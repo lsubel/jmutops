@@ -9,12 +9,11 @@ import java.sql.Array;
 import java.util.logging.Logger;
 
 /**
+ * Class which builds a connection to the database and which is response to
+ * add new data to the database and
+ * get existing data from the database.
  * @author sheak
- *
- */
-/**
- * @author sheak
- *
+ * 
  */
 /**
  * @author sheak
@@ -35,7 +34,10 @@ public class DatabaseResults {
 	private static final Logger log = Logger.getLogger(DatabaseResults.class
 			.getName());
 
-	Connection connection;
+	/**
+	 * Field which stores the connection object after initialization
+	 */
+	private Connection connection;
 
 	/**
 	 * Initialize the database object
@@ -74,20 +76,22 @@ public class DatabaseResults {
 	// /////////////////////////////////////////////////
 
 	public boolean initializeTables() {
+		log.info("Initialization of database tables started!");
+
 		PreparedStatement stmt;
-		
+
 		// TABLE Program
 		try {
 			stmt = connection.prepareStatement("CREATE TABLE Program ("
-					+ "ID_program INTEGER PRIMARY KEY, "
+					+ "ID_program SERIAL PRIMARY KEY, "
 					+ "programName VARCHAR(255) NOT NULL, "
 					+ "programDescription VARCHAR(1023), "
 					+ "utrlToProjectPage VARCHAR(255), "
 					+ "urlToBugtracker VARCHAR(255), "
-					+ "pathAtLocalMachine VARCHAR(1023)" +
-					")");
-			stmt.executeQuery();
+					+ "pathAtLocalMachine VARCHAR(1023)" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table Program was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table Program!");
 			e.printStackTrace();
@@ -97,32 +101,30 @@ public class DatabaseResults {
 		// TABLE Bugreport
 		try {
 			stmt = connection.prepareStatement("CREATE TABLE Bugreport ("
-					+ "ID_bugreport INTEGER PRIMARY KEY, "
+					+ "ID_bugreport SERIAL PRIMARY KEY, "
 					+ "ID_program INTEGER NOT NULL, "
 					+ "bugDescription VARCHAR(1023), "
-					+ "priority VARCHAR(63), "
-					+ "officalID INTEGER, "
-					+ "reported TIMESTAMP, "
-					+ "modified TIMESTAMP" +
-					")");
-			stmt.executeQuery();
+					+ "priority VARCHAR(63), " + "officalID INTEGER, "
+					+ "reported TIMESTAMP, " + "modified TIMESTAMP" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table Bugreport was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table Bugreport!");
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		// TABLE ChangingFiles
 		try {
 			stmt = connection.prepareStatement("CREATE TABLE ChangingFiles ("
-					+ "ID_changingfiles INTEGER PRIMARY KEY, "
+					+ "ID_changingfiles SERIAL PRIMARY KEY, "
 					+ "ID_bugreport INTEGER NOT NULL, "
 					+ "prefixedFilePath VARCHAR(511), "
-					+ "postfixedFilePath VARCHAR(511)" +
-					")");
-			stmt.executeQuery();
+					+ "postfixedFilePath VARCHAR(511)" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table ChangingFiles was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table ChangingFiles!");
 			e.printStackTrace();
@@ -131,109 +133,279 @@ public class DatabaseResults {
 
 		// TABLE AppliedMutationOperator
 		try {
-			stmt = connection.prepareStatement("CREATE TABLE AppliedMutationOperator ("
-					+ "ID_appliedmutationoperator INTEGER PRIMARY KEY, "
-					+ "ID_changingfiles INTEGER NOT NULL, "
-					+ "ID_mutationoperator INTEGER NOT NULL, "
-					+ "prefixedRange INTEGER[2],"
-					+ "postfixedRange INTEGER[2]" +
-					")");
-			stmt.executeQuery();
+			stmt = connection
+					.prepareStatement("CREATE TABLE AppliedMutationOperator ("
+							+ "ID_appliedmutationoperator SERIAL PRIMARY KEY, "
+							+ "ID_changingfiles INTEGER NOT NULL, "
+							+ "ID_mutationoperator INTEGER NOT NULL, "
+							+ "prefixedRange INTEGER[2],"
+							+ "postfixedRange INTEGER[2]" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table AppliedMutationOperator was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table AppliedMutationOperator!");
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		// TABLE MutationOperator
 		try {
-			stmt = connection.prepareStatement("CREATE TABLE MutationOperator ("
-					+ "ID_mutationoperator INTEGER PRIMARY KEY, "
-					+ "ID_mutationoperatorcategory INTEGER NOT NULL, "
-					+ "ID_literature INTEGER NOT NULL, " 
-					+ "ID_effectlocation INTEGER NOT NULL,"
-					+ "mutationOperatorDescription VARCHAR(1023),"
-					+ "mutationOperatorAbbreviation VARCHAR(7)" +
-					")");
-			stmt.executeQuery();
+			stmt = connection
+					.prepareStatement("CREATE TABLE MutationOperator ("
+							+ "ID_mutationoperator SERIAL PRIMARY KEY, "
+							+ "ID_mutationoperatorcategory INTEGER NOT NULL, "
+							+ "ID_literature INTEGER NOT NULL, "
+							+ "ID_effectlocation INTEGER NOT NULL,"
+							+ "mutationOperatorDescription VARCHAR(1023),"
+							+ "mutationOperatorAbbreviation VARCHAR(7)" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table MutationOperator was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table MutationOperator!");
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		// TABLE MutationOperatorCategory
 		try {
-			stmt = connection.prepareStatement("CREATE TABLE MutationOperatorCategory ("
-					+ "ID_mutationoperatorcategory INTEGER PRIMARY KEY"
-					+ "categoryName VARCHAR(127)" +
-					")");
-			stmt.executeQuery();
+			stmt = connection
+					.prepareStatement("CREATE TABLE MutationOperatorCategory ("
+							+ "ID_mutationoperatorcategory SERIAL PRIMARY KEY, "
+							+ "categoryName VARCHAR(127)" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table MutationOperatorCategory was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table MutationOperatorCategory!");
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		// TABLE Literature
 		try {
 			stmt = connection.prepareStatement("CREATE TABLE Literature ("
-					+ "ID_literature INTEGER PRIMARY KEY,"
+					+ "ID_literature SERIAL PRIMARY KEY,"
 					+ "title VARCHAR(127) NOT NULL, "
-					+ "authors VARCHAR(127), "
-					+ "url VARCHAR(127)"
-					+ ")");
-			stmt.executeQuery();
+					+ "authors VARCHAR(127), " + "url VARCHAR(127)" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table Literature was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table Literature!");
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		// TABLE LocationOfEffect
 		try {
-			stmt = connection.prepareStatement("CREATE TABLE LocationOfEffect ("
-					+ "ID_effectlocation INTEGER PRIMARY KEY,"
-					+ "effectName VARCHAR(127) NOT NULL"
-					+ ")");
-			stmt.executeQuery();
+			stmt = connection
+					.prepareStatement("CREATE TABLE LocationOfEffect ("
+							+ "ID_effectlocation SERIAL PRIMARY KEY,"
+							+ "effectName VARCHAR(127) NOT NULL" + ")");
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table LocationOfEffect was created!");
 		} catch (SQLException e) {
 			log.warning("Could not create table LocationOfEffect!");
 			e.printStackTrace();
 			return false;
 		}
-		
+		log.info("Initialization of database tables finished!");
 		return true;
-		
+
 	}
-	
-	///////////////////////////////////////////////////
-	///	delete all tables 
-	///////////////////////////////////////////////////
-	
-	public boolean dropTables() {
-		PreparedStatement stmt;
+
+	// /////////////////////////////////////////////////
+	// / delete tables
+	// /////////////////////////////////////////////////
+
+	public boolean dropTable(String tablename){
 		
-		// TABLE Program
+		log.info("Deletion of database table " +  tablename + " started!");
+
+		PreparedStatement stmt;
+
 		try {
-			stmt = connection.prepareStatement("DROP TABLE Program, Bugreport, ChangingFiles, AppliedMutationOperator, MutationOperator, MutationOperatorCategory, Literature, LocationOfEffect");
-			stmt.executeQuery();
+			stmt = connection.prepareStatement("DROP TABLE " + tablename);
+			stmt.executeUpdate();
 			stmt.close();
+			log.info("Table " +  tablename + " was dropped!");
 		} catch (SQLException e) {
-			log.warning("Could not create table Program!");
+			log.warning("Could not drop table " +  tablename + "!");
 			e.printStackTrace();
 			return false;
 		}
+		
+		log.info("Deletion of all database table " +  tablename + " finished!");
 		return true;
-	}	
-		
-		
+	}
 	
+	public void dropTables() {
+		log.info("Deletion of all database tables started!");
+
+		PreparedStatement stmt;
+
+		// TABLE Program
+		try {
+			stmt = connection.prepareStatement("DROP TABLE Program");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Program was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table Program!");
+			e.printStackTrace();
+		}
+
+		// TABLE Bugreport
+		try {
+			stmt = connection.prepareStatement("DROP TABLE Bugreport");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Bugreport was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table Bugreport!");
+			e.printStackTrace();
+		}
+
+		// TABLE ChangingFiles
+		try {
+			stmt = connection.prepareStatement("DROP TABLE ChangingFiles");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table ChangingFiles was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table ChangingFiles!");
+			e.printStackTrace();
+		}
+
+		// TABLE AppliedMutationOperator
+		try {
+			stmt = connection
+					.prepareStatement("DROP TABLE AppliedMutationOperator");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table AppliedMutationOperator was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table AppliedMutationOperator!");
+			e.printStackTrace();
+		}
+
+		// TABLE MutationOperator
+		try {
+			stmt = connection.prepareStatement("DROP TABLE MutationOperator");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table MutationOperator was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table MutationOperator!");
+			e.printStackTrace();
+		}
+		// TABLE MutationOperatorCategory
+		try {
+			stmt = connection
+					.prepareStatement("DROP TABLE MutationOperatorCategory");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table MutationOperatorCategory was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table MutationOperatorCategory!");
+			e.printStackTrace();
+		}
+		// TABLE Literature
+		try {
+			stmt = connection.prepareStatement("DROP TABLE Literature");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Literature was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table Literature!");
+			e.printStackTrace();
+		}
+		// TABLE LocationOfEffect
+		try {
+			stmt = connection.prepareStatement("DROP TABLE LocationOfEffect");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table LocationOfEffect was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table LocationOfEffect!");
+			e.printStackTrace();
+		}
+		log.info("Deletion of all database tables finished!");
+
+	}
+
+	// /////////////////////////////////////////////////
+	// / fill some property tables
+	// /////////////////////////////////////////////////
+
+	public boolean fillLocationOfEffect() {
+		log.info("Filling of table LocationOfEffect started!");
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+					.prepareStatement("INSERT INTO LocationOfEffect (effectName) " +
+							"VALUES" +
+							"('Method-level') , " +
+							"('Class-level'), " +
+							"('Class spanning'); ");
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+
+		// execute the statement
+		try {
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+		log.info("Filling of table LocationOfEffect finished!");
+		return true;
+
+	}
+	
+	
+	public boolean fillMutationOperatorCategory() {
+		log.info("Filling of table MutationOperatorCategory started!");
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+					.prepareStatement("INSERT INTO MutationOperatorCategory (categoryName) " +
+							"VALUES" +
+							"('Method-level'), " +
+							"('Inheritance'), " +
+							"('Polymorphism'), " +
+							"('Java-specific features'), " +
+							"('Exception handling');");
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+
+		// execute the statement
+		try {
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+		log.info("Filling of table MutationOperatorCategory finished!");
+		return true;
+
+	}
+
 	// /////////////////////////////////////////////////
 	// / add new entries
 	// /////////////////////////////////////////////////
@@ -453,6 +625,30 @@ public class DatabaseResults {
 	// / get existing entries
 	// /////////////////////////////////////////////////
 
+	public ResultSet getAllPrograms() {
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt = null;
+		try {
+			stmt = connection.prepareStatement("SELECT * FROM Program");
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+
+	}
+
 	public ResultSet getProgram(int ID_program) {
 		// create a parameterized statement to insert the new data
 		PreparedStatement stmt = null;
@@ -640,6 +836,15 @@ public class DatabaseResults {
 			return null;
 		}
 		return results;
+	}
+
+	public static void main(String[] args) {
+		DatabaseResults res = new DatabaseResults();
+		res.dropTables();
+		res.initializeTables();
+		res.fillLocationOfEffect();
+		res.fillMutationOperatorCategory();
+
 	}
 
 }
