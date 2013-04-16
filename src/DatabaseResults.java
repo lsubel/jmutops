@@ -73,9 +73,7 @@ public class DatabaseResults {
 	// / initialize database
 	// /////////////////////////////////////////////////
 
-	public boolean initializeDatabase() {
-		// drop all existing tables
-
+	public boolean initializeTables() {
 		PreparedStatement stmt;
 		
 		// TABLE Program
@@ -196,16 +194,16 @@ public class DatabaseResults {
 			return false;
 		}
 		
-		// TABLE LocationEffect
+		// TABLE LocationOfEffect
 		try {
-			stmt = connection.prepareStatement("CREATE TABLE LocationEffect ("
+			stmt = connection.prepareStatement("CREATE TABLE LocationOfEffect ("
 					+ "ID_effectlocation INTEGER PRIMARY KEY,"
 					+ "effectName VARCHAR(127) NOT NULL"
 					+ ")");
 			stmt.executeQuery();
 			stmt.close();
 		} catch (SQLException e) {
-			log.warning("Could not create table LocationEffect!");
+			log.warning("Could not create table LocationOfEffect!");
 			e.printStackTrace();
 			return false;
 		}
@@ -213,7 +211,29 @@ public class DatabaseResults {
 		return true;
 		
 	}
-
+	
+	///////////////////////////////////////////////////
+	///	delete all tables 
+	///////////////////////////////////////////////////
+	
+	public boolean dropTables() {
+		PreparedStatement stmt;
+		
+		// TABLE Program
+		try {
+			stmt = connection.prepareStatement("DROP TABLE Program, Bugreport, ChangingFiles, AppliedMutationOperator, MutationOperator, MutationOperatorCategory, Literature, LocationOfEffect");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table Program!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}	
+		
+		
+	
 	// /////////////////////////////////////////////////
 	// / add new entries
 	// /////////////////////////////////////////////////
