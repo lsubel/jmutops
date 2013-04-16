@@ -70,6 +70,151 @@ public class DatabaseResults {
 	}
 
 	// /////////////////////////////////////////////////
+	// / initialize database
+	// /////////////////////////////////////////////////
+
+	public boolean initializeDatabase() {
+		// drop all existing tables
+
+		PreparedStatement stmt;
+		
+		// TABLE Program
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE Program ("
+					+ "ID_program INTEGER PRIMARY KEY, "
+					+ "programName VARCHAR(255) NOT NULL, "
+					+ "programDescription VARCHAR(1023), "
+					+ "utrlToProjectPage VARCHAR(255), "
+					+ "urlToBugtracker VARCHAR(255), "
+					+ "pathAtLocalMachine VARCHAR(1023)" +
+					")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table Program!");
+			e.printStackTrace();
+			return false;
+		}
+
+		// TABLE Bugreport
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE Bugreport ("
+					+ "ID_bugreport INTEGER PRIMARY KEY, "
+					+ "ID_program INTEGER NOT NULL, "
+					+ "bugDescription VARCHAR(1023), "
+					+ "priority VARCHAR(63), "
+					+ "officalID INTEGER, "
+					+ "reported TIMESTAMP, "
+					+ "modified TIMESTAMP" +
+					")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table Bugreport!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		// TABLE ChangingFiles
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE ChangingFiles ("
+					+ "ID_changingfiles INTEGER PRIMARY KEY, "
+					+ "ID_bugreport INTEGER NOT NULL, "
+					+ "prefixedFilePath VARCHAR(511), "
+					+ "postfixedFilePath VARCHAR(511)" +
+					")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table ChangingFiles!");
+			e.printStackTrace();
+			return false;
+		}
+
+		// TABLE AppliedMutationOperator
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE AppliedMutationOperator ("
+					+ "ID_appliedmutationoperator INTEGER PRIMARY KEY, "
+					+ "ID_changingfiles INTEGER NOT NULL, "
+					+ "ID_mutationoperator INTEGER NOT NULL, "
+					+ "prefixedRange INTEGER[2],"
+					+ "postfixedRange INTEGER[2]" +
+					")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table AppliedMutationOperator!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		// TABLE MutationOperator
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE MutationOperator ("
+					+ "ID_mutationoperator INTEGER PRIMARY KEY, "
+					+ "ID_mutationoperatorcategory INTEGER NOT NULL, "
+					+ "ID_literature INTEGER NOT NULL, " 
+					+ "ID_effectlocation INTEGER NOT NULL,"
+					+ "mutationOperatorDescription VARCHAR(1023),"
+					+ "mutationOperatorAbbreviation VARCHAR(7)" +
+					")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table MutationOperator!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		// TABLE MutationOperatorCategory
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE MutationOperatorCategory ("
+					+ "ID_mutationoperatorcategory INTEGER PRIMARY KEY"
+					+ "categoryName VARCHAR(127)" +
+					")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table MutationOperatorCategory!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		// TABLE Literature
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE Literature ("
+					+ "ID_literature INTEGER PRIMARY KEY,"
+					+ "title VARCHAR(127) NOT NULL, "
+					+ "authors VARCHAR(127), "
+					+ "url VARCHAR(127)"
+					+ ")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table Literature!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		// TABLE LocationEffect
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE LocationEffect ("
+					+ "ID_effectlocation INTEGER PRIMARY KEY,"
+					+ "effectName VARCHAR(127) NOT NULL"
+					+ ")");
+			stmt.executeQuery();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not create table LocationEffect!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+		
+	}
+
+	// /////////////////////////////////////////////////
 	// / add new entries
 	// /////////////////////////////////////////////////
 
@@ -102,12 +247,12 @@ public class DatabaseResults {
 		// execute the statement
 		try {
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
 			return false;
 		}
-
 		return true;
 	}
 
@@ -141,6 +286,7 @@ public class DatabaseResults {
 		// execute the statement
 		try {
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -171,6 +317,7 @@ public class DatabaseResults {
 		// execute the statement
 		try {
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -205,6 +352,7 @@ public class DatabaseResults {
 		// execute the statement
 		try {
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -239,6 +387,7 @@ public class DatabaseResults {
 		// execute the statement
 		try {
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -248,9 +397,7 @@ public class DatabaseResults {
 		return true;
 	}
 
-	public boolean addLiterature(String title,
-			String authors,
-			String url) {
+	public boolean addLiterature(String title, String authors, String url) {
 		// assert parameters to be not null
 		assert title != null;
 		assert authors != null;
@@ -258,7 +405,8 @@ public class DatabaseResults {
 		// create a parameterized statement to insert the new data
 		PreparedStatement stmt;
 		try {
-			stmt = connection.prepareStatement("INSERT INTO Literature (title, authors, url) VALUES(?, ?, ?)");
+			stmt = connection
+					.prepareStatement("INSERT INTO Literature (title, authors, url) VALUES(?, ?, ?)");
 			stmt.setString(0, title);
 			stmt.setString(1, authors);
 			stmt.setString(2, url);
@@ -271,6 +419,7 @@ public class DatabaseResults {
 		// execute the statement
 		try {
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -279,7 +428,7 @@ public class DatabaseResults {
 
 		return true;
 	}
-	
+
 	// /////////////////////////////////////////////////
 	// / get existing entries
 	// /////////////////////////////////////////////////
@@ -300,6 +449,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -338,6 +488,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -350,7 +501,8 @@ public class DatabaseResults {
 		// create a parameterized statement to insert the new data
 		PreparedStatement stmt = null;
 		try {
-			stmt = connection.prepareStatement("SELECT * FROM ChangingFiles where ID_bugreport = ?");
+			stmt = connection
+					.prepareStatement("SELECT * FROM ChangingFiles where ID_bugreport = ?");
 			stmt.setInt(0, ID_bugreport);
 		} catch (SQLException e) {
 			log.warning("Could not create and fill prepared statement!");
@@ -361,6 +513,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -368,12 +521,14 @@ public class DatabaseResults {
 		}
 		return results;
 	}
-	
-	public ResultSet getAllAppliedMutationOperatorForChangingFiles(int ID_changingfiles){
+
+	public ResultSet getAllAppliedMutationOperatorForChangingFiles(
+			int ID_changingfiles) {
 		// create a parameterized statement to insert the new data
 		PreparedStatement stmt = null;
 		try {
-			stmt = connection.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_changingfiles = ?");
+			stmt = connection
+					.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_changingfiles = ?");
 			stmt.setInt(0, ID_changingfiles);
 		} catch (SQLException e) {
 			log.warning("Could not create and fill prepared statement!");
@@ -384,6 +539,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -392,7 +548,7 @@ public class DatabaseResults {
 		return results;
 	}
 
-	public ResultSet getAllMutationOperators(){
+	public ResultSet getAllMutationOperators() {
 		// create a parameterized statement to insert the new data
 		Statement stmt = null;
 		String query = "SELECT * FROM AppliedMutationOperator";
@@ -407,6 +563,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery(query);
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -414,12 +571,14 @@ public class DatabaseResults {
 		}
 		return results;
 	}
-	
-	public ResultSet getAllAppliedMutationOperatorForMutationOperator(int ID_mutationoperator){
+
+	public ResultSet getAllAppliedMutationOperatorForMutationOperator(
+			int ID_mutationoperator) {
 		// create a parameterized statement to insert the new data
 		PreparedStatement stmt = null;
 		try {
-			stmt = connection.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_mutationoperator = ?");
+			stmt = connection
+					.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_mutationoperator = ?");
 			stmt.setInt(0, ID_mutationoperator);
 		} catch (SQLException e) {
 			log.warning("Could not create and fill prepared statement!");
@@ -430,6 +589,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery();
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -437,8 +597,8 @@ public class DatabaseResults {
 		}
 		return results;
 	}
-	
-	public ResultSet getAllLiterature(){
+
+	public ResultSet getAllLiterature() {
 		// create a parameterized statement to insert the new data
 		Statement stmt = null;
 		String query = "SELECT * FROM Literature";
@@ -453,6 +613,7 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery(query);
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
@@ -460,5 +621,5 @@ public class DatabaseResults {
 		}
 		return results;
 	}
-	
+
 }
