@@ -1,11 +1,25 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Array;
 import java.util.logging.Logger;
 
+/**
+ * @author sheak
+ *
+ */
+/**
+ * @author sheak
+ *
+ */
+/**
+ * @author sheak
+ * 
+ */
 public class DatabaseResults {
 
 	/**
@@ -54,6 +68,10 @@ public class DatabaseResults {
 			log.warning("Connection could not be established!");
 		}
 	}
+
+	// /////////////////////////////////////////////////
+	// / add new entries
+	// /////////////////////////////////////////////////
 
 	public boolean addProgram(String programName, String programDescription,
 			String urlToProjectPage, String urlToBugtracker,
@@ -202,11 +220,11 @@ public class DatabaseResults {
 		// assert parameters to be not null
 		assert mutationOperatorDescription != null;
 		assert mutationOperatorAbbreviation != null;
-
 		// create a parameterized statement to insert the new data
 		PreparedStatement stmt;
 		try {
-			stmt = connection.prepareStatement("INSERT INTO MutationOperator (ID_mutationoperatorcategory, ID_literature, ID_effectlocation, mutationOperatorDescription, mutationOperatorAbbreviation) VALUES(?, ?, ?, ?, ?)");
+			stmt = connection
+					.prepareStatement("INSERT INTO MutationOperator (ID_mutationoperatorcategory, ID_literature, ID_effectlocation, mutationOperatorDescription, mutationOperatorAbbreviation) VALUES(?, ?, ?, ?, ?)");
 			stmt.setInt(0, ID_mutationoperatorcategory);
 			stmt.setInt(1, ID_literature);
 			stmt.setInt(2, ID_effectlocation);
@@ -229,4 +247,163 @@ public class DatabaseResults {
 
 		return true;
 	}
+
+	// /////////////////////////////////////////////////
+	// / get existing entries
+	// /////////////////////////////////////////////////
+
+	public ResultSet getProgram(int ID_program) {
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt = null;
+		try {
+			stmt = connection
+					.prepareStatement("SELECT * FROM Program where ID_program = ?");
+			stmt.setInt(0, ID_program);
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// check return resultset
+		try {
+			results.last();
+			int size = results.getRow();
+			if (size != 1) {
+				log.warning("Found " + size
+						+ " entries in table Programs with id " + ID_program
+						+ ".");
+			}
+		} catch (SQLException e) {
+			log.warning("Could not check prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+
+	public ResultSet getAllBugreportsForProgram(int ID_program) {
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt = null;
+		try {
+			stmt = connection
+					.prepareStatement("SELECT * FROM Bugreport where ID_program = ?");
+			stmt.setInt(0, ID_program);
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+
+	public ResultSet getAllChangingFilesForBugreport(int ID_bugreport) {
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt = null;
+		try {
+			stmt = connection.prepareStatement("SELECT * FROM ChangingFiles where ID_bugreport = ?");
+			stmt.setInt(0, ID_bugreport);
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+	
+	public ResultSet getAllAppliedMutationOperatorForChangingFiles(int ID_changingfiles){
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt = null;
+		try {
+			stmt = connection.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_changingfiles = ?");
+			stmt.setInt(0, ID_changingfiles);
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+
+	public ResultSet getAllMutationOperators(){
+		// create a parameterized statement to insert the new data
+		Statement stmt = null;
+		String query = "SELECT * FROM AppliedMutationOperator";
+		try {
+			stmt = connection.createStatement();
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery(query);
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+	
+	public ResultSet getAllAppliedMutationOperatorForMutationOperator(int ID_mutationoperator){
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt = null;
+		try {
+			stmt = connection.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_mutationoperator = ?");
+			stmt.setInt(0, ID_mutationoperator);
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+	
 }
