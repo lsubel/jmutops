@@ -248,6 +248,38 @@ public class DatabaseResults {
 		return true;
 	}
 
+	public boolean addLiterature(String title,
+			String authors,
+			String url) {
+		// assert parameters to be not null
+		assert title != null;
+		assert authors != null;
+		assert url != null;
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt;
+		try {
+			stmt = connection.prepareStatement("INSERT INTO Literature (title, authors, url) VALUES(?, ?, ?)");
+			stmt.setString(0, title);
+			stmt.setString(1, authors);
+			stmt.setString(2, url);
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+
+		// execute the statement
+		try {
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+	
 	// /////////////////////////////////////////////////
 	// / get existing entries
 	// /////////////////////////////////////////////////
@@ -398,6 +430,29 @@ public class DatabaseResults {
 		ResultSet results;
 		try {
 			results = stmt.executeQuery();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		return results;
+	}
+	
+	public ResultSet getAllLiterature(){
+		// create a parameterized statement to insert the new data
+		Statement stmt = null;
+		String query = "SELECT * FROM Literature";
+		try {
+			stmt = connection.createStatement();
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return null;
+		}
+		// execute the statement
+		ResultSet results;
+		try {
+			results = stmt.executeQuery(query);
 		} catch (SQLException e) {
 			log.warning("Could not execute prepared statement!");
 			e.printStackTrace();
