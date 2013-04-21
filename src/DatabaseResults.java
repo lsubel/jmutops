@@ -212,6 +212,23 @@ public class DatabaseResults {
 			e.printStackTrace();
 			return false;
 		}
+		
+		// TABLE MutationType
+		try {
+			stmt = connection
+					.prepareStatement("CREATE TABLE MutationType ("
+							+ "ID_mutationtype SERIAL PRIMARY KEY,"
+							+ "typeName VARCHAR(32) NOT NULL" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table MutationType was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table MutationType!");
+			e.printStackTrace();
+			return false;
+		}
+		
+		// finished Message
 		log.info("Initialization of database tables finished!");
 		return true;
 
@@ -333,10 +350,21 @@ public class DatabaseResults {
 			log.warning("Could not drop table LocationOfEffect!");
 			e.printStackTrace();
 		}
+		// TABLE MutationType
+		try {
+			stmt = connection.prepareStatement("DROP TABLE MutationType");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table MutationType was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table MutationType!");
+			e.printStackTrace();
+		}
+		// finishing message
 		log.info("Deletion of all database tables finished!");
 
 	}
-
+	
 	// /////////////////////////////////////////////////
 	// / fill some property tables
 	// /////////////////////////////////////////////////
@@ -406,6 +434,37 @@ public class DatabaseResults {
 
 	}
 
+	public boolean fillMutationType() {
+		log.info("Filling of table MutationType started!");
+		// create a parameterized statement to insert the new data
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+					.prepareStatement("INSERT INTO MutationType (categoryName) " +
+							"VALUES" +
+							"('Insertion'), " +
+							"('Deletion'), " +
+							"('Replacement');");
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+
+		// execute the statement
+		try {
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not execute prepared statement!");
+			e.printStackTrace();
+			return false;
+		}
+		log.info("Filling of table MutationType finished!");
+		return true;
+
+	}	
+	
 	// /////////////////////////////////////////////////
 	// / add new entries
 	// /////////////////////////////////////////////////
@@ -844,6 +903,7 @@ public class DatabaseResults {
 		res.initializeTables();
 		res.fillLocationOfEffect();
 		res.fillMutationOperatorCategory();
+		res.fillMutationType();
 
 	}
 
