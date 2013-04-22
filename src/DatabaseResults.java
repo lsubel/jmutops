@@ -78,78 +78,113 @@ public class DatabaseResults {
 	public boolean initializeTables() {
 		log.info("Initialization of database tables started!");
 
-		PreparedStatement stmt;
-
 		// TABLE Program
-		try {
-			stmt = connection.prepareStatement("CREATE TABLE Program ("
-					+ "ID_program SERIAL PRIMARY KEY, "
-					+ "programName VARCHAR(255) NOT NULL, "
-					+ "programDescription VARCHAR(1023), "
-					+ "utrlToProjectPage VARCHAR(255), "
-					+ "urlToBugtracker VARCHAR(255), "
-					+ "pathAtLocalMachine VARCHAR(1023)" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table Program was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table Program!");
-			e.printStackTrace();
-			return false;
-		}
+		initializeTableProgram();
 
 		// TABLE Bugreport
-		try {
-			stmt = connection.prepareStatement("CREATE TABLE Bugreport ("
-					+ "ID_bugreport SERIAL PRIMARY KEY, "
-					+ "ID_program INTEGER NOT NULL, "
-					+ "bugDescription VARCHAR(1023), "
-					+ "priority VARCHAR(63), " + "officalID INTEGER, "
-					+ "reported TIMESTAMP, " + "modified TIMESTAMP" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table Bugreport was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table Bugreport!");
-			e.printStackTrace();
-			return false;
-		}
+		initializeTableBugreport();
 
 		// TABLE ChangingFiles
-		try {
-			stmt = connection.prepareStatement("CREATE TABLE ChangingFiles ("
-					+ "ID_changingfiles SERIAL PRIMARY KEY, "
-					+ "ID_bugreport INTEGER NOT NULL, "
-					+ "prefixedFilePath VARCHAR(511), "
-					+ "postfixedFilePath VARCHAR(511)" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table ChangingFiles was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table ChangingFiles!");
-			e.printStackTrace();
-			return false;
-		}
+		initializeTableChangingFiles();
 
 		// TABLE AppliedMutationOperator
+		initializeTableAppliedMutationOperator();
+
+		// TABLE MutationOperator
+		initializeTableMutationOperator();
+
+		// TABLE MutationOperatorCategory
+		initializeTableMutationOperatorCategory();
+
+		// TABLE Literature
+		initializeTableLiterature();
+
+		// TABLE LocationOfEffect
+		initializeTableLocationOfEffect();
+		
+		// TABLE MutationType
+		initializeTableMutationType();
+		
+		// finished Message
+		log.info("Initialization of database tables finished!");
+		return true;
+
+	}
+
+	private boolean initializeTableMutationType() {
+		PreparedStatement stmt;
 		try {
 			stmt = connection
-					.prepareStatement("CREATE TABLE AppliedMutationOperator ("
-							+ "ID_appliedmutationoperator SERIAL PRIMARY KEY, "
-							+ "ID_changingfiles INTEGER NOT NULL, "
-							+ "ID_mutationoperator INTEGER NOT NULL, "
-							+ "prefixedRange INTEGER[2],"
-							+ "postfixedRange INTEGER[2]" + ")");
+					.prepareStatement("CREATE TABLE MutationType ("
+							+ "ID_mutationtype SERIAL PRIMARY KEY,"
+							+ "typeName VARCHAR(32) NOT NULL" + ")");
 			stmt.executeUpdate();
 			stmt.close();
-			log.info("Table AppliedMutationOperator was created!");
+			log.info("Table MutationType was created!");
 		} catch (SQLException e) {
-			log.warning("Could not create table AppliedMutationOperator!");
+			log.warning("Could not create table MutationType!");
 			e.printStackTrace();
 			return false;
 		}
+		return true;
+	}
 
-		// TABLE MutationOperator
+	private boolean initializeTableLocationOfEffect() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+					.prepareStatement("CREATE TABLE LocationOfEffect ("
+							+ "ID_effectlocation SERIAL PRIMARY KEY,"
+							+ "effectName VARCHAR(127) NOT NULL" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table LocationOfEffect was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table LocationOfEffect!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean initializeTableLiterature() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE Literature ("
+					+ "ID_literature SERIAL PRIMARY KEY,"
+					+ "title VARCHAR(127) NOT NULL, "
+					+ "authors VARCHAR(127), " + "url VARCHAR(127)" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Literature was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table Literature!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean initializeTableMutationOperatorCategory() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+					.prepareStatement("CREATE TABLE MutationOperatorCategory ("
+							+ "ID_mutationoperatorcategory SERIAL PRIMARY KEY, "
+							+ "categoryName VARCHAR(127)" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table MutationOperatorCategory was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table MutationOperatorCategory!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean initializeTableMutationOperator() {
+		PreparedStatement stmt;
 		try {
 			stmt = connection
 					.prepareStatement("CREATE TABLE MutationOperator ("
@@ -167,71 +202,88 @@ public class DatabaseResults {
 			e.printStackTrace();
 			return false;
 		}
-
-		// TABLE MutationOperatorCategory
-		try {
-			stmt = connection
-					.prepareStatement("CREATE TABLE MutationOperatorCategory ("
-							+ "ID_mutationoperatorcategory SERIAL PRIMARY KEY, "
-							+ "categoryName VARCHAR(127)" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table MutationOperatorCategory was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table MutationOperatorCategory!");
-			e.printStackTrace();
-			return false;
-		}
-
-		// TABLE Literature
-		try {
-			stmt = connection.prepareStatement("CREATE TABLE Literature ("
-					+ "ID_literature SERIAL PRIMARY KEY,"
-					+ "title VARCHAR(127) NOT NULL, "
-					+ "authors VARCHAR(127), " + "url VARCHAR(127)" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table Literature was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table Literature!");
-			e.printStackTrace();
-			return false;
-		}
-
-		// TABLE LocationOfEffect
-		try {
-			stmt = connection
-					.prepareStatement("CREATE TABLE LocationOfEffect ("
-							+ "ID_effectlocation SERIAL PRIMARY KEY,"
-							+ "effectName VARCHAR(127) NOT NULL" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table LocationOfEffect was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table LocationOfEffect!");
-			e.printStackTrace();
-			return false;
-		}
-		
-		// TABLE MutationType
-		try {
-			stmt = connection
-					.prepareStatement("CREATE TABLE MutationType ("
-							+ "ID_mutationtype SERIAL PRIMARY KEY,"
-							+ "typeName VARCHAR(32) NOT NULL" + ")");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table MutationType was created!");
-		} catch (SQLException e) {
-			log.warning("Could not create table MutationType!");
-			e.printStackTrace();
-			return false;
-		}
-		
-		// finished Message
-		log.info("Initialization of database tables finished!");
 		return true;
+	}
 
+	private boolean initializeTableAppliedMutationOperator() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection
+					.prepareStatement("CREATE TABLE AppliedMutationOperator ("
+							+ "ID_appliedmutationoperator SERIAL PRIMARY KEY, "
+							+ "ID_changingfiles INTEGER NOT NULL, "
+							+ "ID_mutationoperator INTEGER NOT NULL, "
+							+ "prefixedRange INTEGER[2],"
+							+ "postfixedRange INTEGER[2]" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table AppliedMutationOperator was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table AppliedMutationOperator!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean initializeTableChangingFiles() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE ChangingFiles ("
+					+ "ID_changingfiles SERIAL PRIMARY KEY, "
+					+ "ID_bugreport INTEGER NOT NULL, "
+					+ "prefixedFilePath VARCHAR(511), "
+					+ "postfixedFilePath VARCHAR(511)" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table ChangingFiles was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table ChangingFiles!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean initializeTableBugreport() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE Bugreport ("
+					+ "ID_bugreport SERIAL PRIMARY KEY, "
+					+ "ID_program INTEGER NOT NULL, "
+					+ "bugDescription VARCHAR(1023), "
+					+ "priority VARCHAR(63), " + "officalID INTEGER, "
+					+ "reported TIMESTAMP, " + "modified TIMESTAMP" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Bugreport was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table Bugreport!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean initializeTableProgram() {
+		PreparedStatement stmt;
+		try {
+			stmt = connection.prepareStatement("CREATE TABLE Program ("
+					+ "ID_program SERIAL PRIMARY KEY, "
+					+ "programName VARCHAR(255) NOT NULL, "
+					+ "programDescription VARCHAR(1023), "
+					+ "utrlToProjectPage VARCHAR(255), "
+					+ "urlToBugtracker VARCHAR(255), "
+					+ "pathAtLocalMachine VARCHAR(1023)" + ")");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Program was created!");
+		} catch (SQLException e) {
+			log.warning("Could not create table Program!");
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	// /////////////////////////////////////////////////
