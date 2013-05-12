@@ -143,10 +143,8 @@ public class TestApplication {
 				result_new.accept(extractor_new);				
 				Expression expr_right = extractor_new.expr;
 				
-				JTI_Matcher matcher = new JTI_Matcher();
-				JTI_Visitor visitor = new JTI_Visitor(expr_right, matcher);
-				// compare both expressions
-				expr_left.accept(visitor);
+				MutationOperator jti = new JTI();
+				jti.check(expr_left, expr_right);
 				
 				
 				

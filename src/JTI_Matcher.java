@@ -16,7 +16,11 @@ import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 
-public class JTI_Matcher extends ASTMatcher {
+public class JTI_Matcher extends BaseASTMatcher {
+
+	public JTI_Matcher(MutationOperator mutop) {
+		super(mutop);
+	}
 
 	@Override
 	public boolean match(MethodInvocation node, Object other) {
@@ -33,6 +37,7 @@ public class JTI_Matcher extends ASTMatcher {
 		
 		// check case: x() and this.x()
 		if( (node_expr == null) && (node2_expr instanceof ThisExpression)){
+			mutop.found(node, node2);
 			return true;
 		}
 
@@ -58,6 +63,7 @@ public class JTI_Matcher extends ASTMatcher {
 			// check case: a and this.a
 			boolean haveSameName = super.match(node, name2);
 			if((expr2 instanceof ThisExpression) && haveSameName){
+				mutop.found(node, node2);
 				return true;
 			}
 			

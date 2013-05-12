@@ -100,9 +100,11 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	// default ASTMatcher to match general properties
 	protected ASTMatcher defaultMatcher;
 	
-	// TODO: add the used ASTMatcher
+	// mutation operator specific matcher
+	protected BaseASTMatcher matcher;
 	
-	public BaseASTVisitor(ASTNode secondTree) {
+	public BaseASTVisitor(BaseASTMatcher matcher, ASTNode secondTree) {
+		this.matcher = matcher;
 		this.secondTree = secondTree;
 		this.defaultMatcher = new ASTMatcher();
 	}
@@ -122,20 +124,8 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	}
 	
 	protected abstract void visitSubtree(ASTNode left, ASTNode right);
-//	{
-//		if(left != null){
-//			this.secondTree = right;
-//			left.accept(this);
-//		}
-//	}
 	
-	protected void visitSubtrees(List list1, List list2){
-		if(list1.size() == list2.size()){
-			for(int i=0; i < list1.size(); i++){
-				visitSubtree((ASTNode) list1.get(i), (ASTNode) list2.get(i));
-			}
-		}
-	}
+	protected abstract void visitSubtrees(List list1, List list2);
 	
 	/////////////////////////////////////////////////////////////
 	//
