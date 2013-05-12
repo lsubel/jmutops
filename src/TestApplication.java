@@ -7,8 +7,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+
+import mutationoperators.MutationOperator;
+import mutationoperators.MutationOperatorChecker;
+import mutationoperators.aor.AOR;
+import mutationoperators.jti.JTI;
+
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+
+import utils.ASTExtractor;
 
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
@@ -103,6 +111,12 @@ public class TestApplication {
 		// extract the differences
 		List<SourceCodeChange> changes = distiller.getSourceCodeChanges();
 
+		// init MutationOperatorChecker
+		MutationOperatorChecker checker = new MutationOperatorChecker();
+		checker.addMutationOperator(new JTI());
+		checker.addMutationOperator(new AOR());
+		
+		
 		// handle each change
 		for(SourceCodeChange change: changes){
 			
@@ -128,9 +142,8 @@ public class TestApplication {
 				parser_old.setKind(ASTParser.K_COMPILATION_UNIT);
 				parser_old.setResolveBindings(true); // we need bindings later on
 				CompilationUnit result_old = (CompilationUnit) parser_old.createAST(null);
-				ASTExtractor extractor_old = new ASTExtractor(sce_old_start, sce_old_end, result_old);
-				result_old.accept(extractor_old);
-				Expression expr_left = extractor_old.expr;
+				ASTExtractor extractor_old = new ASTExtractor();
+				ASTNode expr_left = extractor_old.getNode(result_old, sce_old_start, sce_old_end);	
 				
 				// extract information for second file
 				ASTParser parser_new = ASTParser.newParser(AST.JLS4);
@@ -139,29 +152,10 @@ public class TestApplication {
 				parser_old.setKind(ASTParser.K_COMPILATION_UNIT);
 				parser_old.setResolveBindings(true); // we need bindings later on
 				CompilationUnit result_new = (CompilationUnit) parser_old.createAST(null);
-				ASTExtractor extractor_new = new ASTExtractor(sce_new_start, sce_new_end, result_new);
-				result_new.accept(extractor_new);				
-				Expression expr_right = extractor_new.expr;
-				
-				MutationOperator jti = new JTI();
-				jti.check(expr_left, expr_right);
-				
-				
-				
-//				if(!expr_right.subtreeMatch(matcher, expr_left)){
-//					SimpleName expr_left_casted = (SimpleName) ((MethodInvocation) expr_left ).arguments().get(0);
-//					FieldAccess expr_right_casted = (FieldAccess) ((MethodInvocation) expr_right ).arguments().get(0);
-//					
-//					boolean isThisExpression = (expr_right_casted.getExpression() instanceof ThisExpression);
-//					boolean hasSameSimpleName = expr_right_casted.getName().subtreeMatch(matcher, expr_left_casted);
-//					
-//					if( isThisExpression && hasSameSimpleName){
-//						System.out.println("Matched!");
-//						
-//						
-//					}
-//				
-//				}
+				ASTExtractor extractor_new = new ASTExtractor();
+				ASTNode expr_right = extractor_new.getNode(result_new, sce_new_start, sce_new_end);	
+
+				checker.checkMethodLevel((Statement) expr_left, (Statement) expr_right);
 				
 				// 
 				System.out.println("Done");
