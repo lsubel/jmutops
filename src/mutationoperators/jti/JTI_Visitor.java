@@ -67,13 +67,13 @@ public class JTI_Visitor extends BaseASTVisitor {
 		}
 		
 		// return result
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean visit(FieldAccess node) {
 		matcher.match(node, secondTree);
-		return true;
+		return false;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class JTI_Visitor extends BaseASTVisitor {
 			// TODO: add exception
 		}
 		
-		return true;
+		return false;
 	}
 	
 	
@@ -108,7 +108,7 @@ public class JTI_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(SimpleName node) {
 		matcher.match(node, this.secondTree);
-		return true;
+		return false;
 	}
 
 	@Override

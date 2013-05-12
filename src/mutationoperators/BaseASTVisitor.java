@@ -154,7 +154,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtrees(node.bodyDeclarations(), atd.bodyDeclarations());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtree(node.getDefault(), atmd.getDefault());	
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtrees(node.bodyDeclarations(), acd.bodyDeclarations());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -217,7 +217,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtree(node.getIndex(), aa.getIndex());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtrees(node.dimensions(), ac.dimensions());
 			
 		}	
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -257,7 +257,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtrees(node.expressions(), ai.expressions());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -277,7 +277,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtree(node.getComponentType(), at.getComponentType());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -296,7 +296,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the message node
 			visitSubtree(node.getMessage(), as.getMessage());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -314,7 +314,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the right expression node
 			visitSubtree(node.getRightHandSide(), assign.getRightHandSide());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -329,17 +329,17 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit each statement of the block
 			visitSubtrees(node.statements(), block.statements());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(BlockComment node) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean visit(BooleanLiteral node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -354,7 +354,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the label node
 			visitSubtree(node.getLabel(), bs.getLabel());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -372,7 +372,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the type node
 			visitSubtree(node.getType(), ce.getType());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -390,12 +390,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the block node
 			visitSubtree(node.getBody(), cc.getBody());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(CharacterLiteral node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -419,7 +419,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit ich argument node
 			visitSubtrees(node.arguments(), cic.arguments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -440,7 +440,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit all type nodes
 			visitSubtrees(node.types(), cic.types());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -461,7 +461,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the else node
 			visitSubtree(node.getElseExpression(), ce.getElseExpression());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -476,7 +476,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit all argument nodes
 			visitSubtrees(node.arguments(),  ci.arguments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -491,7 +491,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the label node
 			visitSubtree(node.getLabel(), ci.getLabel());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -509,12 +509,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the expression node
 			visitSubtree(node.getExpression(), ds.getExpression());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(EmptyStatement node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -535,7 +535,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the body node
 			visitSubtree(node.getBody(), efs.getBody());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -559,7 +559,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit all argument nodes
 			visitSubtrees(node.arguments(),  ecd.arguments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -589,7 +589,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit all modifiers nodes
 			visitSubtrees(node.modifiers(), ed.modifiers());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -604,7 +604,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the statement node
 			visitSubtree(node.getExpression(), es.getExpression());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -622,7 +622,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the name node
 			visitSubtree(node.getName(), fa.getName());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -646,7 +646,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit all modifiers nodes
 			visitSubtrees(node.modifiers(), fd.modifiers());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -670,7 +670,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit all initializer nodes
 			visitSubtrees(node.initializers(), fs.initializers());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -692,7 +692,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtree(node.getElseStatement(), is.getElseStatement());
 			
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -707,7 +707,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the name node
 			visitSubtree(node.getName(), id.getName());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -728,7 +728,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the extended expression
 			visitSubtrees(node.extendedOperands(), ie.extendedOperands());			
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -746,7 +746,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the right node
 			visitSubtree(node.getRightOperand(), id.getRightOperand());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -761,7 +761,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the block node
 			visitSubtree(node.getBody(), init.getBody());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -776,7 +776,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit each tag of the javadoc
 			visitSubtrees(node.tags(), jd.tags());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -794,12 +794,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the body node
 			visitSubtree(node.getBody(), ls.getBody());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(LineComment node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -814,7 +814,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the name node
 			visitSubtree(node.getTypeName(), ma.getTypeName());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -832,7 +832,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the qualifier node
 			visitSubtree(node.getQualifier(), mr.getQualifier());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -850,7 +850,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the value node 
 			visitSubtree(node.getValue(), mvp.getValue());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -871,7 +871,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit each parameter of the method ref
 			visitSubtrees(node.parameters(), mr.parameters());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -889,7 +889,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the type node
 			visitSubtree(node.getType(), mrp.getType());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -928,7 +928,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the body node
 			visitSubtree(node.getBody(), md.getBody());	
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -952,12 +952,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit each arguments 
 			visitSubtrees(node.arguments(), mi.arguments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(Modifier node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -975,17 +975,17 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the value nodes
 			visitSubtrees(node.values(), na.values());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(NullLiteral node) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean visit(NumberLiteral node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1012,7 +1012,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 				}
 			}
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1031,7 +1031,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			visitSubtrees(node.typeArguments(), pt.typeArguments());
 			
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1046,7 +1046,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the javadoc node
 			visitSubtree(node.getExpression(), pe.getExpression());	
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1061,7 +1061,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the operand node
 			visitSubtree(node.getOperand(), pe.getOperand());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1076,12 +1076,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the operand node
 			visitSubtree(node.getOperand(), pe.getOperand());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(PrimitiveType node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1099,7 +1099,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the qualifier node
 			visitSubtree(node.getQualifier(), qn.getQualifier());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1117,7 +1117,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the qualifier node
 			visitSubtree(node.getQualifier(), qt.getQualifier());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1132,17 +1132,17 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the name node
 			visitSubtree(node.getExpression(), rs.getExpression());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(SimpleName node) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean visit(SimpleType node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1160,7 +1160,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the value node
 			visitSubtree(node.getValue(), sma.getValue());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1184,12 +1184,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the initializer node
 			visitSubtree(node.getInitializer(), svd.getInitializer());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(StringLiteral node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1210,7 +1210,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the argument nodes
 			visitSubtrees(node.arguments(), sci.arguments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1228,7 +1228,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the name node
 			visitSubtree(node.getName(), sfa.getName());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1252,7 +1252,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the argument nodes
 			visitSubtrees(node.arguments(), smi.arguments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1267,7 +1267,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the expression node
 			visitSubtree(node.getExpression(), sc.getExpression());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1285,7 +1285,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the statement nodes
 			visitSubtrees(node.statements(), ss.statements());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1303,7 +1303,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the bode node
 			visitSubtree(node.getBody(), ss.getBody());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1318,12 +1318,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the fragement nodes
 			visitSubtrees(node.fragments(), te.fragments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
 	public boolean visit(TextElement node) {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1338,7 +1338,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the qualifier node
 			visitSubtree(node.getQualifier(), ts.getQualifier());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1353,7 +1353,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the expression node
 			visitSubtree(node.getExpression(), ts.getExpression());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1377,7 +1377,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the finally node
 			visitSubtree(node.getFinally(), ts.getFinally());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1416,7 +1416,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the body declaration nodes
 			visitSubtrees(node.bodyDeclarations(), td.bodyDeclarations());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1434,7 +1434,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the typedelcaration node
 			visitSubtree(node.getTypeDeclaration(), tds.getTypeDeclaration());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1449,7 +1449,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the expression node
 			visitSubtree(node.getType(), tl.getType());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1467,7 +1467,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the typebound node
 			visitSubtrees(node.typeBounds(), tp.typeBounds());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1482,7 +1482,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the type nodes
 			visitSubtrees(node.types(), ut.types());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1503,7 +1503,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the fragement nodes
 			visitSubtrees(node.fragments(), vde.fragments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1524,7 +1524,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the fragement nodes
 			visitSubtrees(node.fragments(), vds.fragments());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1542,7 +1542,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the initializer node
 			visitSubtree(node.getInitializer(), vdf.getInitializer());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1560,7 +1560,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the body node
 			visitSubtree(node.getBody(), ws.getBody());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	@Override
@@ -1575,7 +1575,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the bound node
 			visitSubtree(node.getBound(), wt.getBound());
 		}
-		return super.visit(node);
+		return false;
 	}
 
 	
