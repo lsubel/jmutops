@@ -4,7 +4,11 @@
 	<classpathentry excluding="src/" kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.core.resources_3.8.1.v20121114-124432.jar"/>
-	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.jdt.core_3.8.3.v20130121-145325.jar"/>
+	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.jdt.core_3.8.3.v20130121-145325.jar" sourcepath="/org.eclipse.jdt.core">
+		<attributes>
+			<attribute name="javadoc_location" value="https://github.com/eclipse/eclipse.jdt.core/tree/master/org.eclipse.jdt.core"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.core.runtime_3.8.0.v20120912-155025.jar"/>
 	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.osgi_3.8.2.v20130124-134944.jar"/>
 	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.core.contenttype_3.4.200.v20120523-2004.jar"/>

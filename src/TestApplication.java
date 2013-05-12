@@ -143,23 +143,27 @@ public class TestApplication {
 				result_new.accept(extractor_new);				
 				Expression expr_right = extractor_new.expr;
 				
-				ASTMatcher matcher = new ASTMatcher();
-				
+				JTI_Matcher matcher = new JTI_Matcher();
+				JTI_Visitor visitor = new JTI_Visitor(expr_right, matcher);
 				// compare both expressions
-				if(!expr_right.subtreeMatch(matcher, expr_left)){
-					SimpleName expr_left_casted = (SimpleName) ((MethodInvocation) expr_left ).arguments().get(0);
-					FieldAccess expr_right_casted = (FieldAccess) ((MethodInvocation) expr_right ).arguments().get(0);
-					
-					boolean isThisExpression = (expr_right_casted.getExpression() instanceof ThisExpression);
-					boolean hasSameSimpleName = expr_right_casted.getName().subtreeMatch(matcher, expr_left_casted);
-					
-					if( isThisExpression && hasSameSimpleName){
-						System.out.println("Matched!");
-						
-						
-					}
+				expr_left.accept(visitor);
 				
-				}
+				
+				
+//				if(!expr_right.subtreeMatch(matcher, expr_left)){
+//					SimpleName expr_left_casted = (SimpleName) ((MethodInvocation) expr_left ).arguments().get(0);
+//					FieldAccess expr_right_casted = (FieldAccess) ((MethodInvocation) expr_right ).arguments().get(0);
+//					
+//					boolean isThisExpression = (expr_right_casted.getExpression() instanceof ThisExpression);
+//					boolean hasSameSimpleName = expr_right_casted.getName().subtreeMatch(matcher, expr_left_casted);
+//					
+//					if( isThisExpression && hasSameSimpleName){
+//						System.out.println("Matched!");
+//						
+//						
+//					}
+//				
+//				}
 				
 				// 
 				System.out.println("Done");
