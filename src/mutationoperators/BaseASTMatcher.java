@@ -7,7 +7,12 @@ public class BaseASTMatcher extends ASTMatcher {
 	/**
 	 * Reference to the mutation operator to call the corresponding found().
 	 */
-	protected MutationOperator mutop;
+	protected final MutationOperator mutop;
+	
+	/**
+	 * Default ASTMatcher to check for equality even when the ASTNode's match was overridden.
+	 */
+	protected final ASTMatcher defaultMatcher;
 	
 	/**
 	 * Default constructor.
@@ -16,5 +21,6 @@ public class BaseASTMatcher extends ASTMatcher {
 	 */
 	public BaseASTMatcher(MutationOperator mutop) {
 		this.mutop = mutop;
+		this.defaultMatcher = new ASTMatcher();
 	}
 }
