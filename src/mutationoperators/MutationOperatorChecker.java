@@ -1,10 +1,12 @@
 package mutationoperators;
 
 import java.lang.instrument.IllegalClassFormatException;
+import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.DoStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.WhileStatement;
@@ -197,6 +199,14 @@ public class MutationOperatorChecker {
 					for(MutationOperator mutops: this.methodlevel_list){
 						mutops.check( ((DoStatement) leftNode).getExpression(), ((DoStatement) rightNode).getExpression());
 					}
+				}
+				else if((leftNode instanceof ForStatement) && (rightNode instanceof ForStatement)){
+					for(MutationOperator mutops: this.methodlevel_list){
+						mutops.check( ((ForStatement) leftNode).getExpression(), ((ForStatement) rightNode).getExpression());
+					}
+				}
+				else{
+					throw new IllegalStateException("Could not found ASTNode with condition: " + leftNode.getClass().getName() + " & " + rightNode.getClass().getName());
 				}
 				break;
 				
