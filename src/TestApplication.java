@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import utils.ASTExtractor;
+import utils.Preperator;
 
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
@@ -38,72 +39,15 @@ public class TestApplication {
 		File file1 	= new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\Test1.java");
 		File file2 	= new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\Test2.java");
 		
-		// create temporary files
-		File left = null;
-		File right = null;
-		try {
-			left = new File("temp_left.java");
-			right = new File("temp_right.java");
-			if(!left.exists()){
-				left.createNewFile();
-			}
-			if(!right.exists()){
-				right.createNewFile();
-			}
-		} catch (IOException e1) {
-
-			
-		}
-		
-		// extract the content of the first file
-		StringBuffer buffer1 = null;
-		try {
-			BufferedReader in = new BufferedReader(new FileReader(file1));
-			buffer1 = new StringBuffer();
-			String line = null;
-			while (null != (line = in.readLine())) {
-			     buffer1.append(line).append("\n");
-			}
-			BufferedWriter out = new BufferedWriter(new FileWriter(left));
-			String outText = buffer1.toString();
-			out.write(outText);
-			out.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		// extract the content of the second file
-		StringBuffer buffer2 = null;
-		try {
-			BufferedReader in = new BufferedReader(new FileReader(file2));
-			buffer2 = new StringBuffer();
-			String line = null;
-			while (null != (line = in.readLine())) {
-			     buffer2.append(line).append("\n");
-			}
-			BufferedWriter out = new BufferedWriter(new FileWriter(right));
-			String outText = buffer2.toString();
-			out.write(outText);
-			out.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		Preperator left_prep = new Preperator(file1);
+		Preperator right_prep = new Preperator(file2);
 		
 		// init a new File distiller
 		FileDistiller distiller = ChangeDistiller.createFileDistiller(Language.JAVA);
 		
 		// Get the changes between both files
 		try {
-		    distiller.extractClassifiedSourceCodeChanges(left, right);
+		    distiller.extractClassifiedSourceCodeChanges(left_prep.getFile(), right_prep.getFile());
 		} catch(Exception e) {
 		    System.err.println("Warning: error while change distilling: " + e.getMessage());
 		}
@@ -137,7 +81,7 @@ public class TestApplication {
 				
 				// extract information for first file
 				ASTParser parser_old = ASTParser.newParser(AST.JLS4);
-				char[] source_old = buffer1.toString().toCharArray();
+				char[] source_old = left_prep.getFileContent().toCharArray();
 				parser_old.setSource(source_old);
 				parser_old.setKind(ASTParser.K_COMPILATION_UNIT);
 				parser_old.setResolveBindings(true); // we need bindings later on
@@ -147,7 +91,7 @@ public class TestApplication {
 				
 				// extract information for second file
 				ASTParser parser_new = ASTParser.newParser(AST.JLS4);
-				char[] source_new = buffer2.toString().toCharArray();
+				char[] source_new = right_prep.getFileContent().toCharArray();
 				parser_old.setSource(source_new);
 				parser_old.setKind(ASTParser.K_COMPILATION_UNIT);
 				parser_old.setResolveBindings(true); // we need bindings later on

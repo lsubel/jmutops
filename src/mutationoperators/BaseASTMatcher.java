@@ -4,10 +4,16 @@ import org.eclipse.jdt.core.dom.ASTMatcher;
 
 public class BaseASTMatcher extends ASTMatcher {
 	
-	// store an reference to the mutation operator to call the corresponding found method
+	/**
+	 * Reference to the mutation operator to call the corresponding found().
+	 */
 	protected MutationOperator mutop;
 	
-	// constructor
+	/**
+	 * Default constructor.
+	 * 
+	 * @param mutop
+	 */
 	public BaseASTMatcher(MutationOperator mutop) {
 		this.mutop = mutop;
 	}
