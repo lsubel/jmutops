@@ -32,15 +32,14 @@ public class JTI extends MutationOperator {
 
 	@Override
 	public void found(ASTNode leftNode, ASTNode rightNode) {
-		System.out.println("Found application of JTI operator:");
-		System.out.println("\t" + "Prefix version:");
-		System.out.println("\t\t" + "Content:" + leftNode.toString());
-		System.out.println("\t\t" + "Node type:" + leftNode.getClass().toString());
-		System.out.println("\t\t" + "Range: " + leftNode.getStartPosition() + "-" + (leftNode.getStartPosition() + leftNode.getLength()));
-		System.out.println("\t" + "Postfix version:");
-		System.out.println("\t\t" + "Content:" + rightNode.toString());
-		System.out.println("\t\t" + "Node type:" + rightNode.getClass().toString());
-		System.out.println("\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength()));
-		System.out.println();
+		logger.info("Found application of JTI operator:" + "\n" +
+		"\t" + "Prefix version:" + "\n" +
+		"\t\t" + "Content:" + leftNode.toString()  + "\n" +
+		"\t\t" + "Node type:" + leftNode.getClass().toString() + "\n" +
+		"\t\t" + "Range: " + leftNode.getStartPosition() + "-" + (leftNode.getStartPosition() + leftNode.getLength() - 1) + "\n" +
+		"\t" + "Postfix version:" + "\n" +
+		"\t\t" + "Content:" + rightNode.toString() + "\n" +
+		"\t\t" + "Node type:" + rightNode.getClass().toString() + "\n" +
+		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
 	}
 }

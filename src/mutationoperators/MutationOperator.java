@@ -42,7 +42,7 @@ public abstract class MutationOperator {
 	/**
 	 * Logger
 	 */
-	protected Logger log = Logger.getLogger(this.getClass().getName());
+	protected Logger logger = Logger.getLogger(this.getClass().getName());
 	
 	/////////////////////////////////////////////////
 	///	Methods
