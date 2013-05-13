@@ -5,13 +5,15 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import mutationoperators.BaseASTMatcher;
 import mutationoperators.BaseASTVisitor;
 import mutationoperators.MutationOperator;
+import mutationoperators.MutationOperatorChecker;
+import mutationoperators.MutationOperator.MutationOperatorCategory;
 
 public class AOR extends MutationOperator {
 
-	public AOR() {
-		this.category = MutationOperatorCategory.METHOD_LEVEL;
+	public AOR(MutationOperatorChecker checker) {
+		super(checker, MutationOperatorCategory.METHOD_LEVEL);
 	}
-	
+
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
 		BaseASTMatcher matcher = new AOR_Matcher(this);

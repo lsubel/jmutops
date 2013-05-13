@@ -65,7 +65,6 @@ public class JTI_Visitor extends BaseASTVisitor {
 				visitSubtrees(node.arguments(), mi.arguments());
 			}
 		}
-		
 		// return result
 		return false;
 	}

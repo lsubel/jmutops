@@ -113,8 +113,8 @@ public class TestApplication {
 
 		// init MutationOperatorChecker
 		MutationOperatorChecker checker = new MutationOperatorChecker();
-		checker.addMutationOperator(new JTI());
-		checker.addMutationOperator(new AOR());
+		checker.addMutationOperator(new JTI(checker));
+		checker.addMutationOperator(new AOR(checker));
 		
 		
 		// handle each change
@@ -158,7 +158,6 @@ public class TestApplication {
 				checker.checkMethodLevel((Statement) expr_left, (Statement) expr_right);
 				
 				// 
-				System.out.println("Done");
 				
 				
 			}	

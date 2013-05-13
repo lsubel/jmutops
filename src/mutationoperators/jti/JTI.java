@@ -2,20 +2,27 @@ package mutationoperators.jti;
 
 
 
+import java.util.logging.Logger;
+
 import mutationoperators.BaseASTMatcher;
 import mutationoperators.BaseASTVisitor;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperator.MutationOperatorCategory;
+import mutationoperators.MutationOperatorChecker;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+
+import results.DatabaseResults;
 
 
 public class JTI extends MutationOperator {
 
-	public JTI() {
-		this.category = MutationOperatorCategory.METHOD_LEVEL;
-	}
+
 	
+	public JTI(MutationOperatorChecker checker) {
+		super(checker, MutationOperatorCategory.METHOD_LEVEL);
+	}
+
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
 		BaseASTMatcher matcher = new JTI_Matcher(this);
@@ -36,5 +43,4 @@ public class JTI extends MutationOperator {
 		System.out.println("\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength()));
 		System.out.println();
 	}
-
 }
