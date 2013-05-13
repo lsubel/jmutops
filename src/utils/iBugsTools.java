@@ -23,6 +23,7 @@ public class iBugsTools {
 	public static String generateReport_iBugs(int index_iBugs){
 		// generate StringBuffer where we store the output string
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n");
 		
 		try {
 			// load the document into DOM Document object	
@@ -44,37 +45,38 @@ public class iBugsTools {
 			XPathExpression exprFilecontentProperty = xpathGeneral.compile("/bugrepository/bug[@id = " + index_iBugs + "]/property");
 			NodeList nodelistProperties = (NodeList) exprFilecontentProperty.evaluate(doc, XPathConstants.NODESET);
 						
-			buffer.append("iBugs id:");
-			buffer.append("\t" + index_iBugs);
+		
+			buffer.append("iBugs id:"+ "\n");
+			buffer.append("\t" + index_iBugs+ "\n");
 					
 			for (int i = 0; i < nodelistProperties.getLength(); i++){
 				NamedNodeMap attr = nodelistProperties.item(i).getAttributes();
 				try {
 					if(attr.getNamedItem("name").getNodeValue().equals("lines-added")){
-						buffer.append("Number of added lines:");
-						buffer.append("\t" + attr.getNamedItem("value").getNodeValue());
+						buffer.append("Number of added lines:" + "\n");
+						buffer.append("\t" + attr.getNamedItem("value").getNodeValue()+ "\n");
 					}
 					if(attr.getNamedItem("name").getNodeValue().equals("lines-deleted")){
-						buffer.append("Number of deleted lines:");
-						buffer.append("\t" + attr.getNamedItem("value").getNodeValue());
+						buffer.append("Number of deleted lines:"+ "\n");
+						buffer.append("\t" + attr.getNamedItem("value").getNodeValue()+ "\n");
 					}
 					if(attr.getNamedItem("name").getNodeValue().equals("lines-modified")){
-						buffer.append("Number of modified lines:");
-						buffer.append("\t" + attr.getNamedItem("value").getNodeValue());
+						buffer.append("Number of modified lines:"+ "\n");
+						buffer.append("\t" + attr.getNamedItem("value").getNodeValue()+ "\n");
 					}
 					if(attr.getNamedItem("name").getNodeValue().equals("lines-churned")){
-						buffer.append("Number of churned lines:");
-						buffer.append("\t" + attr.getNamedItem("value").getNodeValue());
+						buffer.append("Number of churned lines:"+ "\n");
+						buffer.append("\t" + attr.getNamedItem("value").getNodeValue()+ "\n");
 					}
 				} catch (Exception e) {
 				}
 			}
-			buffer.append("Bugreport:");
-			buffer.append("\t" + strBugreport);
+			buffer.append("Bugreport:"+ "\n");
+			buffer.append("\t" + strBugreport+ "\n");
 
 
-			buffer.append("Fingerprint:");
-			buffer.append("\t" + strFingerprint);
+			buffer.append("Fingerprint:"+ "\n");
+			buffer.append("\t" + strFingerprint+ "\n");
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
