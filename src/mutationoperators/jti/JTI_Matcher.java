@@ -68,7 +68,7 @@ public class JTI_Matcher extends BaseASTMatcher {
 			SimpleName name2 = node2.getName();
 			Expression expr2 = node2.getExpression();
 			// check case: a and this.a
-			boolean haveSameName = super.match(node, name2);
+			boolean haveSameName = this.defaultMatcher.match(node, name2);
 			if((expr2 instanceof ThisExpression) && haveSameName){
 				mutop.found(node, node2);
 				return true;
