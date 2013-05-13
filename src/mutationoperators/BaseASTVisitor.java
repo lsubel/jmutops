@@ -1,6 +1,7 @@
 package mutationoperators;
 import java.util.List;
 
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -904,20 +905,17 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the javadoc node
 			visitSubtree(node.getJavadoc(), md.getJavadoc());
 			
-			// visit the modifier nodes
-			visitSubtrees(node.modifiers(), md.modifiers());
-			
 			// visit the name node
 			visitSubtree(node.getName(), md.getName());
 			
-			// visit the returntype node
-			visitSubtree(node.getReturnType(), md.getReturnType());
-			
-			// visit the returntype2 node
-			visitSubtree(node.getReturnType2(), md.getReturnType2());
-			
-			// visit the typeparameter nodes
-			visitSubtrees(node.typeParameters(), md.typeParameters());
+			if (node.getAST().apiLevel() == AST.JLS4) {
+				// visit the modifier nodes
+				visitSubtrees(node.modifiers(), md.modifiers());
+				// visit the typeparameter nodes
+				visitSubtrees(node.typeParameters(), md.typeParameters());
+				// visit the returntype2 node
+				visitSubtree(node.getReturnType2(), md.getReturnType2());
+			}
 			
 			// visit the parameters node
 			visitSubtrees(node.parameters(), md.parameters());
@@ -1389,32 +1387,22 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 		if(localStoredTree instanceof TypeDeclaration){
 			TypeDeclaration td = (TypeDeclaration) localStoredTree;
 			
-			// visit the javadoc node
-			visitSubtree(node.getJavadoc(), td.getJavadoc());
-			
-			// visit the modifier nodes
-			visitSubtrees(node.modifiers(), td.modifiers());
-			
-			// visit the name node
-			visitSubtree(node.getName(), td.getName());
-			
-			// visit the superclass node
-			visitSubtree(node.getSuperclass(), td.getSuperclass());
-			
-			// visit the superinterface nodes
-			visitSubtrees(node.superInterfaces(), td.superInterfaces());
-			
-			// visit the superclasstype node
-			visitSubtree(node.getSuperclassType(), td.getSuperclassType());
-			
-			// visist the superinterface types
-			visitSubtrees(node.superInterfaceTypes(), td.superInterfaceTypes());
-			
-			// visit the typeparameter nodes
-			visitSubtrees(node.typeParameters(), td.typeParameters());
-			
-			// visit the body declaration nodes
-			visitSubtrees(node.bodyDeclarations(), td.bodyDeclarations());
+			if (node.getAST().apiLevel() >= AST.JLS3) {
+				// visit the javadoc node
+				visitSubtree(node.getJavadoc(), td.getJavadoc());
+				// visit the modifier nodes
+				visitSubtrees(node.modifiers(), td.modifiers());
+				// visit the name node
+				visitSubtree(node.getName(), td.getName());
+				// visit the typeparameter nodes
+				visitSubtrees(node.typeParameters(), td.typeParameters());
+				// visit the superclasstype node
+				visitSubtree(node.getSuperclassType(), td.getSuperclassType());
+				// visist the superinterface types
+				visitSubtrees(node.superInterfaceTypes(), td.superInterfaceTypes());
+				// visit the body declaration nodes
+				visitSubtrees(node.bodyDeclarations(), td.bodyDeclarations());
+			}
 		}
 		return false;
 	}
