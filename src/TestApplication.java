@@ -4,6 +4,7 @@ import java.util.List;
 import mutationoperators.MutationOperatorChecker;
 import mutationoperators.aor.AOR;
 import mutationoperators.jti.JTI;
+import mutationoperators.mnro.MNRO;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.dom.AST;
@@ -29,6 +30,7 @@ public class TestApplication {
 	public static void main(String[] args) {
 		
 		File[] folders_id = new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results").listFiles();
+//		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\28974")};
 		
 		for(File folder_id: folders_id){
 			
@@ -66,6 +68,7 @@ public class TestApplication {
 				MutationOperatorChecker checker = new MutationOperatorChecker();
 				checker.addMutationOperator(new JTI(checker));
 				checker.addMutationOperator(new AOR(checker));
+				checker.addMutationOperator(new MNRO(checker));
 				
 				if(changes == null)
 					continue;
