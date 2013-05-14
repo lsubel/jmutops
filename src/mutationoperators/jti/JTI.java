@@ -19,13 +19,14 @@ public class JTI extends MutationOperator {
 
 	public JTI(MutationOperatorChecker checker) {
 		super(checker, MutationOperatorCategory.METHOD_LEVEL);
+		this.matcher = new JTI_Matcher(this);
+		this.visitor = new JTI_Visitor(matcher);
 	}
 
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
-		BaseASTMatcher matcher = new JTI_Matcher(this);
-		BaseASTVisitor visitor = new JTI_Visitor(matcher, rightNode);
-		leftNode.accept(visitor);
+		this.visitor.setSecondTree(rightNode);
+		leftNode.accept(this.visitor);
 	}
 
 	@Override

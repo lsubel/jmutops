@@ -7,6 +7,8 @@ import mutationoperators.BaseASTVisitor;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperatorChecker;
 import mutationoperators.MutationOperator.MutationOperatorCategory;
+import mutationoperators.aor.AOR_Matcher;
+import mutationoperators.aor.AOR_Visitor;
 import mutationoperators.jti.JTI_Matcher;
 import mutationoperators.jti.JTI_Visitor;
 
@@ -14,12 +16,13 @@ public class MNRO extends MutationOperator {
 
 	public MNRO(MutationOperatorChecker checker) {
 		super(checker, MutationOperatorCategory.METHOD_LEVEL);
+		this.matcher = new MNRO_Matcher(this);
+		this.visitor = new MNRO_Visitor(this.matcher);
 	}
 
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
-		BaseASTMatcher matcher = new MNRO_Matcher(this);
-		BaseASTVisitor visitor = new MNRO_Visitor(matcher, rightNode);
+		this.visitor.setSecondTree(rightNode);
 		leftNode.accept(visitor);
 	}
 

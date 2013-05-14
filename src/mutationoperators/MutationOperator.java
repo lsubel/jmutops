@@ -44,6 +44,16 @@ public abstract class MutationOperator {
 	 */
 	protected Logger logger = Logger.getLogger(this.getClass().getName());
 	
+	/**
+	 * Reference to the ASTVisitor related to this Mutation Operator
+	 */
+	protected BaseASTVisitor visitor;
+	
+	/**
+	 * Reference to the ASTMatcher related to this Mutation Operator
+	 */
+	protected BaseASTMatcher matcher;
+	
 	/////////////////////////////////////////////////
 	///	Methods
 	/////////////////////////////////////////////////	

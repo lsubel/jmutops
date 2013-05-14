@@ -10,8 +10,8 @@ import mutationoperators.BaseASTVisitor;
 
 public class AOR_Visitor extends BaseASTVisitor {
 
-	public AOR_Visitor(BaseASTMatcher matcher, ASTNode secondTree) {
-		super(matcher, secondTree);
+	public AOR_Visitor(BaseASTMatcher matcher) {
+		super(matcher);
 	}
 
 	@Override

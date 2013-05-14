@@ -91,8 +91,6 @@ import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 
-import sun.security.krb5.internal.ccache.CCacheInputStream;
-
 
 public abstract class BaseASTVisitor extends ASTVisitor {
 
@@ -105,9 +103,8 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	// mutation operator specific matcher
 	protected BaseASTMatcher matcher;
 	
-	public BaseASTVisitor(BaseASTMatcher matcher, ASTNode secondTree) {
+	public BaseASTVisitor(BaseASTMatcher matcher) {
 		this.matcher = matcher;
-		this.secondTree = secondTree;
 		this.defaultMatcher = new ASTMatcher();
 	}
 	
@@ -117,11 +114,11 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	//
 	/////////////////////////////////////////////////////////////
 	
-	protected ASTNode getSecondTree(){
+	public ASTNode getSecondTree(){
 		return this.secondTree;
 	}
 	
-	protected void setSecondTree(ASTNode ast){
+	public void setSecondTree(ASTNode ast){
 		this.secondTree = ast;
 	}
 	

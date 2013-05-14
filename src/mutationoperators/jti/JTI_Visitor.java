@@ -41,8 +41,8 @@ import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 
 public class JTI_Visitor extends BaseASTVisitor {
 	
-	public JTI_Visitor(BaseASTMatcher matcher, ASTNode secondTree) {
-		super(matcher, secondTree);
+	public JTI_Visitor(BaseASTMatcher matcher) {
+		super(matcher);
 	}
 
 	@Override

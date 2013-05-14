@@ -12,12 +12,13 @@ public class AOR extends MutationOperator {
 
 	public AOR(MutationOperatorChecker checker) {
 		super(checker, MutationOperatorCategory.METHOD_LEVEL);
+		this.matcher = new AOR_Matcher(this);
+		this.visitor = new AOR_Visitor(this.matcher);
 	}
 
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
-		BaseASTMatcher matcher = new AOR_Matcher(this);
-		BaseASTVisitor visitor = new AOR_Visitor(matcher, rightNode);
+		this.visitor.setSecondTree(rightNode);
 		leftNode.accept(visitor);
 	}
 
