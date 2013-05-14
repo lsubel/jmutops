@@ -21,29 +21,51 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 
 /**
  * Class storing the implemented MutationOperators, calling the correct
- * operators
+ * operators.
  * 
  * @author Lukas Subel
  * 
  */
 public class MutationOperatorChecker {
 
+	/**
+	 * Array containing all method level related mutation operators.
+	 */
 	ArrayList<MutationOperator> methodlevel_list;
+	
+	/**
+	 * Array containing all class level related mutation operators.
+	 */
 	ArrayList<MutationOperator> classlevel_list;
 
+	/**
+	 * Default constructor.
+	 */
 	public MutationOperatorChecker() {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
 		this.classlevel_list = new ArrayList<MutationOperator>();
 	}
 
 	
+	/**
+	 * @param mutop
+	 * @return
+	 */
 	public boolean addMutationOperator(MutationOperator mutop) {
 		switch (mutop.getCategory()) {
 		case CLASS_LEVEL:
-			throw new UnsupportedOperationException(
-					"This method has not yet been implemented.");
+			// check if this operator was added before
+			if (!this.classlevel_list.contains(mutop)) {
+				// if not, add it
+				this.classlevel_list.add(mutop);
+				return true;
+			} else {
+				return false;
+			}
 		case METHOD_LEVEL:
+			// check if this operator was added before
 			if (!this.methodlevel_list.contains(mutop)) {
+				// if not, add it
 				this.methodlevel_list.add(mutop);
 				return true;
 			} else {
