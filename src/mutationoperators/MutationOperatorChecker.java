@@ -36,6 +36,7 @@ public class MutationOperatorChecker {
 		this.classlevel_list = new ArrayList<MutationOperator>();
 	}
 
+	
 	public boolean addMutationOperator(MutationOperator mutop) {
 		switch (mutop.getCategory()) {
 		case CLASS_LEVEL:
@@ -52,35 +53,45 @@ public class MutationOperatorChecker {
 			return false;
 		}
 	}
-
-	public void check(ASTNode leftNode, ASTNode rightNode, SourceCodeChange change) {	
+	
+	public void check(ASTNode node, SourceCodeChange change) {	
 		if(change instanceof Insert){
-			this.check(leftNode,rightNode, (Insert) change);
+			this.check(node, (Insert) change);
 		}
 		else if(change instanceof Delete){
-			this.check(leftNode,rightNode, (Delete) change);	
+			this.check(node, (Delete) change);	
 		}
-		else if(change instanceof Update){
+		else{
+			throw new IllegalStateException("Could not found correct subclass for change on a single version.");
+		}
+	}	
+	
+
+	public void check(ASTNode leftNode, ASTNode rightNode, SourceCodeChange change) {	
+		if(change instanceof Update){
 			this.check(leftNode,rightNode, (Update) change);	
 		}
 		else if(change instanceof Move){
 			this.check(leftNode,rightNode, (Move) change);	
 		}
 		else{
-			throw new IllegalStateException("Could not found correct subclass for change.");
+			throw new IllegalStateException("Could not found correct subclass for change on two versions.");
 		}
 	}
 		
-	public void check(ASTNode leftNode, ASTNode rightNode, Insert change) {
+	private void check(ASTNode node, Insert change) {
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
 			switch (change.getChangeType()) {
+			
+			case COMMENT_INSERT:
+				// since comment updates do not fix bugs, we ignore this case
+				break;
 			case ADDITIONAL_CLASS:
 			case ADDITIONAL_FUNCTIONALITY:
 			case ADDITIONAL_OBJECT_STATE:
 			case ALTERNATIVE_PART_INSERT:
-			case COMMENT_INSERT:
 			case STATEMENT_INSERT:
 			case UNCLASSIFIED_CHANGE:
 				// default case means some error
@@ -108,7 +119,7 @@ public class MutationOperatorChecker {
 		}
 	}
 
-	public void check(ASTNode leftNode, ASTNode rightNode, Delete change) {
+	private void check(ASTNode node, Delete change) {
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
@@ -142,7 +153,7 @@ public class MutationOperatorChecker {
 		}
 	}
 
-	public void check(ASTNode leftNode, ASTNode rightNode, Move change) {
+	private void check(ASTNode leftNode, ASTNode rightNode, Move change) {
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
@@ -172,7 +183,7 @@ public class MutationOperatorChecker {
 		}
 	}
 
-	public void check(ASTNode leftNode, ASTNode rightNode, Update change) {
+	private void check(ASTNode leftNode, ASTNode rightNode, Update change) {
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			
