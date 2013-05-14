@@ -3,7 +3,7 @@ package mutationoperators.mnro;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import mutationoperators.BaseASTMatcher;
-import mutationoperators.BasicTwo_ASTVisitor;
+import mutationoperators.BaseASTVisitor;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperatorChecker;
 import mutationoperators.MutationOperator.MutationOperatorCategory;
@@ -19,7 +19,7 @@ public class MNRO extends MutationOperator {
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
 		BaseASTMatcher matcher = new MNRO_Matcher(this);
-		BasicTwo_ASTVisitor visitor = new MNRO_Visitor(matcher, rightNode);
+		BaseASTVisitor visitor = new MNRO_Visitor(matcher, rightNode);
 		leftNode.accept(visitor);
 	}
 

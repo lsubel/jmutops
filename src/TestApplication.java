@@ -21,9 +21,6 @@ import utils.iBugsTools;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
 import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
-import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
-import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
-import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
@@ -93,67 +90,13 @@ public class TestApplication {
 				// handle each change
 				for(SourceCodeChange change: changes){
 					
-					if((change instanceof Insert) || (change instanceof Delete)){
-						// init variables
-						SourceCodeEntity sce = null;
-						ASTNode expr = null;
-						
+					if(change instanceof Update){
 						// cast the change into the correct type
-						if(change instanceof Insert){
-							Insert change_insert = (Insert) change;	
+						Update change_update = (Update) change;	
 						
-							// extract the change entities
-							sce = change_insert.getChangedEntity();
-						
-						}
-						else if(change instanceof Delete){
-							Delete change_delete = (Delete) change;	
-							
-							// extract the change entities
-							sce = change_delete.getChangedEntity();
-						}
-						
-						// extract the ranges in the document
-						int sce_start 	= sce.getStartPosition();
-						int sce_end 	= sce.getEndPosition();
-		
-		
-						if(change instanceof Insert){
-							// extract postfixed version when insert
-							CompilationUnit result = right_prep.getAST();
-							ASTExtractor extractor = new ASTExtractor();	
-							expr= extractor.getNode(result, sce_start, sce_end);		
-						}
-						else if(change instanceof Delete){
-							// extract postfixed version when insert
-							CompilationUnit result = left_prep.getAST();
-							ASTExtractor extractor = new ASTExtractor();	
-							expr= extractor.getNode(result, sce_start, sce_end);
-						}
-						
-						// check for mutation operators
-						checker.check(expr, change);
-					}	
-					else if((change instanceof Update) || (change instanceof Move)){
-						// init variables
-						SourceCodeEntity sce_old = null;
-						SourceCodeEntity sce_new = null;
-						
-						// cast the change into the correct type
-						if(change instanceof Update){
-							Update change_update = (Update) change;	
-						
-							// extract the change entities
-							sce_old = change_update.getChangedEntity();
-							sce_new = change_update.getNewEntity();
-						}
-						else if(change instanceof Move){
-							Move change_move = (Move) change;	
-							
-							// extract the change entities
-							sce_old = change_move.getChangedEntity();
-							sce_new = change_move.getNewEntity();	
-						}
+						// extract the change entities
+						SourceCodeEntity sce_old = change_update.getChangedEntity();
+						SourceCodeEntity sce_new = change_update.getNewEntity();
 						
 						// extract the ranges in the document
 						int sce_old_start 	= sce_old.getStartPosition();
@@ -161,6 +104,7 @@ public class TestApplication {
 						int sce_new_start 	= sce_new.getStartPosition();
 						int sce_new_end 	= sce_new.getEndPosition();
 		
+						
 						// extract information for first file
 						CompilationUnit result_old = left_prep.getAST();
 						ASTExtractor extractor_old = new ASTExtractor();
@@ -171,8 +115,11 @@ public class TestApplication {
 						ASTExtractor extractor_new = new ASTExtractor();
 						ASTNode expr_right = extractor_new.getNode(result_new, sce_new_start, sce_new_end);	
 		
-						// check for mutation operators
-						checker.check(expr_left, expr_right, change);
+						if((expr_left instanceof Statement) && (expr_right instanceof Statement)){
+							checker.check(expr_left, expr_right, change);
+						}
+						
+						
 					}	
 				}
 				

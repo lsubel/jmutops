@@ -5,7 +5,7 @@ package mutationoperators.jti;
 import java.util.logging.Logger;
 
 import mutationoperators.BaseASTMatcher;
-import mutationoperators.BasicTwo_ASTVisitor;
+import mutationoperators.BaseASTVisitor;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperator.MutationOperatorCategory;
 import mutationoperators.MutationOperatorChecker;
@@ -24,7 +24,7 @@ public class JTI extends MutationOperator {
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
 		BaseASTMatcher matcher = new JTI_Matcher(this);
-		BasicTwo_ASTVisitor visitor = new JTI_Visitor(matcher, rightNode);
+		BaseASTVisitor visitor = new JTI_Visitor(matcher, rightNode);
 		leftNode.accept(visitor);
 	}
 

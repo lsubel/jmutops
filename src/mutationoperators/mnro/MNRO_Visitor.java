@@ -6,9 +6,9 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
 import mutationoperators.BaseASTMatcher;
-import mutationoperators.BasicTwo_ASTVisitor;
+import mutationoperators.BaseASTVisitor;
 
-public class MNRO_Visitor extends BasicTwo_ASTVisitor {
+public class MNRO_Visitor extends BaseASTVisitor {
 
 	public MNRO_Visitor(BaseASTMatcher matcher, ASTNode secondTree) {
 		super(matcher, secondTree);
