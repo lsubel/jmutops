@@ -3,7 +3,7 @@ package mutationoperators.aor;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.BasicTwo_ASTVisitor;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperatorChecker;
 import mutationoperators.MutationOperator.MutationOperatorCategory;
@@ -17,7 +17,7 @@ public class AOR extends MutationOperator {
 	@Override
 	public void check(ASTNode leftNode, ASTNode rightNode) {
 		BaseASTMatcher matcher = new AOR_Matcher(this);
-		BaseASTVisitor visitor = new AOR_Visitor(matcher, rightNode);
+		BasicTwo_ASTVisitor visitor = new AOR_Visitor(matcher, rightNode);
 		leftNode.accept(visitor);
 	}
 

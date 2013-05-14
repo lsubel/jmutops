@@ -79,6 +79,10 @@ public class MutationOperatorChecker {
 		}
 	}
 		
+	///////////////////////////////////////////////////////////
+	///	private methods
+	///////////////////////////////////////////////////////////
+	
 	private void check(ASTNode node, Insert change) {
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -94,6 +98,7 @@ public class MutationOperatorChecker {
 			case ALTERNATIVE_PART_INSERT:
 			case STATEMENT_INSERT:
 			case UNCLASSIFIED_CHANGE:
+				break;
 				// default case means some error
 			default:
 				throw new IllegalStateException(
@@ -103,14 +108,15 @@ public class MutationOperatorChecker {
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
-			case ADDING_ATTRIBUTE_MODIFIABILITY:
 			case ADDING_CLASS_DERIVABILITY:
 			case ADDING_METHOD_OVERRIDABILITY:
 			case DOC_INSERT:
 			case PARAMETER_INSERT:
 			case PARENT_CLASS_INSERT:
 			case PARENT_INTERFACE_INSERT:
+			case REMOVING_ATTRIBUTE_MODIFIABILITY:
 			case RETURN_TYPE_INSERT:
+				break;
 			default:
 				throw new IllegalStateException(
 						"Expected class insert, but found "
@@ -131,6 +137,7 @@ public class MutationOperatorChecker {
 			case REMOVED_OBJECT_STATE:
 			case STATEMENT_DELETE:
 			case UNCLASSIFIED_CHANGE:
+				break;
 				// default case means some error
 			default:
 				throw new IllegalStateException(
@@ -140,11 +147,13 @@ public class MutationOperatorChecker {
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
+			case ADDING_ATTRIBUTE_MODIFIABILITY:
 			case DOC_DELETE:
 			case PARAMETER_DELETE:
 			case PARENT_CLASS_DELETE:
 			case PARENT_INTERFACE_DELETE:
 			case RETURN_TYPE_DELETE:
+				break;
 			default:
 				throw new IllegalStateException(
 						"Expected class delete, but found "
@@ -166,6 +175,7 @@ public class MutationOperatorChecker {
 			case STATEMENT_ORDERING_CHANGE:
 			case STATEMENT_PARENT_CHANGE:
 			case UNCLASSIFIED_CHANGE:
+				break;
 			// default case means some error
 			default:
 				throw new IllegalStateException(
@@ -253,7 +263,6 @@ public class MutationOperatorChecker {
 
 			case PARENT_INTERFACE_CHANGE:
 
-			case REMOVING_ATTRIBUTE_MODIFIABILITY:
 			case REMOVING_CLASS_DERIVABILITY:
 			case REMOVING_METHOD_OVERRIDABILITY:
 			case RETURN_TYPE_CHANGE:

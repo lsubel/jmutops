@@ -5,7 +5,7 @@ package mutationoperators.jti;
 import java.util.List;
 
 import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.BasicTwo_ASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -39,7 +39,7 @@ import org.eclipse.jdt.core.dom.TypeLiteral;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 
 
-public class JTI_Visitor extends BaseASTVisitor {
+public class JTI_Visitor extends BasicTwo_ASTVisitor {
 	
 	public JTI_Visitor(BaseASTMatcher matcher, ASTNode secondTree) {
 		super(matcher, secondTree);

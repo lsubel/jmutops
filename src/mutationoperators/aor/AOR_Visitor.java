@@ -6,9 +6,9 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
 import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.BasicTwo_ASTVisitor;
 
-public class AOR_Visitor extends BaseASTVisitor {
+public class AOR_Visitor extends BasicTwo_ASTVisitor {
 
 	public AOR_Visitor(BaseASTMatcher matcher, ASTNode secondTree) {
 		super(matcher, secondTree);
