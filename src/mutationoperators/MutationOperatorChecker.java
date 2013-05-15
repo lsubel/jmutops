@@ -48,8 +48,10 @@ public class MutationOperatorChecker {
 
 	
 	/**
-	 * @param mutop
-	 * @return
+	 * Add another MutationOperator to the Checker.
+	 * 
+	 * @param mutop MutationOperator which should be used on checked ASTs.
+	 * @return True if the MutationOperator was added, otherwise false.
 	 */
 	public boolean addMutationOperator(MutationOperator mutop) {
 		switch (mutop.getCategory()) {
@@ -89,6 +91,13 @@ public class MutationOperatorChecker {
 	}	
 	
 
+	/**
+	 * Depending on the kind of change, call a different submethod.
+	 * 
+	 * @param leftNode Prefixed version of AST.
+	 * @param rightNode Postfixed version of AST.
+	 * @param change ChangeDistiller object describing the change related betweeen both AST versions. 
+	 */
 	public void check(ASTNode leftNode, ASTNode rightNode, SourceCodeChange change) {	
 		if(change instanceof Update){
 			this.check(leftNode,rightNode, (Update) change);	
