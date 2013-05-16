@@ -102,7 +102,7 @@ public class JMutOps {
 				ASTNode expr_right = extractor_new.getNode(result_new, sce_new_start, sce_new_end);	
 
 				if((expr_left instanceof Statement) && (expr_right instanceof Statement)){
-					this.checker.check(expr_left, expr_right, change);
+					this.checker.checkForMutationOperators(expr_left, expr_right, change);
 				}
 				
 				

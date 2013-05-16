@@ -1,17 +1,13 @@
 package mutationoperators;
 
-import java.lang.instrument.IllegalClassFormatException;
-import java.rmi.UnexpectedException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
@@ -28,16 +24,29 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
  */
 public class MutationOperatorChecker {
 
+	//////////////////////////////////////////////////////
+	/// Fields
+	//////////////////////////////////////////////////////
+	
 	/**
 	 * Array containing all method level related mutation operators.
 	 */
-	ArrayList<MutationOperator> methodlevel_list;
+	private ArrayList<MutationOperator> methodlevel_list;
 	
 	/**
 	 * Array containing all class level related mutation operators.
 	 */
-	ArrayList<MutationOperator> classlevel_list;
-
+	private ArrayList<MutationOperator> classlevel_list;
+	
+	/**
+	 * Counts the number of applications for all mutation operator in one change.
+	 */
+	private int applicationCounter;
+	
+	//////////////////////////////////////////////////////
+	/// Methods
+	//////////////////////////////////////////////////////
+	
 	/**
 	 * Default constructor.
 	 */
@@ -45,7 +54,6 @@ public class MutationOperatorChecker {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
 		this.classlevel_list = new ArrayList<MutationOperator>();
 	}
-
 	
 	/**
 	 * Add another MutationOperator to the Checker.
@@ -78,7 +86,10 @@ public class MutationOperatorChecker {
 		}
 	}
 	
-	public void check(ASTNode node, SourceCodeChange change) {	
+	public int checkForMutationOperators(ASTNode node, SourceCodeChange change) {	
+		// reset the counter
+		this.resetApplicationCount();
+		//
 		if(change instanceof Insert){
 			this.check(node, (Insert) change);
 		}
@@ -88,6 +99,8 @@ public class MutationOperatorChecker {
 		else{
 			throw new IllegalStateException("Could not found correct subclass for change on a single version.");
 		}
+		// return the number of applications
+		return this.getApplicationCount();
 	}	
 	
 
@@ -98,7 +111,10 @@ public class MutationOperatorChecker {
 	 * @param rightNode Postfixed version of AST.
 	 * @param change ChangeDistiller object describing the change related betweeen both AST versions. 
 	 */
-	public void check(ASTNode leftNode, ASTNode rightNode, SourceCodeChange change) {	
+	public int checkForMutationOperators(ASTNode leftNode, ASTNode rightNode, SourceCodeChange change) {
+		// reset the counter
+		this.resetApplicationCount();
+		//
 		if(change instanceof Update){
 			this.check(leftNode,rightNode, (Update) change);	
 		}
@@ -108,6 +124,8 @@ public class MutationOperatorChecker {
 		else{
 			throw new IllegalStateException("Could not found correct subclass for change on two versions.");
 		}
+		// return the number of applications
+		return this.getApplicationCount();
 	}
 		
 	private void check(ASTNode node, Insert change) {
@@ -228,24 +246,16 @@ public class MutationOperatorChecker {
 			case CONDITION_EXPRESSION_CHANGE:
 				// check only the condition of the node
 				if((leftNode instanceof IfStatement) && (rightNode instanceof IfStatement)){
-					for(MutationOperator mutops: this.methodlevel_list){
-						mutops.check( ((IfStatement) leftNode).getExpression(), ((IfStatement) rightNode).getExpression());
-					}
+					runMutationOperators(this.methodlevel_list, ((IfStatement) leftNode).getExpression(), ((IfStatement) rightNode).getExpression());
 				}
 				else if((leftNode instanceof WhileStatement) && (rightNode instanceof WhileStatement)){
-					for(MutationOperator mutops: this.methodlevel_list){
-						mutops.check( ((WhileStatement) leftNode).getExpression(), ((WhileStatement) rightNode).getExpression());
-					}
+					runMutationOperators(this.methodlevel_list, ((WhileStatement) leftNode).getExpression(), ((WhileStatement) rightNode).getExpression());
 				}
 				else if((leftNode instanceof DoStatement) && (rightNode instanceof DoStatement)){
-					for(MutationOperator mutops: this.methodlevel_list){
-						mutops.check( ((DoStatement) leftNode).getExpression(), ((DoStatement) rightNode).getExpression());
-					}
+					runMutationOperators(this.methodlevel_list, ((DoStatement) leftNode).getExpression(), ((DoStatement) rightNode).getExpression());
 				}
 				else if((leftNode instanceof ForStatement) && (rightNode instanceof ForStatement)){
-					for(MutationOperator mutops: this.methodlevel_list){
-						mutops.check( ((ForStatement) leftNode).getExpression(), ((ForStatement) rightNode).getExpression());
-					}
+					runMutationOperators(this.methodlevel_list, ((ForStatement) leftNode).getExpression(), ((ForStatement) rightNode).getExpression());
 				}
 				else{
 					throw new IllegalStateException("Could not found ASTNode with condition: " + leftNode.getClass().getName() + " & " + rightNode.getClass().getName());
@@ -255,9 +265,7 @@ public class MutationOperatorChecker {
 			case STATEMENT_UPDATE:
 			case UNCLASSIFIED_CHANGE:				
 				// in this case, we cannot specify the searchable area
-				for(MutationOperator mutops: this.methodlevel_list){
-					mutops.check(leftNode, rightNode);
-				}
+				runMutationOperators(this.methodlevel_list, leftNode, rightNode);
 				break;
 				
 			default:
@@ -297,5 +305,35 @@ public class MutationOperatorChecker {
 			}
 		}
 
+	}
+	
+	/**
+	 * Helper method. Check for each MutationOperator in operatorlist, if leftNode to rightNode applied the corresponding operator.
+	 * 
+	 * @param operatorlist A {@link List} of {@link MutationOperator} containing all MutationOperators to check in this case.
+	 * @param leftNode The prefixed version.
+	 * @param rightNode The postfixed version.
+	 */
+	private void runMutationOperators(List<MutationOperator> operatorlist, ASTNode leftNode, ASTNode rightNode){
+		for(MutationOperator operator: operatorlist){
+			operator.check(leftNode, rightNode);
+			this.incrementApplicationCountBy(operator.getApplicationCount());
+		}
+	}
+	
+	//////////////////////////////////////////////////////
+	// ApplicationCount
+	//////////////////////////////////////////////////////
+	
+	private int getApplicationCount(){
+		return this.applicationCounter;
+	}
+	
+	private void resetApplicationCount(){
+		this.applicationCounter = 0;
+	}
+	
+	private void incrementApplicationCountBy(int additionalNumbers){
+		this.applicationCounter += 1;
 	}
 }
