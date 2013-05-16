@@ -41,6 +41,8 @@ public class TestApplication {
 		// for each iBugs id
 		for(File folder_id: folders_id){
 			
+			logger.fine("Starting to check iBugs ID " + folder_id.getName());
+			
 			File[] prefixedFiles  = new File(folder_id.getAbsolutePath() + "\\pre-fix").listFiles();
 			
 			// for each file containing in the prefixed folder
@@ -52,7 +54,7 @@ public class TestApplication {
 					continue;
 				}
 				
-				logger.info("Starting to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName() + ".");
+				logger.fine("Starting to check file " + prefixedFile.getName() + ".");
 		
 				// Include the files
 				File file1 	= prefixedFile;
@@ -83,7 +85,7 @@ public class TestApplication {
 				
 				if(changes == null){
 					logger.info("No changes were found.");
-					logger.info("Ending to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName() + "." + "\n");
+					logger.info("Ending to check File " + prefixedFile.getName() + "." + "\n");
 					continue;
 				}
 				
@@ -123,9 +125,11 @@ public class TestApplication {
 					}	
 				}
 				
-				logger.info("Ending to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName() + "." + "\n");
+				logger.info("Ending to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName());
 		
 			}
+			
+			logger.info("Ending to check iBugs ID " + folder_id.getName() + "\n");
 	
 		}
 		

@@ -94,13 +94,19 @@ import org.eclipse.jdt.core.dom.WildcardType;
 
 public abstract class BaseASTVisitor extends ASTVisitor {
 
-	// second AST which will be traversed in parallel
+	/**
+	 * Reference to the second AST which will be traversed in parallel.
+	 */
 	protected ASTNode secondTree;
 	
-	// default ASTMatcher to match general properties
+	/**
+	 * Default ASTMatcher to match general properties.
+	 */
 	protected ASTMatcher defaultMatcher;
 	
-	// mutation operator specific matcher
+	/**
+	 * Mutation operator specific matcher.
+	 */
 	protected BaseASTMatcher matcher;
 	
 	public BaseASTVisitor(BaseASTMatcher matcher) {
