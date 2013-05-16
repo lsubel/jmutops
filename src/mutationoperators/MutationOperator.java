@@ -54,6 +54,11 @@ public abstract class MutationOperator {
 	 */
 	protected BaseASTMatcher matcher;
 	
+	/**
+	 * Counts the number of applications for one mutation operator in one change.
+	 */
+	protected int applicationsCounter;
+	
 	/////////////////////////////////////////////////
 	///	Methods
 	/////////////////////////////////////////////////	
@@ -81,7 +86,13 @@ public abstract class MutationOperator {
 	 * @param leftNode The prefix code.
 	 * @param rightNode The postfix code.
 	 */
-	public abstract void check(ASTNode leftNode, ASTNode rightNode);
+	public void check(ASTNode leftNode, ASTNode rightNode){
+		// reset the application counter
+		this.resetApplicationCount();
+		// start to visit the subAST
+		this.visitor.setSecondTree(rightNode);
+		leftNode.accept(visitor);
+	}
 	
 	/**
 	 * Method called when an application of an mutation operator was found.
@@ -89,7 +100,21 @@ public abstract class MutationOperator {
 	 * @param leftNode The prefix code.
 	 * @param rightNode The postfix code.
 	 */
-	public abstract void found(ASTNode leftNode, ASTNode rightNode);
+	public void found(ASTNode leftNode, ASTNode rightNode){
+		// generate log message 
+		logger.info("Found application of " + this.getClass().getSimpleName() + " operator:" + "\n" +
+		"\t" + "Prefix version: " + "\n" +
+		"\t\t" + "Content: " + leftNode.toString()  + "\n" +
+		"\t\t" + "Node type: " + leftNode.getClass().toString() + "\n" +
+		"\t\t" + "Range: " + leftNode.getStartPosition() + "-" + (leftNode.getStartPosition() + leftNode.getLength() - 1) + "\n" +
+		"\t" + "Postfix version: " + "\n" +
+		"\t\t" + "Content: " + rightNode.toString() + "\n" +
+		"\t\t" + "Node type: " + rightNode.getClass().toString() + "\n" +
+		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
+		// increment the application counter
+		this.incrementApplicationCount();
+		// TODO: add an operator specific entry in the DB
+	}
 	
 	
 	/**
@@ -99,5 +124,17 @@ public abstract class MutationOperator {
 	 */
 	public MutationOperatorCategory getCategory(){
 		return this.category;
+	}
+	
+	public int getApplicationCount(){
+		return this.applicationsCounter;
+	}
+	
+	public void resetApplicationCount(){
+		this.applicationsCounter = 0;
+	}
+	
+	public void incrementApplicationCount(){
+		this.applicationsCounter += 1;
 	}
 }
