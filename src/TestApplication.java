@@ -35,6 +35,7 @@ public class TestApplication {
 		File[] folders_id = new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results").listFiles();
 //		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\28974")};
 		
+		JMutOps jmutops = new JMutOps();
 		
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		
@@ -55,77 +56,10 @@ public class TestApplication {
 				}
 				
 				logger.fine("Starting to check file " + prefixedFile.getName() + ".");
-		
-				// Include the files
-				File file1 	= prefixedFile;
-				File file2 	= postfixedFile;
 				
-				// preperate the files
-				Preperator left_prep = new Preperator(file1);
-				Preperator right_prep = new Preperator(file2);
-				
-				// init a new File distiller
-				FileDistiller distiller = ChangeDistiller.createFileDistiller(Language.JAVA);
-				
-				// Get the changes between both files
-				try {
-				    distiller.extractClassifiedSourceCodeChanges(left_prep.getFile(), right_prep.getFile());
-				} catch(Exception e) {
-				    System.err.println("Warning: error while change distilling: " + e.getMessage());
-				}
-				
-				// extract the differences
-				List<SourceCodeChange> changes = distiller.getSourceCodeChanges();
-		
-				// init MutationOperatorChecker
-				MutationOperatorChecker checker = new MutationOperatorChecker();
-				checker.addMutationOperator(new JTI(checker));
-				checker.addMutationOperator(new AOR(checker));
-				checker.addMutationOperator(new MNRO(checker));
-				
-				if(changes == null){
-					logger.info("No changes were found.");
-					logger.info("Ending to check File " + prefixedFile.getName() + "." + "\n");
-					continue;
-				}
-				
-				// handle each change
-				for(SourceCodeChange change: changes){
-					
-					if(change instanceof Update){
-						// cast the change into the correct type
-						Update change_update = (Update) change;	
-						
-						// extract the change entities
-						SourceCodeEntity sce_old = change_update.getChangedEntity();
-						SourceCodeEntity sce_new = change_update.getNewEntity();
-						
-						// extract the ranges in the document
-						int sce_old_start 	= sce_old.getStartPosition();
-						int sce_old_end 	= sce_old.getEndPosition();
-						int sce_new_start 	= sce_new.getStartPosition();
-						int sce_new_end 	= sce_new.getEndPosition();
-		
-						
-						// extract information for first file
-						CompilationUnit result_old = left_prep.getAST();
-						ASTExtractor extractor_old = new ASTExtractor();
-						ASTNode expr_left = extractor_old.getNode(result_old, sce_old_start, sce_old_end);	
-						
-						// extract information for second file
-						CompilationUnit result_new = right_prep.getAST();
-						ASTExtractor extractor_new = new ASTExtractor();
-						ASTNode expr_right = extractor_new.getNode(result_new, sce_new_start, sce_new_end);	
-		
-						if((expr_left instanceof Statement) && (expr_right instanceof Statement)){
-							checker.check(expr_left, expr_right, change);
-						}
-						
-						
-					}	
-				}
-				
-				logger.info("Ending to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName());
+				jmutops.checkFiles(prefixedFile, postfixedFile);
+								
+				logger.fine("Ending to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName());
 		
 			}
 			
