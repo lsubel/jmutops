@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.NodeFinder;
 import org.eclipse.jdt.core.dom.Statement;
 
 import results.DatabaseResults;
@@ -90,16 +91,13 @@ public class JMutOps {
 				int sce_new_start 	= sce_new.getStartPosition();
 				int sce_new_end 	= sce_new.getEndPosition();
 
-				
 				// extract information for first file
-				CompilationUnit result_old = left_prep.getAST();
-				ASTExtractor extractor_old = new ASTExtractor();
-				ASTNode expr_left = extractor_old.getNode(result_old, sce_old_start, sce_old_end);	
+				NodeFinder nodeFinder_old = new NodeFinder(left_prep.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
+				ASTNode expr_left = nodeFinder_old.getCoveredNode();
 				
 				// extract information for second file
-				CompilationUnit result_new = right_prep.getAST();
-				ASTExtractor extractor_new = new ASTExtractor();
-				ASTNode expr_right = extractor_new.getNode(result_new, sce_new_start, sce_new_end);	
+				NodeFinder nodeFinder_new = new NodeFinder(right_prep.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
+				ASTNode expr_right = nodeFinder_new.getCoveredNode();
 
 				if((expr_left instanceof Statement) && (expr_right instanceof Statement)){
 					this.checker.checkForMutationOperators(expr_left, expr_right, change);
