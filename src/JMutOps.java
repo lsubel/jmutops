@@ -23,30 +23,108 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 
 
+/**
+ * Initial object.
+ * 
+ * @author Lukas Subel
+ *
+ */
 public class JMutOps {
 
+	/**
+	 * Enumeration used in case of adding classpath / sourcepath to distinguish between prefixed and postfixed code. 
+	 * @author Lukas Subel
+	 *
+	 */
+	public enum TargetVersion {
+		PREFIX, POSTFIX;
+	}
 
 	/**
-	 * Logger
+	 * Logger.
 	 */
 	private static final Logger logger = Logger.getLogger(JMutOps.class.getName());
 	
-	FileDistiller distiller;
+	/**
+	 * FileDistiller used to distill changes between two version of a file.
+	 */
+	private FileDistiller distiller = ChangeDistiller.createFileDistiller(Language.JAVA);;
 
-	MutationOperatorChecker checker;
+	/**
+	 * MutationOperatorChecker handles all implemented MutationOperators.
+	 */
+	private MutationOperatorChecker checker = new MutationOperatorChecker();
 	
-	// preperate the files
-	Preperator left_prep = new Preperator();
-	Preperator right_prep = new Preperator();
+	/**
+	 * Preperation class used to retrieve information for the prefixed code.
+	 */
+	private Preperator prefixed_preperator;
+	/**
+	 * Preperation class used to retrieve information for the postfixed code.
+	 */
+	private Preperator postfixed_preperator;
+
+	/**
+	 * Stores the name of the program related to this changes.
+	 */
+	private String programName;
 	
+	/**
+	 * Default constructor; adding all implemented MutationOperators to MutationOperatorChecker.
+	 */
 	public JMutOps() {
-		// init a new File distiller
-		this.distiller = ChangeDistiller.createFileDistiller(Language.JAVA);
-		// init the MutationOperatorChecker, fill it with MutationOperators
-		this.checker = new MutationOperatorChecker();
 		checker.addMutationOperator(new JTI(checker));
 		checker.addMutationOperator(new AOR(checker));
 		checker.addMutationOperator(new MNRO(checker));
+	}
+	
+	/**
+	 * Initial a new program to check.
+	 * <p>
+	 * TODO: Add initialization in case of existing program in DB
+	 * @param programName
+	 */
+	public void initProgram(String programName){
+		this.programName = programName;
+		this.prefixed_preperator = new Preperator();
+		this.postfixed_preperator = new Preperator();
+	}
+	
+	/**
+	 * Add path to required binary type.
+	 * 
+	 * @param classPath Absolute path to a binary type.
+	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
+	 * @return True if it was able to add the classpath, otherwise false.
+	 */
+	public boolean addClasspathEntry(String classPath, TargetVersion version){
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.addClasspathEntry(classPath);
+		case POSTFIX:
+			return this.postfixed_preperator.addClasspathEntry(classPath);
+		default:
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}
+	}
+	
+	/**
+	 * Add path to required source type.
+	 * 
+	 * @param sourcePath Absolute path to a source type.
+	 * @param encoding If source type need a specific encoding, this argument must contain this encoding. Otherwise it has to be null
+	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
+	 * @return
+	 */
+	public boolean addSourcepathEntry(String sourcePath, String encoding, TargetVersion version){
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.addSourcepathEntry(sourcePath, encoding);
+		case POSTFIX:
+			return this.postfixed_preperator.addSourcepathEntry(sourcePath, encoding);
+		default:
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}		
 	}
 	
 	public void checkFiles(File prefixedFile, File postfixedFile){
@@ -58,12 +136,12 @@ public class JMutOps {
 			throw new IllegalArgumentException("Second argument must not be null.");
 		}
 		
-		left_prep.prepare(prefixedFile);
-		right_prep.prepare(postfixedFile);
+		prefixed_preperator.prepare(prefixedFile);
+		postfixed_preperator.prepare(postfixedFile);
 		
 		// Get the changes between both files
 		try {
-		    distiller.extractClassifiedSourceCodeChanges(left_prep.getFile(), right_prep.getFile());
+		    distiller.extractClassifiedSourceCodeChanges(prefixed_preperator.getFile(), postfixed_preperator.getFile());
 		} catch(Exception e) {
 		    System.err.println("Warning: error while change distilling: " + e.getMessage());
 		}
@@ -94,11 +172,11 @@ public class JMutOps {
 				int sce_new_end 	= sce_new.getEndPosition();
 
 				// extract information for first file
-				NodeFinder nodeFinder_old = new NodeFinder(left_prep.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
+				NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
 				ASTNode expr_left = nodeFinder_old.getCoveredNode();
 				
 				// extract information for second file
-				NodeFinder nodeFinder_new = new NodeFinder(right_prep.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
+				NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
 				ASTNode expr_right = nodeFinder_new.getCoveredNode();
 
 				if((expr_left instanceof Statement) && (expr_right instanceof Statement)){

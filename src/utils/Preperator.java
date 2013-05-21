@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.jdt.core.dom.AST;
@@ -29,6 +30,14 @@ public class Preperator {
 	
 	CompilationUnit m_OutputAST;
 	
+	ArrayList<String> classpathEntries;
+	
+	ArrayList<String> sourcepathEntries;
+	
+	ArrayList<String> encodings;
+	
+	boolean includeRunningVMBootclasspath;
+	
 	///////////////////////////////////////////////////
 	///	Methods
 	///////////////////////////////////////////////////
@@ -39,9 +48,14 @@ public class Preperator {
 	 * @param inputFile
 	 */
 	public Preperator() {
+		// initialize parser
 		this.parser = ASTParser.newParser(AST.JLS4);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		this.parser.setResolveBindings(true); // we need bindings later on
+		// initialize ArrayList
+		this.classpathEntries = new ArrayList<String>();
+		this.sourcepathEntries = new ArrayList<String>();
+		this.encodings = new ArrayList<String>();
 	}
 	
 	public boolean prepare(File inputFile){
@@ -71,9 +85,15 @@ public class Preperator {
 			// store the content
 			this.m_OutputContent = bufferFileContent.toString();
 		
-			// generate an AST for this file
+			// add additional information
+			String[] classPaths = this.classpathEntries.toArray(new String[this.classpathEntries.size()]);
+			String[] sourcePaths = this.sourcepathEntries.toArray(new String[this.sourcepathEntries.size()]);
+			String[] encodings = this.encodings.toArray(new String[this.encodings.size()]);
+			this.parser.setEnvironment(classPaths, sourcePaths, encodings, this.includeRunningVMBootclasspath);
 			char[] source_old = this.m_OutputContent.toCharArray();
 			this.parser.setSource(source_old);
+			
+			// generate an AST for this file
 			this.m_OutputAST = (CompilationUnit) this.parser.createAST(null);
 		
 	} catch (FileNotFoundException e) {
@@ -93,7 +113,7 @@ public class Preperator {
 }
 	
 	///////////////////////////////////////////////////////
-	///	Getter methods
+	///	Getter/Setter methods
 	///////////////////////////////////////////////////////
 	
 	public File getFile(){
@@ -106,6 +126,27 @@ public class Preperator {
 	
 	public CompilationUnit getAST(){
 		return this.m_OutputAST;
+	}
+
+	public boolean addClasspathEntry(String classPath) {
+		if(this.classpathEntries.contains(classPath)){
+			return false;
+		}
+		else {
+			this.classpathEntries.add(classPath);
+			return true;
+		}
+	}
+
+	public boolean addSourcepathEntry(String sourcePath, String encoding) {
+		if(this.sourcepathEntries.contains(sourcePath)){
+			return false;
+		}
+		else {
+			this.sourcepathEntries.add(sourcePath);
+			this.encodings.add(encoding);
+			return true;
+		}
 	}
 	
 }

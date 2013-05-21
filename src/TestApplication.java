@@ -34,6 +34,7 @@ public class TestApplication {
 //		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\28974")};
 		
 		JMutOps jmutops = new JMutOps();
+		jmutops.initProgram("iBugs");
 		
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		
