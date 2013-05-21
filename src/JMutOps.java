@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.Statement;
 
 import results.DatabaseResults;
 
-import utils.ASTExtractor;
 import utils.Preperator;
 
 import mutationoperators.MutationOperatorChecker;
@@ -36,6 +35,10 @@ public class JMutOps {
 
 	MutationOperatorChecker checker;
 	
+	// preperate the files
+	Preperator left_prep = new Preperator();
+	Preperator right_prep = new Preperator();
+	
 	public JMutOps() {
 		// init a new File distiller
 		this.distiller = ChangeDistiller.createFileDistiller(Language.JAVA);
@@ -55,9 +58,8 @@ public class JMutOps {
 			throw new IllegalArgumentException("Second argument must not be null.");
 		}
 		
-		// preperate the files
-		Preperator left_prep = new Preperator(prefixedFile);
-		Preperator right_prep = new Preperator(postfixedFile);
+		left_prep.prepare(prefixedFile);
+		right_prep.prepare(postfixedFile);
 		
 		// Get the changes between both files
 		try {

@@ -14,8 +14,6 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.Statement;
 
-
-import utils.ASTExtractor;
 import utils.Preperator;
 import utils.iBugsTools;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;

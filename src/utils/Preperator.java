@@ -19,6 +19,8 @@ public class Preperator {
 	///	Fields
 	///////////////////////////////////////////////////
 	
+	ASTParser parser;
+	
 	File m_SourceFile;
 	
 	File m_OutputFile;
@@ -31,52 +33,68 @@ public class Preperator {
 	///	Methods
 	///////////////////////////////////////////////////
 	
-	public Preperator(File inputFile) {
+	/**
+	 * Default constructor.
+	 * 
+	 * @param inputFile
+	 */
+	public Preperator() {
+		this.parser = ASTParser.newParser(AST.JLS4);
+		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		this.parser.setResolveBindings(true); // we need bindings later on
+	}
+	
+	public boolean prepare(File inputFile){
 		// store the inputFile
 		this.m_SourceFile = inputFile;
-	
+
 		try {
 			// generate a new File where we store the content
 			String tempFileName = "temp" + "_" + RandomStringUtils.random(16, "abcdefghijklmnopqrstuvwxyz".toCharArray());
 			this.m_OutputFile = File.createTempFile(tempFileName, ".java");
-			
+		
 			// extract the content of the first file
 			StringBuffer bufferFileContent = null;
 			BufferedReader inBuffer = new BufferedReader(new FileReader(this.m_SourceFile));
 			bufferFileContent = new StringBuffer();
 			String line = null;
 			while (null != (line = inBuffer.readLine())) {
-			     bufferFileContent.append(line).append("\n");
+				bufferFileContent.append(line).append("\n");
 			}
-			
+		
 			// write the extracted content into the temp file
 			BufferedWriter out = new BufferedWriter(new FileWriter(this.m_OutputFile));
 			String outText = bufferFileContent.toString();
 			out.write(outText);
 			out.close();
-			
+		
 			// store the content
 			this.m_OutputContent = bufferFileContent.toString();
-			
-			// generate an AST for this file
-			ASTParser parser_old = ASTParser.newParser(AST.JLS4);
-			char[] source_old = this.m_OutputContent.toCharArray();
-			parser_old.setSource(source_old);
-			parser_old.setKind(ASTParser.K_COMPILATION_UNIT);
-			parser_old.setResolveBindings(true); // we need bindings later on
-			this.m_OutputAST = (CompilationUnit) parser_old.createAST(null);
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
-		assert (this.m_SourceFile != null);
-		assert (this.m_OutputContent != null);
-		assert (this.m_OutputFile != null);
-		assert (this.m_OutputAST != null);
+			// generate an AST for this file
+			char[] source_old = this.m_OutputContent.toCharArray();
+			this.parser.setSource(source_old);
+			this.m_OutputAST = (CompilationUnit) this.parser.createAST(null);
+		
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
 	}
+	
+	
+	
+	assert (this.m_SourceFile != null);
+	assert (this.m_OutputContent != null);
+	assert (this.m_OutputFile != null);
+	assert (this.m_OutputAST != null);
+	
+	return true;
+}
+	
+	///////////////////////////////////////////////////////
+	///	Getter methods
+	///////////////////////////////////////////////////////
 	
 	public File getFile(){
 		return this.m_OutputFile;
