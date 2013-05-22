@@ -1,5 +1,6 @@
 package utils;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,8 +9,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -19,6 +24,11 @@ public class Preperator {
 	///////////////////////////////////////////////////
 	///	Fields
 	///////////////////////////////////////////////////
+	
+	/**
+	 * Logger.
+	 */
+	private static final Logger logger = Logger.getLogger(Preperator.class.getName());
 	
 	ASTParser parser;
 	
@@ -36,6 +46,8 @@ public class Preperator {
 	
 	ArrayList<String> encodings;
 	
+	Hashtable<String, String> options;
+	
 	boolean includeRunningVMBootclasspath;
 	
 	///////////////////////////////////////////////////
@@ -51,7 +63,9 @@ public class Preperator {
 		// initialize parser
 		this.parser = ASTParser.newParser(AST.JLS4);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		this.parser.setResolveBindings(true); // we need bindings later on
+		this.parser.setResolveBindings(true);
+		this.parser.setBindingsRecovery(true);
+		this.parser.setStatementsRecovery(true);
 		// initialize ArrayList
 		this.classpathEntries = new ArrayList<String>();
 		this.sourcepathEntries = new ArrayList<String>();
@@ -67,7 +81,9 @@ public class Preperator {
 			String tempFileName = "temp" + "_" + RandomStringUtils.random(16, "abcdefghijklmnopqrstuvwxyz".toCharArray());
 			this.m_OutputFile = File.createTempFile(tempFileName, ".java");
 		
-			// extract the content of the first file
+			// extract the content of the first file,
+			// write the extracted content into the temp file,
+			// store the content
 			StringBuffer bufferFileContent = null;
 			BufferedReader inBuffer = new BufferedReader(new FileReader(this.m_SourceFile));
 			bufferFileContent = new StringBuffer();
@@ -75,26 +91,32 @@ public class Preperator {
 			while (null != (line = inBuffer.readLine())) {
 				bufferFileContent.append(line).append("\n");
 			}
-		
-			// write the extracted content into the temp file
 			BufferedWriter out = new BufferedWriter(new FileWriter(this.m_OutputFile));
 			String outText = bufferFileContent.toString();
 			out.write(outText);
 			out.close();
-		
-			// store the content
 			this.m_OutputContent = bufferFileContent.toString();
 		
-			// add additional information
+			// add additional information to the parser
 			String[] classPaths = this.classpathEntries.toArray(new String[this.classpathEntries.size()]);
 			String[] sourcePaths = this.sourcepathEntries.toArray(new String[this.sourcepathEntries.size()]);
 			String[] encodings = this.encodings.toArray(new String[this.encodings.size()]);
-			this.parser.setEnvironment(classPaths, sourcePaths, encodings, this.includeRunningVMBootclasspath);
 			char[] source_old = this.m_OutputContent.toCharArray();
+			this.parser.setEnvironment(classPaths, sourcePaths, encodings, this.includeRunningVMBootclasspath);
+			this.parser.setCompilerOptions(this.options);
+			this.parser.setUnitName(inputFile.getName());
 			this.parser.setSource(source_old);
 			
 			// generate an AST for this file
 			this.m_OutputAST = (CompilationUnit) this.parser.createAST(null);
+			
+		    IProblem[] problems = this.m_OutputAST.getProblems();
+		    if (problems != null && problems.length > 0) {
+		        logger.warning("Got " + problems.length +" problems compiling the source file: ");
+		        for (IProblem problem : problems) {
+		            logger.warning(problem.getMessage());
+		        }
+		    }
 		
 	} catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -146,6 +168,21 @@ public class Preperator {
 			this.sourcepathEntries.add(sourcePath);
 			this.encodings.add(encoding);
 			return true;
+		}
+	}
+
+	public boolean setIncludeRunningVMBootclasspath(boolean newValue) {
+		this.includeRunningVMBootclasspath = newValue;
+		return true;
+	}
+
+	public boolean setOptions(Hashtable<String, String> options) {
+		try {
+			this.options = options;
+			return true;
+		} catch (Exception e) {
+			logger.warning(e.getMessage());
+			return false;
 		}
 	}
 	

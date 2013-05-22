@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -126,6 +127,30 @@ public class JMutOps {
 			throw new IllegalArgumentException("Argument version has to be a correct value");
 		}		
 	}
+	
+	/**
+	 * Set Variable to include bootclasspath of running VM.
+	 * 
+	 * @param newValue true if the bootclasspath of the running VM must be prepended to the given classpath and false if the bootclasspath of the running VM should be ignored.
+	 * @return True if it was possible to set the value, otherwise false.
+	 */
+	public boolean setIncludeRunningVMBootclasspath(boolean newValue){
+		boolean preFixedResult = this.prefixed_preperator.setIncludeRunningVMBootclasspath(newValue);
+		boolean postFixedResult = this.postfixed_preperator.setIncludeRunningVMBootclasspath(newValue);
+		return preFixedResult && postFixedResult;
+	}
+	
+	public boolean setOptions(Hashtable<String, String> options, TargetVersion version){
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.setOptions(options);
+		case POSTFIX:
+			return this.postfixed_preperator.setOptions(options);
+		default:
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}		
+	}
+	
 	
 	public void checkFiles(File prefixedFile, File postfixedFile){
 		// check for null argument

@@ -3,6 +3,7 @@ package mutationoperators.mnro;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
@@ -32,8 +33,7 @@ public class MNRO_Matcher extends BaseASTMatcher {
 				sameArgument = this.defaultMatcher.safeSubtreeListMatch(node.arguments(), node2.arguments());
 			}
 			// check that the return type is the samee
-			ITypeBinding node1_typeBinding = node.resolveTypeBinding();
-			ITypeBinding node2_typeBinding = node2.resolveTypeBinding();
+			ITypeBinding type = node.resolveTypeBinding();
 			boolean sameReturnType = true;
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){

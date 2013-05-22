@@ -1,30 +1,16 @@
 import java.io.File;
-import java.util.List;
+import java.util.Hashtable;
 import java.util.logging.Logger;
 
-import mutationoperators.MutationOperatorChecker;
-import mutationoperators.aor.AOR;
-import mutationoperators.jti.JTI;
-import mutationoperators.mnro.MNRO;
 
 import org.apache.commons.io.FilenameUtils;
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.ASTParser;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.Statement;
-
-import utils.Preperator;
-import utils.iBugsTools;
-import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
-import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
-import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
-import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
-import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
-import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
+import org.eclipse.jdt.core.JavaCore;
 
 public class TestApplication {
 
+	/**
+	 * @param args
+	 */
 	/**
 	 * @param args
 	 */
@@ -32,16 +18,22 @@ public class TestApplication {
 		
 		File[] folders_id = new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results").listFiles();
 //		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\28974")};
+//		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\Test\\12345")};
 		
 		JMutOps jmutops = new JMutOps();
 		jmutops.initProgram("iBugs");
+		jmutops.setIncludeRunningVMBootclasspath(true);
+	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
+	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
+		jmutops.setOptions(options, JMutOps.TargetVersion.PREFIX);
+		jmutops.setOptions(options, JMutOps.TargetVersion.POSTFIX);  
 		
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		
 		// for each iBugs id
 		for(File folder_id: folders_id){
 			
-			logger.fine("Starting to check iBugs ID " + folder_id.getName());
+			logger.info("Starting to check iBugs ID " + folder_id.getName());
 			
 			File[] prefixedFiles  = new File(folder_id.getAbsolutePath() + "\\pre-fix").listFiles();
 			
@@ -59,7 +51,6 @@ public class TestApplication {
 				jmutops.checkFiles(prefixedFile, postfixedFile);
 								
 				logger.fine("Ending to check iBugs ID " + folder_id.getName() + ", File " + prefixedFile.getName());
-		
 			}
 			
 			logger.info("Ending to check iBugs ID " + folder_id.getName() + "\n");
