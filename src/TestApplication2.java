@@ -7,33 +7,23 @@ import org.eclipse.jdt.core.JavaCore;
 
 
 public class TestApplication2 {
-
-	public static void visitFile(File file, JMutOps jmutops, JMutOps.TargetVersion version){
-		File[] subfiles = file.listFiles();
-		for(File subfile: subfiles){
-			if(subfile.isDirectory()){
-				visitFile(subfile, jmutops, version);
-			}
-			else if(subfile.isFile()){
-				// check both files to be .java
-				if((FilenameUtils.isExtension(subfile.getName(),"java"))){
-					jmutops.addSourcepathEntry(subfile.getAbsolutePath(), null, version);
-				}
-			}
-		}
-	}
 	
+	private static final String VERSION_ID 			= "86789";
+	private static final String PATH_TO_IBUGS 		= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\";
+	private static final String PATH_TO_DIFF_FILES 	= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\";
+	private static final String PATH_TO_PREFIX_JAR 	= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\prefix.jar";
+	private static final String PATH_TO_POSTFIX_JAR = "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\postfix.jar";
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-		File initialPath = new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789");
+		File initialPath = new File(PATH_TO_IBUGS + VERSION_ID);
 		File prefixedPath = new File(initialPath.getAbsolutePath() + "\\pre-fix");
 		File postfixedPath = new File(initialPath.getAbsolutePath() + "\\post-fix");
 		
 		
-		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\86789")};
+		File[] folders_id = new File[]{new File(PATH_TO_DIFF_FILES + VERSION_ID)};
 		
 		JMutOps jmutops = new JMutOps();
 		jmutops.initProgram("iBugs");
@@ -43,8 +33,8 @@ public class TestApplication2 {
 		jmutops.setOptions(options, JMutOps.TargetVersion.PREFIX);
 		jmutops.setOptions(options, JMutOps.TargetVersion.POSTFIX);  
 
-		jmutops.addSourcepathEntry("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\prefix.jar", null, JMutOps.TargetVersion.PREFIX);
-		jmutops.addSourcepathEntry("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\postfix.jar", null, JMutOps.TargetVersion.POSTFIX);
+		jmutops.addSourcepathEntry(PATH_TO_PREFIX_JAR, null, JMutOps.TargetVersion.PREFIX);
+		jmutops.addSourcepathEntry(PATH_TO_POSTFIX_JAR, null, JMutOps.TargetVersion.POSTFIX);
 		
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		

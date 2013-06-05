@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 
 import utils.Settings;
 
-import JMutOps;
 import mutationoperators.BaseASTMatcher;
 import mutationoperators.MutationOperator;
 
@@ -46,7 +45,6 @@ public class MNRO_Matcher extends BaseASTMatcher {
 			else{
 				sameReturnType = Settings.DEFAULT_BINDING_VALUE;
 			}
-			
 			
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){
