@@ -31,7 +31,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
  *
  */
 public class JMutOps {
-
+	
 	/**
 	 * Enumeration used in case of adding classpath / sourcepath to distinguish between prefixed and postfixed code. 
 	 * @author Lukas Subel

@@ -7,6 +7,9 @@ import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
+import utils.Settings;
+
+import JMutOps;
 import mutationoperators.BaseASTMatcher;
 import mutationoperators.MutationOperator;
 
@@ -32,9 +35,19 @@ public class MNRO_Matcher extends BaseASTMatcher {
 			if(sameArgumentLength){
 				sameArgument = this.defaultMatcher.safeSubtreeListMatch(node.arguments(), node2.arguments());
 			}
-			// check that the return type is the samee
-			ITypeBinding type = node.resolveTypeBinding();
-			boolean sameReturnType = true;
+			// check that the return type is the same;
+			// in case of unresolved bindings, use default value
+			boolean sameReturnType;
+			ITypeBinding prefixType 	= node.resolveTypeBinding();
+			ITypeBinding postfixType 	= node2.resolveTypeBinding();
+			if((prefixType != null) & (postfixType != null)){
+				sameReturnType = prefixType.isEqualTo(postfixType);
+			}
+			else{
+				sameReturnType = Settings.DEFAULT_BINDING_VALUE;
+			}
+			
+			
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){
 				this.mutop.found(node, node2);
