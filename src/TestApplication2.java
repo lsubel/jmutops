@@ -11,8 +11,8 @@ public class TestApplication2 {
 	private static final String VERSION_ID 			= "86789";
 	private static final String PATH_TO_IBUGS 		= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\";
 	private static final String PATH_TO_DIFF_FILES 	= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Repository\\iBugs changed files\\changedistiller-results\\";
-	private static final String PATH_TO_PREFIX_JAR 	= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\prefix.jar";
-	private static final String PATH_TO_POSTFIX_JAR = "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\postfix.jar";
+	private static final String PATH_TO_PREFIX_JAR 	= "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\pre-fix\\org.aspectj\\modules\\weaver\\src";
+	private static final String PATH_TO_POSTFIX_JAR = "C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\iBugs\\AspectJ\\ibugs_aspectj-1.3\\versions\\86789\\post-fix\\org.aspectj\\modules\\weaver\\src";
 	/**
 	 * @param args
 	 */
@@ -39,7 +39,7 @@ public class TestApplication2 {
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		
 		// for each iBugs id
-		for(File folder_id: folders_id){
+		for(File folder_id: folders_id){ 	
 			
 			logger.info("Starting to check iBugs ID " + folder_id.getName());
 			
