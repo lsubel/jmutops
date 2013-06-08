@@ -74,6 +74,10 @@ public class JMutOps {
 	 * Default constructor; adding all implemented MutationOperators to MutationOperatorChecker.
 	 */
 	public JMutOps() {
+		// initialize variables
+		this.prefixed_preperator = new Preperator();
+		this.postfixed_preperator = new Preperator();
+		// initialize all implemented MutationOperator
 		checker.addMutationOperator(new JTI(checker));
 		checker.addMutationOperator(new AOR(checker));
 		checker.addMutationOperator(new MNRO(checker));
@@ -87,8 +91,6 @@ public class JMutOps {
 	 */
 	public void initProgram(String programName){
 		this.programName = programName;
-		this.prefixed_preperator = new Preperator();
-		this.postfixed_preperator = new Preperator();
 	}
 	
 	/**
