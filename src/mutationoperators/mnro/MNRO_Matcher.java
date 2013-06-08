@@ -45,7 +45,6 @@ public class MNRO_Matcher extends BaseASTMatcher {
 			else{
 				sameReturnType = Settings.DEFAULT_BINDING_VALUE;
 			}
-			
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){
 				this.mutop.found(node, node2);
