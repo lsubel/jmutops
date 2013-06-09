@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
 
+import results.ApplicationCounter;
 import results.FileResults;
 
 import utils.Settings;
@@ -75,6 +76,8 @@ public class AlessandraVMApplication {
 		FileResults fr = new FileResults();
 		fr.setResultingFileName("results_" + iBugs_ID + ".txt");
 		jmutops.addResultClass(fr);
+		ApplicationCounter ac = new ApplicationCounter();
+		jmutops.addResultClass(ac);
 		
 		// look for source folders in pathToSources
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);

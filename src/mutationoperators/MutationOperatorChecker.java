@@ -39,13 +39,7 @@ public class MutationOperatorChecker {
 	 * Array containing all class level related mutation operators.
 	 */
 	private ArrayList<MutationOperator> classlevel_list;
-
-	/**
-	 * Counts the number of applications for all mutation operator in one
-	 * change.
-	 */
-	private int applicationCounter;
-
+	
 	/**
 	 * Array containing all classes which should be mentioned when there is
 	 * something to log
@@ -97,9 +91,7 @@ public class MutationOperatorChecker {
 		}
 	}
 
-	public int checkForMutationOperators(ASTNode node, SourceCodeChange change) {
-		// reset the counter
-		this.resetApplicationCount();
+	public void checkForMutationOperators(ASTNode node, SourceCodeChange change) {
 		//
 		if (change instanceof Insert) {
 			this.check(node, (Insert) change);
@@ -109,8 +101,6 @@ public class MutationOperatorChecker {
 			throw new IllegalStateException(
 					"Could not found correct subclass for change on a single version.");
 		}
-		// return the number of applications
-		return this.getApplicationCount();
 	}
 
 	/**
@@ -124,10 +114,8 @@ public class MutationOperatorChecker {
 	 *            ChangeDistiller object describing the change related betweeen
 	 *            both AST versions.
 	 */
-	public int checkForMutationOperators(ASTNode leftNode, ASTNode rightNode,
+	public void checkForMutationOperators(ASTNode leftNode, ASTNode rightNode,
 			SourceCodeChange change) {
-		// reset the counter
-		this.resetApplicationCount();
 		//
 		if (change instanceof Update) {
 			this.check(leftNode, rightNode, (Update) change);
@@ -137,8 +125,6 @@ public class MutationOperatorChecker {
 			throw new IllegalStateException(
 					"Could not found correct subclass for change on two versions.");
 		}
-		// return the number of applications
-		return this.getApplicationCount();
 	}
 
 	private void check(ASTNode node, Insert change) {
@@ -347,24 +333,7 @@ public class MutationOperatorChecker {
 			ASTNode leftNode, ASTNode rightNode) {
 		for (MutationOperator operator : operatorlist) {
 			operator.check(leftNode, rightNode);
-			this.incrementApplicationCountBy(operator.getApplicationCount());
 		}
-	}
-
-	// ////////////////////////////////////////////////////
-	// ApplicationCount
-	// ////////////////////////////////////////////////////
-
-	private int getApplicationCount() {
-		return this.applicationCounter;
-	}
-
-	private void resetApplicationCount() {
-		this.applicationCounter = 0;
-	}
-
-	private void incrementApplicationCountBy(int additionalNumbers) {
-		this.applicationCounter += 1;
 	}
 
 	// ////////////////////////////////////////////////////
