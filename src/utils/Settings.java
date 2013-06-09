@@ -15,9 +15,9 @@ public class Settings {
 	public static final Level loggerlevel = Level.INFO;
 	
 	/**
-	 * True if jMutOps should produce logging messages
+	 * True if jMutOps should write create a logfile
 	 */
-	public static final boolean isLogging = true;
+	public static final boolean isWritingLog = true;
 	
 	/**
 	 * True if jMutOps should write results in a DB.
