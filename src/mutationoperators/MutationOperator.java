@@ -44,12 +44,7 @@ public abstract class MutationOperator{
 	 * Reference to the ASTMatcher related to this Mutation Operator
 	 */
 	protected BaseASTMatcher matcher;
-	
-	/**
-	 * Counts the number of applications for one mutation operator in one change.
-	 */
-	protected int applicationsCounter;
-	
+		
 	/////////////////////////////////////////////////
 	///	Methods
 	/////////////////////////////////////////////////	
@@ -78,8 +73,6 @@ public abstract class MutationOperator{
 	 * @param rightNode The postfix code.
 	 */
 	public void check(ASTNode leftNode, ASTNode rightNode){
-		// reset the application counter
-		this.resetApplicationCount();
 		// start to visit the subAST
 		this.visitor.setSecondTree(rightNode);
 		leftNode.accept(visitor);
@@ -104,10 +97,6 @@ public abstract class MutationOperator{
 		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
 		// notify other ResultInterfaces
 		this.mutopscheck.foundMatching(this, leftNode, rightNode);
-		
-		// increment the application counter
-		this.incrementApplicationCount();
-		// TODO: add an operator specific entry in the DB
 	}
 	
 	
@@ -118,17 +107,5 @@ public abstract class MutationOperator{
 	 */
 	public MutationOperatorCategory getCategory(){
 		return this.category;
-	}
-	
-	public int getApplicationCount(){
-		return this.applicationsCounter;
-	}
-	
-	public void resetApplicationCount(){
-		this.applicationsCounter = 0;
-	}
-	
-	public void incrementApplicationCount(){
-		this.applicationsCounter += 1;
 	}
 }
