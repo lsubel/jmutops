@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.logging.Logger;
 
@@ -81,7 +80,7 @@ public class Preperator {
 			String tempFileName = "temp" + "_" + RandomStringUtils.random(16, "abcdefghijklmnopqrstuvwxyz".toCharArray());
 			this.m_OutputFile = File.createTempFile(tempFileName, ".java");
 		
-			// extract the content of the first file,
+			// extract the content of the file,
 			// write the extracted content into the temp file,
 			// store the content
 			StringBuffer bufferFileContent = null;
@@ -110,6 +109,7 @@ public class Preperator {
 			// generate an AST for this file
 			this.m_OutputAST = (CompilationUnit) this.parser.createAST(null);
 			
+			// write occuring problems into the logger
 		    IProblem[] problems = this.m_OutputAST.getProblems();
 		    if (problems != null && problems.length > 0) {
 		        logger.warning("Got " + problems.length +" problems compiling the source file: ");
@@ -123,8 +123,6 @@ public class Preperator {
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
-	
-	
 	
 	assert (this.m_SourceFile != null);
 	assert (this.m_OutputContent != null);
