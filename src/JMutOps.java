@@ -195,12 +195,12 @@ public class JMutOps {
 		}		
 	}
 	
-	public boolean addResultClass(ResultListener ri){
-		return this.checker.addResultClass(ri);
+	public void addResultClass(ResultListener ri){
+		this.checker.addResultListener(ri);
 	}
 	
-	public boolean createResults(){
-		return this.checker.createResults();
+	public void createResults(){
+		this.checker.processOnCreatingResult();
 	}
 	
 	/**

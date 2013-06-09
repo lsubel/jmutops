@@ -101,7 +101,7 @@ public abstract class MutationOperator{
 		"\t\t" + "Node type: " + rightNode.getClass().toString() + "\n" +
 		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
 		// notify other ResultInterfaces
-		this.mutopscheck.foundMatching(this, leftNode, rightNode);
+		this.mutopscheck.processOnMatchingFound(this, leftNode, rightNode);
 	}
 	
 	

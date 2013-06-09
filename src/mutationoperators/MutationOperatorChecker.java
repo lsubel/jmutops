@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 import results.ResultListener;
+import results.ResultListenerMulticaster;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
@@ -39,13 +40,12 @@ public class MutationOperatorChecker {
 	 * Array containing all class level related mutation operators.
 	 */
 	private ArrayList<MutationOperator> classlevel_list;
-	
-	/**
-	 * Array containing all classes which should be mentioned when there is
-	 * something to log
-	 */
-	private ArrayList<ResultListener> resultClasses = new ArrayList<ResultListener>();
 
+	/**
+	 * Multicaster which will talk to all ResultListeners which were added
+	 */
+	private ResultListenerMulticaster listener = new ResultListenerMulticaster();
+	
 	// ////////////////////////////////////////////////////
 	// / Methods
 	// ////////////////////////////////////////////////////
@@ -336,41 +336,32 @@ public class MutationOperatorChecker {
 		}
 	}
 
-	// ////////////////////////////////////////////////////
-	// Mentioning in case of a match
-	// ////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
+	//	ActionListener
+	//////////////////////////////////////////////////////
 
-	/**
-	 * Add another ResultInterface which should be mentioned.
-	 * <p>
-	 * 
-	 * @param resultclass
-	 * @return True if the ResultInterface was added, otherwise false.
-	 */
-	public boolean addResultClass(ResultListener resultclass) {
-		if (!this.resultClasses.contains(resultclass)) {
-			this.resultClasses.add(resultclass);
-			return true;
-		} else {
-			return false;
-		}
+	public void addResultListener(ResultListener rl) {
+		this.listener.add(rl);
 	}
 
-	public void foundMatching(MutationOperator mutationOperator,
+	public void processOnMatchingFound(MutationOperator mutationOperator,
 			ASTNode leftNode, ASTNode rightNode) {
-		for (ResultListener ri : this.resultClasses) {
-			ri.OnMatchingFound(mutationOperator, leftNode, rightNode);
-		}
+		this.listener.OnMatchingFound(mutationOperator, leftNode, rightNode);
 	}
 
-	public boolean createResults() {
-		try {
-			for (ResultListener ri : this.resultClasses) {
-				ri.createResults();
-			}
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+	public void processOnCreatingResult() {	
+		this.listener.OnCreatingResult();
+	}
+	
+	public void processOnProgramChanged(String newProgramName){
+		this.listener.OnProgramChanged(newProgramName);
+	}
+	
+	public void processOnBugChanged(){
+		this.listener.OnBugChanged();
+	}
+	
+	public void processOnNewFileStarted(){
+		this.listener.OnNewFileStarted();
 	}
 }

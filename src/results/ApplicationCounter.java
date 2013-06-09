@@ -27,7 +27,7 @@ public class ApplicationCounter extends ResultListener {
 	}
 
 	@Override
-	public void createResults() {
+	public void OnCreatingResult() {
 		System.out.println("Applications found:" + "\n");
 		for(String operatorName: this.counter.keySet()){
 			int value = this.counter.get(operatorName);

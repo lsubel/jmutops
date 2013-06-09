@@ -50,7 +50,7 @@ public class ResultsFileWriter extends ResultListener{
 	}
 
 	@Override
-	public void createResults() {
+	public void OnCreatingResult() {
 		// initialize variables
 		FileWriter fw = null;
 		File resultingFile = null;

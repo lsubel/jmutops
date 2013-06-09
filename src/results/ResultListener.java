@@ -13,5 +13,5 @@ public abstract class ResultListener{
 	
 	public void OnNewFileStarted(){}
 	
-	public void createResults(){}
+	public void OnCreatingResult(){}
 }
