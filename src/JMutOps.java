@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.Statement;
 
 import results.DatabaseResults;
 import results.ResultListener;
+import results.ResultListenerMulticaster;
 
 import utils.Preperator;
 
@@ -67,6 +68,11 @@ public class JMutOps {
 	 */
 	private String programName;
 
+	/**
+	 * Multicaster which will talk to all ResultListeners which were added
+	 */
+	private ResultListenerMulticaster listener = new ResultListenerMulticaster();
+	
 	/////////////////////////////////////////
 	//	Constructors
 	/////////////////////////////////////////	
@@ -78,6 +84,7 @@ public class JMutOps {
 		// initialize variables
 		this.prefixed_preperator = new Preperator();
 		this.postfixed_preperator = new Preperator();
+		addImplementedMutationOperators();
 	}
 	
 	/////////////////////////////////////////
@@ -191,13 +198,7 @@ public class JMutOps {
 		}		
 	}
 	
-	public void addResultListener(ResultListener ri){
-		this.checker.addResultListener(ri);
-	}
-	
-	public void createResults(){
-		this.checker.processOnCreatingResult();
-	}
+
 	
 	/**
 	 * Set Variable to include bootclasspath of running VM.
@@ -223,6 +224,29 @@ public class JMutOps {
 		}		
 	}
 	
+	/**
+	 * 
+	 */
+	private void addImplementedMutationOperators() {
+		// TODO: add new mutation operators here
+		this.checker.addMutationOperator(new JTI(this.listener));
+		this.checker.addMutationOperator(new AOR(this.listener));
+		this.checker.addMutationOperator(new MNRO(this.listener));
+	}
 	
+	//////////////////////////////////////////////////////
+	//	ActionListener
+	//////////////////////////////////////////////////////
+
+	public void addResultListener(ResultListener rl) {
+		this.listener.add(rl);
+	}
+
+	public void removeResultListener(ResultListener rl){
+		this.listener.remove(rl);
+	}
 	
+	public void createResults(){
+		this.listener.OnCreatingResult();
+	}
 }

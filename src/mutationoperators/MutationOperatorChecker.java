@@ -44,11 +44,6 @@ public class MutationOperatorChecker {
 	 * Array containing all class level related mutation operators.
 	 */
 	private ArrayList<MutationOperator> classlevel_list;
-
-	/**
-	 * Multicaster which will talk to all ResultListeners which were added
-	 */
-	private ResultListenerMulticaster listener = new ResultListenerMulticaster();
 	
 	// ////////////////////////////////////////////////////
 	// / Methods
@@ -60,7 +55,6 @@ public class MutationOperatorChecker {
 	public MutationOperatorChecker() {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
 		this.classlevel_list = new ArrayList<MutationOperator>();
-		this.addImplementedMutationOperators();
 	}
 
 	/**
@@ -71,7 +65,7 @@ public class MutationOperatorChecker {
 	 *            MutationOperator which should be used on checked ASTs.
 	 * @return True if the MutationOperator was added, otherwise false.
 	 */
-	private boolean addMutationOperator(MutationOperator mutop) {
+	public boolean addMutationOperator(MutationOperator mutop) {
 		switch (mutop.getCategory()) {
 		case CLASS_LEVEL:
 			// check if this operator was added before
@@ -339,33 +333,5 @@ public class MutationOperatorChecker {
 		for (MutationOperator operator : operatorlist) {
 			operator.check(leftNode, rightNode);
 		}
-	}
-
-	
-	/**
-	 * 
-	 */
-	private void addImplementedMutationOperators() {
-		// TODO: add new mutation operators here
-		this.addMutationOperator(new JTI(this.listener));
-		this.addMutationOperator(new AOR(this.listener));
-		this.addMutationOperator(new MNRO(this.listener));
-	}
-	
-	//////////////////////////////////////////////////////
-	//	ActionListener
-	//////////////////////////////////////////////////////
-
-	public void addResultListener(ResultListener rl) {
-		this.listener.add(rl);
-	}
-
-	public void removeResultListener(ResultListener rl){
-		this.listener.remove(rl);
-	}
-
-	public void processOnCreatingResult(){
-		this.listener.OnCreatingResult();
-	}
-	
+	}	
 }
