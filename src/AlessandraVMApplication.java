@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.JavaCore;
 import enums.OptionsVersion;
 
 import results.ApplicationCounter;
-import results.FileResults;
+import results.ResultsFileWriter;
 
 import utils.Settings;
 
@@ -75,7 +75,7 @@ public class AlessandraVMApplication {
 		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
 		
 		// 
-		FileResults fr = new FileResults();
+		ResultsFileWriter fr = new ResultsFileWriter();
 		fr.setResultingFileName("results_" + iBugs_ID + ".txt");
 		jmutops.addResultClass(fr);
 		ApplicationCounter ac = new ApplicationCounter();

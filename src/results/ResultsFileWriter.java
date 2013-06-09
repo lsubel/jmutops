@@ -13,18 +13,18 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-public class FileResults extends ResultListener{
+public class ResultsFileWriter extends ResultListener{
 
 	/**
 	 * Logger.
 	 */
-	private static final Logger logger = Logger.getLogger(FileResults.class.getName());
+	private static final Logger logger = Logger.getLogger(ResultsFileWriter.class.getName());
 	
 	ArrayList<Dictionary<String, String>> results; 
 	
 	String filename;
 	
-	public FileResults() {
+	public ResultsFileWriter() {
 		this.results = new ArrayList<Dictionary<String, String>>();
 	}
 	
