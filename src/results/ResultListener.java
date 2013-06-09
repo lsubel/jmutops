@@ -14,4 +14,6 @@ public abstract class ResultListener{
 	public void OnNewFileStarted(){}
 	
 	public void OnCreatingResult(){}
+	
+	public void OnErrorDetected(){}
 }

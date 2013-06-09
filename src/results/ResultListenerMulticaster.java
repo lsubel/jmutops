@@ -55,6 +55,13 @@ public class ResultListenerMulticaster extends ResultListener {
 			rl.OnCreatingResult();
 		}
 	}
+	
+	@Override
+	public void OnErrorDetected() {
+		for(ResultListener rl: this.listener){
+			rl.OnCreatingResult();
+		}
+	}
 
 	
 }
