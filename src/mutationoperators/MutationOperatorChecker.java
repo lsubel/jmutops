@@ -3,6 +3,10 @@ package mutationoperators;
 import java.util.ArrayList;
 import java.util.List;
 
+import mutationoperators.aor.AOR;
+import mutationoperators.jti.JTI;
+import mutationoperators.mnro.MNRO;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
@@ -56,6 +60,7 @@ public class MutationOperatorChecker {
 	public MutationOperatorChecker() {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
 		this.classlevel_list = new ArrayList<MutationOperator>();
+		this.addImplementedMutationOperators();
 	}
 
 	/**
@@ -66,7 +71,7 @@ public class MutationOperatorChecker {
 	 *            MutationOperator which should be used on checked ASTs.
 	 * @return True if the MutationOperator was added, otherwise false.
 	 */
-	public boolean addMutationOperator(MutationOperator mutop) {
+	private boolean addMutationOperator(MutationOperator mutop) {
 		switch (mutop.getCategory()) {
 		case CLASS_LEVEL:
 			// check if this operator was added before
@@ -336,6 +341,17 @@ public class MutationOperatorChecker {
 		}
 	}
 
+	
+	/**
+	 * 
+	 */
+	private void addImplementedMutationOperators() {
+		// TODO: add new mutation operators here
+		this.addMutationOperator(new JTI(this.listener));
+		this.addMutationOperator(new AOR(this.listener));
+		this.addMutationOperator(new MNRO(this.listener));
+	}
+	
 	//////////////////////////////////////////////////////
 	//	ActionListener
 	//////////////////////////////////////////////////////
@@ -344,24 +360,12 @@ public class MutationOperatorChecker {
 		this.listener.add(rl);
 	}
 
-	public void processOnMatchingFound(MutationOperator mutationOperator,
-			ASTNode leftNode, ASTNode rightNode) {
-		this.listener.OnMatchingFound(mutationOperator, leftNode, rightNode);
+	public void removeResultListener(ResultListener rl){
+		this.listener.remove(rl);
 	}
 
-	public void processOnCreatingResult() {	
+	public void processOnCreatingResult(){
 		this.listener.OnCreatingResult();
 	}
 	
-	public void processOnProgramChanged(String newProgramName){
-		this.listener.OnProgramChanged(newProgramName);
-	}
-	
-	public void processOnBugChanged(){
-		this.listener.OnBugChanged();
-	}
-	
-	public void processOnNewFileStarted(){
-		this.listener.OnNewFileStarted();
-	}
 }

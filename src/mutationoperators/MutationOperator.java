@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import enums.MutationOperatorCategory;
 
 import results.DatabaseResults;
+import results.ResultListenerMulticaster;
 
 public abstract class MutationOperator{
 
@@ -26,9 +27,9 @@ public abstract class MutationOperator{
 	protected final MutationOperatorCategory category;
 	
 	/**
-	 * Reference to the owner to get run specific information, f.e. the tested file.
+	 * TODO: add javadoc
 	 */
-	protected final MutationOperatorChecker mutopscheck;
+	protected final ResultListenerMulticaster eventListener;
 	
 	/**
 	 * Logger
@@ -57,18 +58,18 @@ public abstract class MutationOperator{
 	/**
 	 * Default constructor, initializing the logger.
 	 */
-	public MutationOperator(MutationOperatorChecker checker, MutationOperatorCategory category, String fullname) {
+	public MutationOperator(ResultListenerMulticaster eventListener, MutationOperatorCategory category, String fullname) {
 		// check null argument
-		if(checker == null){
-			throw new IllegalArgumentException("MutationOperatorChecker checker cannot be null.");
+		if(eventListener == null){
+			throw new IllegalArgumentException("ResultListenerMulticaster eventListener cannot be null.");
 		}
 		if(category == null){
 			throw new IllegalArgumentException("MutationOperatorCategory category cannot be null.");
 		}
 		// assign fields
-		this.mutopscheck = checker;
-		this.category = category;
-		this.fullname = fullname;
+		this.eventListener	= eventListener;
+		this.category 		= category;
+		this.fullname 		= fullname;
 	}
 		
 	/**
@@ -101,7 +102,7 @@ public abstract class MutationOperator{
 		"\t\t" + "Node type: " + rightNode.getClass().toString() + "\n" +
 		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
 		// notify other ResultInterfaces
-		this.mutopscheck.processOnMatchingFound(this, leftNode, rightNode);
+		this.eventListener.OnMatchingFound(this, leftNode, rightNode);
 	}
 	
 	

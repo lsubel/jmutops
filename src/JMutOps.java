@@ -78,10 +78,6 @@ public class JMutOps {
 		// initialize variables
 		this.prefixed_preperator = new Preperator();
 		this.postfixed_preperator = new Preperator();
-		// initialize all implemented MutationOperator
-		checker.addMutationOperator(new JTI(checker));
-		checker.addMutationOperator(new AOR(checker));
-		checker.addMutationOperator(new MNRO(checker));
 	}
 	
 	/////////////////////////////////////////
@@ -195,7 +191,7 @@ public class JMutOps {
 		}		
 	}
 	
-	public void addResultClass(ResultListener ri){
+	public void addResultListener(ResultListener ri){
 		this.checker.addResultListener(ri);
 	}
 	
