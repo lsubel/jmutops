@@ -11,7 +11,7 @@ public abstract class ResultListener{
 	
 	public void OnBugChanged(){}
 	
-	public void OnFileChanged(){}
+	public void OnNewFileStarted(){}
 	
 	public void createResults(){}
 }
