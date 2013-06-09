@@ -22,5 +22,5 @@ public class Settings {
 	/**
 	 * True if jMutOps should write results in a DB.
 	 */
-	public static final boolean writeInDB = true;
+	public static final boolean writeInDB = false;
 }
