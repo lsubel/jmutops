@@ -15,5 +15,5 @@ public abstract class ResultListener{
 	
 	public void OnCreatingResult(){}
 	
-	public void OnErrorDetected(){}
+	public void OnErrorDetected(String location, String errorMessage){}
 }

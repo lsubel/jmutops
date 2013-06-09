@@ -57,9 +57,9 @@ public class ResultListenerMulticaster extends ResultListener {
 	}
 	
 	@Override
-	public void OnErrorDetected() {
+	public void OnErrorDetected(String location, String errorMessage) {
 		for(ResultListener rl: this.listener){
-			rl.OnCreatingResult();
+			rl.OnErrorDetected(location, errorMessage);
 		}
 	}
 
