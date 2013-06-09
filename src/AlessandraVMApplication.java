@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -7,6 +8,8 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
+
+import results.FileResults;
 
 import utils.Settings;
 
@@ -65,26 +68,33 @@ public class AlessandraVMApplication {
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
-		jmutops.setOptions(options, JMutOps.TargetVersion.PREFIX);
-		jmutops.setOptions(options, JMutOps.TargetVersion.POSTFIX);  
+		jmutops.setOptions(options, OptionsVersion.PREFIX);
+		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
+		
+		// 
+		FileResults fr = new FileResults();
+		fr.setResultingFileName("results_" + iBugs_ID + ".txt");
+		jmutops.addResultClass(fr);
 		
 		// look for source folders in pathToSources
-		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, JMutOps.TargetVersion.PREFIX);
-		checkForSrc(jmutops, new File[]{new File(postfixSourceFolder)}, JMutOps.TargetVersion.POSTFIX);
+		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
+		checkForSrc(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
 		
 		// initialize the logger
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		// set the handler for the root logger
-		try {
-			Logger tempAnonymousLogger = Logger.getAnonymousLogger();
-			Handler handler = new FileHandler("log_" + iBugs_ID + ".txt");
-			tempAnonymousLogger.getParent().addHandler(handler);
-			tempAnonymousLogger.getParent().setLevel(Settings.loggerlevel);
-			logger.info("Set FileHandler for logger.");
-		} catch (SecurityException e) {
-			logger.info("Could not set FileHandler for logger.");
-		} catch (IOException e) {
-			logger.info("Could not set FileHandler for logger.");
+		if(Settings.isWritingLog){
+			try {
+				Logger tempAnonymousLogger = Logger.getAnonymousLogger();
+				Handler handler = new FileHandler("log_" + iBugs_ID + ".txt");
+				tempAnonymousLogger.getParent().addHandler(handler);
+				tempAnonymousLogger.getParent().setLevel(Settings.loggerlevel);
+				logger.info("Set FileHandler for logger.");
+			} catch (SecurityException e) {
+				logger.info("Could not set FileHandler for logger.");
+			} catch (IOException e) {
+				logger.info("Could not set FileHandler for logger.");
+			}
 		}
 		
 		logger.info("Starting to check iBugs ID " + iBugs_ID + "\n");
@@ -112,9 +122,10 @@ public class AlessandraVMApplication {
 		
 		logger.info("Ending to check iBugs ID " + iBugs_ID + "\n");
 		
+		jmutops.createResults();
 	}
 	
-	public static void checkForSrc(JMutOps jmutops, File[] folderContent, JMutOps.TargetVersion version){
+	public static void checkForSrc(JMutOps jmutops, File[] folderContent, OptionsVersion version){
 		for(File file: folderContent){
 			if(file.isDirectory()){
 				if(file.getName().equals("src")){

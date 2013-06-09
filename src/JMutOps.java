@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.NodeFinder;
 import org.eclipse.jdt.core.dom.Statement;
 
 import results.DatabaseResults;
+import results.ResultInterface;
 
 import utils.Preperator;
 
@@ -31,16 +32,11 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
  *
  */
 public class JMutOps {
-	
-	/**
-	 * Enumeration used in case of adding classpath / sourcepath to distinguish between prefixed and postfixed code. 
-	 * @author Lukas Subel
-	 *
-	 */
-	public enum TargetVersion {
-		PREFIX, POSTFIX;
-	}
 
+	/////////////////////////////////////////
+	//	Fields
+	/////////////////////////////////////////
+	
 	/**
 	 * Logger.
 	 */
@@ -69,6 +65,10 @@ public class JMutOps {
 	 * Stores the name of the program related to this changes.
 	 */
 	private String programName;
+
+	/////////////////////////////////////////
+	//	Constructors
+	/////////////////////////////////////////	
 	
 	/**
 	 * Default constructor; adding all implemented MutationOperators to MutationOperatorChecker.
@@ -83,76 +83,9 @@ public class JMutOps {
 		checker.addMutationOperator(new MNRO(checker));
 	}
 	
-	/**
-	 * Initial a new program to check.
-	 * <p>
-	 * TODO: Add initialization in case of existing program in DB
-	 * @param programName
-	 */
-	public void initProgram(String programName){
-		this.programName = programName;
-	}
-	
-	/**
-	 * Add path to required binary type.
-	 * 
-	 * @param classPath Absolute path to a binary type.
-	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
-	 * @return True if it was able to add the classpath, otherwise false.
-	 */
-	public boolean addClasspathEntry(String classPath, TargetVersion version){
-		switch(version){
-		case PREFIX:
-			return this.prefixed_preperator.addClasspathEntry(classPath);
-		case POSTFIX:
-			return this.postfixed_preperator.addClasspathEntry(classPath);
-		default:
-			throw new IllegalArgumentException("Argument version has to be a correct value");
-		}
-	}
-	
-	/**
-	 * Add path to required source type.
-	 * 
-	 * @param sourcePath Absolute path to a source type.
-	 * @param encoding If source type need a specific encoding, this argument must contain this encoding. Otherwise it has to be null
-	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
-	 * @return
-	 */
-	public boolean addSourcepathEntry(String sourcePath, String encoding, TargetVersion version){
-		switch(version){
-		case PREFIX:
-			return this.prefixed_preperator.addSourcepathEntry(sourcePath, encoding);
-		case POSTFIX:
-			return this.postfixed_preperator.addSourcepathEntry(sourcePath, encoding);
-		default:
-			throw new IllegalArgumentException("Argument version has to be a correct value");
-		}		
-	}
-	
-	/**
-	 * Set Variable to include bootclasspath of running VM.
-	 * 
-	 * @param newValue true if the bootclasspath of the running VM must be prepended to the given classpath and false if the bootclasspath of the running VM should be ignored.
-	 * @return True if it was possible to set the value, otherwise false.
-	 */
-	public boolean setIncludeRunningVMBootclasspath(boolean newValue){
-		boolean preFixedResult = this.prefixed_preperator.setIncludeRunningVMBootclasspath(newValue);
-		boolean postFixedResult = this.postfixed_preperator.setIncludeRunningVMBootclasspath(newValue);
-		return preFixedResult && postFixedResult;
-	}
-	
-	public boolean setOptions(Hashtable<String, String> options, TargetVersion version){
-		switch(version){
-		case PREFIX:
-			return this.prefixed_preperator.setOptions(options);
-		case POSTFIX:
-			return this.postfixed_preperator.setOptions(options);
-		default:
-			throw new IllegalArgumentException("Argument version has to be a correct value");
-		}		
-	}
-	
+	/////////////////////////////////////////
+	//	Methods
+	/////////////////////////////////////////
 	
 	public void checkFiles(File prefixedFile, File postfixedFile){
 		// check for null argument
@@ -209,10 +142,88 @@ public class JMutOps {
 				if((expr_left instanceof Statement) && (expr_right instanceof Statement)){
 					this.checker.checkForMutationOperators(expr_left, expr_right, change);
 				}
-				
-				
 			}	
 		}
-
 	}
+	
+	/**
+	 * Initial a new program to check.
+	 * @param programName
+	 */
+	public void initProgram(String programName){
+		this.programName = programName;
+		// TODO: call OnCreateProgram event
+	}
+	
+	/**
+	 * Add path to required binary type.
+	 * 
+	 * @param classPath Absolute path to a binary type.
+	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
+	 * @return True if it was able to add the classpath, otherwise false.
+	 */
+	public boolean addClasspathEntry(String classPath, OptionsVersion version){
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.addClasspathEntry(classPath);
+		case POSTFIX:
+			return this.postfixed_preperator.addClasspathEntry(classPath);
+		default:
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}
+	}
+	
+	/**
+	 * Add path to required source type.
+	 * 
+	 * @param sourcePath Absolute path to a source type.
+	 * @param encoding If source type need a specific encoding, this argument must contain this encoding. Otherwise it has to be null
+	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
+	 * @return
+	 */
+	public boolean addSourcepathEntry(String sourcePath, String encoding, OptionsVersion version){
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.addSourcepathEntry(sourcePath, encoding);
+		case POSTFIX:
+			return this.postfixed_preperator.addSourcepathEntry(sourcePath, encoding);
+		default:
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}		
+	}
+	
+	public boolean addResultClass(ResultInterface ri){
+		return this.checker.addResultClass(ri);
+	}
+	
+	public boolean createResults(){
+		return this.checker.createResults();
+	}
+	
+	/**
+	 * Set Variable to include bootclasspath of running VM.
+	 * 
+	 * @param newValue true if the bootclasspath of the running VM must be prepended to the given classpath <p>
+	 *	and false if the bootclasspath of the running VM should be ignored.
+	 * @return True if it was possible to set the value, otherwise false.
+	 */
+	public boolean setIncludeRunningVMBootclasspath(boolean newValue){
+		boolean preFixedResult = this.prefixed_preperator.setIncludeRunningVMBootclasspath(newValue);
+		boolean postFixedResult = this.postfixed_preperator.setIncludeRunningVMBootclasspath(newValue);
+		return preFixedResult && postFixedResult;
+	}
+	
+	public boolean setOptions(Hashtable<String, String> options, OptionsVersion version){
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.setOptions(options);
+		case POSTFIX:
+			return this.postfixed_preperator.setOptions(options);
+		default:
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}		
+	}
+	
+	
+	
 }

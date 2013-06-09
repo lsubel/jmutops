@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.Hashtable;
 import java.util.logging.Logger;
@@ -25,8 +26,8 @@ public class TestApplication {
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
-		jmutops.setOptions(options, JMutOps.TargetVersion.PREFIX);
-		jmutops.setOptions(options, JMutOps.TargetVersion.POSTFIX);  
+		jmutops.setOptions(options, OptionsVersion.PREFIX);
+		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
 		
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		

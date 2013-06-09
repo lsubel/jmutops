@@ -1,4 +1,6 @@
 package mutationoperators;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Logger;
 
 import mutationoperators.jti.JTI;
@@ -8,7 +10,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 import results.DatabaseResults;
 
-public abstract class MutationOperator {
+public abstract class MutationOperator{
 
 	public enum MutationOperatorCategory {
 		METHOD_LEVEL("Method-level operator"), 
@@ -102,7 +104,7 @@ public abstract class MutationOperator {
 	 */
 	public void found(ASTNode leftNode, ASTNode rightNode){
 		// generate log message 
-		logger.info("Found application of " + this.getClass().getSimpleName() + " operator:" + "\n" +
+		logger.fine("Found application of " + this.getClass().getSimpleName() + " operator:" + "\n" +
 		"\t" + "Prefix version: " + "\n" +
 		"\t\t" + "Content: " + leftNode.toString()  + "\n" +
 		"\t\t" + "Node type: " + leftNode.getClass().toString() + "\n" +
@@ -111,6 +113,9 @@ public abstract class MutationOperator {
 		"\t\t" + "Content: " + rightNode.toString() + "\n" +
 		"\t\t" + "Node type: " + rightNode.getClass().toString() + "\n" +
 		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
+		// notify other ResultInterfaces
+		this.mutopscheck.foundMatching(this, leftNode, rightNode);
+		
 		// increment the application counter
 		this.incrementApplicationCount();
 		// TODO: add an operator specific entry in the DB

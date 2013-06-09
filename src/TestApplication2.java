@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.util.Hashtable;
 import java.util.logging.Logger;
@@ -30,11 +31,11 @@ public class TestApplication2 {
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
-		jmutops.setOptions(options, JMutOps.TargetVersion.PREFIX);
-		jmutops.setOptions(options, JMutOps.TargetVersion.POSTFIX);  
+		jmutops.setOptions(options, OptionsVersion.PREFIX);
+		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
 
-		jmutops.addSourcepathEntry(PATH_TO_PREFIX_JAR, null, JMutOps.TargetVersion.PREFIX);
-		jmutops.addSourcepathEntry(PATH_TO_POSTFIX_JAR, null, JMutOps.TargetVersion.POSTFIX);
+		jmutops.addSourcepathEntry(PATH_TO_PREFIX_JAR, null, OptionsVersion.PREFIX);
+		jmutops.addSourcepathEntry(PATH_TO_POSTFIX_JAR, null, OptionsVersion.POSTFIX);
 		
 		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		
