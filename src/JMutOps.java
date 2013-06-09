@@ -97,10 +97,13 @@ public class JMutOps {
 			throw new IllegalArgumentException("Second argument must not be null.");
 		}
 		
+		// TODO: fire OnNewFileStarted here
+		
+		// prepare both files
 		prefixed_preperator.prepare(prefixedFile);
 		postfixed_preperator.prepare(postfixedFile);
 		
-		// Get the changes between both files
+		// get the changes between both files
 		try {
 		    distiller.extractClassifiedSourceCodeChanges(prefixed_preperator.getFile(), postfixed_preperator.getFile());
 		} catch(Exception e) {
@@ -140,9 +143,8 @@ public class JMutOps {
 				NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
 				ASTNode expr_right = nodeFinder_new.getCoveredNode();
 
-				if((expr_left instanceof Statement) && (expr_right instanceof Statement)){
-					this.checker.checkForMutationOperators(expr_left, expr_right, change);
-				}
+				// run the mutation operator check
+				this.checker.checkForMutationOperators(expr_left, expr_right, change);
 			}	
 		}
 	}

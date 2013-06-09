@@ -274,7 +274,7 @@ public class MutationOperatorChecker {
 
 			case STATEMENT_UPDATE:
 			case UNCLASSIFIED_CHANGE:
-				// in this case, we cannot specify the searchable area
+				// in this case, we cannot specify the area to search
 				runMutationOperators(this.methodlevel_list, leftNode, rightNode);
 				break;
 

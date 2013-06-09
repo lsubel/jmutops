@@ -120,7 +120,11 @@ public class AlessandraVMApplication {
 			
 			logger.fine("Starting to check file " + prefixFile.getName() + ".");
 			
-			jmutops.checkFiles(prefixFile, postfixFile);
+			try {
+				jmutops.checkFiles(prefixFile, postfixFile);
+			} catch (Exception e) {
+				System.out.println("Exception found: " + e.getMessage());
+			}
 							
 			logger.fine("Ending to check file " + postfixFile.getName() + ".");
 		}
