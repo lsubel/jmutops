@@ -17,7 +17,7 @@ public class Settings {
 	/**
 	 * True if jMutOps should write create a logfile
 	 */
-	public static final boolean isWritingLog = true;
+	public static final boolean isWritingLog = false;
 	
 	/**
 	 * True if jMutOps should write results in a DB.

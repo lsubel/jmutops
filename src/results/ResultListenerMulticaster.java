@@ -1,23 +1,40 @@
 package results;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+/**
+ * Casts method calls to all registered {@link ResultListener}.
+ * 
+ * @author Lukas Subel
+ *
+ */
 public class ResultListenerMulticaster extends ResultListener {
 
-	protected ArrayList<ResultListener> listener = new ArrayList<ResultListener>();
+	/**
+	 * Logger.
+	 */
+	private static final Logger logger = Logger.getLogger(ResultListenerMulticaster.class.getName());
+	
+	/**
+	 * ArrayList containing all registered {@link ResultListener}.
+	 */
+	private ArrayList<ResultListener> listener = new ArrayList<ResultListener>();
 	
 	public void add(ResultListener rl){
 		if(!(listener.contains(rl))){
 			listener.add(rl);
+			ResultListenerMulticaster.logger.fine("ResultListener " + rl.getClass().getSimpleName() + " was added.");
 		}
 	}
 	
 	public void remove(ResultListener rl){
 		listener.remove(rl);
+		ResultListenerMulticaster.logger.fine("ResultListener " + rl.getClass().getSimpleName() + " was removed.");
 	}
 	
 	@Override
