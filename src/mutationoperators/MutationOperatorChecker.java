@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import results.ResultInterface;
+import results.ResultListener;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
@@ -44,7 +44,7 @@ public class MutationOperatorChecker {
 	 * Array containing all classes which should be mentioned when there is
 	 * something to log
 	 */
-	private ArrayList<ResultInterface> resultClasses = new ArrayList<ResultInterface>();
+	private ArrayList<ResultListener> resultClasses = new ArrayList<ResultListener>();
 
 	// ////////////////////////////////////////////////////
 	// / Methods
@@ -347,7 +347,7 @@ public class MutationOperatorChecker {
 	 * @param resultclass
 	 * @return True if the ResultInterface was added, otherwise false.
 	 */
-	public boolean addResultClass(ResultInterface resultclass) {
+	public boolean addResultClass(ResultListener resultclass) {
 		if (!this.resultClasses.contains(resultclass)) {
 			this.resultClasses.add(resultclass);
 			return true;
@@ -358,14 +358,14 @@ public class MutationOperatorChecker {
 
 	public void foundMatching(MutationOperator mutationOperator,
 			ASTNode leftNode, ASTNode rightNode) {
-		for (ResultInterface ri : this.resultClasses) {
+		for (ResultListener ri : this.resultClasses) {
 			ri.OnMatchingFound(mutationOperator, leftNode, rightNode);
 		}
 	}
 
 	public boolean createResults() {
 		try {
-			for (ResultInterface ri : this.resultClasses) {
+			for (ResultListener ri : this.resultClasses) {
 				ri.createResults();
 			}
 			return true;

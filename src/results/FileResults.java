@@ -13,7 +13,7 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-public class FileResults implements ResultInterface{
+public class FileResults extends ResultListener{
 
 	/**
 	 * Logger.

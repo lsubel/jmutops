@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.NodeFinder;
 import org.eclipse.jdt.core.dom.Statement;
 
 import results.DatabaseResults;
-import results.ResultInterface;
+import results.ResultListener;
 
 import utils.Preperator;
 
@@ -193,7 +193,7 @@ public class JMutOps {
 		}		
 	}
 	
-	public boolean addResultClass(ResultInterface ri){
+	public boolean addResultClass(ResultListener ri){
 		return this.checker.addResultClass(ri);
 	}
 	

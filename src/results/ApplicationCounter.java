@@ -5,7 +5,7 @@ import java.util.HashMap;
 import mutationoperators.MutationOperator;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-public class ApplicationCounter implements ResultInterface {
+public class ApplicationCounter extends ResultListener {
 
 	HashMap<String, Integer> counter;
 	
