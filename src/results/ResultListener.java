@@ -5,9 +5,13 @@ import mutationoperators.MutationOperator;
 
 public abstract class ResultListener{
 	
-	public void OnMatchingFound(MutationOperator operator, ASTNode prefix, ASTNode postfix){	
-	}
+	public void OnMatchingFound(MutationOperator operator, ASTNode prefix, ASTNode postfix){}
 	
-	public void createResults(){
-	}
+	public void OnProgramChanged(String newProgramName){}
+	
+	public void OnBugChanged(){}
+	
+	public void OnFileChanged(){}
+	
+	public void createResults(){}
 }
