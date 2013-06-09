@@ -45,15 +45,19 @@ public abstract class MutationOperator{
 	 */
 	protected BaseASTMatcher matcher;
 		
+	/**
+	 * Full name of this mutation operator
+	 */
+	protected final String fullname;
+	
 	/////////////////////////////////////////////////
 	///	Methods
 	/////////////////////////////////////////////////	
-	
-	
+
 	/**
 	 * Default constructor, initializing the logger.
 	 */
-	public MutationOperator(MutationOperatorChecker checker, MutationOperatorCategory category) {
+	public MutationOperator(MutationOperatorChecker checker, MutationOperatorCategory category, String fullname) {
 		// check null argument
 		if(checker == null){
 			throw new IllegalArgumentException("MutationOperatorChecker checker cannot be null.");
@@ -64,6 +68,7 @@ public abstract class MutationOperator{
 		// assign fields
 		this.mutopscheck = checker;
 		this.category = category;
+		this.fullname = fullname;
 	}
 		
 	/**
@@ -102,10 +107,21 @@ public abstract class MutationOperator{
 	
 	/**
 	 * Get the mutation operator's category.
-	 * 
+	 * <p>
 	 * @return The category associated with the mutation operator.
 	 */
 	public MutationOperatorCategory getCategory(){
 		return this.category;
 	}
+	
+
+	/**
+	 * Get the mutation operator's full name.
+	 * <p>
+	 * @return The full name.
+	 */
+	public String getFullname() {
+		return fullname;
+	}
+
 }
