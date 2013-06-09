@@ -1,5 +1,6 @@
 package mutationoperators.aor;
 
+import enums.MutationOperatorCategory;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperatorChecker;
 

@@ -1,5 +1,6 @@
 package mutationoperators.jti;
 
+import enums.MutationOperatorCategory;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperatorChecker;
 

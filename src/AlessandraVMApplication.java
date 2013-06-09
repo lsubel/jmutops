@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
 
+import enums.OptionsVersion;
+
 import results.ApplicationCounter;
 import results.FileResults;
 

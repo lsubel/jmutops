@@ -8,24 +8,13 @@ import mutationoperators.jti.JTI;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
+import enums.MutationOperatorCategory;
+
 import results.DatabaseResults;
 
 public abstract class MutationOperator{
 
-	public enum MutationOperatorCategory {
-		METHOD_LEVEL("Method-level operator"), 
-		CLASS_LEVEL("Class-level operator");
-		
-		private final String label;
-		
-		private MutationOperatorCategory(String label){
-			this.label = label;
-		}
-		
-		public String toString(){
-			return this.label;
-		}
-	}
+	
 	
 	/////////////////////////////////////////////////
 	///	Fields
