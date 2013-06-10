@@ -13,12 +13,14 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import utils.LoggerFactory;
+
 public class ResultsFileWriter extends ResultListener{
 
 	/**
 	 * Logger.
 	 */
-	private static final Logger logger = Logger.getLogger(ResultsFileWriter.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ResultsFileWriter.class.getName());
 	
 	ArrayList<Dictionary<String, String>> results; 
 	

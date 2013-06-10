@@ -12,6 +12,7 @@ import results.DatabaseResults;
 import results.ResultListener;
 import results.ResultListenerMulticaster;
 
+import utils.LoggerFactory;
 import utils.Preperator;
 
 import mutationoperators.MutationOperatorChecker;
@@ -42,7 +43,7 @@ public class JMutOps {
 	/**
 	 * Logger.
 	 */
-	private static final Logger logger = Logger.getLogger(JMutOps.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(JMutOps.class.getName());
 	
 	/**
 	 * FileDistiller used to distill changes between two version of a file.

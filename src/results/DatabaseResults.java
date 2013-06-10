@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 import java.sql.Array;
 import java.util.logging.Logger;
 
+import utils.LoggerFactory;
+
 /**
  * Class which builds a connection to the database and which is response to
  * add new data to the database and
@@ -32,7 +34,7 @@ public class DatabaseResults {
 	/**
 	 * Logger
 	 */
-	private static final Logger log = Logger.getLogger(DatabaseResults.class
+	private static final Logger log = LoggerFactory.getLogger(DatabaseResults.class
 			.getName());
 
 	/**

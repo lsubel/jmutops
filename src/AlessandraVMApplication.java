@@ -14,6 +14,7 @@ import enums.OptionsVersion;
 import results.ApplicationCounter;
 import results.ResultsFileWriter;
 
+import utils.LoggerFactory;
 import utils.Settings;
 
 
@@ -55,6 +56,23 @@ public class AlessandraVMApplication {
 			System.exit(0);
 		}
 		
+		// initialize the logger
+		Logger logger = LoggerFactory.getLogger(TestApplication.class.getName());
+		// set the handler for the root logger
+		if(Settings.isWritingLog){
+			try {
+				Logger tempAnonymousLogger = Logger.getAnonymousLogger();
+				Handler handler = new FileHandler("log_" + iBugs_ID + ".txt");
+				handler.setLevel(Settings.loggerlevel);
+				tempAnonymousLogger.getParent().setLevel(Settings.loggerlevel);
+				tempAnonymousLogger.getParent().addHandler(handler);
+				logger.info("Set FileHandler for logger.");
+			} catch (SecurityException e) {
+				logger.info("Could not set FileHandler for logger.");
+			} catch (IOException e) {
+				logger.info("Could not set FileHandler for logger.");
+			}
+		}
 		
 		// extract the different paths
 		String initialPath = pathToIDFolders + "\\" + iBugs_ID;
@@ -83,24 +101,7 @@ public class AlessandraVMApplication {
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
 		checkForSrc(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
 		
-		// initialize the logger
-		Logger logger = Logger.getLogger(TestApplication.class.getName());
-		// set the handler for the root logger
-		if(Settings.isWritingLog){
-			try {
-				Logger tempAnonymousLogger = Logger.getAnonymousLogger();
-				Handler handler = new FileHandler("log_" + iBugs_ID + ".txt");
-				tempAnonymousLogger.getParent().addHandler(handler);
-				tempAnonymousLogger.getParent().setLevel(Settings.loggerlevel);
-				logger.info("Set FileHandler for logger.");
-			} catch (SecurityException e) {
-				logger.info("Could not set FileHandler for logger.");
-			} catch (IOException e) {
-				logger.info("Could not set FileHandler for logger.");
-			}
-		}
-		
-		logger.info("Starting to check iBugs ID " + iBugs_ID + "\n");
+		logger.info("Starting to check iBugs ID " + iBugs_ID + ".");
 		
 		// check each file in the prefix folder
 		for(File prefixFile: prefixFoldercontent){
@@ -127,7 +128,7 @@ public class AlessandraVMApplication {
 			logger.fine("Ending to check file " + postfixFile.getName() + ".");
 		}
 		
-		logger.info("Ending to check iBugs ID " + iBugs_ID + "\n");
+		logger.info("Ending to check iBugs ID " + iBugs_ID + ".");
 		
 		jmutops.createResults();
 	}

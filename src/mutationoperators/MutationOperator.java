@@ -12,6 +12,7 @@ import enums.MutationOperatorCategory;
 
 import results.DatabaseResults;
 import results.ResultListenerMulticaster;
+import utils.LoggerFactory;
 
 public abstract class MutationOperator{
 
@@ -34,7 +35,7 @@ public abstract class MutationOperator{
 	/**
 	 * Logger
 	 */
-	protected Logger logger = Logger.getLogger(this.getClass().getName());
+	protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	
 	/**
 	 * Reference to the ASTVisitor related to this Mutation Operator

@@ -27,7 +27,7 @@ public class Preperator {
 	/**
 	 * Logger.
 	 */
-	private static final Logger logger = Logger.getLogger(Preperator.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(Preperator.class.getName());
 	
 	ASTParser parser;
 	

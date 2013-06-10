@@ -7,6 +7,8 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import utils.LoggerFactory;
+
 /**
  * Casts method calls to all registered {@link ResultListener}.
  * 
@@ -18,7 +20,7 @@ public class ResultListenerMulticaster extends ResultListener {
 	/**
 	 * Logger.
 	 */
-	private static final Logger logger = Logger.getLogger(ResultListenerMulticaster.class.getName());
+	private static final Logger logger = LoggerFactory.getLogger(ResultListenerMulticaster.class.getName());
 	
 	/**
 	 * ArrayList containing all registered {@link ResultListener}.

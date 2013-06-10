@@ -12,7 +12,7 @@ public class Settings {
 	/**
 	 * Setting the level of the logger messages
 	 */
-	public static final Level loggerlevel = Level.INFO;
+	public static final Level loggerlevel = Level.FINE;
 	
 	/**
 	 * True if jMutOps should write create a logfile
