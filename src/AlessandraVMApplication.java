@@ -75,13 +75,13 @@ public class AlessandraVMApplication {
 		}
 		
 		// extract the different paths
-		String initialPath = pathToIDFolders + "\\" + iBugs_ID;
-		String prefixFolder  = initialPath + "\\" + PREFIX;
-		String postfixFolder = initialPath + "\\" + POSTFIX;
+		String initialPath = pathToIDFolders + File.separator + iBugs_ID;
+		String prefixFolder  = initialPath + File.separator + PREFIX;
+		String postfixFolder = initialPath + File.separator + POSTFIX;
 		File[] prefixFoldercontent  = new File(prefixFolder).listFiles();
 		File[] postfixFoldercontent = new File(postfixFolder).listFiles();
-		String prefixSourceFolder 	= pathToSources + "\\" + PREFIX;
-		String postfixSourceFolder 	= pathToSources + "\\" + POSTFIX;
+		String prefixSourceFolder 	= pathToSources + File.separator + PREFIX;
+		String postfixSourceFolder 	= pathToSources + File.separator + POSTFIX;
 		
 		// initialize jMutOps
 		JMutOps jmutops = new JMutOps();
