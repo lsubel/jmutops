@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 
 public class ApplicationCounter extends ResultListener {
 
-	HashMap<String, Integer> counter;
+	private HashMap<String, Integer> counter;
 	
 	public ApplicationCounter() {
 		this.counter = new HashMap<String, Integer>();
@@ -33,6 +33,10 @@ public class ApplicationCounter extends ResultListener {
 			int value = this.counter.get(operatorName);
 			System.out.println(operatorName + ": " + value);
 		}
+	}
+	
+	public Integer getCount(String operator){
+		return this.counter.get(operator);
 	}
 
 }
