@@ -90,4 +90,13 @@ public class JTI_Test extends BasicMutationOperatorTest {
 		this.jmutops.checkFiles(preFix, postFix);
 		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
 	}
+	
+	@Test
+	public void testJTI_Argument2() {
+		int oldValue = this.counter.getCount(JTI.fullname);
+		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b, String c){this.a = this.a + b;}", "test(a, a);"));
+		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b, String c){this.a = this.a + b;}", "test(a, this.a);"));
+		this.jmutops.checkFiles(preFix, postFix);
+		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+	}
 }
