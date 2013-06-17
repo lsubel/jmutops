@@ -23,4 +23,14 @@ public class Settings {
 	 * True if jMutOps should write results in a DB.
 	 */
 	public static final boolean writeInDB = false;
+	
+	/**
+	 * Contains the default folder name for prefix folders.
+	 */
+	public static final String DEFAULT_PREFIX_FOLDER = "pre-fix";
+		
+	/**
+	 * Contains the default folder name for postfix folders.
+	 */
+	public static final String DEFAULT_POSTFIX_FOLDER = "post-fix";
 }
