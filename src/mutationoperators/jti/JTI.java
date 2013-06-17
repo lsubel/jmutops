@@ -7,7 +7,7 @@ import mutationoperators.MutationOperatorChecker;
 
 public class JTI extends MutationOperator {
 
-	private static String fullname = "Java this insertion";
+	public static final String fullname = "Java this insertion";
 	
 	public JTI(ResultListenerMulticaster eventListener) {
 		super(eventListener, MutationOperatorCategory.METHOD_LEVEL);

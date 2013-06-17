@@ -7,7 +7,7 @@ import mutationoperators.MutationOperatorChecker;
 
 public class AOR extends MutationOperator {
 
-	private static String fullname = "Arithmethic Operator Replacement";
+	public static final String fullname = "Arithmethic Operator Replacement";
 	
 	public AOR(ResultListenerMulticaster eventListener) {
 		super(eventListener, MutationOperatorCategory.METHOD_LEVEL);

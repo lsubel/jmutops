@@ -7,7 +7,7 @@ import mutationoperators.MutationOperatorChecker;
 
 public class MNRO extends MutationOperator {
 
-	private static String fullname = "Method name replacement operator";
+	public static final String fullname = "Method name replacement operator";
 	
 	public MNRO(ResultListenerMulticaster eventListener) {
 		super(eventListener, MutationOperatorCategory.METHOD_LEVEL);
