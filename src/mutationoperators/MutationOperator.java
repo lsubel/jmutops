@@ -46,11 +46,6 @@ public abstract class MutationOperator{
 	 * Reference to the ASTMatcher related to this Mutation Operator
 	 */
 	protected BaseASTMatcher matcher;
-		
-	/**
-	 * Full name of this mutation operator
-	 */
-	protected final String fullname;
 	
 	/////////////////////////////////////////////////
 	///	Methods
@@ -59,7 +54,7 @@ public abstract class MutationOperator{
 	/**
 	 * Default constructor, initializing the logger.
 	 */
-	public MutationOperator(ResultListenerMulticaster eventListener, MutationOperatorCategory category, String fullname) {
+	public MutationOperator(ResultListenerMulticaster eventListener, MutationOperatorCategory category) {
 		// check null argument
 		if(eventListener == null){
 			throw new IllegalArgumentException("ResultListenerMulticaster eventListener cannot be null.");
@@ -70,7 +65,6 @@ public abstract class MutationOperator{
 		// assign fields
 		this.eventListener	= eventListener;
 		this.category 		= category;
-		this.fullname 		= fullname;
 	}
 		
 	/**
@@ -122,8 +116,6 @@ public abstract class MutationOperator{
 	 * <p>
 	 * @return The full name.
 	 */
-	public String getFullname() {
-		return fullname;
-	}
+	public abstract String getFullname();
 
 }

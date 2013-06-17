@@ -7,9 +7,16 @@ import mutationoperators.MutationOperatorChecker;
 
 public class JTI extends MutationOperator {
 
+	private static String fullname = "Java this insertion";
+	
 	public JTI(ResultListenerMulticaster eventListener) {
-		super(eventListener, MutationOperatorCategory.METHOD_LEVEL, "Java this insertion");
+		super(eventListener, MutationOperatorCategory.METHOD_LEVEL);
 		this.matcher = new JTI_Matcher(this);
 		this.visitor = new JTI_Visitor(matcher);
+	}
+
+	@Override
+	public String getFullname() {
+		return this.fullname;
 	}
 }
