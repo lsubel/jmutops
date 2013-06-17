@@ -36,7 +36,11 @@ public class ApplicationCounter extends ResultListener {
 	}
 	
 	public Integer getCount(String operator){
-		return this.counter.get(operator);
+		if(this.counter.containsKey(operator)){
+			return this.counter.get(operator);
+		} else{
+			return 0;
+		}
 	}
 
 }
