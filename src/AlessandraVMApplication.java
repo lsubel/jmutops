@@ -6,6 +6,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
+import jmutops.JMutOps;
+
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
 
