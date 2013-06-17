@@ -15,6 +15,7 @@ import results.ResultListenerMulticaster;
 
 import utils.LoggerFactory;
 import utils.Preperator;
+import utils.TestUtilities;
 
 import mutationoperators.MutationOperatorChecker;
 import mutationoperators.aor.AOR;
@@ -84,8 +85,8 @@ public class JMutOps {
 	 */
 	public JMutOps() {
 		// initialize variables
-		this.prefixed_preperator = new Preperator();
-		this.postfixed_preperator = new Preperator();
+		this.prefixed_preperator = new Preperator(TestUtilities.getDefaultPrefixFolder());
+		this.postfixed_preperator = new Preperator(TestUtilities.getDefaultPostfixFolder());
 		addImplementedMutationOperators();
 	}
 	

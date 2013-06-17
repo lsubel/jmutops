@@ -49,6 +49,8 @@ public class Preperator {
 	
 	boolean includeRunningVMBootclasspath;
 	
+	File defaultPath;
+	
 	///////////////////////////////////////////////////
 	///	Methods
 	///////////////////////////////////////////////////
@@ -58,7 +60,9 @@ public class Preperator {
 	 * 
 	 * @param inputFile
 	 */
-	public Preperator() {
+	public Preperator(File defaultPath) {
+		// store parameter
+		this.defaultPath = defaultPath;
 		// initialize parser
 		this.parser = ASTParser.newParser(AST.JLS4);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -77,8 +81,8 @@ public class Preperator {
 
 		try {
 			// generate a new File where we store the content
-			String tempFileName = "temp" + "_" + RandomStringUtils.random(16, "abcdefghijklmnopqrstuvwxyz".toCharArray());
-			this.m_OutputFile = File.createTempFile(tempFileName, ".java");
+			String tempFileName = inputFile.getName();
+			this.m_OutputFile = File.createTempFile(tempFileName, ".java", this.defaultPath);
 		
 			// extract the content of the file,
 			// write the extracted content into the temp file,
