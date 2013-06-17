@@ -63,4 +63,31 @@ public class JTI_Test extends BasicMutationOperatorTest {
 		this.jmutops.checkFiles(preFix, postFix);
 		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
 	}
+	
+	@Test
+	public void testJTI_MethodCall2() {
+		int oldValue = this.counter.getCount(JTI.fullname);
+		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("int a; public int test(){return a;}", "a = test();"));
+		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("int a; public int test(){return a;}", "this.a = this.test();"));
+		this.jmutops.checkFiles(preFix, postFix);
+		assertEquals(oldValue + 2, this.counter.getCount(JTI.fullname).intValue());
+	}
+	
+	@Test
+	public void testJTI_MethodCall3() {
+		int oldValue = this.counter.getCount(JTI.fullname);
+		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public String test(){return a;}", "a = test();"));
+		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public String test(){return a;}", "this.a = this.test();"));
+		this.jmutops.checkFiles(preFix, postFix);
+		assertEquals(oldValue + 2, this.counter.getCount(JTI.fullname).intValue());
+	}
+	
+	@Test
+	public void testJTI_Argument1() {
+		int oldValue = this.counter.getCount(JTI.fullname);
+		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b){this.a = this.a + b;}", "test(a);"));
+		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b){this.a = this.a + b;}", "test(this.a);"));
+		this.jmutops.checkFiles(preFix, postFix);
+		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+	}
 }
