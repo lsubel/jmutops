@@ -89,8 +89,6 @@ public abstract class BasicMutationOperatorTest {
 		return "public class " + CLASS_NAME + " { \n" + snippet + " \n};";
 	}
 	
-	
-	
 	protected String createMethodSourceCode(String methodBody){
 		StringBuilder methodSource = new StringBuilder();
         methodSource.append("void ");
