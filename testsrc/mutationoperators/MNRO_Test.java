@@ -36,73 +36,73 @@ public class MNRO_Test extends BasicMutationOperatorTest {
 	}
 	
 	@Test
-	public void testMNRO_match1() {
+	public void testMNRO_Match1() {
 		int diff = compareMatches("resetCounter();", "resetName();");
 		assertEquals(1, diff);
 	}
 	
 	@Test
-	public void testMNRO_match2() {
+	public void testMNRO_Match2() {
 		int diff = compareMatches("int a = getCounter(); incrementCounter(a);", "int a = getNameLength(); incrementCounter(a);");
 		assertEquals(1, diff);
 	}
 	
 	@Test
-	public void testMNRO_match3() {
+	public void testMNRO_Match3() {
 		int diff = compareMatches("incrementCounter(5);", "resetCounter(5);");
 		assertEquals(1, diff);
 	}
 	
 	@Test
-	public void testMNRO_match4() {
+	public void testMNRO_Match4() {
 		int diff = compareMatches("if(isZero()){incrementCounter(1);};", "if(isOne()){incrementCounter(1);};");
 		assertEquals(1, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentReturn1() {
+	public void testMNRO_DifferentReturn1() {
 		int diff = compareMatches("resetCounter();", "getCounter();");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentReturn2() {
+	public void testMNRO_DifferentReturn2() {
 		int diff = compareMatches("getName();", "getCounter();");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentReturn3() {
+	public void testMNRO_DifferentReturn3() {
 		int diff = compareMatches("getName();", "isOne();");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentReturn4() {
+	public void testMNRO_DifferentReturn4() {
 		int diff = compareMatches("getName();", "resetName();");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentArgLength1() {
+	public void testMNRO_DifferentArgLength1() {
 		int diff = compareMatches("resetCounter();", "incrementCounter(1);");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentArgLength2() {
+	public void testMNRO_DifferentArgLength2() {
 		int diff = compareMatches("resetCounter();", "addSubstring(\"Test\");");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentArgLength3() {
+	public void testMNRO_DifferentArgLength3() {
 		int diff = compareMatches("incrementCounter(1);", "incrementCounter(1, 2);");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testMNRO_differentArgType1() {
+	public void testMNRO_DifferentArgType1() {
 		int diff = compareMatches("int a = 0; incrementCounter(a);", "byte a = 0; incrementCounter(a);");
 		assertEquals(0, diff);
 	}

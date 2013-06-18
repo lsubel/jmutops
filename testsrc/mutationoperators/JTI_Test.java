@@ -85,20 +85,32 @@ public class JTI_Test extends BasicMutationOperatorTest {
 	}
 	
 	@Test
-	public void testJTI_noMatch1() {
+	public void testJTI_NoMatch1() {
 		int diff = compareMatches("test4(this.b, this.b);", "test4(b, this.b);");
 		assertEquals(0, diff);
 	}
 	
 	@Test
-	public void testJTI_noMatch2() {
+	public void testJTI_NoMatch2() {
 		int diff = compareMatches("a = this.a*2;", "a = a*2;");
 		assertEquals(0, diff);
 	}	
 	
 	@Test
-	public void testJTI_noMatch3() {
+	public void testJTI_NoMatch3() {
 		int diff = compareMatches("this.a = 5;", "a = 5;");
 		assertEquals(0, diff);
 	}
+	
+	@Test
+	public void testJTI_NoMatch4() {
+		int diff = compareMatches("this.a = 5;", "this.b = 5;");
+		assertEquals(0, diff);
+	}
+	
+	@Test
+	public void testJTI_NoMatch5() {
+		int diff = compareMatches("a = this.a*2;", "a = this.b*2;");
+		assertEquals(0, diff);
+	}	
 }
