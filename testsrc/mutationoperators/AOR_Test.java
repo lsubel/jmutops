@@ -67,13 +67,19 @@ public class AOR_Test extends BasicMutationOperatorTest {
 	
 	@Test
 	public void testAOR_UnaryMatch2() {
-		int diff = compareMatches("a = -b;", "a = b;");
+		int diff = compareMatches("a = -b;", "a = +b;");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testAOR_UnaryMatch3() {
-		int diff = compareMatches("a = (b + c);", "a = -(b + c);");
+		int diff = compareMatches("a = +(b + c);", "a = -(b + c);");
+		assertEquals(1, diff);
+	}
+	
+	@Test
+	public void testAOR_UnaryMatch4() {
+		int diff = compareMatches("a = -(b + c);", "a = +(b + c);");
 		assertEquals(1, diff);
 	}
 	
@@ -98,6 +104,18 @@ public class AOR_Test extends BasicMutationOperatorTest {
 	@Test
 	public void testAOR_ShortCut4() {
 		int diff = compareMatches("--a;", "a++;");
+		assertEquals(1, diff);
+	}
+	
+	@Test
+	public void testAOR_ShortCut5() {
+		int diff = compareMatches("--a;", "++a;");
+		assertEquals(1, diff);
+	}
+	
+	@Test
+	public void testAOR_ShortCut6() {
+		int diff = compareMatches("++a;", "--a;");
 		assertEquals(1, diff);
 	}
 }

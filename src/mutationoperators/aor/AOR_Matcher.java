@@ -5,6 +5,8 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.InfixExpression;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
 public class AOR_Matcher extends BaseASTMatcher {
 
@@ -34,6 +36,98 @@ public class AOR_Matcher extends BaseASTMatcher {
 				!(node.getOperator().equals(ie.getOperator()));
 			if(correctPrefixedOperator && correctPostfixedOperator && differentOperators){
 				this.mutop.found(node, ie);
+			}
+			return true; 
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean match(PostfixExpression node, Object other) {
+		
+		boolean correctPrefixedShortcutOperator = 
+				(node.getOperator().equals(PostfixExpression.Operator.INCREMENT))
+				|| (node.getOperator().equals(PostfixExpression.Operator.DECREMENT));
+		
+		// check for other is Postfix Expression (=> shortcut)
+		if(other instanceof PostfixExpression){
+			PostfixExpression pe = (PostfixExpression) other;	
+			
+			boolean correctPostfixedShortcutOperator = 
+					(pe.getOperator().equals(PostfixExpression.Operator.INCREMENT))
+					|| (pe.getOperator().equals(PostfixExpression.Operator.DECREMENT));
+		
+			boolean differentOperators = 
+					!(node.getOperator().equals(pe.getOperator()));
+			
+			if( (correctPrefixedShortcutOperator && correctPostfixedShortcutOperator) && differentOperators){
+				this.mutop.found(node, pe);
+			}
+			return true; 
+		}
+		
+		
+		// check for other is Prefix Expression (=> unary or shortcut)
+		if(other instanceof PrefixExpression){
+			PrefixExpression pe = (PrefixExpression) other;
+
+			boolean correctPostfixedShortcutOperator = 
+					(pe.getOperator().equals(PrefixExpression.Operator.INCREMENT))
+					|| (pe.getOperator().equals(PrefixExpression.Operator.DECREMENT));
+			
+			if(correctPrefixedShortcutOperator && correctPostfixedShortcutOperator){
+				this.mutop.found(node, pe);
+			}
+			return true; 
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean match(PrefixExpression node, Object other) {
+		// extract prefix operators
+		boolean correctPrefixedUnaryOperator = 
+				(node.getOperator().equals(PrefixExpression.Operator.PLUS))
+				|| (node.getOperator().equals(PrefixExpression.Operator.MINUS));
+		boolean correctPrefixedShortcutOperator = 
+				(node.getOperator().equals(PrefixExpression.Operator.INCREMENT))
+				|| (node.getOperator().equals(PrefixExpression.Operator.DECREMENT));
+		
+		// check for other is Postfix Expression (=> shortcut)
+		if(other instanceof PostfixExpression){
+			PostfixExpression pe = (PostfixExpression) other;	
+			
+			boolean correctPostfixedShortcutOperator = 
+					(pe.getOperator().equals(PrefixExpression.Operator.INCREMENT))
+					|| (pe.getOperator().equals(PrefixExpression.Operator.DECREMENT));
+			
+			if(correctPrefixedShortcutOperator && correctPostfixedShortcutOperator){
+				this.mutop.found(node, pe);
+			}
+			return true; 
+		}
+		
+		
+		// check for other is Prefix Expression (=> unary or shortcut)
+		if(other instanceof PrefixExpression){
+			PrefixExpression pe = (PrefixExpression) other;
+			
+
+			boolean correctPostfixedUnaryOperator = 
+					(pe.getOperator().equals(PrefixExpression.Operator.PLUS))
+					|| (pe.getOperator().equals(PrefixExpression.Operator.MINUS));
+
+
+			boolean correctPostfixedShortcutOperator = 
+					(pe.getOperator().equals(PrefixExpression.Operator.INCREMENT))
+					|| (pe.getOperator().equals(PrefixExpression.Operator.DECREMENT));
+		
+			boolean differentOperators = 
+					!(node.getOperator().equals(pe.getOperator()));
+			
+			if( ((correctPrefixedUnaryOperator && correctPostfixedUnaryOperator) || (correctPrefixedShortcutOperator && correctPostfixedShortcutOperator) )
+					&& differentOperators){
+				this.mutop.found(node, pe);
 			}
 			return true; 
 		}
