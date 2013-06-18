@@ -1,11 +1,7 @@
 package mutationoperators;
 
 import static org.junit.Assert.*;
-
-import java.io.File;
-
 import mutationoperators.jti.JTI;
-
 import org.junit.Test;
 
 public class JTI_Test extends BasicMutationOperatorTest {
@@ -86,5 +82,23 @@ public class JTI_Test extends BasicMutationOperatorTest {
 	public void testJTI_Argument2() {
 		int diff = compareMatches("test4(b, b);", "test4(b, this.b);");
 		assertEquals(1, diff);
+	}
+	
+	@Test
+	public void testJTI_noMatch1() {
+		int diff = compareMatches("test4(this.b, this.b);", "test4(b, this.b);");
+		assertEquals(0, diff);
+	}
+	
+	@Test
+	public void testJTI_noMatch2() {
+		int diff = compareMatches("a = this.a*2;", "a = a*2;");
+		assertEquals(0, diff);
+	}	
+	
+	@Test
+	public void testJTI_noMatch3() {
+		int diff = compareMatches("this.a = 5;", "a = 5;");
+		assertEquals(0, diff);
 	}
 }
