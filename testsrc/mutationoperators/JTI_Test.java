@@ -9,94 +9,82 @@ import mutationoperators.jti.JTI;
 import org.junit.Test;
 
 public class JTI_Test extends BasicMutationOperatorTest {
+	
+	@Override
+	protected String getOperatorName() {
+		return JTI.fullname;
+	}
 
+	@Override
+	protected String getFields() {
+		return 	"int a = 0; " +
+				"String b = \"Bla\"; " +
+				"public void test(){b = \"test\";} " + 
+				"public int test1(){return a;} " +
+				"public String test2(){return b;}" +
+				"public void test3(String arg){this.b = this.b + arg;}" +
+				"public void test4(String arg1, String arg2){this.b = this.b + arg1 + arg2;}"
+				;
+	}
+	
+	
 	@Test
 	public void testJTI_FieldAssign1() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("int a; ", "a = 5;"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("int a; ", "this.a = 5;"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("a = 5;", "this.a = 5;");
+		assertEquals(1, diff);
 	}
 
 	@Test
 	public void testJTI_FieldAssign2() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a; ", "a = \"Test\";"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a; ", "this.a = \"Test\";"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("b = \"Test\";", "this.b = \"Test\";");
+		assertEquals(1, diff);
 	}
 
 	@Test
 	public void testJTI_FieldUsage1() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("int a = 21; ", "a = a*2;"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("int a = 21; ", "a = this.a*2;"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("a = a*2;", "a = this.a*2;");
+		assertEquals(1, diff);
 	}	
 
 	@Test
 	public void testJTI_FieldUsage2() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"Test\"; ", "a = a + a;"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"Test\"; ", "a = this.a + a;"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("b = b + b;", "b = this.b + b;");
+		assertEquals(1, diff);
 	}
 
 	@Test
 	public void testJTI_FieldUsage3() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"Test\"; ", "a = a + a;"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"Test\"; ", "a = this.a + this.a;"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 2, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("a = a + a;", "a = this.a + this.a;");
+		assertEquals(2, diff);
 	}
 	
 	@Test
 	public void testJTI_MethodCall1() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a; public void test(){a = \"test\";}", "test();"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a; public void test(){a = \"test\";}", "this.test();"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("test();", "this.test();");
+		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testJTI_MethodCall2() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("int a; public int test(){return a;}", "a = test();"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("int a; public int test(){return a;}", "this.a = this.test();"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 2, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("a = test1();", "this.a = this.test1();");
+		assertEquals(2, diff);
 	}
 	
 	@Test
 	public void testJTI_MethodCall3() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public String test(){return a;}", "a = test();"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public String test(){return a;}", "this.a = this.test();"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 2, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("b = test2();", "this.b = this.test2();");
+		assertEquals(2, diff);
 	}
 	
 	@Test
 	public void testJTI_Argument1() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b){this.a = this.a + b;}", "test(a);"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b){this.a = this.a + b;}", "test(this.a);"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("test3(b);", "test3(this.b);");
+		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testJTI_Argument2() {
-		int oldValue = this.counter.getCount(JTI.fullname);
-		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b, String c){this.a = this.a + b;}", "test(a, a);"));
-		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode("String a = \"test\"; public void test(String b, String c){this.a = this.a + b;}", "test(a, this.a);"));
-		this.jmutops.checkFiles(preFix, postFix);
-		assertEquals(oldValue + 1, this.counter.getCount(JTI.fullname).intValue());
+		int diff = compareMatches("test4(b, b);", "test4(b, this.b);");
+		assertEquals(1, diff);
 	}
 }

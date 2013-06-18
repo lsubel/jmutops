@@ -14,6 +14,8 @@ import java.util.Hashtable;
 
 import jmutops.JMutOps;
 
+import mutationoperators.jti.JTI;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.JavaCore;
@@ -26,7 +28,7 @@ import enums.OptionsVersion;
 import results.ApplicationCounter;
 import utils.TestUtilities;
 
-public class BasicMutationOperatorTest {
+public abstract class BasicMutationOperatorTest {
 
 	protected static final String METHOD_NAME = "method";
 	protected static final String CLASS_NAME = "Foo";
@@ -61,13 +63,26 @@ public class BasicMutationOperatorTest {
 		this.jmutops = null;
 		this.counter = null;
 	}
-	
-	protected File createPrefixSourceFile(String createFieldMethodSourceCode) {
-		return this.createSourceFile(createFieldMethodSourceCode, CLASS_NAME, PATH_FOR_PREFIX_FILES);
+
+	public int compareMatches(String prefixMethodBody, String postfixMethodBody) {
+		int oldValue = this.counter.getCount(this.getOperatorName()).intValue();
+		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode(prefixMethodBody));
+		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode(postfixMethodBody));
+		this.jmutops.checkFiles(preFix, postFix);
+		// returns the difference between both versions
+		return this.counter.getCount(this.getOperatorName()).intValue() - oldValue;
 	}
 	
-	protected File createPostfixSourceFile(String createFieldMethodSourceCode) {
-		return this.createSourceFile(createFieldMethodSourceCode, CLASS_NAME, PATH_FOR_POSTFIX_FILES);
+	protected abstract String getOperatorName();
+	
+	protected abstract String getFields();
+	
+	protected File createPrefixSourceFile(String sourceCode) {
+		return this.createSourceFile(sourceCode, CLASS_NAME, PATH_FOR_PREFIX_FILES);
+	}
+	
+	protected File createPostfixSourceFile(String sourceCode) {
+		return this.createSourceFile(sourceCode, CLASS_NAME, PATH_FOR_POSTFIX_FILES);
 	}
 	
 	private String createSourceCode(String snippet){
@@ -86,14 +101,14 @@ public class BasicMutationOperatorTest {
         return createSourceCode(methodSource.toString());
 	}
 
-	protected String createFieldMethodSourceCode(String fields, String methodBody){
+	protected String createFieldMethodSourceCode(String methodBody){
 		StringBuilder methodSource = new StringBuilder();
         methodSource.append("void ");
         methodSource.append(METHOD_NAME);
         methodSource.append("() { ");
         methodSource.append(methodBody);
         methodSource.append(" }");
-        return createSourceCode(fields + "\n" + methodSource.toString());		
+        return createSourceCode(getFields() + "\n" + methodSource.toString());		
 	}
 	
 	protected File createSourceFile(String javacode, String fileName, File pathToFolder) {
