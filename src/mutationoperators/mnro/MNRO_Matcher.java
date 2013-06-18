@@ -43,7 +43,7 @@ public class MNRO_Matcher extends BaseASTMatcher {
 				sameReturnType = prefixType.isEqualTo(postfixType);
 			}
 			else{
-				sameReturnType = Settings.DEFAULT_BINDING_VALUE;
+				sameReturnType = Settings.BINDING_DEFAULTVALUE;
 			}
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){

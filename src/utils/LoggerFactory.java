@@ -6,13 +6,13 @@ public class LoggerFactory {
 
 	public static Logger getLogger(String name){
 		Logger log = Logger.getLogger(name);
-		log.setLevel(Settings.loggerlevel);
+		log.setLevel(Settings.LOGGER_LEVEL);
 		return log;
 	}
 	
 	public static Logger getAnonymousLogger(){
 		Logger log = Logger.getAnonymousLogger();
-		log.setLevel(Settings.loggerlevel);
+		log.setLevel(Settings.LOGGER_LEVEL);
 		return log;
 	}
 	

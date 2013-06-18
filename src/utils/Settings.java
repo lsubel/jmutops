@@ -7,22 +7,22 @@ public class Settings {
 	/**
 	 * Constant value used when we could not resolve a binding
 	 */
-	public static final boolean DEFAULT_BINDING_VALUE = false;
+	public static final boolean BINDING_DEFAULTVALUE = false;
 
 	/**
 	 * Setting the level of the logger messages
 	 */
-	public static final Level loggerlevel = Level.FINE;
+	public static final Level LOGGER_LEVEL = Level.FINE;
 	
 	/**
-	 * True if jMutOps should write create a logfile
+	 * True if jMutOps should write a logfile
 	 */
-	public static final boolean isWritingLog = false;
+	public static final boolean LOGGER_WRITE_FILE = false;
 	
 	/**
 	 * True if jMutOps should write results in a DB.
 	 */
-	public static final boolean writeInDB = false;
+	public static final boolean DB_WRITE = false;
 	
 	/**
 	 * Contains the default folder name for prefix folders.

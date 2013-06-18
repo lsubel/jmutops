@@ -61,12 +61,12 @@ public class AlessandraVMApplication {
 		// initialize the logger
 		Logger logger = LoggerFactory.getLogger(TestApplication.class.getName());
 		// set the handler for the root logger
-		if(Settings.isWritingLog){
+		if(Settings.LOGGER_WRITE_FILE){
 			try {
 				Logger tempAnonymousLogger = Logger.getAnonymousLogger();
 				Handler handler = new FileHandler("log_" + iBugs_ID + ".txt");
-				handler.setLevel(Settings.loggerlevel);
-				tempAnonymousLogger.getParent().setLevel(Settings.loggerlevel);
+				handler.setLevel(Settings.LOGGER_LEVEL);
+				tempAnonymousLogger.getParent().setLevel(Settings.LOGGER_LEVEL);
 				tempAnonymousLogger.getParent().addHandler(handler);
 				logger.info("Set FileHandler for logger.");
 			} catch (SecurityException e) {
