@@ -14,6 +14,7 @@ public class JTI_Test extends BasicMutationOperatorTest {
 	@Override
 	protected String getFields() {
 		return 	"int a = 0; " +
+				"int c = 42; " +
 				"String b = \"Bla\"; " +
 				"public void test(){b = \"test\";} " + 
 				"public int test1(){return a;} " +
@@ -104,13 +105,13 @@ public class JTI_Test extends BasicMutationOperatorTest {
 	
 	@Test
 	public void testJTI_NoMatch4() {
-		int diff = compareMatches("this.a = 5;", "this.b = 5;");
+		int diff = compareMatches("this.a = 5;", "this.c = 5;");
 		assertEquals(0, diff);
 	}
 	
 	@Test
 	public void testJTI_NoMatch5() {
-		int diff = compareMatches("a = this.a*2;", "a = this.b*2;");
+		int diff = compareMatches("a = this.a*2;", "a = this.c*2;");
 		assertEquals(0, diff);
 	}	
 }
