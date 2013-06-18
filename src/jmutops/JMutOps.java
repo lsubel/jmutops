@@ -120,7 +120,6 @@ public class JMutOps {
 		List<SourceCodeChange> changes = distiller.getSourceCodeChanges();
 		if(changes == null){
 			logger.info("No changes were found.");
-			logger.info("Ending to check File " + prefixedFile.getName() + "." + "\n");
 			return;
 		}
 		
