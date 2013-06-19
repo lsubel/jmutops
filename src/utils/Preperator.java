@@ -18,16 +18,13 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
+import results.ResultListenerMulticaster;
+
 public class Preperator {
 
 	///////////////////////////////////////////////////
 	///	Fields
 	///////////////////////////////////////////////////
-	
-	/**
-	 * Logger.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(Preperator.class.getName());
 	
 	ASTParser parser;
 	
@@ -51,18 +48,21 @@ public class Preperator {
 	
 	File defaultPath;
 	
+	ResultListenerMulticaster listener;
+	
 	///////////////////////////////////////////////////
 	///	Methods
 	///////////////////////////////////////////////////
 	
 	/**
 	 * Default constructor.
-	 * 
+	 * @param listener TODO
 	 * @param inputFile
 	 */
-	public Preperator(File defaultPath) {
+	public Preperator(ResultListenerMulticaster listener, File defaultPath) {
 		// store parameter
 		this.defaultPath = defaultPath;
+		this.listener = listener;
 		// initialize parser
 		this.parser = ASTParser.newParser(AST.JLS4);
 		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -116,9 +116,9 @@ public class Preperator {
 			// write occuring problems into the logger
 		    IProblem[] problems = this.m_OutputAST.getProblems();
 		    if (problems != null && problems.length > 0) {
-		        logger.warning("Got " + problems.length +" problems compiling the source file: ");
+		    	this.listener.OnErrorDetected("Preperator - prepare", problems.length + " different errors detected.");
 		        for (IProblem problem : problems) {
-		            logger.warning(problem.getMessage());
+					this.listener.OnErrorDetected("Preperator - prepare", problem.getMessage());
 		        }
 		    }
 		
@@ -183,7 +183,7 @@ public class Preperator {
 			this.options = options;
 			return true;
 		} catch (Exception e) {
-			logger.warning(e.getMessage());
+			this.listener.OnErrorDetected("Preperator - setOptions", e.getMessage());
 			return false;
 		}
 	}

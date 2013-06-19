@@ -45,11 +45,6 @@ public class JMutOps {
 	/////////////////////////////////////////
 	
 	/**
-	 * Logger.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(JMutOps.class.getName());
-	
-	/**
 	 * FileDistiller used to distill changes between two version of a file.
 	 */
 	private FileDistiller distiller = ChangeDistiller.createFileDistiller(Language.JAVA);;
@@ -82,8 +77,8 @@ public class JMutOps {
 	 */
 	public JMutOps() {
 		// initialize variables
-		this.prefixed_preperator = new Preperator(TestUtilities.getDefaultPrefixFolder());
-		this.postfixed_preperator = new Preperator(TestUtilities.getDefaultPostfixFolder());
+		this.prefixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPrefixFolder());
+		this.postfixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPostfixFolder());
 		addImplementedMutationOperators();
 	}
 	
@@ -94,10 +89,14 @@ public class JMutOps {
 	public void checkFiles(File prefixedFile, File postfixedFile){
 		// check for null argument
 		if(prefixedFile == null){
-			throw new IllegalArgumentException("First argument must not be null.");
+			String errorMessage = "First argument must not be null.";
+			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			throw new IllegalArgumentException(errorMessage);
 		}
 		if(postfixedFile == null){
-			throw new IllegalArgumentException("Second argument must not be null.");
+			String errorMessage = "Second argument must not be null.";
+			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			throw new IllegalArgumentException(errorMessage);
 		}
 		
 		// fire OnNewFileStarted here
@@ -111,13 +110,16 @@ public class JMutOps {
 		try {
 		    distiller.extractClassifiedSourceCodeChanges(prefixed_preperator.getFile(), postfixed_preperator.getFile());
 		} catch(Exception e) {
-		    System.err.println("Warning: error while change distilling: " + e.getMessage());
+			String errorMessage = e.getMessage();
+			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			return;
 		}
 		
 		// extract the differences
 		List<SourceCodeChange> changes = distiller.getSourceCodeChanges();
 		if(changes == null){
-			logger.info("No changes were found.");
+			String errorMessage = "No changes were found.";
+			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
 			return;
 		}
 		
@@ -161,7 +163,9 @@ public class JMutOps {
 					sce_new_end 	= sce_new.getEndPosition();
 				}
 				else{
-					throw new IllegalStateException("This exception should never be thrown.");
+					String errorMessage = "Impossible exception location.";
+					this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+					throw new IllegalStateException(errorMessage);
 				}
 
 				// extract information for first file
@@ -207,7 +211,9 @@ public class JMutOps {
 		case POSTFIX:
 			return this.postfixed_preperator.addClasspathEntry(classPath);
 		default:
-			throw new IllegalArgumentException("Argument version has to be a correct value");
+			String errorMessage = "Argument version has to be a correct value";
+			this.listener.OnErrorDetected("JMutOps - addClasspathEntry", errorMessage);
+			throw new IllegalArgumentException(errorMessage);
 		}
 	}
 	
@@ -226,6 +232,8 @@ public class JMutOps {
 		case POSTFIX:
 			return this.postfixed_preperator.addSourcepathEntry(sourcePath, encoding);
 		default:
+			String errorMessage = "Argument version has to be a correct value";
+			this.listener.OnErrorDetected("JMutOps - addSourcepathEntry", errorMessage);
 			throw new IllegalArgumentException("Argument version has to be a correct value");
 		}		
 	}
@@ -252,6 +260,8 @@ public class JMutOps {
 		case POSTFIX:
 			return this.postfixed_preperator.setOptions(options);
 		default:
+			String errorMessage = "Argument version has to be a correct value";
+			this.listener.OnErrorDetected("JMutOps - setOptions", errorMessage);
 			throw new IllegalArgumentException("Argument version has to be a correct value");
 		}		
 	}
