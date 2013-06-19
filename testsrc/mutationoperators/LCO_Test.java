@@ -10,7 +10,7 @@ public class LCO_Test extends BasicMutationOperatorTest {
 	
 	@Override
 	protected String getOperatorName() {
-		return LCO.fullname;
+		return LCO.class.getSimpleName();
 	}
 
 	@Override

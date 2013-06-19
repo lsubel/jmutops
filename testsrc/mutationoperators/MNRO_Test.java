@@ -11,7 +11,7 @@ public class MNRO_Test extends BasicMutationOperatorTest {
 
 	@Override
 	protected String getOperatorName() {
-		return MNRO.fullname;
+		return MNRO.class.getSimpleName();
 	}
 
 	@Override

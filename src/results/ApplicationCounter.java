@@ -16,7 +16,7 @@ public class ApplicationCounter extends ResultListener {
 	@Override
 	public void OnMatchingFound(MutationOperator operator, ASTNode prefix,
 			ASTNode postfix) {
-		String operatorName = operator.getFullname();
+		String operatorName = operator.getClass().getSimpleName();
 		if(this.counter.containsKey(operatorName)){
 			Integer oldValue = this.counter.remove(operatorName);
 			this.counter.put(operatorName, oldValue + 1);

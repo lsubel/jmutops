@@ -8,7 +8,7 @@ public class JTI_Test extends BasicMutationOperatorTest {
 	
 	@Override
 	protected String getOperatorName() {
-		return JTI.fullname;
+		return JTI.class.getSimpleName();
 	}
 
 	@Override
