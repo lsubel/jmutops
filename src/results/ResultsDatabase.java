@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author sheak
  * 
  */
-public class DatabaseResults {
+public class ResultsDatabase {
 
 	/**
 	 * Connection values for the database
@@ -32,7 +32,7 @@ public class DatabaseResults {
 	/**
 	 * Logger
 	 */
-	private static final Logger log = Logger.getLogger(DatabaseResults.class
+	private static final Logger log = Logger.getLogger(ResultsDatabase.class
 			.getName());
 
 	/**
@@ -43,7 +43,7 @@ public class DatabaseResults {
 	/**
 	 * Initialize the database object
 	 */
-	public DatabaseResults() {
+	public ResultsDatabase() {
 		// Initialize the connection to and PostgreqSQL database
 		log.info("Try to initialize PostgreSQL JDBC Connection");
 		try {
@@ -951,7 +951,7 @@ public class DatabaseResults {
 	}
 
 	public static void main(String[] args) {
-		DatabaseResults res = new DatabaseResults();
+		ResultsDatabase res = new ResultsDatabase();
 		res.dropTables();
 		res.initializeTables();
 		res.fillLocationOfEffect();

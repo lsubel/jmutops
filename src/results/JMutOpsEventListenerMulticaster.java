@@ -9,31 +9,31 @@ import mutationoperators.MutationOperator;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 /**
- * Casts method calls to all registered {@link ResultListener}.
+ * Casts method calls to all registered {@link JMutOpsEventListener}.
  * 
  * @author Lukas Subel
  *
  */
-public class ResultListenerMulticaster implements ResultListener {
+public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	
 	/**
-	 * ArrayList containing all registered {@link ResultListener}.
+	 * ArrayList containing all registered {@link JMutOpsEventListener}.
 	 */
-	private ArrayList<ResultListener> listener = new ArrayList<ResultListener>();
+	private ArrayList<JMutOpsEventListener> listener = new ArrayList<JMutOpsEventListener>();
 	
-	public void add(ResultListener rl){
+	public void add(JMutOpsEventListener rl){
 		if(!(listener.contains(rl))){
 			listener.add(rl);
 		}
 	}
 	
-	public void remove(ResultListener rl){
+	public void remove(JMutOpsEventListener rl){
 		listener.remove(rl);
 	}
 	
 	@Override
 	public void OnBugChanged(int officalID) {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnBugChanged(officalID);
 		}
 	}
@@ -41,42 +41,42 @@ public class ResultListenerMulticaster implements ResultListener {
 	@Override
 	public void OnMatchingFound(MutationOperator operator, ASTNode prefix,
 			ASTNode postfix) {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnMatchingFound(operator, prefix, postfix);
 		}
 	}
 	
 	@Override
 	public void OnFileCheckStarted(File prefixedFile, File postfixedFile) {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnFileCheckStarted(prefixedFile, postfixedFile);
 		}
 	}
 	
 	@Override
 	public void OnProgramChanged(String newProgramName) {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnProgramChanged(newProgramName);
 		}
 	}
 	
 	@Override
 	public void OnCreatingResult() {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnCreatingResult();
 		}
 	}
 	
 	@Override
 	public void OnErrorDetected(String location, String errorMessage) {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnErrorDetected(location, errorMessage);
 		}
 	}
 
 	@Override
 	public void OnFileCheckFinished() {
-		for(ResultListener rl: this.listener){
+		for(JMutOpsEventListener rl: this.listener){
 			rl.OnFileCheckFinished();
 		}
 	}

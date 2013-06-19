@@ -13,7 +13,7 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-public class ResultsFileWriter implements ResultListener{
+public class ResultsFileWriter implements JMutOpsEventListener{
 
 	//////////////////////////////////////////
 	///	Fields
@@ -22,6 +22,10 @@ public class ResultsFileWriter implements ResultListener{
 	ArrayList<Dictionary<String, String>> results; 
 	
 	String filename;
+	
+	File prefix;
+
+	File postfix;
 	
 	//////////////////////////////////////////
 	///	Methods
@@ -45,10 +49,11 @@ public class ResultsFileWriter implements ResultListener{
 		entry.put("prefix-content", prefix.toString());
 		entry.put("prefix-node", prefix.getClass().toString());
 		entry.put("prefix-range", prefix.getStartPosition() + "-" + (prefix.getStartPosition() + prefix.getLength() - 1));
+		entry.put("prefix-file", this.prefix.getAbsolutePath());
 		entry.put("postfix-content", postfix.toString());
 		entry.put("postfix-node", postfix.getClass().toString());
 		entry.put("postfix-range", postfix.getStartPosition() + "-" + (postfix.getStartPosition() + postfix.getLength() - 1));		
-	
+		entry.put("postfix-file", this.prefix.getAbsolutePath());
 		this.results.add(entry);
 	}
 
@@ -81,10 +86,12 @@ public class ResultsFileWriter implements ResultListener{
 				bw.write("\t\t" + "Content: " + entry.get("prefix-content")  + "\n");
 				bw.write("\t\t" + "Node type: " + entry.get("prefix-node") + "\n");
 				bw.write("\t\t" + "Range: " + entry.get("prefix-range") + "\n");
+				bw.write("\t\t" + "File: " + entry.get("prefix-file") + "\n");
 				bw.write("\t" + "Postfix version: " + "\n");
 				bw.write("\t\t" + "Content: " + entry.get("postfix-content") + "\n");
 				bw.write("\t\t" + "Node type: " + entry.get("postfix-node") + "\n");
 				bw.write("\t\t" + "Range: " + entry.get("postfix-range") + "\n");
+				bw.write("\t\t" + "File: " + entry.get("postfix-file") + "\n");
 				bw.write("");
 			}
 			bw.write("\n");
@@ -108,6 +115,8 @@ public class ResultsFileWriter implements ResultListener{
 
 	@Override
 	public void OnFileCheckStarted(File prefixedFile, File postfixedFile) {	
+		this.prefix 	= prefixedFile;
+		this.postfix 	= postfixedFile;
 	}
 
 	@Override

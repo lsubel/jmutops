@@ -2,7 +2,7 @@ package mutationoperators;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import enums.MutationOperatorCategory;
-import results.ResultListenerMulticaster;
+import results.JMutOpsEventListenerMulticaster;
 
 public abstract class MutationOperator{
 
@@ -22,7 +22,7 @@ public abstract class MutationOperator{
 	/**
 	 * TODO: add javadoc
 	 */
-	protected final ResultListenerMulticaster eventListener;
+	protected final JMutOpsEventListenerMulticaster eventListener;
 	
 
 	
@@ -43,7 +43,7 @@ public abstract class MutationOperator{
 	/**
 	 * Default constructor, initializing the logger.
 	 */
-	public MutationOperator(ResultListenerMulticaster eventListener, MutationOperatorCategory category, String name) {
+	public MutationOperator(JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category, String name) {
 		// check null argument
 		if(eventListener == null){
 			throw new IllegalArgumentException("ResultListenerMulticaster eventListener cannot be null.");

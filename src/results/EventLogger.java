@@ -7,7 +7,7 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-public class OwnLogger implements ResultListener {
+public class EventLogger implements JMutOpsEventListener {
 
 	StringBuffer logger = new StringBuffer();
 	

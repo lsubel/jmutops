@@ -13,8 +13,8 @@ import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import results.ResultListener;
-import results.ResultListenerMulticaster;
+import results.JMutOpsEventListener;
+import results.JMutOpsEventListenerMulticaster;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;

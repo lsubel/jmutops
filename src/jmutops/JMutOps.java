@@ -7,8 +7,8 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import org.eclipse.jdt.core.dom.NodeFinder;
-import results.ResultListener;
-import results.ResultListenerMulticaster;
+import results.JMutOpsEventListener;
+import results.JMutOpsEventListenerMulticaster;
 
 import utils.Preperator;
 import utils.TestUtilities;
@@ -62,7 +62,7 @@ public class JMutOps {
 	/**
 	 * Multicaster which will talk to all ResultListeners which were added
 	 */
-	private ResultListenerMulticaster listener = new ResultListenerMulticaster();
+	private JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
 	
 	/////////////////////////////////////////
 	//	Constructors
@@ -277,11 +277,11 @@ public class JMutOps {
 	//	ActionListener
 	//////////////////////////////////////////////////////
 
-	public void addResultListener(ResultListener rl) {
+	public void addResultListener(JMutOpsEventListener rl) {
 		this.listener.add(rl);
 	}
 
-	public void removeResultListener(ResultListener rl){
+	public void removeResultListener(JMutOpsEventListener rl){
 		this.listener.remove(rl);
 	}
 	

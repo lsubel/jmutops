@@ -5,7 +5,7 @@ import java.io.File;
 import org.eclipse.jdt.core.dom.ASTNode;
 import mutationoperators.MutationOperator;
 
-public interface ResultListener{
+public interface JMutOpsEventListener{
 	
 	/**
 	 * Event gets fired when an mutation operator matching was found.<p>

@@ -1,13 +1,13 @@
 package mutationoperators.mnro;
 
-import results.ResultListenerMulticaster;
+import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import mutationoperators.MutationOperator;
 import mutationoperators.MutationOperatorChecker;
 
 public class MNRO extends MutationOperator {
 
-	public MNRO(ResultListenerMulticaster eventListener) {
+	public MNRO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener, MutationOperatorCategory.METHOD_LEVEL,
 				"Method name replacement operator");
 		this.matcher = new MNRO_Matcher(this);

@@ -18,7 +18,7 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 
-import results.ResultListenerMulticaster;
+import results.JMutOpsEventListenerMulticaster;
 
 public class Preperator {
 
@@ -48,7 +48,7 @@ public class Preperator {
 	
 	File defaultPath;
 	
-	ResultListenerMulticaster listener;
+	JMutOpsEventListenerMulticaster listener;
 	
 	///////////////////////////////////////////////////
 	///	Methods
@@ -59,7 +59,7 @@ public class Preperator {
 	 * @param listener TODO
 	 * @param inputFile
 	 */
-	public Preperator(ResultListenerMulticaster listener, File defaultPath) {
+	public Preperator(JMutOpsEventListenerMulticaster listener, File defaultPath) {
 		// store parameter
 		this.defaultPath = defaultPath;
 		this.listener = listener;
