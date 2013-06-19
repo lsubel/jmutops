@@ -24,8 +24,6 @@ public abstract class MutationOperator{
 	 */
 	protected final JMutOpsEventListenerMulticaster eventListener;
 	
-
-	
 	/**
 	 * Reference to the ASTVisitor related to this Mutation Operator
 	 */

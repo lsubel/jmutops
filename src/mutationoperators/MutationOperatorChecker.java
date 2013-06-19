@@ -150,10 +150,12 @@ public class MutationOperatorChecker {
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
+			case DOC_INSERT:
+				// since comment updates do not fix bugs, we ignore this case
+				break;
 			case ADDING_ATTRIBUTE_MODIFIABILITY:
 			case ADDING_CLASS_DERIVABILITY:
 			case ADDING_METHOD_OVERRIDABILITY:
-			case DOC_INSERT:
 			case PARAMETER_INSERT:
 			case PARENT_CLASS_INSERT:
 			case PARENT_INTERFACE_INSERT:
@@ -190,6 +192,8 @@ public class MutationOperatorChecker {
 			// in case of a class change
 			switch (change.getChangeType()) {
 			case DOC_DELETE:
+				// since comment updates do not fix bugs, we ignore this case
+				break;
 			case PARAMETER_DELETE:
 			case PARENT_CLASS_DELETE:
 			case PARENT_INTERFACE_DELETE:
@@ -288,6 +292,10 @@ public class MutationOperatorChecker {
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
+			case DOC_UPDATE:
+				// since comment updates do not fix bugs, we ignore this case
+				break;
+				
 			case ATTRIBUTE_RENAMING:
 			case ATTRIBUTE_TYPE_CHANGE:
 				
@@ -295,8 +303,7 @@ public class MutationOperatorChecker {
 				
 			case DECREASING_ACCESSIBILITY_CHANGE:
 
-			case DOC_UPDATE:
-				
+
 			case INCREASING_ACCESSIBILITY_CHANGE:
 				
 			case METHOD_RENAMING:
