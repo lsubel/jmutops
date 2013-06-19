@@ -41,9 +41,9 @@ public class ResultListenerMulticaster implements ResultListener {
 	}
 	
 	@Override
-	public void OnBugChanged() {
+	public void OnBugChanged(int officalID) {
 		for(ResultListener rl: this.listener){
-			rl.OnBugChanged();
+			rl.OnBugChanged(officalID);
 		}
 	}
 	

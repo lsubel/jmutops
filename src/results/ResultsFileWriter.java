@@ -110,7 +110,7 @@ public class ResultsFileWriter implements ResultListener{
 	}
 
 	@Override
-	public void OnBugChanged() {	
+	public void OnBugChanged(int officalID) {	
 	}
 
 	@Override

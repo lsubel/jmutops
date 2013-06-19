@@ -189,6 +189,10 @@ public class JMutOps {
 		this.listener.OnProgramChanged(programName);
 	}
 	
+	public void initBug(String officialID){
+		// TODO: fire event
+	}
+	
 	/**
 	 * Add path to required binary type.
 	 * 
