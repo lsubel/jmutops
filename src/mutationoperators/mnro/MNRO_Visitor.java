@@ -3,6 +3,7 @@ package mutationoperators.mnro;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
 import mutationoperators.BaseASTMatcher;
@@ -15,31 +16,24 @@ public class MNRO_Visitor extends BaseASTVisitor {
 	}
 
 	@Override
-	protected void visitSubtree(ASTNode left, ASTNode right) {
-		if(left != null){
-			this.secondTree = right;
-			left.accept(this);
-		}
-	}
-
-	@Override
-	protected void visitSubtrees(List list1, List list2) {
-		if(list1.size() == list2.size()){
-			for(int i=0; i < list1.size(); i++){
-				visitSubtree((ASTNode) list1.get(i), (ASTNode) list2.get(i));
-			}
-		}
-
-	}
-
-	@Override
 	public boolean visit(MethodInvocation node) {
+		// locally store the AST
+		ASTNode localStoredTree = getSecondTree();
 
-		matcher.match(node, this.secondTree);
+		if(localStoredTree instanceof MethodInvocation){
+			MethodInvocation mi = (MethodInvocation) localStoredTree;
+			
+			// check for an application
+			matcher.match(node, mi);
+			
+			// visit the expression node
+			visitSubtree(node.getExpression(), mi.getExpression());;
+			
+			// visit each arguments 
+			visitSubtrees(node.arguments(), mi.arguments());
+		}
 		
 		return super.visit(node);
 	}
-
-	
 	
 }

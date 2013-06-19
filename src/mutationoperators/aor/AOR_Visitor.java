@@ -17,23 +17,6 @@ public class AOR_Visitor extends BaseASTVisitor {
 	}
 
 	@Override
-	protected void visitSubtree(ASTNode left, ASTNode right) {
-		if(left != null){
-			this.secondTree = right;
-			left.accept(this);
-		}
-	}
-
-	@Override
-	protected void visitSubtrees(List list1, List list2) {
-		if(list1.size() == list2.size()){
-			for(int i=0; i < list1.size(); i++){
-				visitSubtree((ASTNode) list1.get(i), (ASTNode) list2.get(i));
-			}
-		}
-	}
-
-	@Override
 	public boolean visit(InfixExpression node) {
 		// locally store the AST
 		ASTNode localStoredTree = getSecondTree();

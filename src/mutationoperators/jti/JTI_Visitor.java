@@ -51,7 +51,7 @@ public class JTI_Visitor extends BaseASTVisitor {
 		matcher.match(node, secondTree);
 		
 		// store tree locally
-		ASTNode tempStore = secondTree;
+		ASTNode tempStore = getSecondTree();
 		
 		// call visitor on subelements
 		if(tempStore instanceof MethodInvocation){
@@ -108,24 +108,5 @@ public class JTI_Visitor extends BaseASTVisitor {
 	public boolean visit(SimpleName node) {
 		matcher.match(node, this.secondTree);
 		return false;
-	}
-
-	@Override
-	protected void visitSubtree(ASTNode left, ASTNode right){
-		if(left != null){
-			this.secondTree = right;
-			left.accept(this);
-		}
-	}
-
-	@Override
-	protected void visitSubtrees(List list1, List list2) {
-		if(list1.size() == list2.size()){
-			for(int i=0; i < list1.size(); i++){
-				visitSubtree((ASTNode) list1.get(i), (ASTNode) list2.get(i));
-			}
-		}
-	}
-	
-	
+	}	
 }

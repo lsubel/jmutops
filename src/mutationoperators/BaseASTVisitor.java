@@ -128,9 +128,20 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 		this.secondTree = ast;
 	}
 	
-	protected abstract void visitSubtree(ASTNode left, ASTNode right);
-	
-	protected abstract void visitSubtrees(List list1, List list2);
+	protected void visitSubtree(ASTNode left, ASTNode right){
+		if(left != null){
+			this.secondTree = right;
+			left.accept(this);
+		}
+	}
+
+	protected void visitSubtrees(List list1, List list2) {
+		if(list1.size() == list2.size()){
+			for(int i=0; i < list1.size(); i++){
+				visitSubtree((ASTNode) list1.get(i), (ASTNode) list2.get(i));
+			}
+		}
+	}
 	
 	/////////////////////////////////////////////////////////////
 	//
