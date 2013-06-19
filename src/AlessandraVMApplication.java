@@ -14,6 +14,7 @@ import org.eclipse.jdt.core.JavaCore;
 import enums.OptionsVersion;
 
 import results.ApplicationCounter;
+import results.OwnLogger;
 import results.ResultsFileWriter;
 
 import utils.Settings;
@@ -79,6 +80,9 @@ public class AlessandraVMApplication {
 		ResultsFileWriter fr = new ResultsFileWriter();
 		fr.setResultingFileName("results_" + iBugs_ID + ".txt");
 		jmutops.addResultListener(fr);
+		
+		OwnLogger ol = new OwnLogger();
+		jmutops.addResultListener(ol);
 		
 		// look for source folders in pathToSources
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);

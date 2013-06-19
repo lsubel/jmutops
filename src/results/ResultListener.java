@@ -22,10 +22,10 @@ public interface ResultListener{
 	public void OnProgramChanged(String newProgramName);
 	
 	/**
-	 * @param officalID the offical ID related to this bug.
+	 * @param officialID the official ID related to this bug.
 	 * 
 	 */
-	public void OnBugChanged(int officalID);
+	public void OnBugChanged(int officialID);
 	
 	/**
 	 * Event gets fired when the check of two files started.
