@@ -16,7 +16,6 @@ import enums.OptionsVersion;
 import results.ApplicationCounter;
 import results.ResultsFileWriter;
 
-import utils.LoggerFactory;
 import utils.Settings;
 
 
@@ -59,7 +58,7 @@ public class AlessandraVMApplication {
 		}
 		
 		// initialize the logger
-		Logger logger = LoggerFactory.getLogger(TestApplication.class.getName());
+		Logger logger = Logger.getLogger(TestApplication.class.getName());
 		// set the handler for the root logger
 		if(Settings.LOGGER_WRITE_FILE){
 			try {

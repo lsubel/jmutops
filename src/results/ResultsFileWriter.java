@@ -13,18 +13,11 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import utils.LoggerFactory;
-
 public class ResultsFileWriter implements ResultListener{
 
 	//////////////////////////////////////////
 	///	Fields
 	//////////////////////////////////////////
-	
-	/**
-	 * Logger.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(ResultsFileWriter.class.getName());
 	
 	ArrayList<Dictionary<String, String>> results; 
 	
@@ -72,8 +65,8 @@ public class ResultsFileWriter implements ResultListener{
 			fw = new FileWriter(resultingFile);
 			bw = new BufferedWriter(fw);
 		} catch (IOException e) {
-			logger.warning("Could not initialize file with results.");
-			return;
+			System.out.println("Could not initialize file with results.");
+			System.exit(0);
 		}
 		
 		// write results into the file
@@ -100,8 +93,8 @@ public class ResultsFileWriter implements ResultListener{
 			bw.write("///////////////////////////////////////////////////////" + "\n");	
 			bw.close();
 		} catch (IOException e) {
-			logger.warning("Could not write all results into file.");
-			return;
+			System.out.println("Could not write all results into file.");
+			System.exit(0);
 		}
 	}
 

@@ -1,18 +1,8 @@
 package mutationoperators;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.logging.Logger;
-
-import mutationoperators.jti.JTI;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.InfixExpression.Operator;
-
 import enums.MutationOperatorCategory;
-
-import results.DatabaseResults;
 import results.ResultListenerMulticaster;
-import utils.LoggerFactory;
 
 public abstract class MutationOperator{
 
@@ -34,10 +24,7 @@ public abstract class MutationOperator{
 	 */
 	protected final ResultListenerMulticaster eventListener;
 	
-	/**
-	 * Logger
-	 */
-	protected Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+
 	
 	/**
 	 * Reference to the ASTVisitor related to this Mutation Operator
@@ -92,8 +79,6 @@ public abstract class MutationOperator{
 	 * @param rightNode The postfix code.
 	 */
 	public void found(ASTNode leftNode, ASTNode rightNode){
-		// generate log message 
-		logger.fine("Found application of " + this.getClass().getSimpleName() + " operator.");
 		// notify other ResultInterfaces
 		this.eventListener.OnMatchingFound(this, leftNode, rightNode);
 	}

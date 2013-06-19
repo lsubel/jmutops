@@ -8,8 +8,6 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import utils.LoggerFactory;
-
 /**
  * Casts method calls to all registered {@link ResultListener}.
  * 
@@ -17,11 +15,6 @@ import utils.LoggerFactory;
  *
  */
 public class ResultListenerMulticaster implements ResultListener {
-
-	/**
-	 * Logger.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(ResultListenerMulticaster.class.getName());
 	
 	/**
 	 * ArrayList containing all registered {@link ResultListener}.
@@ -31,13 +24,11 @@ public class ResultListenerMulticaster implements ResultListener {
 	public void add(ResultListener rl){
 		if(!(listener.contains(rl))){
 			listener.add(rl);
-			ResultListenerMulticaster.logger.fine("ResultListener " + rl.getClass().getSimpleName() + " was added.");
 		}
 	}
 	
 	public void remove(ResultListener rl){
 		listener.remove(rl);
-		ResultListenerMulticaster.logger.fine("ResultListener " + rl.getClass().getSimpleName() + " was removed.");
 	}
 	
 	@Override

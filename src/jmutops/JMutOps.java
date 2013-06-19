@@ -2,18 +2,14 @@ package jmutops;
 import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.NodeFinder;
-import org.eclipse.jdt.core.dom.Statement;
 
-import results.DatabaseResults;
+import org.eclipse.jdt.core.dom.NodeFinder;
 import results.ResultListener;
 import results.ResultListenerMulticaster;
 
-import utils.LoggerFactory;
 import utils.Preperator;
 import utils.TestUtilities;
 
