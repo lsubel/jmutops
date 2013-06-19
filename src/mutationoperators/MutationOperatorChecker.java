@@ -171,8 +171,10 @@ public class MutationOperatorChecker {
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
 			switch (change.getChangeType()) {
-			case ALTERNATIVE_PART_DELETE:
 			case COMMENT_DELETE:
+				// since comment updates do not fix bugs, we ignore this case
+				break;				
+			case ALTERNATIVE_PART_DELETE:
 			case REMOVED_CLASS:
 			case REMOVED_FUNCTIONALITY:
 			case REMOVED_OBJECT_STATE:
@@ -206,14 +208,15 @@ public class MutationOperatorChecker {
 			// in case of a body change
 			switch (change.getChangeType()) {
 
-			// since comment updates do not fix bugs, we ignore this case
 			case COMMENT_MOVE:
+				// since comment updates do not fix bugs, we ignore this case
 				break;
 
 			case STATEMENT_ORDERING_CHANGE:
 			case STATEMENT_PARENT_CHANGE:
 			case UNCLASSIFIED_CHANGE:
-				// default case means some error
+				break;
+				
 			default:
 				throw new IllegalStateException(
 						"Expected body move, but found "
@@ -287,25 +290,31 @@ public class MutationOperatorChecker {
 			switch (change.getChangeType()) {
 			case ATTRIBUTE_RENAMING:
 			case ATTRIBUTE_TYPE_CHANGE:
+				
 			case CLASS_RENAMING:
+				
 			case DECREASING_ACCESSIBILITY_CHANGE:
 
 			case DOC_UPDATE:
+				
 			case INCREASING_ACCESSIBILITY_CHANGE:
+				
 			case METHOD_RENAMING:
 
 			case PARAMETER_ORDERING_CHANGE:
 			case PARAMETER_RENAMING:
 			case PARAMETER_TYPE_CHANGE:
+				
 			case PARENT_CLASS_CHANGE:
-
 			case PARENT_INTERFACE_CHANGE:
 
 			case REMOVING_ATTRIBUTE_MODIFIABILITY:
 			case REMOVING_CLASS_DERIVABILITY:
 			case REMOVING_METHOD_OVERRIDABILITY:
+				
 			case RETURN_TYPE_CHANGE:
-
+				
+			case UNCLASSIFIED_CHANGE:
 				break;
 			default:
 				throw new IllegalStateException(
