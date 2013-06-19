@@ -28,6 +28,7 @@ import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import enums.OptionsVersion;
 
 
@@ -122,19 +123,45 @@ public class JMutOps {
 		// handle each change
 		for(SourceCodeChange change: changes){
 			
-			if(change instanceof Update){
-				// cast the change into the correct type
-				Update change_update = (Update) change;	
+			if((change instanceof Update) || (change instanceof Move)){
+				SourceCodeEntity sce_old;
+				SourceCodeEntity sce_new;
+				int sce_old_start;
+				int sce_old_end;
+				int sce_new_start;
+				int sce_new_end;
 				
-				// extract the change entities
-				SourceCodeEntity sce_old = change_update.getChangedEntity();
-				SourceCodeEntity sce_new = change_update.getNewEntity();
+				if(change instanceof Update){
+					// cast the change into the correct type
+					Update change_update = (Update) change;	
 				
-				// extract the ranges in the document
-				int sce_old_start 	= sce_old.getStartPosition();
-				int sce_old_end 	= sce_old.getEndPosition();
-				int sce_new_start 	= sce_new.getStartPosition();
-				int sce_new_end 	= sce_new.getEndPosition();
+					// extract the change entities
+					sce_old = change_update.getChangedEntity();
+					sce_new = change_update.getNewEntity();
+				
+					// extract the ranges in the document
+					sce_old_start 	= sce_old.getStartPosition();
+					sce_old_end 	= sce_old.getEndPosition();
+					sce_new_start 	= sce_new.getStartPosition();
+					sce_new_end 	= sce_new.getEndPosition();
+				}
+				else if(change instanceof Move){
+					// cast the change into the correct type
+					Move change_move = (Move) change;	
+				
+					// extract the change entities
+					sce_old = change_move.getChangedEntity();
+					sce_new = change_move.getNewEntity();
+				
+					// extract the ranges in the document
+					sce_old_start 	= sce_old.getStartPosition();
+					sce_old_end 	= sce_old.getEndPosition();
+					sce_new_start 	= sce_new.getStartPosition();
+					sce_new_end 	= sce_new.getEndPosition();
+				}
+				else{
+					throw new IllegalStateException("This exception should never be thrown.");
+				}
 
 				// extract information for first file
 				NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
@@ -146,7 +173,7 @@ public class JMutOps {
 
 				// run the mutation operator check
 				this.checker.checkForMutationOperators(expr_left, expr_right, change);
-			}	
+			}	// end of if((change instanceof Update) || (change instanceof Move)){
 		}
 	}
 	
