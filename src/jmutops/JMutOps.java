@@ -67,11 +67,6 @@ public class JMutOps {
 	private Preperator postfixed_preperator;
 
 	/**
-	 * Stores the name of the program related to this changes.
-	 */
-	private String programName;
-
-	/**
 	 * Multicaster which will talk to all ResultListeners which were added
 	 */
 	private ResultListenerMulticaster listener = new ResultListenerMulticaster();
@@ -159,8 +154,7 @@ public class JMutOps {
 	 * @param programName
 	 */
 	public void initProgram(String programName){
-		this.programName = programName;
-		// TODO: call OnCreateProgram event
+		this.listener.OnProgramChanged(programName);
 	}
 	
 	/**
