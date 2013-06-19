@@ -15,8 +15,12 @@ import org.eclipse.jdt.core.dom.ASTNode;
 
 import utils.LoggerFactory;
 
-public class ResultsFileWriter extends ResultListener{
+public class ResultsFileWriter implements ResultListener{
 
+	//////////////////////////////////////////
+	///	Fields
+	//////////////////////////////////////////
+	
 	/**
 	 * Logger.
 	 */
@@ -25,6 +29,10 @@ public class ResultsFileWriter extends ResultListener{
 	ArrayList<Dictionary<String, String>> results; 
 	
 	String filename;
+	
+	//////////////////////////////////////////
+	///	Methods
+	//////////////////////////////////////////
 	
 	public ResultsFileWriter() {
 		this.results = new ArrayList<Dictionary<String, String>>();
@@ -95,6 +103,26 @@ public class ResultsFileWriter extends ResultListener{
 			logger.warning("Could not write all results into file.");
 			return;
 		}
+	}
+
+	@Override
+	public void OnProgramChanged(String newProgramName) {
+	}
+
+	@Override
+	public void OnBugChanged() {	
+	}
+
+	@Override
+	public void OnFileCheckStarted(File prefixedFile, File postfixedFile) {	
+	}
+
+	@Override
+	public void OnErrorDetected(String location, String errorMessage) {
+	}
+
+	@Override
+	public void OnFileCheckFinished() {
 	}
 
 	

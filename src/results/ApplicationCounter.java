@@ -1,11 +1,12 @@
 package results;
 
+import java.io.File;
 import java.util.HashMap;
 
 import mutationoperators.MutationOperator;
 import org.eclipse.jdt.core.dom.ASTNode;
 
-public class ApplicationCounter extends ResultListener {
+public class ApplicationCounter implements ResultListener {
 
 	private HashMap<String, Integer> counter;
 	
@@ -41,6 +42,26 @@ public class ApplicationCounter extends ResultListener {
 		} else{
 			return 0;
 		}
+	}
+
+	@Override
+	public void OnProgramChanged(String newProgramName) {	
+	}
+
+	@Override
+	public void OnBugChanged() {
+	}
+
+	@Override
+	public void OnFileCheckStarted(File prefixedFile, File postfixedFile) {
+	}
+
+	@Override
+	public void OnErrorDetected(String location, String errorMessage) {
+	}
+
+	@Override
+	public void OnFileCheckFinished() {
 	}
 
 }

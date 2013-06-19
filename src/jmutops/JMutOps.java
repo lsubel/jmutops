@@ -100,7 +100,8 @@ public class JMutOps {
 			throw new IllegalArgumentException("Second argument must not be null.");
 		}
 		
-		// TODO: fire OnNewFileStarted here
+		// fire OnNewFileStarted here
+		this.listener.OnFileCheckStarted(prefixedFile, postfixedFile);
 		
 		// prepare both files
 		prefixed_preperator.prepare(prefixedFile);
@@ -175,6 +176,9 @@ public class JMutOps {
 				this.checker.checkForMutationOperators(expr_left, expr_right, change);
 			}	// end of if((change instanceof Update) || (change instanceof Move)){
 		}
+		
+		// fire OnRunFinished here
+		this.listener.OnFileCheckFinished();
 	}
 	
 	/**

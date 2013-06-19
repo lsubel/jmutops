@@ -1,5 +1,6 @@
 package results;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ import utils.LoggerFactory;
  * @author Lukas Subel
  *
  */
-public class ResultListenerMulticaster extends ResultListener {
+public class ResultListenerMulticaster implements ResultListener {
 
 	/**
 	 * Logger.
@@ -55,9 +56,9 @@ public class ResultListenerMulticaster extends ResultListener {
 	}
 	
 	@Override
-	public void OnNewFileStarted() {
+	public void OnFileCheckStarted(File prefixedFile, File postfixedFile) {
 		for(ResultListener rl: this.listener){
-			rl.OnNewFileStarted();
+			rl.OnFileCheckStarted(prefixedFile, postfixedFile);
 		}
 	}
 	
@@ -79,6 +80,13 @@ public class ResultListenerMulticaster extends ResultListener {
 	public void OnErrorDetected(String location, String errorMessage) {
 		for(ResultListener rl: this.listener){
 			rl.OnErrorDetected(location, errorMessage);
+		}
+	}
+
+	@Override
+	public void OnFileCheckFinished() {
+		for(ResultListener rl: this.listener){
+			rl.OnFileCheckFinished();
 		}
 	}
 
