@@ -57,24 +57,6 @@ public class AlessandraVMApplication {
 			System.exit(0);
 		}
 		
-		// initialize the logger
-		Logger logger = Logger.getLogger(TestApplication.class.getName());
-		// set the handler for the root logger
-		if(Settings.LOGGER_WRITE_FILE){
-			try {
-				Logger tempAnonymousLogger = Logger.getAnonymousLogger();
-				Handler handler = new FileHandler("log_" + iBugs_ID + ".txt");
-				handler.setLevel(Settings.LOGGER_LEVEL);
-				tempAnonymousLogger.getParent().setLevel(Settings.LOGGER_LEVEL);
-				tempAnonymousLogger.getParent().addHandler(handler);
-				logger.info("Set FileHandler for logger.");
-			} catch (SecurityException e) {
-				logger.info("Could not set FileHandler for logger.");
-			} catch (IOException e) {
-				logger.info("Could not set FileHandler for logger.");
-			}
-		}
-		
 		// extract the different paths
 		String initialPath = pathToIDFolders + File.separator + iBugs_ID;
 		String prefixFolder  = initialPath + File.separator + PREFIX;
@@ -102,8 +84,6 @@ public class AlessandraVMApplication {
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
 		checkForSrc(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
 		
-		logger.info("Starting to check iBugs ID " + iBugs_ID + ".");
-		
 		// check each file in the prefix folder
 		for(File prefixFile: prefixFoldercontent){
 			File postfixFile = new File(postfixFolder + "\\" + prefixFile.getName());
@@ -118,18 +98,14 @@ public class AlessandraVMApplication {
 				continue;
 			}
 			
-			logger.fine("Starting to check file " + prefixFile.getName() + ".");
-			
 			try {
 				jmutops.checkFiles(prefixFile, postfixFile);
 			} catch (Exception e) {
 				System.out.println("Exception found: " + e.getMessage());
 			}
 							
-			logger.fine("Ending to check file " + postfixFile.getName() + ".");
 		}
 		
-		logger.info("Ending to check iBugs ID " + iBugs_ID + ".");
 		
 		jmutops.createResults();
 	}
