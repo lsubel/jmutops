@@ -7,16 +7,10 @@ import mutationoperators.MutationOperatorChecker;
 
 public class MNRO extends MutationOperator {
 
-	public static final String fullname = "Method name replacement operator";
-	
 	public MNRO(ResultListenerMulticaster eventListener) {
-		super(eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener, MutationOperatorCategory.METHOD_LEVEL,
+				"Method name replacement operator");
 		this.matcher = new MNRO_Matcher(this);
 		this.visitor = new MNRO_Visitor(this.matcher);
-	}
-	
-	@Override
-	public String getFullname() {
-		return this.fullname;
 	}
 }
