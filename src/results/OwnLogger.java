@@ -66,8 +66,8 @@ public class OwnLogger implements ResultListener {
 	public void OnErrorDetected(String location, String errorMessage) {
 		Date now = new Date();
 		logger.append(now.toString() + " - Error detected:" + "\n");
-		logger.append("\t" + "Location: " + location);
-		logger.append("\t" + "Message: " + errorMessage);
+		logger.append("\t" + "Location: " + location + "\n");
+		logger.append("\t" + "Message: " + errorMessage + "\n");
 		logger.append("\n");
 	}
 
