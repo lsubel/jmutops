@@ -87,15 +87,7 @@ public abstract class MutationOperator{
 	 */
 	public void found(ASTNode leftNode, ASTNode rightNode){
 		// generate log message 
-		logger.fine("Found application of " + this.getClass().getSimpleName() + " operator:" + "\n" +
-		"\t" + "Prefix version: " + "\n" +
-		"\t\t" + "Content: " + leftNode.toString()  + "\n" +
-		"\t\t" + "Node type: " + leftNode.getClass().toString() + "\n" +
-		"\t\t" + "Range: " + leftNode.getStartPosition() + "-" + (leftNode.getStartPosition() + leftNode.getLength() - 1) + "\n" +
-		"\t" + "Postfix version: " + "\n" +
-		"\t\t" + "Content: " + rightNode.toString() + "\n" +
-		"\t\t" + "Node type: " + rightNode.getClass().toString() + "\n" +
-		"\t\t" + "Range: " + rightNode.getStartPosition() + "-" + (rightNode.getStartPosition() + rightNode.getLength() - 1)+ "\n");
+		logger.fine("Found application of " + this.getClass().getSimpleName() + " operator.");
 		// notify other ResultInterfaces
 		this.eventListener.OnMatchingFound(this, leftNode, rightNode);
 	}
