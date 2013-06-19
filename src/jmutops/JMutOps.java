@@ -20,6 +20,7 @@ import utils.TestUtilities;
 import mutationoperators.MutationOperatorChecker;
 import mutationoperators.aor.AOR;
 import mutationoperators.jti.JTI;
+import mutationoperators.lco.LCO;
 import mutationoperators.mnro.MNRO;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
@@ -151,7 +152,7 @@ public class JMutOps {
 	
 	/**
 	 * Initial a new program to check.
-	 * @param programName
+	 * @param programName The new program's name.
 	 */
 	public void initProgram(String programName){
 		this.listener.OnProgramChanged(programName);
@@ -228,6 +229,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new JTI(this.listener));
 		this.checker.addMutationOperator(new AOR(this.listener));
 		this.checker.addMutationOperator(new MNRO(this.listener));
+		this.checker.addMutationOperator(new LCO(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
