@@ -1,6 +1,3 @@
 - Maybe implement EventListener in ResultInterface
 - Use ENUM to define the MutationOperators which should be added
 - Change Logger mechanic to use value from Setting
-
-- Improve examples to fit into document 
-- Include that both external tools are runnable alone
