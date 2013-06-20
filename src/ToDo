@@ -2,10 +2,5 @@
 - Use ENUM to define the MutationOperators which should be added
 - Change Logger mechanic to use value from Setting
 
-- thebibliography -> bibtex  
-- Figure 5 bigger/better readable; maybe 2x2 version is better
-- Background into JMutOps; rename "Required tools"
-- Remove code line in figures
 - Improve examples to fit into document 
 - Include that both external tools are runnable alone
-- Write correct schedule, starting from July 1st
