@@ -85,37 +85,37 @@ public class AOR_Test extends BasicMutationOperatorTest {
 	
 	@Test
 	public void testAOR_ShortCut1() {
-		int diff = compareMatches("a++;", "++a;");
+		int diff = compareMatches("System.out.println(); this.a++;", "System.out.println(); ++this.a;");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testAOR_ShortCut2() {
-		int diff = compareMatches("--a;", "a--;");
+		int diff = compareMatches("System.out.println(); --this.a;", "System.out.println(); this.a--;");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testAOR_ShortCut3() {
-		int diff = compareMatches("++a;", "a--;");
+		int diff = compareMatches("System.out.println(); ++this.a;", "System.out.println(); this.a--;");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testAOR_ShortCut4() {
-		int diff = compareMatches("--a;", "a++;");
+		int diff = compareMatches("System.out.println(); --this.a;", "System.out.println(); this.a++;");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testAOR_ShortCut5() {
-		int diff = compareMatches("--a;", "++a;");
+		int diff = compareMatches("System.out.println(); --this.a;", "System.out.println(); ++this.a;");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testAOR_ShortCut6() {
-		int diff = compareMatches("++a;", "--a;");
+		int diff = compareMatches("System.out.println(); ++this.a;", "System.out.println(); --this.a;");
 		assertEquals(1, diff);
 	}
 }
