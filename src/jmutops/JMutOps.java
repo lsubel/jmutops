@@ -193,7 +193,9 @@ public class JMutOps {
 			List<SourceCodeChange> changes) {
 		List<SourceCodeChange> newList = new ArrayList<SourceCodeChange>();
 
-		for(SourceCodeChange change: changes){
+		while(changes.size() != 0){
+			
+			SourceCodeChange change = changes.get(0);
 			
 			int nInsertStart;
 			int nInsertEnd;
