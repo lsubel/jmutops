@@ -57,6 +57,16 @@ public class AOR_Visitor extends BaseASTVisitor {
 			// visit the operand
 			visitSubtree(node.getOperand(), pe.getOperand());
 		}
+		else if(localStoredTree instanceof PrefixExpression){
+			PrefixExpression pe = (PrefixExpression) localStoredTree;
+				
+			// check for an application
+			matcher.match(node, pe);
+				
+			// visit the operand
+			visitSubtree(node.getOperand(), pe.getOperand());
+		}
+			
 		
 		super.visit(node);
 		return true;
@@ -70,6 +80,15 @@ public class AOR_Visitor extends BaseASTVisitor {
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof PrefixExpression){
 			PrefixExpression pe = (PrefixExpression) localStoredTree;
+			
+			// check for an application
+			matcher.match(node, pe);
+			
+			// visit the operand
+			visitSubtree(node.getOperand(), pe.getOperand());
+		}
+		else if(localStoredTree instanceof PostfixExpression){
+			PostfixExpression pe = (PostfixExpression) localStoredTree;
 			
 			// check for an application
 			matcher.match(node, pe);

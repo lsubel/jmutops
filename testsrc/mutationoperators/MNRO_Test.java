@@ -35,15 +35,15 @@ public class MNRO_Test extends BasicMutationOperatorTest {
 				;
 	}
 	
-	@Test
+	@Test 
 	public void testMNRO_Match1() {
-		int diff = compareMatches("resetCounter();", "resetName();");
+		int diff = compareMatches("System.out.println(); resetCounter();", "System.out.println(); resetName();");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testMNRO_Match2() {
-		int diff = compareMatches("int a = getCounter(); incrementCounter(a);", "int a = getNameLength(); incrementCounter(a);");
+		int diff = compareMatches("System.out.println(); int a = getCounter(); incrementCounter(a);", "System.out.println(); int a = getNameLength(); incrementCounter(a);");
 		assertEquals(1, diff);
 	}
 	

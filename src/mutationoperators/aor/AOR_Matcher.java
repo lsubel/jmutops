@@ -98,8 +98,8 @@ public class AOR_Matcher extends BaseASTMatcher {
 			PostfixExpression pe = (PostfixExpression) other;	
 			
 			boolean correctPostfixedShortcutOperator = 
-					(pe.getOperator().equals(PrefixExpression.Operator.INCREMENT))
-					|| (pe.getOperator().equals(PrefixExpression.Operator.DECREMENT));
+					(pe.getOperator().equals(PostfixExpression.Operator.INCREMENT))
+					|| (pe.getOperator().equals(PostfixExpression.Operator.DECREMENT));
 			
 			if(correctPrefixedShortcutOperator && correctPostfixedShortcutOperator){
 				this.mutop.found(node, pe);

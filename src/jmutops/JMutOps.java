@@ -1,5 +1,6 @@
 package jmutops;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import mutationoperators.mnro.MNRO;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
 import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
@@ -119,6 +122,8 @@ public class JMutOps {
 			return;
 		}
 		
+		changes = summarizeChanges(changes);
+		
 		// handle each change
 		for(SourceCodeChange change: changes){
 			
@@ -181,6 +186,80 @@ public class JMutOps {
 		this.listener.OnFileCheckFinished();
 	}
 	
+	private List<SourceCodeChange> summarizeChanges(
+			List<SourceCodeChange> changes) {
+		List<SourceCodeChange> newList = new ArrayList<SourceCodeChange>();
+
+		for(SourceCodeChange change: changes){
+			
+			int nInsertStart;
+			int nInsertEnd;
+			
+			if(change instanceof Insert){
+				Insert castedChange = (Insert) change;
+				changes.remove(change);
+				
+				for(SourceCodeChange change2: changes){
+					if(change2 instanceof Delete){
+						Delete castedChange2 = (Delete) change2;
+						
+						boolean sameRange = 
+								(castedChange.getChangedEntity().getStartPosition() == castedChange2.getChangedEntity().getStartPosition())
+								&& (castedChange.getChangedEntity().getEndPosition() == castedChange2.getChangedEntity().getEndPosition());
+						boolean sameParentEntity = castedChange.getParentEntity() == castedChange2.getParentEntity();
+						boolean sameRootEntity = castedChange.getRootEntity() == castedChange2.getRootEntity();
+						if(sameRange && sameParentEntity && sameRootEntity){
+							Update newUpdate = new Update(castedChange.getRootEntity(), castedChange2.getChangedEntity(), castedChange.getChangedEntity(), castedChange.getParentEntity());
+							changes.remove(change);
+							changes.remove(change2);
+							castedChange = null;
+							newList.add(newUpdate);
+							break;
+						}
+					}
+				}
+				
+				if(castedChange != null){
+					newList.add(castedChange);
+				}
+			}
+			
+			else if(change instanceof Delete){
+				Delete castedChange = (Delete) change;
+				changes.remove(change);
+				
+				for(SourceCodeChange change2: changes){
+					if(change2 instanceof Insert){
+						Insert castedChange2 = (Insert) change2;
+						
+						boolean sameRange = 
+								(castedChange.getChangedEntity().getStartPosition() == castedChange2.getChangedEntity().getStartPosition())
+								&& (castedChange.getChangedEntity().getEndPosition() == castedChange2.getChangedEntity().getEndPosition());
+						boolean sameParentEntity = castedChange.getParentEntity() == castedChange2.getParentEntity();
+						boolean sameRootEntity = castedChange.getRootEntity() == castedChange2.getRootEntity();
+						if(sameRange && sameParentEntity && sameRootEntity){
+							Update newUpdate = new Update(castedChange.getRootEntity(), castedChange.getChangedEntity(), castedChange2.getChangedEntity(), castedChange.getParentEntity());
+							changes.remove(change2);
+							castedChange = null;
+							newList.add(newUpdate);
+							break;
+						}
+					}
+				}
+				
+				if(castedChange != null){
+					newList.add(castedChange);
+				}
+			}
+			else{
+				newList.add(change);
+				changes.remove(change);
+			}
+			
+		}
+		return newList;
+	}
+
 	/**
 	 * Initial a new program to check.
 	 * @param programName The new program's name.
