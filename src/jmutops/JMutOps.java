@@ -12,6 +12,7 @@ import results.JMutOpsEventListener;
 import results.JMutOpsEventListenerMulticaster;
 
 import utils.Preperator;
+import utils.Settings;
 import utils.TestUtilities;
 
 import mutationoperators.MutationOperatorChecker;
@@ -122,7 +123,9 @@ public class JMutOps {
 			return;
 		}
 		
-		changes = summarizeChanges(changes);
+		if(Settings.TRY_TO_SUMMARIZE_CHANGES){
+			changes = summarizeChanges(changes);
+		}
 		
 		// handle each change
 		for(SourceCodeChange change: changes){

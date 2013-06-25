@@ -33,4 +33,6 @@ public class Settings {
 	 * Contains the default folder name for postfix folders.
 	 */
 	public static final String DEFAULT_POSTFIX_FOLDER = "post-fix";
+	
+	public static final boolean TRY_TO_SUMMARIZE_CHANGES = true;
 }
