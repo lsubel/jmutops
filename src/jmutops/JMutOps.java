@@ -99,7 +99,7 @@ public class JMutOps {
 			throw new IllegalArgumentException(errorMessage);
 		}
 		
-		// fire OnNewFileStarted here
+		// fire OnNewFileStarted event
 		this.listener.OnFileCheckStarted(prefixedFile, postfixedFile);
 		
 		// prepare both files
@@ -129,6 +129,9 @@ public class JMutOps {
 		
 		// handle each change
 		for(SourceCodeChange change: changes){
+			
+			// fire OnChangeChecked event
+			this.listener.OnChangeChecked(change);
 			
 			if((change instanceof Update) || (change instanceof Move)){
 				SourceCodeEntity sce_old;

@@ -3,6 +3,8 @@ package results;
 import java.io.File;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import mutationoperators.MutationOperator;
 
 public interface JMutOpsEventListener{
@@ -50,4 +52,10 @@ public interface JMutOpsEventListener{
 	 * @param errorMessage The received error message.
 	 */
 	public void OnErrorDetected(String location, String errorMessage);
+	
+	/**
+	 * Event gets fired when a new change will be checked.
+	 * @param change The SourceCodeChange-object related to the change.
+	 */
+	public void OnChangeChecked(SourceCodeChange change);
 }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import mutationoperators.MutationOperator;
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
+
 public class ApplicationCounter implements JMutOpsEventListener {
 
 	private HashMap<String, Integer> counter;
@@ -62,6 +64,12 @@ public class ApplicationCounter implements JMutOpsEventListener {
 
 	@Override
 	public void OnFileCheckFinished() {
+	}
+
+	@Override
+	public void OnChangeChecked(SourceCodeChange change) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

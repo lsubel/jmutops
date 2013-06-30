@@ -7,6 +7,9 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
+import ch.uzh.ifi.seal.changedistiller.model.entities.*;
+
 public class EventLogger implements JMutOpsEventListener {
 
 	StringBuffer logger = new StringBuffer();
@@ -68,6 +71,44 @@ public class EventLogger implements JMutOpsEventListener {
 		logger.append(now.toString() + " - Error detected:" + "\n");
 		logger.append("\t" + "Location: " + location + "\n");
 		logger.append("\t" + "Message: " + errorMessage + "\n");
+		logger.append("\n");
+	}
+
+	@Override
+	public void OnChangeChecked(SourceCodeChange change) {
+		Date now = new Date();
+		logger.append(now.toString() + " - Started to check a new change." +  "\n");
+		logger.append("\t" + "Type of change: " + change.getChangeType().toString() + "\n");
+		if(change instanceof Insert){
+			Insert casted = (Insert) change;
+			logger.append("\t" + "Parent entity: " + casted.getParentEntity().toString() + "\n");
+			logger.append("\t" + "Node of changed entity: " + casted.getChangedEntity().toString() + "\n");
+			logger.append("\t" + "Range of changed entity: " + casted.getChangedEntity().getSourceRange().toString() + "\n");
+		}
+		if(change instanceof Delete){
+			Delete casted = (Delete) change;
+			logger.append("\t" + "Parent entity: " + casted.getParentEntity().toString() + "\n");
+			logger.append("\t" + "Node of changed entity: " + casted.getChangedEntity().toString() + "\n");
+			logger.append("\t" + "Range of changed entity: " + casted.getChangedEntity().getSourceRange().toString() + "\n");
+		}
+		if(change instanceof Update){
+			Update casted = (Update) change;
+			logger.append("\t" + "Parent entity: " + casted.getParentEntity().toString() + "\n");
+			logger.append("\t" + "Node of changed entity: " + casted.getChangedEntity().toString() + "\n");
+			logger.append("\t" + "Range of changed entity: " + casted.getChangedEntity().getSourceRange().toString() + "\n");
+			logger.append("\t" + "Node of new entity: " + casted.getNewEntity().toString() + "\n");
+			logger.append("\t" + "Range of new entity: " + casted.getNewEntity().getSourceRange().toString() + "\n");
+			
+		}
+		if(change instanceof Move){
+			Move casted = (Move) change;
+			logger.append("\t" + "Parent entity: " + casted.getParentEntity().toString() + "\n");
+			logger.append("\t" + "Node of changed entity: " + casted.getChangedEntity().toString() + "\n");
+			logger.append("\t" + "Range of changed entity: " + casted.getChangedEntity().getSourceRange().toString() + "\n");
+			logger.append("\t" + "Node of new entity: " + casted.getNewEntity().toString() + "\n");
+			logger.append("\t" + "Range of new entity: " + casted.getNewEntity().getSourceRange().toString() + "\n");
+			
+		}
 		logger.append("\n");
 	}
 

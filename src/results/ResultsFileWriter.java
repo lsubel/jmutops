@@ -13,6 +13,8 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
+
 public class ResultsFileWriter implements JMutOpsEventListener{
 
 	//////////////////////////////////////////
@@ -125,6 +127,10 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 
 	@Override
 	public void OnFileCheckFinished() {
+	}
+
+	@Override
+	public void OnChangeChecked(SourceCodeChange change) {
 	}
 
 	

@@ -8,6 +8,8 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
+
 /**
  * Casts method calls to all registered {@link JMutOpsEventListener}.
  * 
@@ -78,6 +80,13 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	public void OnFileCheckFinished() {
 		for(JMutOpsEventListener rl: this.listener){
 			rl.OnFileCheckFinished();
+		}
+	}
+
+	@Override
+	public void OnChangeChecked(SourceCodeChange change) {
+		for(JMutOpsEventListener rl: this.listener){
+			rl.OnChangeChecked(change);
 		}
 	}
 
