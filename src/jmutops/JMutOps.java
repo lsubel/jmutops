@@ -52,7 +52,7 @@ public class JMutOps {
 	/**
 	 * MutationOperatorChecker handles all implemented MutationOperators.
 	 */
-	private MutationOperatorChecker checker = new MutationOperatorChecker();
+	private MutationOperatorChecker checker;
 	
 	/**
 	 * Preperation class used to retrieve information for the prefixed code.
@@ -77,8 +77,9 @@ public class JMutOps {
 	 */
 	public JMutOps() {
 		// initialize variables
-		this.prefixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPrefixFolder());
+		this.prefixed_preperator  = new Preperator(this.listener, TestUtilities.getDefaultPrefixFolder());
 		this.postfixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPostfixFolder());
+		this.checker			  = new MutationOperatorChecker(this.listener);
 		addImplementedMutationOperators();
 	}
 	

@@ -45,16 +45,23 @@ public class MutationOperatorChecker {
 	 */
 	private ArrayList<MutationOperator> classlevel_list;
 	
+	/**
+	 * Multicaster which will talk to all ResultListeners which were added
+	 */
+	private JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
+	
 	// ////////////////////////////////////////////////////
 	// / Methods
 	// ////////////////////////////////////////////////////
 
 	/**
 	 * Default constructor.
+	 * @param listener TODO
 	 */
-	public MutationOperatorChecker() {
+	public MutationOperatorChecker(JMutOpsEventListenerMulticaster listener) {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
-		this.classlevel_list = new ArrayList<MutationOperator>();
+		this.classlevel_list  = new ArrayList<MutationOperator>();
+		this.listener 		  = listener;
 	}
 
 	/**
@@ -68,6 +75,7 @@ public class MutationOperatorChecker {
 	public boolean addMutationOperator(MutationOperator mutop) {
 		switch (mutop.getCategory()) {
 		case CLASS_LEVEL:
+			this.listener.OnMutationOperatorInit(mutop);
 			// check if this operator was added before
 			if (!this.classlevel_list.contains(mutop)) {
 				// if not, add it
@@ -77,6 +85,7 @@ public class MutationOperatorChecker {
 				return false;
 			}
 		case METHOD_LEVEL:
+			this.listener.OnMutationOperatorInit(mutop);
 			// check if this operator was added before
 			if (!this.methodlevel_list.contains(mutop)) {
 				// if not, add it
