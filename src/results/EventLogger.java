@@ -118,7 +118,7 @@ public class EventLogger implements JMutOpsEventListener {
 	public void OnMutationOperatorInit(MutationOperator mutop) {
 		Date now = new Date();
 		logger.append(now.toString() + " - Mutation operator initialized:" + "\n");
-		logger.append("\t" + "Short name: " + mutop.getClass().getSimpleName() + "\n");
+		logger.append("\t" + "Short name: " + mutop.getShortname() + "\n");
 		logger.append("\t" + "Full name: " + mutop.getFullname() + "\n");
 		logger.append("\t" + "Category: " + mutop.getCategory().toString());
 		logger.append("\n");

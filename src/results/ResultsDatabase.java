@@ -54,7 +54,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	private int ID_program 			= -1;
 	private int ID_bugreport 		= -1;
 	private int ID_changingfiles 	= -1;
-	private int ID_mutationoperator	= -1;
 	
 	/**
 	 * HashMap which maps MutationOperators to corresponding ID_mutationoperator in the DB
@@ -441,7 +440,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		try {
 			stmt = this.connection.prepareStatement("SELECT * FROM Matchings WHERE (ID_changingfiles = ?) AND (ID_mutationoperator = ?) AND (prefixStart = ?) AND (prefixEnd = ?) AND (postfixStart = ?) AND (postfixEnd = ?)");
 			stmt.setInt(0, this.ID_changingfiles);
-			stmt.setInt(1, this.ID_mutationoperator);
+			stmt.setInt(1, mapMutopsToDB.get(operator));
 			stmt.setInt(2, prefixStart);
 			stmt.setInt(3, prefixEnd);
 			stmt.setInt(4, postfixStart);
@@ -462,7 +461,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			try {
 				stmt = this.connection.prepareStatement("INSERT INTO Matchings (ID_changingfiles, ID_mutationoperator, prefixStart, prefixEnd, postfixStart, postfixEnd) VALUES (?, ?, ?, ?, ?, ?)");
 				stmt.setInt(0, this.ID_changingfiles);
-				stmt.setInt(1, this.ID_mutationoperator);
+				stmt.setInt(1, mapMutopsToDB.get(operator));
 				stmt.setInt(2, prefixStart);
 				stmt.setInt(3, prefixEnd);
 				stmt.setInt(4, postfixStart);
