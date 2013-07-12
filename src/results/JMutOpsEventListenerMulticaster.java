@@ -34,9 +34,9 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	}
 	
 	@Override
-	public void OnBugChanged(int officalID) {
+	public void OnBugChanged(int officalID, String urlToBugreport) {
 		for(JMutOpsEventListener rl: this.listener){
-			rl.OnBugChanged(officalID);
+			rl.OnBugChanged(officalID, urlToBugreport);
 		}
 	}
 	
@@ -56,9 +56,9 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	}
 	
 	@Override
-	public void OnProgramChanged(String newProgramName) {
+	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker) {
 		for(JMutOpsEventListener rl: this.listener){
-			rl.OnProgramChanged(newProgramName);
+			rl.OnProgramChanged(newProgramName, programDescription, urlToProjectPage, urlToBugtracker);
 		}
 	}
 	
@@ -90,5 +90,10 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 		}
 	}
 
-	
+	@Override
+	public void OnMutationOperatorInit(MutationOperator mutop) {
+		for(JMutOpsEventListener rl: this.listener){
+			rl.OnMutationOperatorInit(mutop);
+		}
+	}	
 }

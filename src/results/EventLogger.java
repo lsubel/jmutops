@@ -7,7 +7,6 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.*;
 
 public class EventLogger implements JMutOpsEventListener {
@@ -31,14 +30,17 @@ public class EventLogger implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnProgramChanged(String newProgramName) {
+	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker) {
 		Date now = new Date();
 		logger.append(now.toString() + " - Initialized a new program with name " + newProgramName + ".\n");
+		logger.append("\t" + "Program description: " + programDescription + "\n");
+		logger.append("\t" + "URL to project page: " + urlToProjectPage + "\n");
+		logger.append("\t" + "URL to bug tracker: "  + urlToBugtracker + "\n");
 		logger.append("\n");
 	}
 
 	@Override
-	public void OnBugChanged(int officialID) {
+	public void OnBugChanged(int officialID, String urlToBugreport) {
 		Date now = new Date();
 		logger.append(now.toString() + " - Initialized a new bug with ID " + officialID + ".");
 		logger.append("\n");
@@ -109,6 +111,16 @@ public class EventLogger implements JMutOpsEventListener {
 			logger.append("\t" + "Range of new entity: " + casted.getNewEntity().getSourceRange().toString() + "\n");
 			
 		}
+		logger.append("\n");
+	}
+
+	@Override
+	public void OnMutationOperatorInit(MutationOperator mutop) {
+		Date now = new Date();
+		logger.append(now.toString() + " - Mutation operator initialized:" + "\n");
+		logger.append("\t" + "Short name: " + mutop.getClass().getSimpleName() + "\n");
+		logger.append("\t" + "Full name: " + mutop.getFullname() + "\n");
+		logger.append("\t" + "Category: " + mutop.getCategory().toString());
 		logger.append("\n");
 	}
 

@@ -49,7 +49,7 @@ public abstract class BasicMutationOperatorTest {
 		
 		// init jmutops
 		this.jmutops = new JMutOps();
-		this.jmutops.initProgram("Internal testSuite");
+		this.jmutops.initProgram("Internal testSuite", "Used during the JUnitTests", "", "");
 		this.jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);

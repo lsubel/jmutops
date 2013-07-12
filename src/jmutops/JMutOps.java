@@ -272,8 +272,8 @@ public class JMutOps {
 	 * Initial a new program to check.
 	 * @param programName The new program's name.
 	 */
-	public void initProgram(String programName){
-		this.listener.OnProgramChanged(programName);
+	public void initProgram(String programName, String programDescription, String urlToProjectPage, String urlToBugtracker){
+		this.listener.OnProgramChanged(programName, programDescription, urlToProjectPage, urlToBugtracker);
 	}
 	
 	public void initBug(String officialID){

@@ -21,13 +21,14 @@ public interface JMutOpsEventListener{
 	 * Events get fired when a program was initialized. <p>
 	 * @param newProgramName The name of the program.
 	 */
-	public void OnProgramChanged(String newProgramName);
+	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker);
 	
 	/**
 	 * @param officialID the official ID related to this bug.
+	 * @param urlToBugreport TODO
 	 * 
 	 */
-	public void OnBugChanged(int officialID);
+	public void OnBugChanged(int officialID, String urlToBugreport);
 	
 	/**
 	 * Event gets fired when the check of two files started.
@@ -58,4 +59,6 @@ public interface JMutOpsEventListener{
 	 * @param change The SourceCodeChange-object related to the change.
 	 */
 	public void OnChangeChecked(SourceCodeChange change);
+	
+	public void OnMutationOperatorInit(MutationOperator mutop);
 }

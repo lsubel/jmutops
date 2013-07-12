@@ -1,2 +1,3 @@
 - Maybe implement EventListener in ResultInterface
 - Use ENUM to define the MutationOperators which should be added
+- New event: OnMutationOperatorStarted(MutationOperator operator)

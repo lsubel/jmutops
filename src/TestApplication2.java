@@ -31,7 +31,7 @@ public class TestApplication2 {
 		File[] folders_id = new File[]{new File(PATH_TO_DIFF_FILES + VERSION_ID)};
 		
 		JMutOps jmutops = new JMutOps();
-		jmutops.initProgram("iBugs");
+		jmutops.initProgram("iBugs", "", "", "");
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);

@@ -26,7 +26,7 @@ public class TestApplication {
 //		File[] folders_id = new File[]{new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\Test\\12345")};
 		
 		JMutOps jmutops = new JMutOps();
-		jmutops.initProgram("iBugs");
+		jmutops.initProgram("iBugs", "", "", "");
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);

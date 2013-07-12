@@ -47,11 +47,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnProgramChanged(String newProgramName) {	
-	}
-
-	@Override
-	public void OnBugChanged(int officalID) {
+	public void OnBugChanged(int officalID, String urlToBugreport) {
 	}
 
 	@Override
@@ -68,8 +64,14 @@ public class ApplicationCounter implements JMutOpsEventListener {
 
 	@Override
 	public void OnChangeChecked(SourceCodeChange change) {
-		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker) {
+	}
+
+	@Override
+	public void OnMutationOperatorInit(MutationOperator mutop) {
 	}
 
 }
