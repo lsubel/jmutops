@@ -115,4 +115,24 @@ public abstract class MutationOperator{
 		return this.fullname;
 	}
 
+	/**
+	 * Get the mutation operator's short cut.
+	 * <p>
+	 * @return The short cut.
+	 */
+	public String getShortname() {
+		return shortname;
+	}
+
+	/**
+	 * Get a description of the mutation operator.
+	 * <p>
+	 * @return The description.
+	 */
+	public String getDescription() {
+		return description;
+	}
+	
+	
+
 }

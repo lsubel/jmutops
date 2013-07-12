@@ -47,7 +47,7 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 		// generate an entry for the matching
 		Dictionary<String, String> entry = new Hashtable<String, String>();
 		
-		entry.put("operator", operator.getClass().getSimpleName());
+		entry.put("operator", operator.getShortname());
 		entry.put("prefix-content", prefix.toString());
 		entry.put("prefix-node", prefix.getClass().toString());
 		entry.put("prefix-range", prefix.getStartPosition() + "-" + (prefix.getStartPosition() + prefix.getLength() - 1));

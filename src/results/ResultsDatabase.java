@@ -764,9 +764,9 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			try {
 				stmt = connection.prepareStatement("INSERT INTO MutationOperator (ID_mutationoperatorcategory, mutationOperatorDescription, mutationOperatorFullname, mutationOperatorAbbreviation) VALUES(?, ?, ?)");
 				stmt.setInt(0, 0); // TODO
-				stmt.setString(1, ""); // TODO
+				stmt.setString(1, mutop.getDescription());
 				stmt.setString(2, mutop.getFullname());
-				stmt.setString(3, mutop.getClass().getSimpleName());
+				stmt.setString(3, mutop.getShortname());
 				stmt.executeUpdate();
 				stmt.close();
 			} catch (SQLException e) {
