@@ -8,7 +8,7 @@ import mutationoperators.MutationOperatorChecker;
 public class JTI extends MutationOperator {
 	
 	public JTI(JMutOpsEventListenerMulticaster eventListener) {
-		super(eventListener, MutationOperatorCategory.METHOD_LEVEL, "Java this insertion");
+		super(eventListener, MutationOperatorCategory.METHOD_LEVEL, "Java this insertion", "JTI", "Inserts the keyword this.");
 		this.matcher = new JTI_Matcher(this);
 		this.visitor = new JTI_Visitor(matcher);
 	}

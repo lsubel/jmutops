@@ -19,6 +19,10 @@ public abstract class MutationOperator{
 	
 	protected final String fullname;
 	
+	protected final String shortname;
+	
+	protected final String description;
+	
 	/**
 	 * TODO: add javadoc
 	 */
@@ -40,8 +44,10 @@ public abstract class MutationOperator{
 
 	/**
 	 * Default constructor, initializing the logger.
+	 * @param shortname TODO
+	 * @param description TODO
 	 */
-	public MutationOperator(JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category, String name) {
+	public MutationOperator(JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category, String fullname, String shortname, String description) {
 		// check null argument
 		if(eventListener == null){
 			throw new IllegalArgumentException("ResultListenerMulticaster eventListener cannot be null.");
@@ -49,13 +55,21 @@ public abstract class MutationOperator{
 		if(category == null){
 			throw new IllegalArgumentException("MutationOperatorCategory category cannot be null.");
 		}
-		if(name == null){
-			throw new IllegalArgumentException("String name cannot be null.");
+		if(fullname == null){
+			throw new IllegalArgumentException("String name fullname be null.");
+		}
+		if(shortname == null){
+			throw new IllegalArgumentException("String shortname cannot be null.");
+		}
+		if(description == null){
+			throw new IllegalArgumentException("String description cannot be null.");
 		}
 		// assign fields
 		this.eventListener	= eventListener;
 		this.category 		= category;
-		this.fullname 		= name;
+		this.fullname 		= fullname;
+		this.shortname		= shortname;
+		this.description    = description;
 	}
 		
 	/**
