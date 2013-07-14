@@ -232,15 +232,15 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			e.printStackTrace();
 		}
 
-		// TABLE AppliedMutationOperator
+		// TABLE Matchings
 		try {
 			stmt = connection
-					.prepareStatement("DROP TABLE AppliedMutationOperator");
+					.prepareStatement("DROP TABLE Matchings");
 			stmt.executeUpdate();
 			stmt.close();
-			log.info("Table AppliedMutationOperator was dropped!");
+			log.info("Table Matchings was dropped!");
 		} catch (SQLException e) {
-			log.warning("Could not drop table AppliedMutationOperator!");
+			log.warning("Could not drop table Matchings!");
 			e.printStackTrace();
 		}
 
@@ -642,199 +642,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 				return;
 			}
 		}
-	}
-
-	// /////////////////////////////////////////////////
-	// / get existing entries
-	// /////////////////////////////////////////////////
-
-	public ResultSet getAllPrograms() {
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt = null;
-		try {
-			stmt = connection.prepareStatement("SELECT * FROM Program");
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
-
-	}
-
-	public ResultSet getProgram(int ID_program) {
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt = null;
-		try {
-			stmt = connection
-					.prepareStatement("SELECT * FROM Program where ID_program = ?");
-			stmt.setInt(0, ID_program);
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// check return resultset
-		try {
-			results.last();
-			int size = results.getRow();
-			if (size != 1) {
-				log.warning("Found " + size
-						+ " entries in table Programs with id " + ID_program
-						+ ".");
-			}
-		} catch (SQLException e) {
-			log.warning("Could not check prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
-	}
-
-	public ResultSet getAllBugreportsForProgram(int ID_program) {
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt = null;
-		try {
-			stmt = connection
-					.prepareStatement("SELECT * FROM Bugreport where ID_program = ?");
-			stmt.setInt(0, ID_program);
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
-	}
-
-	public ResultSet getAllChangingFilesForBugreport(int ID_bugreport) {
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt = null;
-		try {
-			stmt = connection
-					.prepareStatement("SELECT * FROM ChangingFiles where ID_bugreport = ?");
-			stmt.setInt(0, ID_bugreport);
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
-	}
-
-	public ResultSet getAllAppliedMutationOperatorForChangingFiles(
-			int ID_changingfiles) {
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt = null;
-		try {
-			stmt = connection
-					.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_changingfiles = ?");
-			stmt.setInt(0, ID_changingfiles);
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
-	}
-
-	public ResultSet getAllMutationOperators() {
-		// create a parameterized statement to insert the new data
-		Statement stmt = null;
-		String query = "SELECT * FROM AppliedMutationOperator";
-		try {
-			stmt = connection.createStatement();
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery(query);
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
-	}
-
-	public ResultSet getAllAppliedMutationOperatorForMutationOperator(
-			int ID_mutationoperator) {
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt = null;
-		try {
-			stmt = connection
-					.prepareStatement("SELECT * FROM AppliedMutationOperator where ID_mutationoperator = ?");
-			stmt.setInt(0, ID_mutationoperator);
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		// execute the statement
-		ResultSet results;
-		try {
-			results = stmt.executeQuery();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return null;
-		}
-		return results;
 	}
 
 	public static void main(String[] args) {
