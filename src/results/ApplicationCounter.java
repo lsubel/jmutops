@@ -19,7 +19,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	@Override
 	public void OnMatchingFound(MutationOperator operator, ASTNode prefix,
 			ASTNode postfix) {
-		String operatorName = operator.getClass().getSimpleName();
+		String operatorName = operator.getShortname();
 		if(this.counter.containsKey(operatorName)){
 			Integer oldValue = this.counter.remove(operatorName);
 			this.counter.put(operatorName, oldValue + 1);
