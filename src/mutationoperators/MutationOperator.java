@@ -15,7 +15,9 @@ public abstract class MutationOperator{
 	/**
 	 * Stores an enum to distinguish between classlevel operators and methodlevel operators.
 	 */
-	protected final MutationOperatorLevel category;
+	protected final MutationOperatorLevel level;
+	
+	
 	
 	protected final String fullname;
 	
@@ -66,7 +68,7 @@ public abstract class MutationOperator{
 		}
 		// assign fields
 		this.eventListener	= eventListener;
-		this.category 		= category;
+		this.level 		= category;
 		this.fullname 		= fullname;
 		this.shortname		= shortname;
 		this.description    = description;
@@ -102,7 +104,7 @@ public abstract class MutationOperator{
 	 * @return The category associated with the mutation operator.
 	 */
 	public MutationOperatorLevel getCategory(){
-		return this.category;
+		return this.level;
 	}
 	
 
