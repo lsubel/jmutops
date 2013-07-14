@@ -1,7 +1,7 @@
 package mutationoperators;
 
 import org.eclipse.jdt.core.dom.ASTNode;
-import enums.MutationOperatorCategory;
+import enums.MutationOperatorLevel;
 import results.JMutOpsEventListenerMulticaster;
 
 public abstract class MutationOperator{
@@ -15,7 +15,7 @@ public abstract class MutationOperator{
 	/**
 	 * Stores an enum to distinguish between classlevel operators and methodlevel operators.
 	 */
-	protected final MutationOperatorCategory category;
+	protected final MutationOperatorLevel category;
 	
 	protected final String fullname;
 	
@@ -47,7 +47,7 @@ public abstract class MutationOperator{
 	 * @param shortname TODO
 	 * @param description TODO
 	 */
-	public MutationOperator(JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category, String fullname, String shortname, String description) {
+	public MutationOperator(JMutOpsEventListenerMulticaster eventListener, MutationOperatorLevel category, String fullname, String shortname, String description) {
 		// check null argument
 		if(eventListener == null){
 			throw new IllegalArgumentException("ResultListenerMulticaster eventListener cannot be null.");
@@ -101,7 +101,7 @@ public abstract class MutationOperator{
 	 * <p>
 	 * @return The category associated with the mutation operator.
 	 */
-	public MutationOperatorCategory getCategory(){
+	public MutationOperatorLevel getCategory(){
 		return this.category;
 	}
 	

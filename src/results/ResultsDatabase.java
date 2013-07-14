@@ -61,6 +61,11 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	HashMap<MutationOperator, Integer> mapMutopsToDB = new HashMap<MutationOperator, Integer>();
 	
 	/**
+	 * HashMap which maps MutationType to corresponding ID_mutationtype in the DB
+	 */
+	HashMap<MutationOperator, Integer> mapMutTypeToDB = new HashMap<MutationOperator, Integer>();	
+	
+	/**
 	 * Initialize the database object
 	 */
 	public ResultsDatabase() {
@@ -149,18 +154,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 				"CREATE TABLE MutationOperatorCategory ("
 				+ "ID_mutationoperatorcategory SERIAL PRIMARY KEY, "
 				+ "categoryName VARCHAR(127)" + ")");
-
-		// TABLE LocationOfEffect
-		initializeTable("LocationOfEffect", 
-				"CREATE TABLE LocationOfEffect ("
-				+ "ID_effectlocation SERIAL PRIMARY KEY,"
-				+ "effectName VARCHAR(127) NOT NULL" + ")");
-		
-		// TABLE MutationType
-		initializeTable("MutationType", 
-				"CREATE TABLE MutationType ("
-				+ "ID_mutationtype SERIAL PRIMARY KEY,"
-				+ "typeName VARCHAR(32) NOT NULL" + ")");
 		
 		// finished Message
 		log.info("Initialization of database tables finished!");
@@ -317,38 +310,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	///////////////////////////////////////////////////
 	/// fill some property tables
 	///////////////////////////////////////////////////
-
-	public boolean fillLocationOfEffect() {
-		log.info("Filling of table LocationOfEffect started!");
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt;
-		try {
-			stmt = connection
-					.prepareStatement("INSERT INTO LocationOfEffect (effectName) " +
-							"VALUES" +
-							"('Method-level') , " +
-							"('Class-level'), " +
-							"('Class spanning'); ");
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return false;
-		}
-
-		// execute the statement
-		try {
-			stmt.executeUpdate();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return false;
-		}
-		log.info("Filling of table LocationOfEffect finished!");
-		return true;
-
-	}
-	
 	
 	public boolean fillMutationOperatorCategory() {
 		log.info("Filling of table MutationOperatorCategory started!");
@@ -382,37 +343,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		return true;
 
 	}
-
-	public boolean fillMutationType() {
-		log.info("Filling of table MutationType started!");
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt;
-		try {
-			stmt = connection
-					.prepareStatement("INSERT INTO MutationType (categoryName) " +
-							"VALUES" +
-							"('Insertion'), " +
-							"('Deletion'), " +
-							"('Replacement');");
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return false;
-		}
-
-		// execute the statement
-		try {
-			stmt.executeUpdate();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return false;
-		}
-		log.info("Filling of table MutationType finished!");
-		return true;
-
-	}	
 	
 	///////////////////////////////////////////////////
 	/// add new entries
@@ -987,10 +917,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		ResultsDatabase res = new ResultsDatabase();
 		res.dropTables();
 		res.initializeTables();
-		res.fillLocationOfEffect();
 		res.fillMutationOperatorCategory();
-		res.fillMutationType();
-
 	}
 
 
