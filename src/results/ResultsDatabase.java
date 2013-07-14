@@ -144,16 +144,9 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		initializeTable("MutationOperator",
 				"CREATE TABLE MutationOperator ("
 				+ "ID_mutationoperator SERIAL PRIMARY KEY, "
-				+ "ID_mutationoperatorcategory INTEGER NOT NULL, "
 				+ "mutationOperatorDescription VARCHAR(1023),"
 				+ "mutationOperatorFullname VARCHAR(63),"
 				+ "mutationOperatorAbbreviation VARCHAR(7)" + ")");
-
-		// TABLE MutationOperatorCategory
-		initializeTable("MutationOperatorCategory", 
-				"CREATE TABLE MutationOperatorCategory ("
-				+ "ID_mutationoperatorcategory SERIAL PRIMARY KEY, "
-				+ "categoryName VARCHAR(127)" + ")");
 		
 		// finished Message
 		log.info("Initialization of database tables finished!");
@@ -261,17 +254,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			log.warning("Could not drop table MutationOperator!");
 			e.printStackTrace();
 		}
-		// TABLE MutationOperatorCategory
-		try {
-			stmt = connection
-					.prepareStatement("DROP TABLE MutationOperatorCategory");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table MutationOperatorCategory was dropped!");
-		} catch (SQLException e) {
-			log.warning("Could not drop table MutationOperatorCategory!");
-			e.printStackTrace();
-		}
 		// TABLE Literature
 		try {
 			stmt = connection.prepareStatement("DROP TABLE Literature");
@@ -282,65 +264,8 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			log.warning("Could not drop table Literature!");
 			e.printStackTrace();
 		}
-		// TABLE LocationOfEffect
-		try {
-			stmt = connection.prepareStatement("DROP TABLE LocationOfEffect");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table LocationOfEffect was dropped!");
-		} catch (SQLException e) {
-			log.warning("Could not drop table LocationOfEffect!");
-			e.printStackTrace();
-		}
-		// TABLE MutationType
-		try {
-			stmt = connection.prepareStatement("DROP TABLE MutationType");
-			stmt.executeUpdate();
-			stmt.close();
-			log.info("Table MutationType was dropped!");
-		} catch (SQLException e) {
-			log.warning("Could not drop table MutationType!");
-			e.printStackTrace();
-		}
 		// finishing message
 		log.info("Deletion of all database tables finished!");
-
-	}
-	
-	///////////////////////////////////////////////////
-	/// fill some property tables
-	///////////////////////////////////////////////////
-	
-	public boolean fillMutationOperatorCategory() {
-		log.info("Filling of table MutationOperatorCategory started!");
-		// create a parameterized statement to insert the new data
-		PreparedStatement stmt;
-		try {
-			stmt = connection
-					.prepareStatement("INSERT INTO MutationOperatorCategory (categoryName) " +
-							"VALUES" +
-							"('Method-level'), " +
-							"('Inheritance'), " +
-							"('Polymorphism'), " +
-							"('Java-specific features'), " +
-							"('Exception handling');");
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement!");
-			e.printStackTrace();
-			return false;
-		}
-
-		// execute the statement
-		try {
-			stmt.executeUpdate();
-			stmt.close();
-		} catch (SQLException e) {
-			log.warning("Could not execute prepared statement!");
-			e.printStackTrace();
-			return false;
-		}
-		log.info("Filling of table MutationOperatorCategory finished!");
-		return true;
 
 	}
 	
@@ -691,11 +616,10 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		else{
 			// create a parameterized statement to insert the new data
 			try {
-				stmt = connection.prepareStatement("INSERT INTO MutationOperator (ID_mutationoperatorcategory, mutationOperatorDescription, mutationOperatorFullname, mutationOperatorAbbreviation) VALUES(?, ?, ?)");
-				stmt.setInt(0, 0); // TODO
-				stmt.setString(1, mutop.getDescription());
-				stmt.setString(2, mutop.getFullname());
-				stmt.setString(3, mutop.getShortname());
+				stmt = connection.prepareStatement("INSERT INTO MutationOperator (mutationOperatorDescription, mutationOperatorFullname, mutationOperatorAbbreviation) VALUES(?, ?, ?)");
+				stmt.setString(0, mutop.getDescription());
+				stmt.setString(1, mutop.getFullname());
+				stmt.setString(2, mutop.getShortname());
 				stmt.executeUpdate();
 				stmt.close();
 			} catch (SQLException e) {
@@ -917,7 +841,6 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		ResultsDatabase res = new ResultsDatabase();
 		res.dropTables();
 		res.initializeTables();
-		res.fillMutationOperatorCategory();
 	}
 
 
