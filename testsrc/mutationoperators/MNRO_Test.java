@@ -11,7 +11,7 @@ public class MNRO_Test extends BasicMutationOperatorTest {
 
 	@Override
 	protected String getOperatorName() {
-		return MNRO.class.getSimpleName();
+		return new MNRO().getShortname();
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class MNRO_Test extends BasicMutationOperatorTest {
 	
 	@Test 
 	public void testMNRO_Match1() {
-		int diff = compareMatches("System.out.println(); resetCounter();", "System.out.println(); resetName();");
+		int diff = compareMatches("resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter();", "resetName(); incrementCounter(1); incrementCounter(5); int result = getCounter();");
 		assertEquals(1, diff);
 	}
 	

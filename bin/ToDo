@@ -1,2 +1,3 @@
 - Maybe implement EventListener in ResultInterface
 - Use ENUM to define the MutationOperators which should be added
+- Implement a default constructor for each MutationOperator; use it to create an MutationOperator in the tests and retrieve the field

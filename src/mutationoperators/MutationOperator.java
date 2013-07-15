@@ -23,6 +23,9 @@ public abstract class MutationOperator{
 	
 	protected final String fullname;
 	
+	/**
+	 * Short cut of the mutation operator.
+	 */
 	protected final String shortname;
 	
 	protected final String description;

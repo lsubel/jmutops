@@ -10,7 +10,7 @@ public class AOR_Test extends BasicMutationOperatorTest {
 
 	@Override
 	protected String getOperatorName() {
-		return AOR.class.getSimpleName();
+		return new AOR().getShortname();
 	}
 
 	@Override
