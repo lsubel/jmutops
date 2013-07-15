@@ -363,6 +363,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new LCO(this.listener));
 		this.checker.addMutationOperator(new ROR(this.listener));
 		this.checker.addMutationOperator(new COR(this.listener));
+		this.checker.addMutationOperator(new SOR(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
