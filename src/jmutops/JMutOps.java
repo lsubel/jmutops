@@ -15,13 +15,15 @@ import utils.Preperator;
 import utils.Settings;
 import utils.TestUtilities;
 
-import mutationoperators.MutationOperatorChecker;
+import mutationoperators.*;
 import mutationoperators.aor.AOR;
+import mutationoperators.asr.ASR;
 import mutationoperators.cor.COR;
 import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
 import mutationoperators.lor.LOR;
 import mutationoperators.mnro.MNRO;
+
 import mutationoperators.ror.ROR;
 import mutationoperators.sor.SOR;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
@@ -367,6 +369,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new COR(this.listener));
 		this.checker.addMutationOperator(new SOR(this.listener));
 		this.checker.addMutationOperator(new LOR(this.listener));
+		this.checker.addMutationOperator(new ASR(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
