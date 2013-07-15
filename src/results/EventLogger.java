@@ -124,4 +124,12 @@ public class EventLogger implements JMutOpsEventListener {
 		logger.append("\n");
 	}
 
+	@Override
+	public void OnNoMatchingFound() {
+		Date now = new Date();
+		logger.append(now.toString() + " - No matching mutation operator found." + "\n");
+		logger.append("\n");
+		
+	}
+
 }

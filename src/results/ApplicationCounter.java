@@ -74,4 +74,8 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	public void OnMutationOperatorInit(MutationOperator mutop) {
 	}
 
+	@Override
+	public void OnNoMatchingFound() {
+	}
+
 }

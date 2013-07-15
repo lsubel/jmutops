@@ -23,6 +23,8 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 	
 	ArrayList<Dictionary<String, String>> results; 
 	
+	int undetected = 0;
+	
 	String filename;
 	
 	File prefix;
@@ -97,6 +99,7 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 				bw.write("");
 			}
 			bw.write("\n");
+			bw.write("Number of changes with no matching operators: " + undetected + "\n");
 			bw.write("///////////////////////////////////////////////////////" + "\n");
 			bw.write("						End of file						 " + "\n");
 			bw.write("///////////////////////////////////////////////////////" + "\n");	
@@ -137,6 +140,11 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 
 	@Override
 	public void OnMutationOperatorInit(MutationOperator mutop) {
+	}
+
+	@Override
+	public void OnNoMatchingFound() {
+		undetected += 1;
 	}
 
 	

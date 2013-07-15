@@ -644,14 +644,15 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		}
 	}
 
+	@Override
+	public void OnNoMatchingFound() {
+		// TODO: create a table which stores the changes with no matching operator
+	}
+	
 	public static void main(String[] args) {
 		ResultsDatabase res = new ResultsDatabase();
 		res.dropTables();
 		res.initializeTables();
 	}
-
-
-
-
 
 }

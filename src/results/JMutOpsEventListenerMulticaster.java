@@ -95,5 +95,12 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 		for(JMutOpsEventListener rl: this.listener){
 			rl.OnMutationOperatorInit(mutop);
 		}
+	}
+
+	@Override
+	public void OnNoMatchingFound() {
+		for(JMutOpsEventListener rl: this.listener){
+			rl.OnNoMatchingFound();
+		}
 	}	
 }

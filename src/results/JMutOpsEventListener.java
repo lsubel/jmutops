@@ -61,4 +61,6 @@ public interface JMutOpsEventListener{
 	public void OnChangeChecked(SourceCodeChange change);
 	
 	public void OnMutationOperatorInit(MutationOperator mutop);
+	
+	public void OnNoMatchingFound();
 }
