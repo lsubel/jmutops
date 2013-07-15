@@ -15,8 +15,8 @@ public class COR extends MutationOperator {
 	
 	public COR(JMutOpsEventListenerMulticaster eventListener) {
 		super("Conditional Operator Replacement", "COR", "Replace binary conditional operators with other binary conditional operators.", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
-		this.matcher = new AOR_Matcher(this);
-		this.visitor = new AOR_Visitor(this.matcher);
+		this.matcher = new COR_Matcher(this);
+		this.visitor = new COR_Visitor(this.matcher);
 	}
 	
 }
