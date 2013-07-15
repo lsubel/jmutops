@@ -25,7 +25,7 @@ public class COD_Matcher extends BaseASTMatcher {
 		// check if the prefix ast without the unary operator and the postfix ast are the same
 		boolean correctSubtree = (firstSubtree.subtreeMatch(defaultMatcher, secondTree));
 		
-		
+		// if both conditions are true, notify a matching
 		if(correctPrefixedUnaryOperator && correctSubtree){
 			this.mutop.found(node, secondTree);
 			return true;
