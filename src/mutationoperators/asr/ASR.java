@@ -15,7 +15,7 @@ public class ASR extends MutationOperator {
 	
 	public ASR(JMutOpsEventListenerMulticaster eventListener) {
 		super("Assignment Operator Replacement", "ASR", "Replace short-cut assignment operators with other short-cut operators of the same kind", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
-		this.matcher = new LCO_Matcher(this);
-		this.visitor = new LCO_Visitor(this.matcher);
+		this.matcher = new ASR_Matcher(this);
+		this.visitor = new ASR_Visitor(this.matcher);
 	}
 }
