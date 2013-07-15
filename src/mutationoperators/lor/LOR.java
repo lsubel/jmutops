@@ -15,8 +15,8 @@ public class LOR extends MutationOperator {
 	
 	public LOR(JMutOpsEventListenerMulticaster eventListener) {
 		super("Logical Operator Replacement", "LOR", "Replace binary logical operators with other binary logical operators", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
-		this.matcher = new LCO_Matcher(this);
-		this.visitor = new LCO_Visitor(this.matcher);
+		this.matcher = new LOR_Matcher(this);
+		this.visitor = new LOR_Visitor(this.matcher);
 	}
 	
 }
