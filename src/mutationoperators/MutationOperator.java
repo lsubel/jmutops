@@ -2,14 +2,28 @@ package mutationoperators;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import ch.uzh.ifi.seal.changedistiller.model.entities.StructureEntityVersion;
+
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
 import results.JMutOpsEventListenerMulticaster;
 
+/**
+ * General (abstract) representation of a mutation operator.<p>
+ * <p>
+ * Each mutation operator has a
+ * <ul>
+ * <li>{@link BaseAstVisitor} <code>visitor</code> that traverse in a mutation operator specific way 
+ * over the prefix and postfix ASTs. During the traversing there are some conditional checked 
+ * and when the results are valid, the {@link BaseASTMatcher} <code>matcher</code> will be called. </li>
+ * <li>{@link BaseASTMatcher} <code>matcher</code> that search for a mutation operator specific matching in two ASTNodes. 
+ * Fires an event {@link results.JMutOpsEventListener#OnMatchingFound(MutationOperator, ASTNode, ASTNode) OnMatchingFound(MutationOperator, ASTNode, ASTNode)} when a matching was detected. 
+ * </ul>
+ * @author Lukas Subel
+ *
+ */
 public abstract class MutationOperator{
 
-	
-	
 	/////////////////////////////////////////////////
 	///	Fields
 	/////////////////////////////////////////////////	
@@ -19,8 +33,14 @@ public abstract class MutationOperator{
 	 */
 	protected final MutationOperatorLevel level;
 	
+	/**
+	 * Stores the category of the mutation operator.
+	 */
 	protected final MutationOperatorCategory category;
 	
+	/**
+	 * Stores the full name of the mutation operator.
+	 */
 	protected final String fullname;
 	
 	/**
@@ -28,6 +48,9 @@ public abstract class MutationOperator{
 	 */
 	protected final String shortname;
 	
+	/**
+	 * A description of the mutation operator's effect.
+	 */
 	protected final String description;
 	
 	/**
@@ -46,12 +69,14 @@ public abstract class MutationOperator{
 	 */
 	protected BaseASTMatcher matcher;
 	
+	/**
+	 * Internal counter which collects the number of detected matchings within a {@link mutationoperators.MutationOperator#check(ASTNode, ASTNode) check(ASTNode, ASTNode)} call.
+	 */
 	protected int application_counter;
 	
 	/////////////////////////////////////////////////
 	///	Methods
 	/////////////////////////////////////////////////	
-
 
 	/**
 	 * Default constructor.
