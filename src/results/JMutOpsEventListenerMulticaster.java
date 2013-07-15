@@ -2,6 +2,7 @@ package results;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import mutationoperators.MutationOperator;
@@ -98,9 +99,9 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnNoMatchingFound() {
+	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 		for(JMutOpsEventListener rl: this.listener){
-			rl.OnNoMatchingFound();
+			rl.OnNoMatchingFound(operatorlist);
 		}
 	}	
 }

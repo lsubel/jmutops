@@ -46,6 +46,8 @@ public abstract class MutationOperator{
 	 */
 	protected BaseASTMatcher matcher;
 	
+	protected int application_counter;
+	
 	/////////////////////////////////////////////////
 	///	Methods
 	/////////////////////////////////////////////////	
@@ -92,10 +94,14 @@ public abstract class MutationOperator{
 	 * @param leftNode The prefix code.
 	 * @param rightNode The postfix code.
 	 */
-	public void check(ASTNode leftNode, ASTNode rightNode){
+	public int check(ASTNode leftNode, ASTNode rightNode){
+		// reset application counter
+		this.application_counter = 0;
 		// start to visit the subAST
 		this.visitor.setSecondTree(rightNode);
 		leftNode.accept(visitor);
+		// return the number of detected matches
+		return this.application_counter;
 	}
 	
 	/**
@@ -105,6 +111,8 @@ public abstract class MutationOperator{
 	 * @param rightNode The postfix code.
 	 */
 	public void found(ASTNode leftNode, ASTNode rightNode){
+		// increment the number of detected applications
+		application_counter += 1;
 		// notify other ResultInterfaces
 		if(this.eventListener != null){
 			this.eventListener.OnMatchingFound(this, leftNode, rightNode);

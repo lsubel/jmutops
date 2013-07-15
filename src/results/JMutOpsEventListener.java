@@ -1,6 +1,7 @@
 package results;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
@@ -62,5 +63,5 @@ public interface JMutOpsEventListener{
 	
 	public void OnMutationOperatorInit(MutationOperator mutop);
 	
-	public void OnNoMatchingFound();
+	public void OnNoMatchingFound(List<MutationOperator> operatorlist);
 }

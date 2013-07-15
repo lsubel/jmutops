@@ -2,6 +2,7 @@ package results;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import mutationoperators.MutationOperator;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -75,7 +76,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnNoMatchingFound() {
+	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 	}
 
 }

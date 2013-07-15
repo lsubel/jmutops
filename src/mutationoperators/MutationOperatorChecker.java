@@ -355,8 +355,15 @@ public class MutationOperatorChecker {
 	 */
 	private void runMutationOperators(List<MutationOperator> operatorlist,
 			ASTNode leftNode, ASTNode rightNode) {
+		// initialize a variable which counts the number of detected applications
+		int detected_applications = 0;
+		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
-			operator.check(leftNode, rightNode);
+			detected_applications += operator.check(leftNode, rightNode);
+		}
+		// fire event when there was no matching detected
+		if(detected_applications == 0){
+			this.listener.OnNoMatchingFound(operatorlist);
 		}
 	}	
 }

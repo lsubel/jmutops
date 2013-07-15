@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 
 import mutationoperators.MutationOperator;
@@ -645,7 +646,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnNoMatchingFound() {
+	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 		// TODO: create a table which stores the changes with no matching operator
 	}
 	

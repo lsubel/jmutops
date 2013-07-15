@@ -2,6 +2,7 @@ package results;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import mutationoperators.MutationOperator;
 
@@ -125,7 +126,7 @@ public class EventLogger implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnNoMatchingFound() {
+	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 		Date now = new Date();
 		logger.append(now.toString() + " - No matching mutation operator found." + "\n");
 		logger.append("\n");
