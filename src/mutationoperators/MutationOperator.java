@@ -31,7 +31,8 @@ public abstract class MutationOperator{
 	protected final String description;
 	
 	/**
-	 * TODO: add javadoc
+	 * Reference to JMutOpsEventListenerMulticaster. Required to fire the {@link results.JMutOpsEventListenerMulticaster#OnMatchingFound(MutationOperator, ASTNode, ASTNode) OnMatchingFound()} method. <p>
+	 * Will be null and not firing event when object is initialized by default constructor.
 	 */
 	protected final JMutOpsEventListenerMulticaster eventListener;
 	
@@ -49,11 +50,15 @@ public abstract class MutationOperator{
 	///	Methods
 	/////////////////////////////////////////////////	
 
+
 	/**
-	 * Default constructor, initializing the logger.
-	 * @param shortname TODO
-	 * @param description TODO
-	 * @param category TODO
+	 * Default constructor.
+	 * @param fullname
+	 * @param shortname
+	 * @param description
+	 * @param level
+	 * @param eventListener
+	 * @param category
 	 */
 	public MutationOperator(String fullname, String shortname, String description, MutationOperatorLevel level, JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category) {
 		// check null argument
