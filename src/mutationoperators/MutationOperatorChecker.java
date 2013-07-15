@@ -23,7 +23,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 
 /**
- * Class storing the implemented MutationOperators. It callS the correct
+ * Class storing the implemented MutationOperators. It calls the correct
  * operators and 
  * 
  * @author Lukas Subel

@@ -19,15 +19,20 @@ public interface JMutOpsEventListener{
 	public void OnMatchingFound(MutationOperator operator, ASTNode prefix, ASTNode postfix);
 	
 	/**
-	 * Events get fired when a program was initialized. <p>
+	 * Event gets fired when a program was initialized. <p>
+	 * This event can be started by calling the method {@link jmutops.JMutOps#initProgram(String, String, String, String) initProgram(String, String, String, String)} in {@link jmutops.JMutOps JMutOps}.
 	 * @param newProgramName The name of the program.
+	 * @param programDescription A short description of the program.
+	 * @param urlToProjectPage The weblink to the project's webpage.
+	 * @param urlToBugtracker The weblink to the project's bugtracker.
 	 */
 	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker);
 	
 	/**
-	 * @param officialID the official ID related to this bug.
-	 * @param urlToBugreport TODO
-	 * 
+	 * Event gets fired when a new bug will be initialized.
+	 * This event can be started by calling the method {@link jmutops.JMutOps#initBug(String) initBug(String)} in {@link jmutops.JMutOps JMutOps}.
+	 * @param officialID The official ID related to this bug.
+	 * @param urlToBugreport The weblink to the bug's entry in the bugtracker.
 	 */
 	public void OnBugChanged(int officialID, String urlToBugreport);
 	
@@ -44,7 +49,8 @@ public interface JMutOpsEventListener{
 	public void OnFileCheckFinished();
 	
 	/**
-	 * Event gets fired when the user wants to recieve results.
+	 * Event gets fired when the user wants to receive results.<p>
+	 * This event can be started by calling the method {@link jmutops.JMutOps#createResults() createResults()} in {@link jmutops.JMutOps JMutOps}.
 	 */
 	public void OnCreatingResult();
 	
@@ -57,11 +63,19 @@ public interface JMutOpsEventListener{
 	
 	/**
 	 * Event gets fired when a new change will be checked.
-	 * @param change The SourceCodeChange-object related to the change.
+	 * @param change The {@link SourceCodeChange} which will be checked.
 	 */
 	public void OnChangeChecked(SourceCodeChange change);
 	
+	/**
+	 * Event gets fired when a new mutation operator will be added to {@link mutationoperators.MutationOperatorChecker MutationOperatorChecker}.
+	 * @param mutop The initialized {@link mutationoperators.MutationOperator MutationOperator}.
+	 */
 	public void OnMutationOperatorInit(MutationOperator mutop);
 	
+	/**
+	 * Event gets fired when there were no mutation operator detected in the last checked change.
+	 * @param operatorlist The list of checked {@link mutationoperators.MutationOperator MutationOperator}.
+	 */
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist);
 }
