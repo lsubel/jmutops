@@ -22,6 +22,7 @@ import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
 import mutationoperators.mnro.MNRO;
 import mutationoperators.ror.ROR;
+import mutationoperators.sor.SOR;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
 import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
