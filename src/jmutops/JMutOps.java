@@ -20,6 +20,7 @@ import mutationoperators.aor.AOR;
 import mutationoperators.cor.COR;
 import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
+import mutationoperators.lor.LOR;
 import mutationoperators.mnro.MNRO;
 import mutationoperators.ror.ROR;
 import mutationoperators.sor.SOR;
@@ -365,6 +366,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new ROR(this.listener));
 		this.checker.addMutationOperator(new COR(this.listener));
 		this.checker.addMutationOperator(new SOR(this.listener));
+		this.checker.addMutationOperator(new LOR(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
