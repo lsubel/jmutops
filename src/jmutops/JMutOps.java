@@ -181,11 +181,11 @@ public class JMutOps {
 
 				// extract information for first file
 				NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
-				ASTNode expr_left = nodeFinder_old.getCoveredNode();
+				ASTNode expr_left = nodeFinder_old.getCoveringNode();
 				
 				// extract information for second file
 				NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
-				ASTNode expr_right = nodeFinder_new.getCoveredNode();
+				ASTNode expr_right = nodeFinder_new.getCoveringNode();
 
 				// run the mutation operator check
 				this.checker.checkForMutationOperators(expr_left, expr_right, change);
