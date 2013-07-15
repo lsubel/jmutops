@@ -18,6 +18,7 @@ import utils.TestUtilities;
 import mutationoperators.*;
 import mutationoperators.aor.AOR;
 import mutationoperators.asr.ASR;
+import mutationoperators.cod.COD;
 import mutationoperators.cor.COR;
 import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
@@ -370,6 +371,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new SOR(this.listener));
 		this.checker.addMutationOperator(new LOR(this.listener));
 		this.checker.addMutationOperator(new ASR(this.listener));
+		this.checker.addMutationOperator(new COD(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
