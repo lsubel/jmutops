@@ -20,6 +20,7 @@ import mutationoperators.aor.AOR;
 import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
 import mutationoperators.mnro.MNRO;
+import mutationoperators.ror.ROR;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
 import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
@@ -359,6 +360,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new AOR(this.listener));
 		this.checker.addMutationOperator(new MNRO(this.listener));
 		this.checker.addMutationOperator(new LCO(this.listener));
+		this.checker.addMutationOperator(new ROR(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
