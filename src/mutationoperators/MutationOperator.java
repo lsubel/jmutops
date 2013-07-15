@@ -57,9 +57,6 @@ public abstract class MutationOperator{
 	 */
 	public MutationOperator(String fullname, String shortname, String description, MutationOperatorLevel level, JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category) {
 		// check null argument
-		if(eventListener == null){
-			throw new IllegalArgumentException("ResultListenerMulticaster eventListener cannot be null.");
-		}
 		if(level == null){
 			throw new IllegalArgumentException("MutationOperatorLevel level cannot be null.");
 		}
@@ -104,7 +101,9 @@ public abstract class MutationOperator{
 	 */
 	public void found(ASTNode leftNode, ASTNode rightNode){
 		// notify other ResultInterfaces
-		this.eventListener.OnMatchingFound(this, leftNode, rightNode);
+		if(this.eventListener != null){
+			this.eventListener.OnMatchingFound(this, leftNode, rightNode);
+		}
 	}
 	
 	
