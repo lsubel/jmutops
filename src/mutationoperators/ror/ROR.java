@@ -1,11 +1,9 @@
 package mutationoperators.ror;
 
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
-import mutationoperators.MutationOperator;
-import mutationoperators.lco.LCO_Matcher;
-import mutationoperators.lco.LCO_Visitor;
 
 public class ROR extends MutationOperator {
 
@@ -14,9 +12,17 @@ public class ROR extends MutationOperator {
 	}
 	
 	public ROR(JMutOpsEventListenerMulticaster eventListener) {
-		super("Relational Operator Replacement", "ROR", "Replace relational operators with other relational operators, and replace the entire predicate with true and false", 
-				MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener);
 		this.matcher = new ROR_Matcher(this);
 		this.visitor = new ROR_Visitor(this.matcher);
+	}
+
+	@Override
+	protected void setProperties() {
+		this.mutopproperty.setShortname("ROR");
+		this.mutopproperty.setFullname("Relational Operator Replacement");
+		this.mutopproperty.setDescription("Replace relational operators with other relational operators, and replace the entire predicate with true and false.");
+		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 }

@@ -1,11 +1,9 @@
 package mutationoperators.cod;
 
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
-import mutationoperators.MutationOperator;
-import mutationoperators.asr.ASR_Matcher;
-import mutationoperators.asr.ASR_Visitor;
 
 public class COD extends MutationOperator {
 
@@ -14,8 +12,17 @@ public class COD extends MutationOperator {
 	}
 	
 	public COD(JMutOpsEventListenerMulticaster eventListener) {
-		super("Conditional Operator Deletion", "COD", "Delete unary conditional operators", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener);
 		this.matcher = new COD_Matcher(this);
 		this.visitor = new COD_Visitor(this.matcher);
+	}
+
+	@Override
+	protected void setProperties() {
+		this.mutopproperty.setShortname("COD");
+		this.mutopproperty.setFullname("Conditional Operator Deletion");
+		this.mutopproperty.setDescription("Delete unary conditional operators");
+		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 }

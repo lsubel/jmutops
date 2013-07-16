@@ -1,10 +1,9 @@
 package mutationoperators.aor;
 
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
-import mutationoperators.MutationOperator;
-import mutationoperators.MutationOperatorChecker;
 
 public class AOR extends MutationOperator {
 
@@ -13,8 +12,17 @@ public class AOR extends MutationOperator {
 	}
 	
 	public AOR(JMutOpsEventListenerMulticaster eventListener) {
-		super("Arithmethic Operator Replacement", "AOR", "Replace basic binary/unary/short-cut arithmetic operators with other binary/unary arithmetic operators.", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener);
 		this.matcher = new AOR_Matcher(this);
 		this.visitor = new AOR_Visitor(this.matcher);
+	}
+
+	@Override
+	protected void setProperties() {
+		this.mutopproperty.setShortname("AOR");
+		this.mutopproperty.setFullname("Arithmetic Operator Replacement");
+		this.mutopproperty.setDescription("Replace basic binary/unary/short-cut arithmetic operators with other binary/unary arithmetic operators.");
+		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 }

@@ -1,11 +1,9 @@
 package mutationoperators.lod;
 
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
-import mutationoperators.MutationOperator;
-import mutationoperators.lco.LCO_Matcher;
-import mutationoperators.lco.LCO_Visitor;
 
 public class LOD extends MutationOperator {
 	
@@ -14,8 +12,17 @@ public class LOD extends MutationOperator {
 	}
 	
 	public LOD(JMutOpsEventListenerMulticaster eventListener) {
-		super("Logical Operator Deletion", "LOD", "Delete unary logical operator", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener);
 		this.matcher = new LOD_Matcher(this);
 		this.visitor = new LOD_Visitor(this.matcher);
+	}
+
+	@Override
+	protected void setProperties() {
+		this.mutopproperty.setShortname("LOD");
+		this.mutopproperty.setFullname("Logical Operator Deletion");
+		this.mutopproperty.setDescription("Delete unary logical operator.");
+		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 }

@@ -1,9 +1,9 @@
 package mutationoperators.lco;
 
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
-import mutationoperators.MutationOperator;
 
 public class LCO extends MutationOperator {
 
@@ -12,8 +12,17 @@ public class LCO extends MutationOperator {
 	}
 	
 	public LCO(JMutOpsEventListenerMulticaster eventListener) {
-		super("Literal change operator", "LCO", "Increase/decrease numeric values; swap boolean literal", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener);
 		this.matcher = new LCO_Matcher(this);
 		this.visitor = new LCO_Visitor(this.matcher);
+	}
+
+	@Override
+	protected void setProperties() {
+		this.mutopproperty.setShortname("LCO");
+		this.mutopproperty.setFullname("Literal change operator");
+		this.mutopproperty.setDescription("Increase/decrease numeric values; swap boolean literal.");
+		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 }

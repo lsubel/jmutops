@@ -1,11 +1,9 @@
 package mutationoperators.aod;
 
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
-import mutationoperators.MutationOperator;
-import mutationoperators.aor.AOR_Matcher;
-import mutationoperators.aor.AOR_Visitor;
 
 public class AOD extends MutationOperator {
 	
@@ -14,8 +12,17 @@ public class AOD extends MutationOperator {
 	}
 	
 	public AOD(JMutOpsEventListenerMulticaster eventListener) {
-		super("Arithmetic Operator Deletion", "AOD", "Delete basic unary/short-cut arithmetic operators.", MutationOperatorLevel.METHOD_LEVEL, eventListener, MutationOperatorCategory.METHOD_LEVEL);
+		super(eventListener);
 		this.matcher = new AOD_Matcher(this);
 		this.visitor = new AOD_Visitor(this.matcher);
+	}
+
+	@Override
+	protected void setProperties() {
+		this.mutopproperty.setShortname("AOD");
+		this.mutopproperty.setFullname("Arithmetic Operator Deletion");
+		this.mutopproperty.setDescription("Delete basic unary/short-cut arithmetic operators.");
+		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 }

@@ -2,11 +2,8 @@ package mutationoperators;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import ch.uzh.ifi.seal.changedistiller.model.entities.StructureEntityVersion;
-
-import enums.MutationOperatorCategory;
-import enums.MutationOperatorLevel;
 import results.JMutOpsEventListenerMulticaster;
+import enums.MutationOperatorLevel;
 
 /**
  * General (abstract) representation of a mutation operator.<p>
@@ -28,30 +25,7 @@ public abstract class MutationOperator{
 	///	Fields
 	/////////////////////////////////////////////////	
 	
-	/**
-	 * Stores an enum to distinguish between classlevel operators and methodlevel operators.
-	 */
-	protected final MutationOperatorLevel level;
-	
-	/**
-	 * Stores the category of the mutation operator.
-	 */
-	protected final MutationOperatorCategory category;
-	
-	/**
-	 * Stores the full name of the mutation operator.
-	 */
-	protected final String fullname;
-	
-	/**
-	 * Short cut of the mutation operator.
-	 */
-	protected final String shortname;
-	
-	/**
-	 * A description of the mutation operator's effect.
-	 */
-	protected final String description;
+	protected final MutationOperatorProperty mutopproperty;
 	
 	/**
 	 * Reference to JMutOpsEventListenerMulticaster. Required to fire the {@link results.JMutOpsEventListenerMulticaster#OnMatchingFound(MutationOperator, ASTNode, ASTNode) OnMatchingFound()} method. <p>
@@ -80,38 +54,19 @@ public abstract class MutationOperator{
 
 	/**
 	 * Default constructor.
-	 * @param fullname
-	 * @param shortname
-	 * @param description
-	 * @param level
 	 * @param eventListener
-	 * @param category
 	 */
-	public MutationOperator(String fullname, String shortname, String description, MutationOperatorLevel level, JMutOpsEventListenerMulticaster eventListener, MutationOperatorCategory category) {
-		// check null argument
-		if(level == null){
-			throw new IllegalArgumentException("MutationOperatorLevel level cannot be null.");
-		}
-		if(category == null){
-			throw new IllegalArgumentException("MutationOperatorCategory category cannot be null.");
-		}
-		if(fullname == null){
-			throw new IllegalArgumentException("String name fullname be null.");
-		}
-		if(shortname == null){
-			throw new IllegalArgumentException("String shortname cannot be null.");
-		}
-		if(description == null){
-			throw new IllegalArgumentException("String description cannot be null.");
-		}
-		// assign fields
+	public MutationOperator(JMutOpsEventListenerMulticaster eventListener) {
+		// assign fields; set property object
 		this.eventListener	= eventListener;
-		this.level 			= level;
-		this.category		= category;
-		this.fullname 		= fullname;
-		this.shortname		= shortname;
-		this.description    = description;
+		this.mutopproperty  = new MutationOperatorProperty(); 
+		this.setProperties();
 	}
+	
+	/**
+	 * Set the field of a {@link MutationOperatorProperty} object for the specific mutation operator.
+	 */
+	protected abstract void setProperties();
 		
 	/**
 	 * Check prefix and postfix versions of an source file for applied mutation operator.
@@ -151,7 +106,7 @@ public abstract class MutationOperator{
 	 * @return The category associated with the mutation operator.
 	 */
 	public MutationOperatorLevel getCategory(){
-		return this.level;
+		return this.mutopproperty.getLevel();
 	}
 	
 
@@ -161,7 +116,7 @@ public abstract class MutationOperator{
 	 * @return The full name.
 	 */
 	public String getFullname(){
-		return this.fullname;
+		return this.mutopproperty.getFullname();
 	}
 
 	/**
@@ -170,7 +125,7 @@ public abstract class MutationOperator{
 	 * @return The short cut.
 	 */
 	public String getShortname() {
-		return shortname;
+		return this.mutopproperty.getShortname();
 	}
 
 	/**
@@ -179,7 +134,7 @@ public abstract class MutationOperator{
 	 * @return The description.
 	 */
 	public String getDescription() {
-		return description;
+		return this.mutopproperty.getDescription();
 	}
 	
 	
