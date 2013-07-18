@@ -17,7 +17,6 @@ import enums.MutationOperatorLevel;
  * Fires an event {@link results.JMutOpsEventListener#OnMatchingFound(MutationOperator, ASTNode, ASTNode) OnMatchingFound(MutationOperator, ASTNode, ASTNode)} when a matching was detected. 
  * </ul>
  * @author Lukas Subel
- *
  */
 public abstract class MutationOperator{
 
@@ -70,23 +69,36 @@ public abstract class MutationOperator{
 		
 	/**
 	 * Check prefix and postfix versions of an source file for applied mutation operator.
+	 * Always should call {@link MutationOperator#check0(ASTNode, ASTNode)}.
 	 * 
 	 * @param leftNode The prefix code.
 	 * @param rightNode The postfix code.
 	 */
 	public int check(ASTNode leftNode, ASTNode rightNode){
+		return this.check0(leftNode, rightNode);
+	}
+	
+	
+	/**
+	 * Internal method; Check prefix and postfix versions of an source file for applied mutation operator
+	 * and returns the number of detected applications.
+	 * @param left The prefix code.
+	 * @param right The postfix code. 
+	 * @return The number of detected applications.
+	 */
+	protected final int check0(ASTNode left, ASTNode right){
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		this.visitor.setSecondTree(rightNode);
-		leftNode.accept(visitor);
+		this.visitor.setSecondTree(right);
+		left.accept(visitor);
 		// return the number of detected matches
-		return this.application_counter;
+		return this.application_counter;		
 	}
 	
-	/**
+	/** 
 	 * Method called when an application of an mutation operator was found.
-	 * 
+	 * <p>
 	 * @param leftNode The prefix code.
 	 * @param rightNode The postfix code.
 	 */
