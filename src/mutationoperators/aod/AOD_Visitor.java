@@ -1,12 +1,11 @@
 package mutationoperators.aod;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.PostfixExpression;
-import org.eclipse.jdt.core.dom.PrefixExpression;
-
 import mutationoperators.BaseASTMatcher;
 import mutationoperators.BaseASTVisitor;
+
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.PostfixExpression;
+import org.eclipse.jdt.core.dom.PrefixExpression;
 
 public class AOD_Visitor extends BaseASTVisitor {
 
