@@ -4,18 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-
-import org.eclipse.jdt.core.dom.ASTNode;
-
-import org.eclipse.jdt.core.dom.NodeFinder;
-import results.JMutOpsEventListener;
-import results.JMutOpsEventListenerMulticaster;
-
-import utils.Preperator;
-import utils.Settings;
-import utils.TestUtilities;
-
-import mutationoperators.*;
+import mutationoperators.MutationOperatorChecker;
 import mutationoperators.aod.AOD;
 import mutationoperators.aor.AOR;
 import mutationoperators.asr.ASR;
@@ -26,18 +15,26 @@ import mutationoperators.lco.LCO;
 import mutationoperators.lod.LOD;
 import mutationoperators.lor.LOR;
 import mutationoperators.mnro.MNRO;
-
 import mutationoperators.ror.ROR;
 import mutationoperators.sor.SOR;
+
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.NodeFinder;
+
+import results.JMutOpsEventListener;
+import results.JMutOpsEventListenerMulticaster;
+import utils.Preperator;
+import utils.Settings;
+import utils.TestUtilities;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
 import ch.uzh.ifi.seal.changedistiller.distilling.FileDistiller;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
-import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import enums.OptionsVersion;
 
 
@@ -210,9 +207,6 @@ public class JMutOps {
 			
 			SourceCodeChange change = changes.get(0);
 			
-			int nInsertStart;
-			int nInsertEnd;
-			
 			if(change instanceof Insert){
 				Insert castedChange = (Insert) change;
 				changes.remove(change);
@@ -286,6 +280,10 @@ public class JMutOps {
 		this.listener.OnProgramChanged(programName, programDescription, urlToProjectPage, urlToBugtracker);
 	}
 	
+	/**
+	 * Initialize a new bug which related to the last initialized program.
+	 * @param officialID
+	 */
 	public void initBug(String officialID){
 		// TODO: fire event
 	}
@@ -296,6 +294,11 @@ public class JMutOps {
 	 * @param classPath Absolute path to a binary type.
 	 * @param version Enum to check if binary type is related to prefixed or postfixed version.
 	 * @return True if it was able to add the classpath, otherwise false.
+	 */
+	/**
+	 * @param classPath
+	 * @param version
+	 * @return
 	 */
 	public boolean addClasspathEntry(String classPath, OptionsVersion version){
 		switch(version){
