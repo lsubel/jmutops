@@ -1,8 +1,6 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
-import mutationoperators.cor.COR;
+import static org.junit.Assert.assertEquals;
 import mutationoperators.lor.LOR;
 
 import org.junit.Test;
@@ -11,9 +9,8 @@ import utils.MethodTest;
 
 public class LOR_Test extends MethodTest {
 
-	@Override
-	protected String getOperatorName() {
-		return new LOR().getShortname();
+	public LOR_Test() {
+		super(new LOR());
 	}
 
 	@Override

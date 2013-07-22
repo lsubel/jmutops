@@ -1,7 +1,6 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import mutationoperators.cor.COR;
 
 import org.junit.Test;
@@ -10,9 +9,8 @@ import utils.MethodTest;
 
 public class COR_Test extends MethodTest {
 
-	@Override
-	protected String getOperatorName() {
-		return new COR().getShortname();
+	public COR_Test() {
+		super(new COR());
 	}
 
 	@Override

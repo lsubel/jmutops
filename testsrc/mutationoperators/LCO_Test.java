@@ -1,7 +1,6 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import mutationoperators.lco.LCO;
 
 import org.junit.Test;
@@ -9,10 +8,9 @@ import org.junit.Test;
 import utils.MethodTest;
 
 public class LCO_Test extends MethodTest {
-	
-	@Override
-	protected String getOperatorName() {
-		return new LCO().getShortname();
+
+	public LCO_Test() {
+		super(new LCO());
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package mutationoperators;
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import mutationoperators.mnro.MNRO;
 
 import org.junit.Test;
@@ -11,9 +10,8 @@ import utils.MethodTest;
 
 public class MNRO_Test extends MethodTest {
 
-	@Override
-	protected String getOperatorName() {
-		return new MNRO().getShortname();
+	public MNRO_Test() {
+		super(new MNRO());
 	}
 
 	@Override

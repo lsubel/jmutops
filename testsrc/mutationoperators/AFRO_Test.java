@@ -9,9 +9,8 @@ import utils.MethodTest;
 
 public class AFRO_Test extends MethodTest {
 	
-	@Override
-	protected String getOperatorName() {
-		return (new AFRO()).getShortname();
+	public AFRO_Test() {
+		super(new AFRO());
 	}
 
 	@Override

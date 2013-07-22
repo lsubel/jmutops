@@ -1,7 +1,6 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import mutationoperators.lod.LOD;
 
 import org.junit.Test;
@@ -10,9 +9,8 @@ import utils.MethodTest;
 
 public class LOD_Test extends MethodTest {
 
-	@Override
-	protected String getOperatorName() {
-		return new LOD().getShortname();
+	public LOD_Test() {
+		super(new LOD());
 	}
 
 	@Override

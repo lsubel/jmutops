@@ -1,7 +1,6 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import mutationoperators.aor.AOR;
 
 import org.junit.Test;
@@ -10,9 +9,8 @@ import utils.MethodTest;
 
 public class AOR_Test extends MethodTest {
 
-	@Override
-	protected String getOperatorName() {
-		return new AOR().getShortname();
+	public AOR_Test() {
+		super(new AOR());
 	}
 
 	@Override

@@ -38,11 +38,20 @@ public abstract class BasicTest {
 	
 	ArrayList<File> tempfilelist;
 	
+	protected final MutationOperator mutop;
 	
 	/////////////////////////////////////////
 	/// Methods
 	/////////////////////////////////////////	
 
+	/**
+	 * Default constructor.
+	 * @param mutop The {@link MutationOperator} under test.
+	 */
+	public BasicTest(MutationOperator mutop){
+		this.mutop = mutop;
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		// initialize arraylist which contains all temporary created files
@@ -64,7 +73,7 @@ public abstract class BasicTest {
 		this.jmutops.addResultListener(counter);
 		
 		// initialize test specific context 
-		initializeContext();
+		initializeContextFiles();
 	}
 
 	@After
@@ -141,13 +150,15 @@ public abstract class BasicTest {
 	 * Get the tested {@link MutationOperator}.
 	 * @return The {@link MutationOperator} under test.
 	 */
-	protected abstract MutationOperator getTestedMutationOperator();
+	protected MutationOperator getTestedMutationOperator(){
+		return this.mutop;
+	}
 	
 	/**
-	 * Initialized context for the class under test,
-	 * e.g. fields in the same file or classes in other files. <p>
+	 * Initialized context files for the class under test,
+	 * so classes in other files. <p>
 	 * Will be called in the @Before method of {@link BasicTest}.
 	 */
-	protected abstract void initializeContext();
+	protected abstract void initializeContextFiles();
 
 }

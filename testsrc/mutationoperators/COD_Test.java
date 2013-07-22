@@ -1,7 +1,6 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import mutationoperators.cod.COD;
 
 import org.junit.Test;
@@ -10,9 +9,8 @@ import utils.MethodTest;
 
 public class COD_Test extends MethodTest {
 
-	@Override
-	protected String getOperatorName() {
-		return new COD().getShortname();
+	public COD_Test() {
+		super(new COD());
 	}
 
 	@Override
