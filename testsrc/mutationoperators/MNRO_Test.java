@@ -5,11 +5,11 @@ import mutationoperators.mnro.MNRO;
 
 import org.junit.Test;
 
-import utils.BasicMutationOperatorTest;
+import utils.MethodTest;
 
 
 
-public class MNRO_Test extends BasicMutationOperatorTest {
+public class MNRO_Test extends MethodTest {
 
 	@Override
 	protected String getOperatorName() {

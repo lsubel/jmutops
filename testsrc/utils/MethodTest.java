@@ -17,7 +17,7 @@ import org.junit.Before;
 import results.ApplicationCounter;
 import enums.OptionsVersion;
 
-public abstract class BasicMutationOperatorTest {
+public abstract class MethodTest {
 
 	protected static final String METHOD_NAME = "method";
 	protected static final String CLASS_NAME = "Foo";

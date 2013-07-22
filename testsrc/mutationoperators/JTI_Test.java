@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import mutationoperators.jti.JTI;
 import org.junit.Test;
 
-import utils.BasicMutationOperatorTest;
+import utils.MethodTest;
 
-public class JTI_Test extends BasicMutationOperatorTest {
+public class JTI_Test extends MethodTest {
 	
 	@Override
 	protected String getOperatorName() {

@@ -4,10 +4,10 @@ import mutationoperators.afro.AFRO;
 
 import org.junit.Test;
 
-import utils.BasicMutationOperatorTest;
+import utils.MethodTest;
 
 
-public class AFRO_Test extends BasicMutationOperatorTest {
+public class AFRO_Test extends MethodTest {
 	
 	@Override
 	protected String getOperatorName() {

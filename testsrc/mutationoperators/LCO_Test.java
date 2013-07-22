@@ -6,9 +6,9 @@ import mutationoperators.lco.LCO;
 
 import org.junit.Test;
 
-import utils.BasicMutationOperatorTest;
+import utils.MethodTest;
 
-public class LCO_Test extends BasicMutationOperatorTest {
+public class LCO_Test extends MethodTest {
 	
 	@Override
 	protected String getOperatorName() {
