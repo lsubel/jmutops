@@ -1,13 +1,10 @@
 package results;
 import java.io.File;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
@@ -335,7 +332,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		
 		
 	@Override
-	public void OnBugChanged(int officialID, String urlToBugreport) {
+	public void OnBugChanged(String bugID, String urlToBugreport) {
 		// assert parameters to be not null
 		assert urlToBugreport != null;
 
@@ -349,7 +346,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		try {
 			stmt = this.connection.prepareStatement("SELECT * FROM Bugreport WHERE (ID_program = ?) AND (officialID = ?)");
 			stmt.setInt(0, this.ID_program);
-			stmt.setInt(1, officialID);
+			stmt.setString(1, bugID);
 			resultset = stmt.executeQuery();
 			stmt.close();
 			resultset.last();
@@ -378,7 +375,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			try {
 				stmt = connection.prepareStatement("INSERT INTO Bugreport (ID_program, officialID, urlToBugreport) VALUES (?, ?, ?)");
 				stmt.setInt(0, this.ID_program);
-				stmt.setInt(1, officialID);
+				stmt.setString(1, bugID);
 				stmt.setString(2, urlToBugreport);
 				stmt.executeUpdate();
 				stmt.close();
@@ -392,7 +389,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 			try {
 				stmt = this.connection.prepareStatement("SELECT * FROM Bugreport WHERE (ID_program = ?) AND (officialID = ?)");
 				stmt.setInt(0, this.ID_program);
-				stmt.setInt(1, officialID);
+				stmt.setString(1, bugID);
 				resultset = stmt.executeQuery();
 				stmt.close();
 				resultset.first();

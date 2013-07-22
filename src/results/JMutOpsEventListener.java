@@ -31,10 +31,10 @@ public interface JMutOpsEventListener{
 	/**
 	 * Event gets fired when a new bug will be initialized.
 	 * This event can be started by calling the method {@link jmutops.JMutOps#initBug(String) initBug(String)} in {@link jmutops.JMutOps JMutOps}.
-	 * @param officialID The official ID related to this bug.
+	 * @param bugID The official ID related to this bug.
 	 * @param urlToBugreport The weblink to the bug's entry in the bugtracker.
 	 */
-	public void OnBugChanged(int officialID, String urlToBugreport);
+	public void OnBugChanged(String bugID, String urlToBugreport);
 	
 	/**
 	 * Event gets fired when the check of two files started.

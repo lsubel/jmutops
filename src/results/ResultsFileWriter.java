@@ -112,7 +112,7 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 	}
 
 	@Override
-	public void OnBugChanged(int officalID, String urlToBugreport) {	
+	public void OnBugChanged(String officalID, String urlToBugreport) {	
 	}
 
 	@Override

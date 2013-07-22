@@ -41,9 +41,9 @@ public class EventLogger implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnBugChanged(int officialID, String urlToBugreport) {
+	public void OnBugChanged(String bugID, String urlToBugreport) {
 		Date now = new Date();
-		logger.append(now.toString() + " - Initialized a new bug with ID " + officialID + ".");
+		logger.append(now.toString() + " - Initialized a new bug with ID " + bugID + ".");
 		logger.append("\n");
 	}
 

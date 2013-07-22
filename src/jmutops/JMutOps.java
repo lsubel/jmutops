@@ -284,8 +284,8 @@ public class JMutOps {
 	 * Initialize a new bug which related to the last initialized program.
 	 * @param officialID
 	 */
-	public void initBug(String officialID){
-		// TODO: fire event
+	public void initBug(String officialID, String urlBugreport){
+		this.listener.OnBugChanged(officialID, urlBugreport);
 	}
 	
 	/**
