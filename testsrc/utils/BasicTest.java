@@ -24,9 +24,9 @@ public abstract class BasicTest {
 	/// Constants
 	/////////////////////////////////////////
 	
-	protected static final File PATH_FOR_PREFIX_FILES = TestUtilities.getFolder(TestUtilities.getTempDir() + File.separator + "prefix");
+	protected static final File PATH_FOR_PREFIX_FILES = TestUtilities.getFolder(TestUtilities.getTempDir() + File.separator + "prefix_test");
 
-	protected static final File PATH_FOR_POSTFIX_FILES = TestUtilities.getFolder(TestUtilities.getTempDir() + File.separator + "postfix");
+	protected static final File PATH_FOR_POSTFIX_FILES = TestUtilities.getFolder(TestUtilities.getTempDir() + File.separator + "postfix_test");
 	
 	/////////////////////////////////////////
 	/// Fields
@@ -80,7 +80,9 @@ public abstract class BasicTest {
 	public void tearDown() throws Exception {
 		// delete all temporary files
 		for(File tempfile: this.tempfilelist){
-			tempfile.delete();
+			if(tempfile != null){
+				tempfile.delete();
+			}
 		}
 		// remove objects
 		this.jmutops = null;
@@ -124,9 +126,9 @@ public abstract class BasicTest {
 		File prefix = createSourceFile(fileName, fileContent, this.PATH_FOR_PREFIX_FILES);
 		File postfix = createSourceFile(fileName, fileContent, this.PATH_FOR_POSTFIX_FILES);
 		
-		// add both files to jMutOps
-		this.jmutops.addSourcepathEntry(prefix.getAbsolutePath(), "", OptionsVersion.PREFIX);
-		this.jmutops.addSourcepathEntry(postfix.getAbsolutePath(), "", OptionsVersion.POSTFIX);
+		// add the storing path the the sourcepath entry of jmutops
+		this.jmutops.addSourcepathEntry(this.PATH_FOR_PREFIX_FILES.getAbsolutePath(), "", OptionsVersion.PREFIX);
+		this.jmutops.addSourcepathEntry(this.PATH_FOR_POSTFIX_FILES.getAbsolutePath(), "", OptionsVersion.POSTFIX);
 	}
 
 	

@@ -1,23 +1,15 @@
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Logger;
 
 import jmutops.JMutOps;
 
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
 
-import enums.OptionsVersion;
-
-import results.ApplicationCounter;
 import results.EventLogger;
 import results.ResultsFileWriter;
-
-import utils.Settings;
+import enums.OptionsVersion;
 
 
 public class AlessandraVMApplication {
@@ -90,7 +82,7 @@ public class AlessandraVMApplication {
 		
 		// check each file in the prefix folder
 		for(File prefixFile: prefixFoldercontent){
-			File postfixFile = new File(postfixFolder + "\\" + prefixFile.getName());
+			File postfixFile = new File(postfixFolder + File.separator + prefixFile.getName());
 			
 			// check for file existance
 			if((!prefixFile.exists()) || (!postfixFile.exists())){
