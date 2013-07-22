@@ -64,7 +64,11 @@ public abstract class MethodTest {
 	
 	protected abstract String getOperatorName();
 	
-	protected abstract String getFields();
+	/**
+	 * Returns the other fields and methods of the main file under test.
+	 * @return The fields and methods of the file under test.
+	 */
+	protected abstract String getOtherClassContent();
 	
 	protected File createPrefixSourceFile(String sourceCode) {
 		return this.createSourceFile(sourceCode, CLASS_NAME, PATH_FOR_PREFIX_FILES);
@@ -95,7 +99,7 @@ public abstract class MethodTest {
         methodSource.append("() { ");
         methodSource.append(methodBody);
         methodSource.append(" }");
-        return createSourceCode(getFields() + "\n" + methodSource.toString());		
+        return createSourceCode(getOtherClassContent() + "\n" + methodSource.toString());		
 	}
 	
 	protected File createSourceFile(String javacode, String fileName, File pathToFolder) {

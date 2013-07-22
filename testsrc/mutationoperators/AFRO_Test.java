@@ -15,7 +15,7 @@ public class AFRO_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return  "int a1 = 0; " + 
 				"boolean b1 = true; " +
 				"boolean b2 = false; " +

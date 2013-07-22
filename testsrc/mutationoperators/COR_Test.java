@@ -16,7 +16,7 @@ public class COR_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return 	"boolean a = true; " +
 				"boolean b = false;" +
 				"boolean c = false;" +

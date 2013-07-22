@@ -16,7 +16,7 @@ public class AOD_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return  "int a = 0; " + 
 				"int b = 100; ";
 	}

@@ -16,7 +16,7 @@ public class COD_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return  "int a1 = 0; " +
 				"int a2 = 9; " +
 				"boolean b1 = true; " +

@@ -16,7 +16,7 @@ public class ASR_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return  "int a1 = 42; " +
 				"int a2 = 100; " +
 				"boolean b1 = true; " +

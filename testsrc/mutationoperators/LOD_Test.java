@@ -16,7 +16,7 @@ public class LOD_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return  "int a = 42; " +
 				"int b = 1;";
 	}

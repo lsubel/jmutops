@@ -14,7 +14,7 @@ public class JTI_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return 	"int a = 0; " +
 				"int c = 42; " +
 				"String b = \"Bla\"; " +

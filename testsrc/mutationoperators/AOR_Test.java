@@ -16,7 +16,7 @@ public class AOR_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return 	"int a = 0; \n" +
 				"int b = 4; \n"+
 				"int c = 42; \n" +

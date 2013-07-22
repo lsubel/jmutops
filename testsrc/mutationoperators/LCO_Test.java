@@ -16,7 +16,7 @@ public class LCO_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return "boolean b;";
 	}
 	

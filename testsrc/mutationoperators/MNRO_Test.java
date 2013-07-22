@@ -17,7 +17,7 @@ public class MNRO_Test extends MethodTest {
 	}
 
 	@Override
-	protected String getFields() {
+	protected String getOtherClassContent() {
 		return 	"int counter = 0; " + 
 				"String name = \"\";" +
 				"public void resetCounter(){counter = 0;} " +
