@@ -1,4 +1,5 @@
 package mutationoperators;
+
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -91,6 +92,12 @@ import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.core.dom.WildcardType;
 
 
+/**
+ * General (abstract) class which traverse in a 
+ * mutation operator depending way over two {@link ASTNode} in parallel.
+ * @author Lukas Subel
+ *
+ */
 public abstract class BaseASTVisitor extends ASTVisitor {
 
 	/**
@@ -108,6 +115,11 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	 */
 	protected BaseASTMatcher matcher;
 	
+	/**
+	 * Default constructor.
+	 * @param matcher The method operator specific {@link BaseASTMatcher} 
+	 * 	which can be called when detecting a possible matching {@link ASTNode}.
+	 */
 	public BaseASTVisitor(BaseASTMatcher matcher) {
 		this.matcher = matcher;
 		this.defaultMatcher = new ASTMatcher();
@@ -119,14 +131,27 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	//
 	/////////////////////////////////////////////////////////////
 	
-	public ASTNode getSecondTree(){
+	/**
+	 * Get the parallel {@link ASTNode}.
+	 * @return The parallel {@link ASTNode} at the moment.
+	 */
+	protected ASTNode getSecondTree(){
 		return this.secondTree;
 	}
 	
-	public void setSecondTree(ASTNode ast){
+	/**
+	 * Set a new parallel {@link ASTNode}.
+	 * @param ast The new {@link ASTNode}.
+	 */
+	protected void setSecondTree(ASTNode ast){
 		this.secondTree = ast;
 	}
 	
+	/**
+	 * Helper function which sets the new parallel {@link ASTNode} before visiting the new {@link ASTNode}.
+	 * @param left The prefix {@link ASTNode}.
+	 * @param right The postfix {@link ASTNode}.
+	 */
 	protected void visitSubtree(ASTNode left, ASTNode right){
 		if(left != null){
 			this.secondTree = right;
@@ -134,6 +159,12 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 		}
 	}
 
+	/**
+	 * Helper function which traverse over two lists of {@link ASTNode}s in parallel.
+	 * Both lists have to have the same length.
+	 * @param list1
+	 * @param list2
+	 */
 	protected void visitSubtrees(List list1, List list2) {
 		if(list1.size() == list2.size()){
 			for(int i=0; i < list1.size(); i++){
