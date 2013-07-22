@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import mutationoperators.MutationOperatorChecker;
+import mutationoperators.afro.AFRO;
 import mutationoperators.aod.AOD;
 import mutationoperators.aor.AOR;
 import mutationoperators.asr.ASR;
@@ -379,6 +380,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new COD(this.listener));
 		this.checker.addMutationOperator(new LOD(this.listener));
 		this.checker.addMutationOperator(new AOD(this.listener));
+		this.checker.addMutationOperator(new AFRO(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
