@@ -1,5 +1,5 @@
+package mutationoperators;
 import static org.junit.Assert.assertEquals;
-import mutationoperators.BasicMutationOperatorTest;
 import mutationoperators.afro.AFRO;
 
 import org.junit.Test;
