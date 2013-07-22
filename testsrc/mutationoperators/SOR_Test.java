@@ -6,6 +6,8 @@ import mutationoperators.sor.SOR;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class SOR_Test extends BasicMutationOperatorTest {
 
 	@Override

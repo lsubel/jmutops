@@ -6,6 +6,8 @@ import mutationoperators.aor.AOR;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class AOR_Test extends BasicMutationOperatorTest {
 
 	@Override

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import mutationoperators.jti.JTI;
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class JTI_Test extends BasicMutationOperatorTest {
 	
 	@Override

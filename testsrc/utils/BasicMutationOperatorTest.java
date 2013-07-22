@@ -1,4 +1,4 @@
-package mutationoperators;
+package utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,7 +15,6 @@ import org.junit.After;
 import org.junit.Before;
 
 import results.ApplicationCounter;
-import utils.TestUtilities;
 import enums.OptionsVersion;
 
 public abstract class BasicMutationOperatorTest {

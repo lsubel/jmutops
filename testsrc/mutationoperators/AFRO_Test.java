@@ -4,6 +4,8 @@ import mutationoperators.afro.AFRO;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 
 public class AFRO_Test extends BasicMutationOperatorTest {
 	

@@ -6,6 +6,8 @@ import mutationoperators.lco.LCO;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class LCO_Test extends BasicMutationOperatorTest {
 	
 	@Override

@@ -6,6 +6,8 @@ import mutationoperators.cod.COD;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class COD_Test extends BasicMutationOperatorTest {
 
 	@Override

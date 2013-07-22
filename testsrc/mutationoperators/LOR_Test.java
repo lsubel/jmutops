@@ -7,6 +7,8 @@ import mutationoperators.lor.LOR;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class LOR_Test extends BasicMutationOperatorTest {
 
 	@Override

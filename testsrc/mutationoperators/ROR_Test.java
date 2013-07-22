@@ -6,6 +6,8 @@ import mutationoperators.ror.ROR;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 public class ROR_Test extends BasicMutationOperatorTest {
 	
 	@Override

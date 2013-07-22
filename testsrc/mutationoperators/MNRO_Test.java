@@ -5,6 +5,8 @@ import mutationoperators.mnro.MNRO;
 
 import org.junit.Test;
 
+import utils.BasicMutationOperatorTest;
+
 
 
 public class MNRO_Test extends BasicMutationOperatorTest {
