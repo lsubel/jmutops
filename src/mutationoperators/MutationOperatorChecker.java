@@ -3,37 +3,30 @@ package mutationoperators;
 import java.util.ArrayList;
 import java.util.List;
 
-import mutationoperators.aor.AOR;
-import mutationoperators.jti.JTI;
-import mutationoperators.mnro.MNRO;
-
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.DoStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
-import results.JMutOpsEventListener;
 import results.JMutOpsEventListenerMulticaster;
-
-import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
-import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 
 /**
- * Class storing the implemented MutationOperators. It calls the correct
- * operators and 
- * 
+ * Class that stores and maintains the implemented MutationOperators. <p>
+
  * @author Lukas Subel
  * 
  */
 public class MutationOperatorChecker {
 
-	// ////////////////////////////////////////////////////
-	// / Fields
-	// ////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
+	/// Fields
+	//////////////////////////////////////////////////////
 
 	/**
 	 * Array containing all method level related mutation operators.
@@ -112,7 +105,13 @@ public class MutationOperatorChecker {
 	}
 
 	/**
-	 * Depending on the kind of change, call a different submethod.
+	 * This method runs the following steps:  
+	 * <ul>
+	 * 	<li> It selects a subset of all registered {@link MutationOperator} 
+	 * 		which could occur in this {@link SourceCodeChange}, </li>
+	 * 	<li> It tries to select a subAST depending on the the {@link SourceCodeChange}, </li>
+	 * 	<li> It calls the {@link MutationOperator} to check for a match. </li>
+	 * </ul>	
 	 * 
 	 * @param leftNode
 	 *            Prefixed version of AST.
