@@ -114,9 +114,9 @@ public class MutationOperatorChecker {
 	 * </ul>	
 	 * 
 	 * @param leftNode
-	 *            Prefixed version of AST.
+	 *            AST with the prefix version.
 	 * @param rightNode
-	 *            Postfixed version of AST.
+	 *            AST with the postfix version.
 	 * @param change
 	 *            ChangeDistiller object describing the change related betweeen
 	 *            both AST versions.
