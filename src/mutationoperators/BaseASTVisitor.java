@@ -103,7 +103,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	/**
 	 * Reference to the second AST which will be traversed in parallel.
 	 */
-	protected ASTNode secondTree;
+	protected ASTNode parallelTree;
 	
 	/**
 	 * Default ASTMatcher to match general properties.
@@ -135,16 +135,16 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	 * Get the parallel {@link ASTNode}.
 	 * @return The parallel {@link ASTNode} at the moment.
 	 */
-	protected ASTNode getSecondTree(){
-		return this.secondTree;
+	protected ASTNode getParallelTree(){
+		return this.parallelTree;
 	}
 	
 	/**
 	 * Set a new parallel {@link ASTNode}.
 	 * @param ast The new {@link ASTNode}.
 	 */
-	protected void setSecondTree(ASTNode ast){
-		this.secondTree = ast;
+	protected void setParallelTree(ASTNode ast){
+		this.parallelTree = ast;
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	 */
 	protected void visitSubtree(ASTNode left, ASTNode right){
 		if(left != null){
-			this.secondTree = right;
+			this.parallelTree = right;
 			left.accept(this);
 		}
 	}
@@ -182,7 +182,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(AnnotationTypeDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof AnnotationTypeDeclaration){
@@ -205,7 +205,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(AnnotationTypeMemberDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof AnnotationTypeMemberDeclaration){
@@ -231,7 +231,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(AnonymousClassDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof AnonymousClassDeclaration){
@@ -248,7 +248,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ArrayAccess node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ArrayAccess){
@@ -268,7 +268,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ArrayCreation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ArrayCreation){
@@ -291,7 +291,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ArrayInitializer node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ArrayInitializer){
@@ -308,7 +308,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ArrayType node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ArrayType){
@@ -328,7 +328,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(AssertStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof AssertStatement){
@@ -347,7 +347,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(Assignment node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof Assignment){
@@ -365,7 +365,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(Block node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof Block){
@@ -390,7 +390,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(BreakStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof BreakStatement){
@@ -405,7 +405,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(CastExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof CastExpression){
@@ -423,7 +423,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(CatchClause node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof CatchClause){
@@ -446,7 +446,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ClassInstanceCreation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ClassInstanceCreation){
@@ -470,7 +470,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(CompilationUnit node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof CompilationUnit){
@@ -491,7 +491,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ConditionalExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ConditionalExpression){
@@ -512,7 +512,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ConstructorInvocation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ConstructorInvocation){
@@ -527,7 +527,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ContinueStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ContinueStatement){
@@ -542,7 +542,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(DoStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof DoStatement){
@@ -565,7 +565,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(EnhancedForStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof EnhancedForStatement){
@@ -586,7 +586,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(EnumConstantDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof EnumConstantDeclaration){
@@ -610,7 +610,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(EnumDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof EnumDeclaration){
@@ -640,7 +640,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ExpressionStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ExpressionStatement){
@@ -655,7 +655,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(FieldAccess node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof FieldAccess){
@@ -673,7 +673,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(FieldDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof FieldDeclaration){
@@ -697,7 +697,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ForStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ForStatement){
@@ -721,7 +721,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(IfStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof IfStatement){
@@ -743,7 +743,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ImportDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ImportDeclaration){
@@ -758,7 +758,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(InfixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof InfixExpression){
@@ -779,7 +779,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(InstanceofExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof InstanceofExpression){
@@ -797,7 +797,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(Initializer node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof Initializer){
@@ -812,7 +812,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(Javadoc node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof Javadoc){
@@ -827,7 +827,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(LabeledStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof LabeledStatement){
@@ -850,7 +850,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MarkerAnnotation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MarkerAnnotation){
@@ -865,7 +865,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MemberRef node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MemberRef){
@@ -883,7 +883,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MemberValuePair node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MemberValuePair){
@@ -901,7 +901,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MethodRef node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MethodRef){
@@ -922,7 +922,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MethodRefParameter node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MethodRefParameter){
@@ -940,7 +940,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MethodDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MethodDeclaration){
@@ -976,7 +976,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(MethodInvocation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof MethodInvocation){
@@ -1005,7 +1005,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(NormalAnnotation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof NormalAnnotation){
@@ -1033,7 +1033,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(PackageDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof PackageDeclaration){
@@ -1060,7 +1060,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ParameterizedType node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ParameterizedType){
@@ -1079,7 +1079,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ParenthesizedExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ParenthesizedExpression){
@@ -1094,7 +1094,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(PostfixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof PostfixExpression){
@@ -1109,7 +1109,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(PrefixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof PrefixExpression){
@@ -1129,7 +1129,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(QualifiedName node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof QualifiedName){
@@ -1147,7 +1147,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(QualifiedType node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof QualifiedType){
@@ -1165,7 +1165,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ReturnStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ReturnStatement){
@@ -1190,7 +1190,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SingleMemberAnnotation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SingleMemberAnnotation){
@@ -1208,7 +1208,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SingleVariableDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SingleVariableDeclaration){
@@ -1237,7 +1237,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SuperConstructorInvocation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SuperConstructorInvocation){
@@ -1258,7 +1258,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SuperFieldAccess node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SuperFieldAccess){
@@ -1276,7 +1276,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SuperMethodInvocation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SuperMethodInvocation){
@@ -1300,7 +1300,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SwitchCase node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SwitchCase){
@@ -1315,7 +1315,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SwitchStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SwitchStatement){
@@ -1333,7 +1333,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(SynchronizedStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof SynchronizedStatement){
@@ -1351,7 +1351,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(TagElement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof TagElement){
@@ -1371,7 +1371,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ThisExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ThisExpression){
@@ -1386,7 +1386,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(ThrowStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof ThrowStatement){
@@ -1401,7 +1401,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(TryStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof TryStatement){
@@ -1425,7 +1425,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(TypeDeclaration node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof TypeDeclaration){
@@ -1454,7 +1454,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(TypeDeclarationStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof TypeDeclarationStatement){
@@ -1472,7 +1472,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(TypeLiteral node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof TypeLiteral){
@@ -1487,7 +1487,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(TypeParameter node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof TypeParameter){
@@ -1505,7 +1505,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(UnionType node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof UnionType){
@@ -1520,7 +1520,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(VariableDeclarationExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof VariableDeclarationExpression){
@@ -1541,7 +1541,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(VariableDeclarationStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof VariableDeclarationStatement){
@@ -1562,7 +1562,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(VariableDeclarationFragment node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof VariableDeclarationFragment){
@@ -1580,7 +1580,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(WhileStatement node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof WhileStatement){
@@ -1598,7 +1598,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	@Override
 	public boolean visit(WildcardType node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof WildcardType){

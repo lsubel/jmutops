@@ -19,7 +19,7 @@ public class LCO_Visitor extends BaseASTVisitor {
 	public boolean visit(BooleanLiteral node) {
 	
 		// locally store the second tree
-		ASTNode tempStore = this.secondTree;
+		ASTNode tempStore = this.parallelTree;
 
 		// check case: a.b and this.a.b
 		if(tempStore instanceof BooleanLiteral){

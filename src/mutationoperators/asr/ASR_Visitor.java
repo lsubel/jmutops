@@ -15,7 +15,7 @@ public class ASR_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(Assignment node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof Assignment){

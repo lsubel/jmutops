@@ -16,7 +16,7 @@ public class COD_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(PrefixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for an application
 		matcher.match(node, localStoredTree);

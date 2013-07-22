@@ -48,10 +48,10 @@ public class JTI_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(MethodInvocation node) {
 		// apply matcher
-		matcher.match(node, secondTree);
+		matcher.match(node, parallelTree);
 		
 		// store tree locally
-		ASTNode tempStore = getSecondTree();
+		ASTNode tempStore = getParallelTree();
 		
 		// call visitor on subelements
 		if(tempStore instanceof MethodInvocation){
@@ -71,14 +71,14 @@ public class JTI_Visitor extends BaseASTVisitor {
 
 	@Override
 	public boolean visit(FieldAccess node) {
-		matcher.match(node, secondTree);
+		matcher.match(node, parallelTree);
 		return false;
 	}
 
 	@Override
 	public boolean visit(QualifiedName node) {
 		// locally store the second tree
-		ASTNode tempStore = this.secondTree;
+		ASTNode tempStore = this.parallelTree;
 
 		// check case: a.b and this.a.b
 		if(tempStore instanceof FieldAccess){
@@ -106,7 +106,7 @@ public class JTI_Visitor extends BaseASTVisitor {
 
 	@Override
 	public boolean visit(SimpleName node) {
-		matcher.match(node, this.secondTree);
+		matcher.match(node, this.parallelTree);
 		return false;
 	}	
 }

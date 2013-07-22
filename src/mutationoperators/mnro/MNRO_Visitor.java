@@ -18,7 +18,7 @@ public class MNRO_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(MethodInvocation node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 
 		if(localStoredTree instanceof MethodInvocation){
 			MethodInvocation mi = (MethodInvocation) localStoredTree;

@@ -17,7 +17,7 @@ public class AOD_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(PostfixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 	
 		// since the Postfix operator might be deleted, 
 		// we just check for an application
@@ -30,7 +30,7 @@ public class AOD_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(PrefixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// since the Postfix operator might be deleted, 
 		// we just check for an application

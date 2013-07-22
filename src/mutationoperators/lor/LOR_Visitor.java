@@ -15,7 +15,7 @@ public class LOR_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(InfixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof InfixExpression){

@@ -90,7 +90,7 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		this.visitor.setSecondTree(right);
+		this.visitor.setParallelTree(right);
 		left.accept(visitor);
 		// return the number of detected matches
 		return this.application_counter;		

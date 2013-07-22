@@ -19,7 +19,7 @@ public class AOR_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(InfixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof InfixExpression){
@@ -45,7 +45,7 @@ public class AOR_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(PostfixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof PostfixExpression){
@@ -75,7 +75,7 @@ public class AOR_Visitor extends BaseASTVisitor {
 	@Override
 	public boolean visit(PrefixExpression node) {
 		// locally store the AST
-		ASTNode localStoredTree = getSecondTree();
+		ASTNode localStoredTree = getParallelTree();
 		
 		// check for same node type in parallel tree
 		if(localStoredTree instanceof PrefixExpression){
