@@ -1,12 +1,8 @@
 package mutationoperators;
 
-import static org.junit.Assert.*;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,19 +10,13 @@ import java.util.Hashtable;
 
 import jmutops.JMutOps;
 
-import mutationoperators.jti.JTI;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-
-import enums.OptionsVersion;
 
 import results.ApplicationCounter;
 import utils.TestUtilities;
+import enums.OptionsVersion;
 
 public abstract class BasicMutationOperatorTest {
 
