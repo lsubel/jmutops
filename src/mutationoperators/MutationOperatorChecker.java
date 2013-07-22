@@ -18,7 +18,8 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 
 /**
  * Class that stores and maintains the implemented MutationOperators. <p>
-
+ * It handles the requests to check for matching mutation operators 
+ * and performs some preparing steps.
  * @author Lukas Subel
  * 
  */
