@@ -85,8 +85,8 @@ public abstract class MethodTest extends BasicTest {
 	 * @param snippet
 	 * @return The complete file content.
 	 */
-	private String surroundWithClass(String snippet){
-		return "public class " + CLASS_NAME + " { \n" + snippet + " \n};";
+	protected String surroundWithClass(String classname, String snippet){
+		return "public class " + classname + " { \n" + snippet + " \n};";
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public abstract class MethodTest extends BasicTest {
         methodSource.append("() { ");
         methodSource.append(methodBody);
         methodSource.append(" }");
-        return surroundWithClass(methodSource.toString());
+        return surroundWithClass(CLASS_NAME, methodSource.toString());
 	}
 
 	/**
@@ -117,6 +117,6 @@ public abstract class MethodTest extends BasicTest {
         methodSource.append("() { ");
         methodSource.append(methodBody);
         methodSource.append(" }");
-        return surroundWithClass(getOtherClassContent() + "\n" + methodSource.toString());		
+        return surroundWithClass(CLASS_NAME, getOtherClassContent() + "\n" + methodSource.toString());		
 	}
 }
