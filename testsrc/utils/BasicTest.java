@@ -123,12 +123,12 @@ public abstract class BasicTest {
 	 */
 	protected void addContextSourceFile(String fileName, String fileContent){
 		// create files for both versions
-		File prefix = createSourceFile(fileName, fileContent, this.PATH_FOR_PREFIX_FILES);
-		File postfix = createSourceFile(fileName, fileContent, this.PATH_FOR_POSTFIX_FILES);
+		createSourceFile(fileName, fileContent, PATH_FOR_PREFIX_FILES);
+		createSourceFile(fileName, fileContent, PATH_FOR_POSTFIX_FILES);
 		
 		// add the storing path the the sourcepath entry of jmutops
-		this.jmutops.addSourcepathEntry(this.PATH_FOR_PREFIX_FILES.getAbsolutePath(), "", OptionsVersion.PREFIX);
-		this.jmutops.addSourcepathEntry(this.PATH_FOR_POSTFIX_FILES.getAbsolutePath(), "", OptionsVersion.POSTFIX);
+		this.jmutops.addSourcepathEntry(PATH_FOR_PREFIX_FILES.getAbsolutePath(), "", OptionsVersion.PREFIX);
+		this.jmutops.addSourcepathEntry(PATH_FOR_POSTFIX_FILES.getAbsolutePath(), "", OptionsVersion.POSTFIX);
 	}
 
 	
