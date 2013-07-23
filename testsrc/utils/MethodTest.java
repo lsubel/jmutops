@@ -4,6 +4,11 @@ import java.io.File;
 
 import mutationoperators.MutationOperator;
 
+/**
+ * General (abstract) class which should be used for method level related tests.
+ * @author Lukas Subel
+ *
+ */
 public abstract class MethodTest extends BasicTest {
 
 	/////////////////////////////////////////
@@ -49,7 +54,7 @@ public abstract class MethodTest extends BasicTest {
 	protected abstract String getOtherClassContent();
 	
 	/**
-	 * Creates files for prefix and postfix version 
+	 * Embed methodbody into method and class, creates files for prefix and postfix version 
 	 * 	and calls {@link BasicTest#compareMatches(File, File) compareMatches(File, File)} in {@link BasicTest}.
 	 * @param prefixMethodBody The prefix method body.
 	 * @param postfixMethodBody The postfix method body.
