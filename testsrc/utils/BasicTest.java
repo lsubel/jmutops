@@ -18,6 +18,11 @@ import org.junit.Before;
 import results.ApplicationCounter;
 import enums.OptionsVersion;
 
+/**
+ * General (abstract) testing class. Contains method to retrieve number of applications.
+ * @author Lukas Subel
+ *
+ */
 public abstract class BasicTest {
 
 	/////////////////////////////////////////
