@@ -1,13 +1,10 @@
 package mutationoperators.mnro;
 
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.InfixExpression;
-import org.eclipse.jdt.core.dom.MethodInvocation;
-
 import mutationoperators.BaseASTMatcher;
 import mutationoperators.BaseASTVisitor;
+
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
 public class MNRO_Visitor extends BaseASTVisitor {
 
@@ -21,6 +18,7 @@ public class MNRO_Visitor extends BaseASTVisitor {
 		ASTNode localStoredTree = getParallelTree();
 
 		if(localStoredTree instanceof MethodInvocation){
+			// cast other node
 			MethodInvocation mi = (MethodInvocation) localStoredTree;
 			
 			// check for an application

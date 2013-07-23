@@ -1,13 +1,10 @@
 package mutationoperators.lco;
 
-import java.util.List;
+import mutationoperators.BaseASTMatcher;
+import mutationoperators.BaseASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
-import org.eclipse.jdt.core.dom.FieldAccess;
-
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
 
 public class LCO_Visitor extends BaseASTVisitor {
 

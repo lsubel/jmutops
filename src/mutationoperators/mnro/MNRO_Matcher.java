@@ -1,16 +1,12 @@
 package mutationoperators.mnro;
 
-import java.util.List;
+import mutationoperators.BaseASTMatcher;
+import mutationoperators.MutationOperator;
 
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
 import utils.Settings;
-
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.MutationOperator;
 
 public class MNRO_Matcher extends BaseASTMatcher {
 
@@ -23,6 +19,7 @@ public class MNRO_Matcher extends BaseASTMatcher {
 		
 		// if the compared AST is  MethodInvocation
 		if(other instanceof MethodInvocation){
+			// cast other node
 			MethodInvocation node2 = (MethodInvocation) other;
 			
 			// check if these the names are different
