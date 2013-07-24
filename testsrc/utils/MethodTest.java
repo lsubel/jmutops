@@ -96,6 +96,9 @@ public abstract class MethodTest extends BasicTest {
 	
 	/**
 	 * Adds class stuff with extends and implements around the snippet.
+	 * @param classname
+	 * @param extendName
+	 * @param implementNames 
 	 * @param snippet
 	 * @return The complete file content.
 	 */
