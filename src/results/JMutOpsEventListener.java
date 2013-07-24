@@ -3,11 +3,17 @@ package results;
 import java.io.File;
 import java.util.List;
 
+import mutationoperators.MutationOperator;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
-import mutationoperators.MutationOperator;
 
+/**
+ * Interface which is related to the events fired within jMutOps.
+ * @author Lukas Subel
+ *
+ */
 public interface JMutOpsEventListener{
 	
 	/**
