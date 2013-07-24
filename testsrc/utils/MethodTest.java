@@ -95,6 +95,23 @@ public abstract class MethodTest extends BasicTest {
 	}
 	
 	/**
+	 * Adds class stuff with extends and implements around the snippet.
+	 * @param snippet
+	 * @return The complete file content.
+	 */
+	protected String surroundWithClass(String classname, String extendName, String implementNames, String snippet){
+		String strResult = "public class " + classname + " ";
+		if(extendName != ""){
+			strResult = strResult + "extends " + extendName + " ";
+		}
+		if(implementNames != ""){
+			strResult = strResult + "implements " + implementNames + " ";
+		}
+		strResult = strResult + "{ \n" + snippet + " \n};";
+		return strResult;
+	}
+	
+	/**
 	 * Embed the method's body into a method and the method into a class.
 	 * @param methodBody The method's body.
 	 * @return Returns the whole code of a .java class.
