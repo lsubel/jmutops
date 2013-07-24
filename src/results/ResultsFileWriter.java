@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import mutationoperators.MutationOperator;
 
