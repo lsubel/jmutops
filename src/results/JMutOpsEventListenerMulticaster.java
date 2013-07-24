@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 
 /**
- * Casts method calls to all registered {@link JMutOpsEventListener}.
+ * Forward method calls to all registered {@link JMutOpsEventListener}.
  * 
  * @author Lukas Subel
  *
