@@ -95,6 +95,18 @@ public class CRO_Test_2 extends MethodTest {
 	}
 	
 	@Test
+	public void testCRO_SameConstructorMethod8() {
+		int diff = compareMatches("Building b = new Garage();", "Building b = new Garage(2);");
+		assertEquals(1, diff);
+	}
+	
+	@Test
+	public void testCRO_SameConstructorMethod9() {
+		int diff = compareMatches("Garage g = new Garage();", "Garage g = new Garage(2);");
+		assertEquals(1, diff);
+	}
+	
+	@Test
 	public void testCRO_DifferentParameterNumber1() {
 		int diff = compareMatches("Building b = new Building();", "Building b = new Garage(2);");
 		assertEquals(1, diff);

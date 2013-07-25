@@ -35,7 +35,7 @@ public class CRO_Test_1 extends MethodTest {
 	
 	@Test
 	public void testCRO_LocalReplacement2() {
-		int diff = compareMatches("Bar Temp = new Bar();", "Bar Temp = new Bar(1);");
+		int diff = compareMatches("Bar Temp = new Bar();", "Bar Temp = new Bar(1, null);");
 		assertEquals(1, diff);
 	}
 
