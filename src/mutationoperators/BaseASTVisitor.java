@@ -461,7 +461,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 			// visit the type node
 			visitSubtree(node.getType(), cic.getType());
 			
-			// visit ich argument node
+			// visit the argument nodes
 			visitSubtrees(node.arguments(), cic.arguments());
 		}
 		return false;
