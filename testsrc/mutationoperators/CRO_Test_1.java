@@ -16,38 +16,38 @@ public class CRO_Test_1 extends MethodTest {
 	@Override
 	protected String getOtherClassContent() {
 		return 	"int value; " + 
-				"Bar childLeft = null; " +
-				"Bar childRight = null; " +
-				"public Bar(){value = 0;} " +
-				"public Bar(int v){value = v;} " +
-				"public Bar(Bar left){childLeft = left;} " +
-				"public Bar(Bar left, Bar right){childLeft = left; childRight = right;} " +
-				"public Bar(int v, Bar left){value = v; childLeft = left} " +
-				"public Bar(int v, Bar left, Bar right){value = v; childLeft = left, childRight = right;} " +
-				"public int getValue(){return value} ";
+				"Foo childLeft = null; " +
+				"Foo childRight = null; " +
+				"public Foo(){value = 0;} " +
+				"public Foo(int v){value = v;} " +
+				"public Foo(Foo left){childLeft = left;} " +
+				"public Foo(Foo left, Foo right){childLeft = left; childRight = right;} " +
+				"public Foo(int v, Foo left){value = v; childLeft = left;} " +
+				"public Foo(int v, Foo left, Foo right){value = v; childLeft = left; childRight = right;} " +
+				"public int getValue(){return value;} ";
 	}
 
 	@Test
 	public void testCRO_LocalReplacement1() {
-		int diff = compareMatches("Bar Temp = new Bar();", "Bar Temp = new Bar(1);");
+		int diff = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1);");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testCRO_LocalReplacement2() {
-		int diff = compareMatches("Bar Temp = new Bar();", "Bar Temp = new Bar(1, null);");
+		int diff = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1, null);");
 		assertEquals(1, diff);
 	}
 
 	@Test
 	public void testCRO_SameArgumentNumber1() {
-		int diff = compareMatches("childRight = new Bar(); Bar Temp = new Bar(1);", "childRight = new Bar(); Bar Temp = new Bar(childRight);");
+		int diff = compareMatches("childRight = new Foo(); Foo Temp = new Foo(1);", "childRight = new Foo(); Foo Temp = new Foo(childRight);");
 		assertEquals(1, diff);
 	}
 	
 	@Test
 	public void testCRO_SameArgumentNumber2() {
-		int diff = compareMatches("childRight = new Bar(); Bar Temp = new Bar(childRight, childRight);", "childRight = new Bar(); Bar Temp = new Bar(42, childRight);");
+		int diff = compareMatches("childRight = new Foo(); Foo Temp = new Foo(childRight, childRight);", "childRight = new Foo(); Foo Temp = new Foo(42, childRight);");
 		assertEquals(1, diff);
 	}
 
