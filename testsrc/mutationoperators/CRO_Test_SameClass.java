@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import utils.MethodTest;
 
-public class CRO_Test_1 extends MethodTest {
+public class CRO_Test_SameClass extends MethodTest {
 
-	public CRO_Test_1() {
+	public CRO_Test_SameClass() {
 		super(new CRO());
 	}
 

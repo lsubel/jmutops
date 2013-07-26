@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import utils.MethodTest;
 
-public class CRO_Test_2 extends MethodTest {
+public class CRO_Test_MultipleFiles extends MethodTest {
 
-	public CRO_Test_2() {
+	public CRO_Test_MultipleFiles() {
 		super(new CRO());
 	}
 
