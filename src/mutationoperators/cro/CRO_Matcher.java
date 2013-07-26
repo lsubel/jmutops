@@ -26,9 +26,9 @@ public class CRO_Matcher extends BaseASTMatcher {
 			IMethodBinding constructor2 = node2.resolveConstructorBinding();
 			
 			// check if both constructors are equal
-			boolean sameConstructors = !(constructor1.isEqualTo(constructor2));
+			boolean differentConstructors = !(constructor1.isEqualTo(constructor2));
 			
-			if(sameConstructors){
+			if(differentConstructors){
 				this.mutop.found(node, node2);
 				return true;
 			}
