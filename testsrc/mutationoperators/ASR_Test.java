@@ -1,6 +1,9 @@
 package mutationoperators;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import mutationoperators.asr.ASR;
 
 import org.junit.Test;
@@ -10,8 +13,12 @@ import utils.MethodTest;
 public class ASR_Test extends MethodTest {
 
 
-	public ASR_Test() {
-		super(new ASR());
+	MutationOperator mutop;
+	
+	@Override
+	protected void initializeMutationOperatorsToTest() {
+		this.mutop = new ASR();
+		this.addMutationOperatorToTest(mutop);
 	}
 
 	@Override
@@ -24,97 +31,97 @@ public class ASR_Test extends MethodTest {
 
 	@Test
 	public void testASR_int1() {
-		int diff = compareMatches("this.a1 += 42;", "this.a1 -= 42;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 += 42;", "this.a1 -= 42;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_int2() {
-		int diff = compareMatches("this.a1 -= 42;", "this.a1 *= 42;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 -= 42;", "this.a1 *= 42;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_int3() {
-		int diff = compareMatches("this.a1 *= 42;", "this.a1 /= 42;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 *= 42;", "this.a1 /= 42;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_int4() {
-		int diff = compareMatches("this.a1 /= 42;", "this.a1 %= 42;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 /= 42;", "this.a1 %= 42;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_int5() {
-		int diff = compareMatches("this.a1 %= 42;", "this.a1 += 42;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 %= 42;", "this.a1 += 42;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_boolean1() {
-		int diff = compareMatches("this.b1 &= this.b2;", "this.b1 |= this.b2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.b1 &= this.b2;", "this.b1 |= this.b2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_boolean2() {
-		int diff = compareMatches("this.b1 |= this.b2;", "this.b1 ^= this.b2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.b1 |= this.b2;", "this.b1 ^= this.b2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_boolean3() {
-		int diff = compareMatches("this.b1 ^= this.b2;", "this.b1 &= this.b2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.b1 ^= this.b2;", "this.b1 &= this.b2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_shift1() {
-		int diff = compareMatches("this.a1 <<= this.a2;", "this.a1 >>= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 <<= this.a2;", "this.a1 >>= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_shift2() {
-		int diff = compareMatches("this.a1 >>= this.a2;", "this.a1 >>>= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 >>= this.a2;", "this.a1 >>>= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_shift3() {
-		int diff = compareMatches("this.a1 >>>= this.a2;", "this.a1 <<= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 >>>= this.a2;", "this.a1 <<= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_mixed1() {
-		int diff = compareMatches("this.a1 >>>= this.a2;", "this.a1 += this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 >>>= this.a2;", "this.a1 += this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_mixed2() {
-		int diff = compareMatches("this.a1 <<= this.a2;", "this.a1 -= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 <<= this.a2;", "this.a1 -= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_mixed3() {
-		int diff = compareMatches("this.a1 *= this.a2;", "this.a1 >>= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 *= this.a2;", "this.a1 >>= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_mixed4() {
-		int diff = compareMatches("this.a1 %= this.a2;", "this.a1 >>>= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 %= this.a2;", "this.a1 >>>= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testASR_mixed5() {
-		int diff = compareMatches("this.a1 /= this.a2;", "this.a1 <<= this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("this.a1 /= this.a2;", "this.a1 <<= this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 }

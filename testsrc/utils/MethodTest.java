@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.File;
+import java.util.HashMap;
 
 import mutationoperators.MutationOperator;
 
@@ -34,14 +35,6 @@ public abstract class MethodTest extends BasicTest {
 	/// Methods
 	/////////////////////////////////////////	
 	
-	/**
-	 * Default constructor.
-	 * @param mutop
-	 */
-	public MethodTest(MutationOperator mutop) {
-		super(mutop);
-	}
-	
 	@Override
 	protected void initializeContextFiles() {
 		// since we do not need external classes for most cases, we do not initialize any context
@@ -60,7 +53,7 @@ public abstract class MethodTest extends BasicTest {
 	 * @param postfixMethodBody The postfix method body.
 	 * @return The number of applications of the {@link MutationOperator} under test.
 	 */
-	public int compareMatches(String prefixMethodBody, String postfixMethodBody) {
+	public HashMap<MutationOperator, Integer> compareMatches(String prefixMethodBody, String postfixMethodBody) {
 		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode(prefixMethodBody));
 		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode(postfixMethodBody));
 

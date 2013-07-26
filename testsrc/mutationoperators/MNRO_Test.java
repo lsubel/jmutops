@@ -1,5 +1,8 @@
 package mutationoperators;
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import mutationoperators.mnro.MNRO;
 
 import org.junit.Test;
@@ -10,8 +13,12 @@ import utils.MethodTest;
 
 public class MNRO_Test extends MethodTest {
 
-	public MNRO_Test() {
-		super(new MNRO());
+	MutationOperator mutop;
+	
+	@Override
+	protected void initializeMutationOperatorsToTest() {
+		this.mutop = new MNRO();
+		this.addMutationOperatorToTest(mutop);
 	}
 
 	@Override
@@ -37,73 +44,73 @@ public class MNRO_Test extends MethodTest {
 	
 	@Test 
 	public void testMNRO_Match1() {
-		int diff = compareMatches("resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter();", "resetName(); incrementCounter(1); incrementCounter(5); int result = getCounter();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter();", "resetName(); incrementCounter(1); incrementCounter(5); int result = getCounter();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_Match2() {
-		int diff = compareMatches("System.out.println(); int a = getCounter(); incrementCounter(a);", "System.out.println(); int a = getNameLength(); incrementCounter(a);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); int a = getCounter(); incrementCounter(a);", "System.out.println(); int a = getNameLength(); incrementCounter(a);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_Match3() {
-		int diff = compareMatches("incrementCounter(5);", "resetCounter(5);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("incrementCounter(5);", "resetCounter(5);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_Match4() {
-		int diff = compareMatches("if(isZero()){incrementCounter(1);};", "if(isOne()){incrementCounter(1);};");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("if(isZero()){incrementCounter(1);};", "if(isOne()){incrementCounter(1);};");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn1() {
-		int diff = compareMatches("resetCounter();", "getCounter();");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("resetCounter();", "getCounter();");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn2() {
-		int diff = compareMatches("getName();", "getCounter();");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("getName();", "getCounter();");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn3() {
-		int diff = compareMatches("getName();", "isOne();");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("getName();", "isOne();");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn4() {
-		int diff = compareMatches("getName();", "resetName();");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("getName();", "resetName();");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgLength1() {
-		int diff = compareMatches("resetCounter();", "incrementCounter(1);");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("resetCounter();", "incrementCounter(1);");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgLength2() {
-		int diff = compareMatches("resetCounter();", "addSubstring(\"Test\");");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("resetCounter();", "addSubstring(\"Test\");");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgLength3() {
-		int diff = compareMatches("incrementCounter(1);", "incrementCounter(1, 2);");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("incrementCounter(1);", "incrementCounter(1, 2);");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgType1() {
-		int diff = compareMatches("int a = 0; incrementCounter(a);", "byte a = 0; incrementCounter(a);");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("int a = 0; incrementCounter(a);", "byte a = 0; incrementCounter(a);");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 }

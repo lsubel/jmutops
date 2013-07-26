@@ -1,6 +1,9 @@
 package mutationoperators;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import mutationoperators.cod.COD;
 
 import org.junit.Test;
@@ -9,8 +12,12 @@ import utils.MethodTest;
 
 public class COD_Test extends MethodTest {
 
-	public COD_Test() {
-		super(new COD());
+	MutationOperator mutop;
+	
+	@Override
+	protected void initializeMutationOperatorsToTest() {
+		this.mutop = new COD();
+		this.addMutationOperatorToTest(mutop);
 	}
 
 	@Override
@@ -23,55 +30,55 @@ public class COD_Test extends MethodTest {
 
 	@Test
 	public void testCOD_constantComparision1(){
-		int diff = compareMatches("boolean result = !(true && false); System.out.println();", "boolean result = (true && false); System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !(true && false); System.out.println();", "boolean result = (true && false); System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_constantComparision2(){
-		int diff = compareMatches("boolean result = !(true & false); System.out.println();", "boolean result = (true & false); System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !(true & false); System.out.println();", "boolean result = (true & false); System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_constantComparision3(){
-		int diff = compareMatches("boolean result = !(false | false); System.out.println();", "boolean result = (false | false); System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !(false | false); System.out.println();", "boolean result = (false | false); System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_constantComparision4(){
-		int diff = compareMatches("boolean result = !(true || true); System.out.println();", "boolean result = (true || true); System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !(true || true); System.out.println();", "boolean result = (true || true); System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_constantComparision5(){
-		int diff = compareMatches("boolean result = !(true ^ true); System.out.println();", "boolean result = (true ^ true); System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !(true ^ true); System.out.println();", "boolean result = (true ^ true); System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_negateConstant1(){
-		int diff = compareMatches("boolean result = !true; System.out.println();", "boolean result = true; System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !true; System.out.println();", "boolean result = true; System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 
 	@Test
 	public void testCOD_negateConstant2(){
-		int diff = compareMatches("boolean result = !false; System.out.println();", "boolean result = false; System.out.println();");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !false; System.out.println();", "boolean result = false; System.out.println();");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_multiple1(){
-		int diff = compareMatches("boolean result = !b1 || !b2; System.out.println();", "boolean result = b1 || b2; System.out.println();");
-		assertEquals(2, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !b1 || !b2; System.out.println();", "boolean result = b1 || b2; System.out.println();");
+		assertEquals(2, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCOD_multiple2(){
-		int diff = compareMatches("boolean result = !(!(b1)); System.out.println();", "boolean result = ((b1)); System.out.println();");
-		assertEquals(2, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean result = !(!(b1)); System.out.println();", "boolean result = ((b1)); System.out.println();");
+		assertEquals(2, resultMap.get(mutop).intValue());
 	}
 }

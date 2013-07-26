@@ -1,6 +1,9 @@
 package mutationoperators;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import mutationoperators.cro.CRO;
 
 import org.junit.Test;
@@ -9,8 +12,12 @@ import utils.MethodTest;
 
 public class CRO_Test_SameClass extends MethodTest {
 
-	public CRO_Test_SameClass() {
-		super(new CRO());
+	MutationOperator mutop;
+	
+	@Override
+	protected void initializeMutationOperatorsToTest() {
+		this.mutop = new CRO();
+		this.addMutationOperatorToTest(mutop);
 	}
 
 	@Override
@@ -29,26 +36,26 @@ public class CRO_Test_SameClass extends MethodTest {
 
 	@Test
 	public void testCRO_LocalReplacement1() {
-		int diff = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCRO_LocalReplacement2() {
-		int diff = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1, null);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1, null);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 
 	@Test
 	public void testCRO_SameArgumentNumber1() {
-		int diff = compareMatches("childRight = new Foo(); Foo Temp = new Foo(1);", "childRight = new Foo(); Foo Temp = new Foo(childRight);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(1);", "childRight = new Foo(); Foo Temp = new Foo(childRight);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testCRO_SameArgumentNumber2() {
-		int diff = compareMatches("childRight = new Foo(); Foo Temp = new Foo(childRight, childRight);", "childRight = new Foo(); Foo Temp = new Foo(42, childRight);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(childRight, childRight);", "childRight = new Foo(); Foo Temp = new Foo(42, childRight);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 
 }

@@ -1,6 +1,9 @@
 package mutationoperators;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import mutationoperators.aor.AOR;
 
 import org.junit.Test;
@@ -9,8 +12,13 @@ import utils.MethodTest;
 
 public class AOR_Test extends MethodTest {
 
-	public AOR_Test() {
-		super(new AOR());
+
+	MutationOperator mutop;
+	
+	@Override
+	protected void initializeMutationOperatorsToTest() {
+		this.mutop = new AOR();
+		this.addMutationOperatorToTest(mutop);
 	}
 
 	@Override
@@ -25,97 +33,97 @@ public class AOR_Test extends MethodTest {
 	
 	@Test
 	public void testAOR_BinaryMatch1() {
-		int diff = compareMatches("a = (b + c);", "a = (b - c);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = (b + c);", "a = (b - c);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_BinaryMatch2() {
-		int diff = compareMatches("a = (b - c);", "a = (b * c);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = (b - c);", "a = (b * c);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_BinaryMatch3() {
-		int diff = compareMatches("a = d*1;", "a = d/1;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = d*1;", "a = d/1;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_BinaryMatch4() {
-		int diff = compareMatches("a = d % 2;", "a = d * 2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = d % 2;", "a = d * 2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_BinaryMatch5() {
-		int diff = compareMatches("a = d / 2;", "a = d % 2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = d / 2;", "a = d % 2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_BinaryMatch6() {
-		int diff = compareMatches("a = getMax(a, b + c);", "a = getMax(a, b * c);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = getMax(a, b + c);", "a = getMax(a, b * c);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_UnaryMatch1() {
-		int diff = compareMatches("a = d * (+b);", "a = d * (-b);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = d * (+b);", "a = d * (-b);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_UnaryMatch2() {
-		int diff = compareMatches("a = -b;", "a = +b;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = -b;", "a = +b;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_UnaryMatch3() {
-		int diff = compareMatches("a = +(b + c);", "a = -(b + c);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = +(b + c);", "a = -(b + c);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_UnaryMatch4() {
-		int diff = compareMatches("a = -(b + c);", "a = +(b + c);");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("a = -(b + c);", "a = +(b + c);");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_ShortCut1() {
-		int diff = compareMatches("System.out.println(); this.a++;", "System.out.println(); ++this.a;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); this.a++;", "System.out.println(); ++this.a;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_ShortCut2() {
-		int diff = compareMatches("System.out.println(); --this.a;", "System.out.println(); this.a--;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); --this.a;", "System.out.println(); this.a--;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_ShortCut3() {
-		int diff = compareMatches("System.out.println(); ++this.a;", "System.out.println(); this.a--;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); ++this.a;", "System.out.println(); this.a--;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_ShortCut4() {
-		int diff = compareMatches("System.out.println(); --this.a;", "System.out.println(); this.a++;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); --this.a;", "System.out.println(); this.a++;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_ShortCut5() {
-		int diff = compareMatches("System.out.println(); --this.a;", "System.out.println(); ++this.a;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); --this.a;", "System.out.println(); ++this.a;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAOR_ShortCut6() {
-		int diff = compareMatches("System.out.println(); ++this.a;", "System.out.println(); --this.a;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("System.out.println(); ++this.a;", "System.out.println(); --this.a;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 }

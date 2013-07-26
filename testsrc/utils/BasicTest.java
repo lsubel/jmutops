@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
 import jmutops.JMutOps;
@@ -43,7 +44,7 @@ public abstract class BasicTest {
 	
 	ArrayList<File> tempfilelist;
 	
-	protected final MutationOperator mutop;
+	ArrayList<MutationOperator> listOfTestedMutationOperators;
 	
 	/////////////////////////////////////////
 	/// Methods
@@ -51,10 +52,12 @@ public abstract class BasicTest {
 
 	/**
 	 * Default constructor.
-	 * @param mutop The {@link MutationOperator} under test.
+	 * @param afro The {@link MutationOperator} under test.
 	 */
-	public BasicTest(MutationOperator mutop){
-		this.mutop = mutop;
+	public BasicTest(){
+		// initialize mutation operators which should be tested
+		this.listOfTestedMutationOperators = new ArrayList<MutationOperator>();
+		initializeMutationOperatorsToTest();
 	}
 	
 	@Before
@@ -136,30 +139,30 @@ public abstract class BasicTest {
 		this.jmutops.addSourcepathEntry(PATH_FOR_POSTFIX_FILES.getAbsolutePath(), "", OptionsVersion.POSTFIX);
 	}
 
-	
 	/**
-	 * Run a prefix and postfix version on jMutOps and returns the number of applications 
-	 * of the tested mutation operator.
+	 * Run a prefix and postfix version on jMutOps and returns a map from {@link MutationOperator} 
+	 * to the number of detected applications.
 	 * @param preFix The prefix version of code.
 	 * @param postFix The postfix version of code.
-	 * @return The number of applications >= 0.
+	 * @return The map.
 	 */
-	public int compareMatches(File preFix, File postFix) {
-		// stores the current count for this mutation operator
-		int oldValue = this.counter.getCount(this.getTestedMutationOperator().getShortname()).intValue();
+	public HashMap<MutationOperator, Integer> compareMatches(File preFix, File postFix) {
+		// initialize the hashmap which contains the result
+		HashMap<MutationOperator, Integer> resultMap = new HashMap<MutationOperator, Integer>();
 		// run jMutOps on both files
 		this.jmutops.checkFiles(preFix, postFix);
-		// returns the difference between both versions
-		return this.counter.getCount(this.getTestedMutationOperator().getShortname()).intValue() - oldValue;
+		// fill the HashMap
+		for(MutationOperator mutop: this.listOfTestedMutationOperators){
+			resultMap.put(mutop, this.counter.getCount(mutop.getShortname()));
+		}
+		return resultMap;
 	}
 	
 	/**
-	 * Get the tested {@link MutationOperator}.
-	 * @return The {@link MutationOperator} under test.
+	 * Initialize the mutation operators which should be tested
+	 * by calling 
 	 */
-	protected MutationOperator getTestedMutationOperator(){
-		return this.mutop;
-	}
+	protected abstract void initializeMutationOperatorsToTest();
 	
 	/**
 	 * Initialized context files for the class under test,
@@ -168,4 +171,13 @@ public abstract class BasicTest {
 	 */
 	protected abstract void initializeContextFiles();
 
+	/**
+	 * Add the {@link MutationOperator} {@code mutop} to the list of tested operators.
+	 * @param mutop
+	 */
+	protected void addMutationOperatorToTest(MutationOperator mutop){
+		this.listOfTestedMutationOperators.add(mutop);
+	}
+	
+	
 }

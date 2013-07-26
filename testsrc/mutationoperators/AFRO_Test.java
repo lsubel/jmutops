@@ -1,5 +1,8 @@
 package mutationoperators;
 import static org.junit.Assert.assertEquals;
+
+import java.util.HashMap;
+
 import mutationoperators.afro.AFRO;
 
 import org.junit.Test;
@@ -8,9 +11,13 @@ import utils.MethodTest;
 
 
 public class AFRO_Test extends MethodTest {
+
+	MutationOperator mutop;
 	
-	public AFRO_Test() {
-		super(new AFRO());
+	@Override
+	protected void initializeMutationOperatorsToTest() {
+		this.mutop = new AFRO();
+		this.addMutationOperatorToTest(mutop);
 	}
 
 	@Override
@@ -38,60 +45,60 @@ public class AFRO_Test extends MethodTest {
 
 	@Test
 	public void testAFRO_LocalReplacement1() {
-		int diff = compareMatches("int res = this.a1;", "int res = this.a2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("int res = this.a1;", "int res = this.a2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_LocalReplacement2() {
-		int diff = compareMatches("int res = this.a1++;", "int res = this.a2++;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("int res = this.a1++;", "int res = this.a2++;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_LocalReplacement3() {
-		int diff = compareMatches("boolean res = !this.b1;", "int res = !this.b2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("boolean res = !this.b1;", "int res = !this.b2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_InObjectReplacement1() {
-		int diff = compareMatches("int res = this.counter1.result;", "int res = this.counter1.counter;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("int res = this.counter1.result;", "int res = this.counter1.counter;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	@Test
 	public void testAFRO_InObjectReplacement2() {
-		int diff = compareMatches("Bar res = this.counter1;", "Bar res = this.counter2;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Bar res = this.counter1;", "Bar res = this.counter2;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_InObjectReplacement3() {
-		int diff = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter1.parentclass;");
-		assertEquals(1, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter1.parentclass;");
+		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_NoMatch1() {
-		int diff = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter2.subclass;");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter2.subclass;");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_NoMatch2() {
-		int diff = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter2.subclass;");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter2.subclass;");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_NoMatch3() {
-		int diff = compareMatches("Foo foo = new Foo(); this.counter1.other = foo;", "Foo foo = new Foo(); this.counter2.other = foo;");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo foo = new Foo(); this.counter1.other = foo;", "Foo foo = new Foo(); this.counter2.other = foo;");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testAFRO_NoMatch4() {
-		int diff = compareMatches("int i = 0; this.a1 = 4;", "int i = 0; i = 4;");
-		assertEquals(0, diff);
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("int i = 0; this.a1 = 4;", "int i = 0; i = 4;");
+		assertEquals(0, resultMap.get(mutop).intValue());
 	}
 }
