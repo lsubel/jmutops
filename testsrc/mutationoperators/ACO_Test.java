@@ -18,8 +18,10 @@ public class ACO_Test extends MethodTest {
 	protected String getOtherClassContent() {
 		return  "int value; " + 
 				"public Foo(){value = 0;} " +
+				"public Foo(Foo f1){value = f1.getValue();} " +
 				"public Foo(int v){value = v;} " +
 				"public Foo(int v1, int v2){value = v1 + v2;} " +
+				"public int getZero(){return 0;} " +
 				"public int getValue(){return value;} " +
 				"public void setValue(int v){value = v;} " +
 				"public void setValue(int v1, int v2){value = v1 + v2;} " +
@@ -75,4 +77,21 @@ public class ACO_Test extends MethodTest {
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
+	@Test
+	public void testAFRO_NoMatching1() {
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("int i = getZero();", "int i = getValue();");
+		assertEquals(0, resultMap.get(mutop).intValue());
+	}
+	
+	@Test
+	public void testAFRO_NoMatching2() {
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); ", "Foo f1 = new Foo(); Foo f2 = new Foo(f1); ");
+		assertEquals(0, resultMap.get(mutop).intValue());
+	}
+	
+	@Test
+	public void testAFRO_NoMatching3() {
+		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(); setValue(f1); ", "Foo f1 = new Foo(); setValue(1); ");
+		assertEquals(0, resultMap.get(mutop).intValue());
+	}
 }

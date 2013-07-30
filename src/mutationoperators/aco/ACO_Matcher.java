@@ -180,13 +180,15 @@ public class ACO_Matcher extends BaseASTMatcher {
 		boolean reducedTypeNumbers = true;
 		if(count1.size() > count2.size()){
 			for(ITypeBinding parameterType: count1.keySet()){
-				if(count1.get(parameterType).intValue() < count2.get(parameterType).intValue()){
+				Integer i2 = count2.get(parameterType);
+				if((i2 != null) || (count1.get(parameterType).intValue() > count2.get(parameterType).intValue())){
 					reducedTypeNumbers = false;
 				}
 			}
 		}else{
 			for(ITypeBinding parameterType: count2.keySet()){
-				if(count1.get(parameterType).intValue() > count2.get(parameterType).intValue()){
+				Integer i1 = count1.get(parameterType);
+				if((i1 != null) || (count1.get(parameterType).intValue() > count2.get(parameterType).intValue())){
 					reducedTypeNumbers = false;
 				}
 			}			
@@ -199,12 +201,16 @@ public class ACO_Matcher extends BaseASTMatcher {
 			HashMap<ITypeBinding, Integer> count2) {
 		boolean sameTypeNumbers = true;
 		for(ITypeBinding parameterType: count1.keySet()){
-			if(count1.get(parameterType).intValue() != count2.get(parameterType).intValue()){
+			Integer i1 = count1.get(parameterType);
+			Integer i2 = count2.get(parameterType);
+			if((i1 == null) || (i2 == null) || (count1.get(parameterType).intValue() != count2.get(parameterType).intValue())){
 				sameTypeNumbers = false;
 			}
 		}
 		for(ITypeBinding parameterType: count2.keySet()){
-			if(count1.get(parameterType).intValue() != count2.get(parameterType).intValue()){
+			Integer i1 = count1.get(parameterType);
+			Integer i2 = count2.get(parameterType);
+			if((i1 == null) || (i2 == null) || (count1.get(parameterType).intValue() != count2.get(parameterType).intValue())){
 				sameTypeNumbers = false;
 			}
 		}
