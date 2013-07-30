@@ -258,7 +258,10 @@ public class MutationOperatorChecker {
 		} else {
 			mutationOperatorList = getCopyOfList(classlevel_list);
 		}
-
+		// filter the list of mutationOperators
+		filterMove(mutationOperatorList, false);
+		
+		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 
@@ -382,5 +385,18 @@ public class MutationOperatorChecker {
 	private ArrayList<MutationOperator> getCopyOfList(
 			ArrayList<MutationOperator> list) {
 		return (ArrayList<MutationOperator>) list.clone();
+	}
+	
+	/**
+	 * Removes all {@link MutationOperator} from {@code list} where the move property is equal to {@code moveValue}.
+	 * @param list The list of {@link MutationOperator} to filter.
+	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the move field.
+	 */
+	private void filterMove(ArrayList<MutationOperator> list, boolean moveValue){
+		for(MutationOperator mutop: list){
+			if(mutop.mutopproperty.isMove() != moveValue){
+				list.remove(mutop);
+			}
+		}
 	}
 }
