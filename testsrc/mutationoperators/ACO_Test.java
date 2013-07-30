@@ -24,7 +24,7 @@ public class ACO_Test extends MethodTest {
 				"public void setValue(int v){value = v;} " +
 				"public void setValue(int v1, int v2){value = v1 + v2;} " +
 				"public void setValue(Foo f1){value = f1.getValue();} " +
-				"public void setValue(Foo f1, Foo2){value = f1.getValue() + f2.getValue();} ";
+				"public void setValue(Foo f1, Foo f2){value = f1.getValue() + f2.getValue();} ";
 	}
 
 	@Override
