@@ -5,16 +5,35 @@ import java.util.HashMap;
 import java.util.List;
 
 import mutationoperators.MutationOperator;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 
+/**
+ * ActionListener which counts the number of detected applications of mutation operators.
+ * @author Lukas Subel
+ *
+ */
 public class ApplicationCounter implements JMutOpsEventListener {
 
+	/**
+	 * A map which stores for every mutation operator shortcut the number of detected applications.
+	 */
 	private HashMap<String, Integer> counter;
 	
+	/**
+	 * Default constructor.
+	 */
 	public ApplicationCounter() {
 		this.counter = new HashMap<String, Integer>();
+	}
+	
+	@Override
+	public void OnMutationOperatorInit(MutationOperator mutop) {
+		assert !(this.counter.containsKey(mutop.getShortname()));
+		// initialize a new entry in the map for the corresponding MutationOperator
+		this.counter.put(mutop.getShortname(), 0);
 	}
 	
 	@Override
@@ -26,7 +45,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 			this.counter.put(operatorName, oldValue + 1);
 		}
 		else{
-			this.counter.put(operatorName, 1);
+			throw new IllegalStateException("Mutation operator " + operatorName + " is not registered at " + this.getClass().getSimpleName() +  ".");
 		}
 	}
 
@@ -69,10 +88,6 @@ public class ApplicationCounter implements JMutOpsEventListener {
 
 	@Override
 	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker) {
-	}
-
-	@Override
-	public void OnMutationOperatorInit(MutationOperator mutop) {
 	}
 
 	@Override

@@ -77,6 +77,11 @@ public class JMutOps {
 	 */
 	private JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
 	
+	/**
+	 * Variable which is true iff {@link #checkFiles(File, File)} was called at least once.
+	 */
+	private boolean firstRunExecuted = false;
+	
 	/////////////////////////////////////////
 	//	Constructors
 	/////////////////////////////////////////	
@@ -89,7 +94,6 @@ public class JMutOps {
 		this.prefixed_preperator  = new Preperator(this.listener, TestUtilities.getDefaultPrefixFolder());
 		this.postfixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPostfixFolder());
 		this.checker			  = new MutationOperatorChecker(this.listener);
-		addImplementedMutationOperators();
 	}
 	
 	/////////////////////////////////////////
@@ -97,6 +101,13 @@ public class JMutOps {
 	/////////////////////////////////////////
 	
 	public void checkFiles(File prefixedFile, File postfixedFile){
+		// if this method called for the first time,
+		// add all mutation operators
+		if(!firstRunExecuted){
+			addImplementedMutationOperators();
+			firstRunExecuted = true;
+		}
+		
 		// check for null argument
 		if(prefixedFile == null){
 			String errorMessage = "First argument must not be null.";
