@@ -17,17 +17,19 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 
 /**
- * Class that stores and maintains the implemented MutationOperators. <p>
- * It handles the requests to check for matching mutation operators 
- * and performs some preparing steps.
+ * Class that stores and maintains the implemented MutationOperators.
+ * <p>
+ * It handles the requests to check for matching mutation operators and performs
+ * some preparing steps.
+ * 
  * @author Lukas Subel
  * 
  */
 public class MutationOperatorChecker {
 
-	//////////////////////////////////////////////////////
-	/// Fields
-	//////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////
+	// / Fields
+	// ////////////////////////////////////////////////////
 
 	/**
 	 * Array containing all method level related mutation operators.
@@ -38,24 +40,26 @@ public class MutationOperatorChecker {
 	 * Array containing all class level related mutation operators.
 	 */
 	private ArrayList<MutationOperator> classlevel_list;
-	
+
 	/**
 	 * Multicaster which will talk to all ResultListeners which were added
 	 */
 	private JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
-	
+
 	// ////////////////////////////////////////////////////
 	// / Methods
 	// ////////////////////////////////////////////////////
 
 	/**
 	 * Default constructor.
-	 * @param listener TODO
+	 * 
+	 * @param listener
+	 *            TODO
 	 */
 	public MutationOperatorChecker(JMutOpsEventListenerMulticaster listener) {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
-		this.classlevel_list  = new ArrayList<MutationOperator>();
-		this.listener 		  = listener;
+		this.classlevel_list = new ArrayList<MutationOperator>();
+		this.listener = listener;
 	}
 
 	/**
@@ -106,13 +110,14 @@ public class MutationOperatorChecker {
 	}
 
 	/**
-	 * This method runs the following steps:  
+	 * This method runs the following steps:
 	 * <ul>
-	 * 	<li> It selects a subset of all registered {@link MutationOperator} 
-	 * 		which could occur in this {@link SourceCodeChange}, </li>
-	 * 	<li> It tries to select a subAST depending on the the {@link SourceCodeChange}, </li>
-	 * 	<li> It calls the {@link MutationOperator} to check for a match. </li>
-	 * </ul>	
+	 * <li>It selects a subset of all registered {@link MutationOperator} which
+	 * could occur in this {@link SourceCodeChange},</li>
+	 * <li>It tries to select a subAST depending on the the
+	 * {@link SourceCodeChange},</li>
+	 * <li>It calls the {@link MutationOperator} to check for a match.</li>
+	 * </ul>
 	 * 
 	 * @param leftNode
 	 *            AST with the prefix version.
@@ -184,7 +189,7 @@ public class MutationOperatorChecker {
 			switch (change.getChangeType()) {
 			case COMMENT_DELETE:
 				// since comment updates do not fix bugs, we ignore this case
-				break;				
+				break;
 			case ALTERNATIVE_PART_DELETE:
 			case REMOVED_CLASS:
 			case REMOVED_FUNCTIONALITY:
@@ -229,7 +234,6 @@ public class MutationOperatorChecker {
 			case STATEMENT_PARENT_CHANGE:
 			case UNCLASSIFIED_CHANGE:
 				break;
-				
 			default:
 				throw new IllegalStateException(
 						"Expected body move, but found "
@@ -247,6 +251,14 @@ public class MutationOperatorChecker {
 	}
 
 	private void check(ASTNode leftNode, ASTNode rightNode, Update change) {
+		// get the correct list of MutationOperator's to check
+		ArrayList<MutationOperator> mutationOperatorList;
+		if (change.getChangeType().isBodyChange()) {
+			mutationOperatorList = getCopyOfList(methodlevel_list);
+		} else {
+			mutationOperatorList = getCopyOfList(classlevel_list);
+		}
+
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 
@@ -261,22 +273,22 @@ public class MutationOperatorChecker {
 				// check only the condition of the node
 				if ((leftNode instanceof IfStatement)
 						&& (rightNode instanceof IfStatement)) {
-					runMutationOperators(this.methodlevel_list,
+					runMutationOperators(mutationOperatorList,
 							((IfStatement) leftNode).getExpression(),
 							((IfStatement) rightNode).getExpression());
 				} else if ((leftNode instanceof WhileStatement)
 						&& (rightNode instanceof WhileStatement)) {
-					runMutationOperators(this.methodlevel_list,
+					runMutationOperators(mutationOperatorList,
 							((WhileStatement) leftNode).getExpression(),
 							((WhileStatement) rightNode).getExpression());
 				} else if ((leftNode instanceof DoStatement)
 						&& (rightNode instanceof DoStatement)) {
-					runMutationOperators(this.methodlevel_list,
+					runMutationOperators(mutationOperatorList,
 							((DoStatement) leftNode).getExpression(),
 							((DoStatement) rightNode).getExpression());
 				} else if ((leftNode instanceof ForStatement)
 						&& (rightNode instanceof ForStatement)) {
-					runMutationOperators(this.methodlevel_list,
+					runMutationOperators(mutationOperatorList,
 							((ForStatement) leftNode).getExpression(),
 							((ForStatement) rightNode).getExpression());
 				} else {
@@ -290,7 +302,7 @@ public class MutationOperatorChecker {
 			case STATEMENT_UPDATE:
 			case UNCLASSIFIED_CHANGE:
 				// in this case, we cannot specify the area to search
-				runMutationOperators(this.methodlevel_list, leftNode, rightNode);
+				runMutationOperators(mutationOperatorList, leftNode, rightNode);
 				break;
 
 			default:
@@ -304,32 +316,31 @@ public class MutationOperatorChecker {
 			case DOC_UPDATE:
 				// since comment updates do not fix bugs, we ignore this case
 				break;
-				
+
 			case ATTRIBUTE_RENAMING:
 			case ATTRIBUTE_TYPE_CHANGE:
-				
+
 			case CLASS_RENAMING:
-				
+
 			case DECREASING_ACCESSIBILITY_CHANGE:
 
-
 			case INCREASING_ACCESSIBILITY_CHANGE:
-				
+
 			case METHOD_RENAMING:
 
 			case PARAMETER_ORDERING_CHANGE:
 			case PARAMETER_RENAMING:
 			case PARAMETER_TYPE_CHANGE:
-				
+
 			case PARENT_CLASS_CHANGE:
 			case PARENT_INTERFACE_CHANGE:
 
 			case REMOVING_ATTRIBUTE_MODIFIABILITY:
 			case REMOVING_CLASS_DERIVABILITY:
 			case REMOVING_METHOD_OVERRIDABILITY:
-				
+
 			case RETURN_TYPE_CHANGE:
-				
+
 			case UNCLASSIFIED_CHANGE:
 				break;
 			default:
@@ -355,15 +366,21 @@ public class MutationOperatorChecker {
 	 */
 	private void runMutationOperators(List<MutationOperator> operatorlist,
 			ASTNode leftNode, ASTNode rightNode) {
-		// initialize a variable which counts the number of detected applications
+		// initialize a variable which counts the number of detected
+		// applications
 		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
 			detected_applications += operator.check(leftNode, rightNode);
 		}
 		// fire event when there was no matching detected
-		if(detected_applications == 0){
+		if (detected_applications == 0) {
 			this.listener.OnNoMatchingFound(operatorlist);
 		}
-	}	
+	}
+
+	private ArrayList<MutationOperator> getCopyOfList(
+			ArrayList<MutationOperator> list) {
+		return (ArrayList<MutationOperator>) list.clone();
+	}
 }
