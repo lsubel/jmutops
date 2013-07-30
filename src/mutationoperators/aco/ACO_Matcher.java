@@ -8,6 +8,7 @@ import mutationoperators.MutationOperator;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 
 public class ACO_Matcher extends BaseASTMatcher {
 
@@ -15,6 +16,84 @@ public class ACO_Matcher extends BaseASTMatcher {
 		super(mutop);
 	}
 
+	
+	@Override
+	public boolean match(MethodInvocation node, Object other) {
+		
+		// if the compared AST is  MethodInvocation
+		if(other instanceof MethodInvocation){
+			// cast other node
+			MethodInvocation node2 = (MethodInvocation) other;
+			
+			// first check if both methods have the same method name
+			boolean sameMethodName = node.getName().subtreeMatch(defaultMatcher, node2.getName());
+			
+			if(sameMethodName){
+				// resolve the bindings
+				IMethodBinding method1 = node.resolveMethodBinding();
+				IMethodBinding method2 = node2.resolveMethodBinding();
+				
+				// check if both methods are equal
+				boolean sameMethods = method1.isEqualTo(method2);
+				
+				if(sameMethods){
+					assert method1.getParameterTypes().equals(method2.getParameterTypes());
+					
+					// check for changes position of arguments
+					boolean argumentPositionChanged = !(node.arguments().equals(node2.arguments()));
+
+					if (argumentPositionChanged) {
+						this.mutop.found(node, node2);
+						return true;
+					}
+				}
+				// otherwise we have different methods
+				else{
+					// check if the different constructors have the same number of arguments
+					boolean sameArgumentNumber = (method1.getParameterTypes().length == method2.getParameterTypes().length);
+					
+					// if both have the sane argument length
+					if(sameArgumentNumber){
+						// we have to check for a different ordering
+						// => we check if there is the same number of types declared in both parameters
+						ITypeBinding[] parameterTypes1 = method1.getParameterTypes();
+						ITypeBinding[] parameterTypes2 = method2.getParameterTypes();
+						
+						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
+						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
+						
+						// check if there are the same values in both HashMaps
+						boolean sameTypeNumbers = checkForSameTypes(count1, count2);
+						// if we have the same number of detected types, we have a match found
+						if(sameTypeNumbers){
+							this.mutop.found(node, node2);
+							return true;
+						}
+					}
+					// otherwise we also have a different number of arguments
+					else{
+						ITypeBinding[] parameterTypes1 = method1.getTypeParameters();
+						ITypeBinding[] parameterTypes2 = method2.getTypeParameters();
+						
+						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
+						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
+						
+						
+						// check for reduced parameters
+						boolean reducedTypeNumbers = checkForReducedTypes(count1, count2);
+						// if we have a reduced number of detected types, we have a match found
+						if(reducedTypeNumbers){
+							this.mutop.found(node, node2);
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	
 	@Override
 	public boolean match(ClassInstanceCreation node, Object other) {
@@ -28,7 +107,7 @@ public class ACO_Matcher extends BaseASTMatcher {
 			boolean sameConstructorName = node.getType().subtreeMatch(defaultMatcher, node2.getType());
 			
 			if (sameConstructorName) {
-				// resolve the bindings
+				// resolve the bindings 
 				IMethodBinding constructor1 = node.resolveConstructorBinding();
 				IMethodBinding constructor2 = node2.resolveConstructorBinding();
 				// check if both constructors are equal
@@ -36,8 +115,8 @@ public class ACO_Matcher extends BaseASTMatcher {
 						.isEqualTo(constructor2));
 				// if we have the same constructor method
 				if (sameConstructors) {
-					assert (constructor1.getTypeParameters()
-							.equals(constructor2.getTypeParameters()));
+					assert (constructor1.getParameterTypes()
+							.equals(constructor2.getParameterTypes()));
 
 					// check for changes position of arguments
 					boolean argumentPositionChanged = !(node.arguments()
@@ -48,17 +127,17 @@ public class ACO_Matcher extends BaseASTMatcher {
 						return true;
 					}
 				}
-				// otherwise we have different methods
+				// otherwise we have different constructors
 				else {
-					// check if the different methods have the same number of arguments
-					boolean sameArgumentNumber = (constructor1.getTypeParameters().length == constructor1.getTypeParameters().length);
+					// check if the different constructors have the same number of arguments
+					boolean sameArgumentNumber = (constructor1.getParameterTypes().length == constructor2.getParameterTypes().length);
 					
 					// if both have the sane argument length
 					if(sameArgumentNumber){
 						// we have to check for a different ordering
 						// => we check if there is the same number of types declared in both parameters
-						ITypeBinding[] parameterTypes1 = constructor1.getTypeParameters();
-						ITypeBinding[] parameterTypes2 = constructor2.getTypeParameters();
+						ITypeBinding[] parameterTypes1 = constructor1.getParameterTypes();
+						ITypeBinding[] parameterTypes2 = constructor2.getParameterTypes();
 						
 						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
 						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
