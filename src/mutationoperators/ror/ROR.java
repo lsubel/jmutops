@@ -24,5 +24,6 @@ public class ROR extends MutationOperator {
 		this.mutopproperty.setDescription("Replace relational operators with other relational operators, and replace the entire predicate with true and false.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setMove(false);
 	}
 }

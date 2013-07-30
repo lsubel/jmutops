@@ -24,6 +24,7 @@ public class COR extends MutationOperator {
 		this.mutopproperty.setDescription("Replace binary conditional operators with other binary conditional operators");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setMove(false);
 	}
 	
 }
