@@ -16,7 +16,6 @@ import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
 import org.junit.Before;
 
-import results.ApplicationCounter;
 import enums.OptionsVersion;
 
 /**

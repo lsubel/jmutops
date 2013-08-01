@@ -1,4 +1,4 @@
-package results;
+package utils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
+import results.JMutOpsEventListener;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 
 /**
@@ -76,6 +77,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 
 	@Override
 	public void OnErrorDetected(String location, String errorMessage) {
+		System.out.println("Error detected at " + location + ": " + errorMessage);
 	}
 
 	@Override
