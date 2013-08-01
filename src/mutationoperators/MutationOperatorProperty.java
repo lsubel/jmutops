@@ -33,15 +33,16 @@ public class MutationOperatorProperty {
 	
 	/**
 	 * True iff the mutation operator should detect movement of statements
+	 * Default is false.
 	 */
-	private boolean isMove;
+	private boolean isMove = false;
 	
 	public boolean isMove() {
 		return isMove;
 	}
 
-	public void setMove(boolean isMove) {
-		this.isMove = isMove;
+	public void setMove() {
+		this.isMove = true;
 	}
 
 	public MutationOperatorProperty(){

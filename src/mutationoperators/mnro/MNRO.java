@@ -24,6 +24,5 @@ public class MNRO extends MutationOperator {
 		this.mutopproperty.setDescription("Replace a method name in MethodInvocationExpression with other method names that have the same parameters and result type.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setMove(false);
 	}
 }

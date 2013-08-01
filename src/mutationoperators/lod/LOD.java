@@ -24,6 +24,5 @@ public class LOD extends MutationOperator {
 		this.mutopproperty.setDescription("Delete unary logical operator.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setMove(false);
 	}
 }

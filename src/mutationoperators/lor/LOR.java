@@ -24,7 +24,6 @@ public class LOR extends MutationOperator {
 		this.mutopproperty.setDescription("Replace binary logical operators with other binary logical operators.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setMove(false);
 	}
 	
 }

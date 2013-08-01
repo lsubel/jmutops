@@ -24,6 +24,5 @@ public class AOR extends MutationOperator {
 		this.mutopproperty.setDescription("Replace basic binary/unary/short-cut arithmetic operators with other binary/unary arithmetic operators.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setMove(false);
 	}
 }
