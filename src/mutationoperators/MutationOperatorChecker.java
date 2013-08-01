@@ -221,6 +221,11 @@ public class MutationOperatorChecker {
 	}
 
 	private void check(ASTNode leftNode, ASTNode rightNode, Move change) {
+		// get the correct list of MutationOperator's to check
+		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
+		// filter the list of mutationOperators
+		filterMove(mutationOperatorList, true);
+		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
@@ -233,6 +238,8 @@ public class MutationOperatorChecker {
 			case STATEMENT_ORDERING_CHANGE:
 			case STATEMENT_PARENT_CHANGE:
 			case UNCLASSIFIED_CHANGE:
+				// TODO: improve the selection of mutationOperators here
+				runMutationOperators(mutationOperatorList, leftNode, rightNode);
 				break;
 			default:
 				throw new IllegalStateException(
@@ -252,15 +259,9 @@ public class MutationOperatorChecker {
 
 	private void check(ASTNode leftNode, ASTNode rightNode, Update change) {
 		// get the correct list of MutationOperator's to check
-		ArrayList<MutationOperator> mutationOperatorList;
-		if (change.getChangeType().isBodyChange()) {
-			mutationOperatorList = getCopyOfList(methodlevel_list);
-		} else {
-			mutationOperatorList = getCopyOfList(classlevel_list);
-		}
+		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
 		filterMove(mutationOperatorList, false);
-		
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -355,6 +356,16 @@ public class MutationOperatorChecker {
 
 	}
 
+	private ArrayList<MutationOperator> getInitialMutationOperators(SourceCodeChange change) {
+		ArrayList<MutationOperator> mutationOperatorList;
+		if (change.getChangeType().isBodyChange()) {
+			mutationOperatorList = getCopyOfList(methodlevel_list);
+		} else {
+			mutationOperatorList = getCopyOfList(classlevel_list);
+		}
+		return mutationOperatorList;
+	}
+
 	/**
 	 * Helper method. Check for each MutationOperator in operatorlist, if
 	 * leftNode to rightNode applied the corresponding operator.
@@ -393,7 +404,8 @@ public class MutationOperatorChecker {
 	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the move field.
 	 */
 	private void filterMove(ArrayList<MutationOperator> list, boolean moveValue){
-		for(MutationOperator mutop: list){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
 			if(mutop.mutopproperty.isMove() != moveValue){
 				list.remove(mutop);
 			}
