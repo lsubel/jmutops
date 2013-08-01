@@ -33,7 +33,4 @@ public class AOI extends MutationOperator {
 	public int check(ASTNode leftNode, ASTNode rightNode) {
 		return super.check(rightNode, leftNode);
 	}
-
-	
-	
 }
