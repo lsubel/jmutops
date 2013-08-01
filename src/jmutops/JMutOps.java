@@ -18,6 +18,7 @@ import mutationoperators.cro.CRO;
 import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
 import mutationoperators.lod.LOD;
+import mutationoperators.loi.LOI;
 import mutationoperators.lor.LOR;
 import mutationoperators.mnro.MNRO;
 import mutationoperators.ror.ROR;
@@ -419,6 +420,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new SCO(this.listener));
 		this.checker.addMutationOperator(new AOI(this.listener));
 		this.checker.addMutationOperator(new COI(this.listener));
+		this.checker.addMutationOperator(new LOI(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
