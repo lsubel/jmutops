@@ -144,6 +144,7 @@ public class JMutOps {
 			return;
 		}
 		
+		// try to summarize some of the changes
 		if(Settings.TRY_TO_SUMMARIZE_CHANGES){
 			changes = summarizeChanges(changes);
 		}
