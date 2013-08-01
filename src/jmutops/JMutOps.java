@@ -8,6 +8,7 @@ import mutationoperators.MutationOperatorChecker;
 import mutationoperators.aco.ACO;
 import mutationoperators.afro.AFRO;
 import mutationoperators.aod.AOD;
+import mutationoperators.aoi.AOI;
 import mutationoperators.aor.AOR;
 import mutationoperators.asr.ASR;
 import mutationoperators.cod.COD;
@@ -415,6 +416,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new CRO(this.listener));
 		this.checker.addMutationOperator(new ACO(this.listener));
 		this.checker.addMutationOperator(new SCO(this.listener));
+		this.checker.addMutationOperator(new AOI(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
