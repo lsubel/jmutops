@@ -19,6 +19,7 @@ import mutationoperators.lod.LOD;
 import mutationoperators.lor.LOR;
 import mutationoperators.mnro.MNRO;
 import mutationoperators.ror.ROR;
+import mutationoperators.sco.SCO;
 import mutationoperators.sor.SOR;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -413,6 +414,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new AFRO(this.listener));
 		this.checker.addMutationOperator(new CRO(this.listener));
 		this.checker.addMutationOperator(new ACO(this.listener));
+		this.checker.addMutationOperator(new SCO(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
