@@ -15,6 +15,7 @@ import mutationoperators.cod.COD;
 import mutationoperators.coi.COI;
 import mutationoperators.cor.COR;
 import mutationoperators.cro.CRO;
+import mutationoperators.eoa.EOA;
 import mutationoperators.jtd.JTD;
 import mutationoperators.jti.JTI;
 import mutationoperators.lco.LCO;
@@ -423,6 +424,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new COI(this.listener));
 		this.checker.addMutationOperator(new LOI(this.listener));
 		this.checker.addMutationOperator(new JTD(this.listener));
+		this.checker.addMutationOperator(new EOA(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////

@@ -1,8 +1,6 @@
 package mutationoperators.eoa;
 
 import mutationoperators.MutationOperator;
-import mutationoperators.cro.CRO_Matcher;
-import mutationoperators.cro.CRO_Visitor;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
@@ -15,8 +13,8 @@ public class EOA extends MutationOperator {
 	
 	public EOA(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new CRO_Matcher(this);
-		this.visitor = new CRO_Visitor(this.matcher);
+		this.matcher = new EOA_Matcher(this);
+		this.visitor = new EOA_Visitor(this.matcher);
 	}
 
 	@Override
