@@ -49,8 +49,8 @@ public class EOA_Test extends MethodTest {
 	
 	@Test
 	public void testEOA_twoDepth(){
-		String pre 	= "Stack s = new Stack(); s.otherstack = this.st1; this.st1 = s.otherstack;";
-		String post	= "Stack s = new Stack(); s.otherstack = this.st1; this.st1 = s.otherstack.clone();";
+		String pre 	= "Stack s = new Stack(); s.otherStack = this.st1; this.st1 = s.otherStack;";
+		String post	= "Stack s = new Stack(); s.otherStack = this.st1; this.st1 = s.otherStack.clone();";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
