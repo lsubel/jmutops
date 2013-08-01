@@ -154,65 +154,81 @@ public class JMutOps {
 			// fire OnChangeChecked event
 			this.listener.OnChangeChecked(change);
 			
+			// depending on the class of change,
+			// call a different submethod which handles the different number of versions
 			if((change instanceof Update) || (change instanceof Move)){
-				SourceCodeEntity sce_old;
-				SourceCodeEntity sce_new;
-				int sce_old_start;
-				int sce_old_end;
-				int sce_new_start;
-				int sce_new_end;
-				
-				if(change instanceof Update){
-					// cast the change into the correct type
-					Update change_update = (Update) change;	
-				
-					// extract the change entities
-					sce_old = change_update.getChangedEntity();
-					sce_new = change_update.getNewEntity();
-				
-					// extract the ranges in the document
-					sce_old_start 	= sce_old.getStartPosition();
-					sce_old_end 	= sce_old.getEndPosition();
-					sce_new_start 	= sce_new.getStartPosition();
-					sce_new_end 	= sce_new.getEndPosition();
-				}
-				else if(change instanceof Move){
-					// cast the change into the correct type
-					Move change_move = (Move) change;	
-				
-					// extract the change entities
-					sce_old = change_move.getChangedEntity();
-					sce_new = change_move.getNewEntity();
-				
-					// extract the ranges in the document
-					sce_old_start 	= sce_old.getStartPosition();
-					sce_old_end 	= sce_old.getEndPosition();
-					sce_new_start 	= sce_new.getStartPosition();
-					sce_new_end 	= sce_new.getEndPosition();
-				}
-				else{
-					String errorMessage = "Impossible exception location.";
-					this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
-					throw new IllegalStateException(errorMessage);
-				}
-
-				// extract information for first file
-				NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
-				ASTNode expr_left = nodeFinder_old.getCoveringNode();
-				
-				// extract information for second file
-				NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
-				ASTNode expr_right = nodeFinder_new.getCoveringNode();
-
-				// run the mutation operator check
-				this.checker.checkForMutationOperators(expr_left, expr_right, change);
-			}	// end of if((change instanceof Update) || (change instanceof Move)){
+				checkChangeTwoVersions(change);
+			}
+			else if((change instanceof Insert) || (change instanceof Delete)){
+				// TODO: implement
+			}
+			else{
+				String errorMessage = "Impossible exception location.";
+				this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+				throw new IllegalStateException(errorMessage);
+			}
 		}
 		
 		// fire OnRunFinished here
 		this.listener.OnFileCheckFinished();
 	}
 	
+	private void checkChangeTwoVersions(SourceCodeChange change) {
+		// initialize variables
+		SourceCodeEntity sce_old;
+		SourceCodeEntity sce_new;
+		int sce_old_start;
+		int sce_old_end;
+		int sce_new_start;
+		int sce_new_end;
+		
+		// depending on the class of change, extract values 
+		if(change instanceof Update){
+			// cast the change into the correct type
+			Update change_update = (Update) change;	
+		
+			// extract the change entities
+			sce_old = change_update.getChangedEntity();
+			sce_new = change_update.getNewEntity();
+		
+			// extract the ranges in the document
+			sce_old_start 	= sce_old.getStartPosition();
+			sce_old_end 	= sce_old.getEndPosition();
+			sce_new_start 	= sce_new.getStartPosition();
+			sce_new_end 	= sce_new.getEndPosition();
+		}
+		else if(change instanceof Move){
+			// cast the change into the correct type
+			Move change_move = (Move) change;	
+		
+			// extract the change entities
+			sce_old = change_move.getChangedEntity();
+			sce_new = change_move.getNewEntity();
+		
+			// extract the ranges in the document
+			sce_old_start 	= sce_old.getStartPosition();
+			sce_old_end 	= sce_old.getEndPosition();
+			sce_new_start 	= sce_new.getStartPosition();
+			sce_new_end 	= sce_new.getEndPosition();
+		}
+		else{
+			String errorMessage = "Impossible exception location.";
+			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			throw new IllegalStateException(errorMessage);
+		}
+
+		// extract information for first file
+		NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
+		ASTNode expr_left = nodeFinder_old.getCoveringNode();
+		
+		// extract information for second file
+		NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
+		ASTNode expr_right = nodeFinder_new.getCoveringNode();
+
+		// run the mutation operator check
+		this.checker.checkForMutationOperators(expr_left, expr_right, change);	
+	}
+
 	private List<SourceCodeChange> summarizeChanges(
 			List<SourceCodeChange> changes) {
 		List<SourceCodeChange> newList = new ArrayList<SourceCodeChange>();
