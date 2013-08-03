@@ -12,7 +12,6 @@ import utils.MethodTest;
 
 public class ASR_Test extends MethodTest {
 
-
 	MutationOperator mutop;
 	
 	@Override
