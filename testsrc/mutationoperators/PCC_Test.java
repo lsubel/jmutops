@@ -47,8 +47,8 @@ public class PCC_Test extends MethodTest {
 	
 	@Test
 	public void testPCC_ClassField1() {
-		String pre = 	"(System.out.println(); (Integer) this.i).toString(); System.out.println(this.s);";
-		String post = 	"(System.out.println(); (Object) this.i).toString(); System.out.println(this.s);";
+		String pre = 	"System.out.println(); ((Integer) this.i).toString(); System.out.println(this.s);";
+		String post = 	"System.out.println(); ((Object) this.i).toString(); System.out.println(this.s);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue()); 
 	}
