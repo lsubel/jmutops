@@ -24,7 +24,8 @@ public class PRV_Test extends MethodTest {
 	protected String getOtherClassContent() {
 		return  "Object obj;" + 
 				"String s1 = \"Hello\";" +
-				"SubClass1 sc1 = null; ";
+				"SubClass1 sc1 = null; " +
+				"RootClass rc = null; ";
 	}
 	
 	@Override
@@ -49,26 +50,26 @@ public class PRV_Test extends MethodTest {
 	
 	@Test
 	public void testPRV_LocalObject2() {
-		String pre 	= "Object obj; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); obj = rc; ";
-		String post = "Object obj; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); obj = sc1; ";
+		String pre 	= "Object objtarget; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); objtarget = rc; ";
+		String post = "Object objtarget; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); objtarget = sc1; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testPRV_LocalObject3() {
-		String pre 	= "RootClass obj; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); obj = rc; ";
-		String post = "RootClass obj; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); obj = sc1; ";
+		String pre 	= "RootClass rctarget; RootClass rcsrc = new RootClass(); SubClass1 scsrc = new SubClass1(); rctarget = rcsrc; ";
+		String post = "RootClass rctarget; RootClass rcsrc = new RootClass(); SubClass1 scsrc = new SubClass1(); rctarget = scsrc; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testPRV_ClassField1() {
-		String pre 	= "RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); this.sc1 = rc; ";
-		String post = "RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); this.sc1 = sc1; ";
+		String pre 	= "RootClass rcl = new RootClass(); SubClass1 sc1 = new SubClass1(); this.rc = rcl; System.out.println();";
+		String post = "RootClass rcl = new RootClass(); SubClass1 sc1 = new SubClass1(); this.rc = sc1; System.out.println();";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		assertEquals(1, resultMap.get(mutop).intValue()); 
 	}
 	
 	@Test
