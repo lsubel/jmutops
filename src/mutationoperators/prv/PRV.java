@@ -1,8 +1,6 @@
 package mutationoperators.prv;
 
 import mutationoperators.MutationOperator;
-import mutationoperators.mnro.MNRO_Matcher;
-import mutationoperators.mnro.MNRO_Visitor;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
@@ -15,8 +13,8 @@ public class PRV extends MutationOperator {
 	
 	public PRV(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new MNRO_Matcher(this);
-		this.visitor = new MNRO_Visitor(this.matcher);
+		this.matcher = new PRV_Matcher(this);
+		this.visitor = new PRV_Visitor(this.matcher);
 	}
 
 	@Override
