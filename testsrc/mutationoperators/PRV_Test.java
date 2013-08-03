@@ -22,7 +22,8 @@ public class PRV_Test extends MethodTest {
 
 	@Override
 	protected String getOtherClassContent() {
-		return  "String s1 = \"Hello\";" +
+		return  "Object obj;" + 
+				"String s1 = \"Hello\";" +
 				"SubClass1 sc1 = null; ";
 	}
 	
@@ -58,6 +59,22 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_LocalObject3() {
 		String pre 	= "RootClass obj; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); obj = rc; ";
 		String post = "RootClass obj; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); obj = sc1; ";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+	}
+	
+	@Test
+	public void testPRV_ClassField1() {
+		String pre 	= "RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); this.sc1 = rc; ";
+		String post = "RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); this.sc1 = sc1; ";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+	}
+	
+	@Test
+	public void testPRV_ClassField2() {
+		String pre 	= "Integer i = new Integer(4); this.obj = this.s1; ";
+		String post = "Integer i = new Integer(4); this.obj = i; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
