@@ -154,7 +154,7 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	 */
 	protected void visitSubtree(ASTNode left, ASTNode right){
 		if(left != null){
-			this.parallelTree = right;
+			setParallelTree(right);
 			left.accept(this);
 		}
 	}
