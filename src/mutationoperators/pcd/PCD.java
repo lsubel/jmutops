@@ -25,5 +25,4 @@ public class PCD extends MutationOperator {
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
-
 }
