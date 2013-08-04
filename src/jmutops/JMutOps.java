@@ -26,6 +26,7 @@ import mutationoperators.lor.LOR;
 import mutationoperators.mnro.MNRO;
 import mutationoperators.pcc.PCC;
 import mutationoperators.pcd.PCD;
+import mutationoperators.pci.PCI;
 import mutationoperators.prv.PRV;
 import mutationoperators.ror.ROR;
 import mutationoperators.sco.SCO;
@@ -433,6 +434,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new PRV(this.listener));
 		this.checker.addMutationOperator(new PCC(this.listener));
 		this.checker.addMutationOperator(new PCD(this.listener));
+		this.checker.addMutationOperator(new PCI(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
