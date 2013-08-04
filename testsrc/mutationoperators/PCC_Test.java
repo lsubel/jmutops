@@ -22,9 +22,6 @@ public class PCC_Test extends MethodTest {
 
 	@Override
 	protected String getOtherClassContent() {
-		Object i = "a";
-		
-		
 		return  "Integer i = new Integer(4); " +
 				"String s = \"Hello\";";
 	}
