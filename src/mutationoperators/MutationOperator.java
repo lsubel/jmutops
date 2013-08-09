@@ -33,7 +33,12 @@ public abstract class MutationOperator{
 	protected final JMutOpsEventListenerMulticaster eventListener;
 	
 	/**
-	 * Reference to the ASTVisitor related to this Mutation Operator
+	 * Reference to the OneASTVisitor related to this Mutation Operator.
+	 */
+	protected OneASTVisitor oneAST_visitor;
+	
+	/**
+	 * Reference to the TwoASTVisitor related to this Mutation Operator.
 	 */
 	protected TwoASTVisitor visitor;
 	
