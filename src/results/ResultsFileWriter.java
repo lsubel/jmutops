@@ -62,6 +62,11 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 	}
 
 	@Override
+	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
+	}
+
+	
+	@Override
 	public void OnCreatingResult() {
 		// initialize variables
 		FileWriter fw = null;

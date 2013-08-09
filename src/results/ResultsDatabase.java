@@ -329,7 +329,11 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		}
 	}
 		
-		
+	@Override
+	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
+		// TODO Auto-generated method stub
+	}
+	
 		
 	@Override
 	public void OnBugChanged(String bugID, String urlToBugreport) {
@@ -652,5 +656,4 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		res.dropTables();
 		res.initializeTables();
 	}
-
 }

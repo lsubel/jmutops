@@ -51,6 +51,19 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	}
 
 	@Override
+	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
+		String operatorName = operator.getShortname();
+		if(this.counter.containsKey(operatorName)){
+			Integer oldValue = this.counter.remove(operatorName);
+			this.counter.put(operatorName, oldValue + 1);
+		}
+		else{
+			throw new IllegalStateException("Mutation operator " + operatorName + " is not registered at " + this.getClass().getSimpleName() +  ".");
+		}
+	}
+
+	
+	@Override
 	public void OnCreatingResult() {
 		System.out.println("Applications found:" + "\n");
 		for(String operatorName: this.counter.keySet()){

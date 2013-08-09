@@ -8,7 +8,11 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
-import ch.uzh.ifi.seal.changedistiller.model.entities.*;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 
 public class EventLogger implements JMutOpsEventListener {
 
@@ -30,6 +34,17 @@ public class EventLogger implements JMutOpsEventListener {
 		logger.append("\n");
 	}
 
+	@Override
+	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
+		Date now = new Date();
+		logger.append(now.toString() + " - Matching was detected:"  + "\n");
+		logger.append("\t" + "Version: " + "\n");
+		logger.append("\t\t" + "Content: " + node.toString()  + "\n");
+		logger.append("\t\t" + "Node type: " + node.getClass().toString() + "\n");
+		logger.append("\t\t" + "Range: " + node.getStartPosition() + "-" + (node.getStartPosition() + node.getLength() - 1) + "\n");
+		logger.append("\n");
+	}
+	
 	@Override
 	public void OnProgramChanged(String newProgramName, String programDescription, String urlToProjectPage, String urlToBugtracker) {
 		Date now = new Date();
@@ -132,5 +147,4 @@ public class EventLogger implements JMutOpsEventListener {
 		logger.append("\n");
 		
 	}
-
 }

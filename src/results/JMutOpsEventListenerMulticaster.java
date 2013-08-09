@@ -49,6 +49,13 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	}
 	
 	@Override
+	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
+		for(JMutOpsEventListener rl: this.listener){
+			rl.OnMatchingFound(operator, node);
+		}
+	}	
+	
+	@Override
 	public void OnFileCheckStarted(File prefixedFile, File postfixedFile) {
 		for(JMutOpsEventListener rl: this.listener){
 			rl.OnFileCheckStarted(prefixedFile, postfixedFile);
@@ -102,5 +109,5 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 		for(JMutOpsEventListener rl: this.listener){
 			rl.OnNoMatchingFound(operatorlist);
 		}
-	}	
+	}
 }

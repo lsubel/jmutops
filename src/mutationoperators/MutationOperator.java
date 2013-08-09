@@ -97,7 +97,7 @@ public abstract class MutationOperator{
 	}
 	
 	/** 
-	 * Method called when an application of an mutation operator was found.
+	 * Method called when an application of an mutation operator was found with two ASTs.
 	 * <p>
 	 * @param leftNode The prefix code.
 	 * @param rightNode The postfix code.
@@ -111,6 +111,20 @@ public abstract class MutationOperator{
 		}
 	}
 	
+	/** 
+	 * Method called when an application of an mutation operator was found with one AST.
+	 * <p>
+	 * @param leftNode The prefix code.
+	 * @param rightNode The postfix code.
+	 */
+	public void found(ASTNode node){
+		// increment the number of detected applications
+		application_counter += 1;
+		// notify other ResultInterfaces
+		if(this.eventListener != null){
+			this.eventListener.OnMatchingFound(this, node);
+		}
+	}
 	
 	/**
 	 * Get the mutation operator's category.

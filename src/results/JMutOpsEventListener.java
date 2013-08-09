@@ -25,6 +25,14 @@ public interface JMutOpsEventListener{
 	public void OnMatchingFound(MutationOperator operator, ASTNode prefix, ASTNode postfix);
 	
 	/**
+	 * Event gets fired when an mutation operator matching was found.<p>
+	 * @param operator The mutation operator which was found.
+	 * @param prefix The AST related to the prefix code.
+	 * @param postfix The AST related to the postfix code.
+	 */
+	public void OnMatchingFound(MutationOperator operator, ASTNode node);
+	
+	/**
 	 * Event gets fired when a program was initialized. <p>
 	 * This event can be started by calling the method {@link jmutops.JMutOps#initProgram(String, String, String, String) initProgram(String, String, String, String)} in {@link jmutops.JMutOps JMutOps}.
 	 * @param newProgramName The name of the program.
