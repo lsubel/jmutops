@@ -5,6 +5,10 @@ import enums.MutationOperatorLevel;
 
 public class MutationOperatorProperty {
 	
+	//////////////////////////////////////////////////////////////
+	///		Fields
+	//////////////////////////////////////////////////////////////
+	
 	/**
 	 * Stores the full name of the mutation operator.
 	 */
@@ -29,7 +33,18 @@ public class MutationOperatorProperty {
 	 * Stores the category of the mutation operator.
 	 */
 	private MutationOperatorCategory category;
-
+	
+	/**
+	 * True iff the mutation operator should detect deletion of statements
+	 * Default is false.
+	 */
+	private boolean isDelete = false;
+	
+	/**
+	 * True iff the mutation operator should detect insertions of statements
+	 * Default is false.
+	 */
+	private boolean isInsert = false;
 	
 	/**
 	 * True iff the mutation operator should detect movement of statements
@@ -37,14 +52,16 @@ public class MutationOperatorProperty {
 	 */
 	private boolean isMove = false;
 	
-	public boolean isMove() {
-		return isMove;
-	}
-
-	public void setMove() {
-		this.isMove = true;
-	}
-
+	/**
+	 * True iff the mutation operator should detect update of statements
+	 * Default is false.
+	 */
+	private boolean isUpdate = false;
+	
+	//////////////////////////////////////////////////////////////
+	///		Methods
+	//////////////////////////////////////////////////////////////	
+	
 	public MutationOperatorProperty(){
 	}
 	
@@ -97,4 +114,38 @@ public class MutationOperatorProperty {
 	public void setCategory(MutationOperatorCategory category) {
 		this.category = category;
 	}
+	
+	public boolean isMove() {
+		return isMove;
+	}
+
+	public void setMove() {
+		this.isMove = true;
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete() {
+		this.isDelete = true;
+	}
+
+	public boolean isInsert() {
+		return isInsert;
+	}
+
+	public void setInsert() {
+		this.isInsert = true;
+	}
+
+	public boolean isUpdate() {
+		return isUpdate;
+	}
+
+	public void setUpdate() {
+		this.isUpdate = true;
+	}
+	
+	
 }
