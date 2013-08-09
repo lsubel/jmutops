@@ -174,7 +174,7 @@ public class JMutOps {
 				checkChangeTwoVersions(change);
 			}
 			else if((change instanceof Insert) || (change instanceof Delete)){
-				// TODO: implement
+				checkChangeOneVersion(change);
 			}
 			else{
 				String errorMessage = "Impossible exception location.";
@@ -187,6 +187,49 @@ public class JMutOps {
 		this.listener.OnFileCheckFinished();
 	}
 	
+	private void checkChangeOneVersion(SourceCodeChange change) {
+		// initialize variables
+		SourceCodeEntity sce;
+		int sce_start;
+		int sce_end;
+		
+		// depending on the class of change, extract values 
+		if(change instanceof Insert){
+			// cast the change into the correct type
+			Insert change_insert = (Insert) change;	
+		
+			// extract the change entities
+			sce = change_insert.getChangedEntity();
+		
+			// extract the ranges in the document
+			sce_start 	= sce.getStartPosition();
+			sce_end 	= sce.getEndPosition();
+		}
+		else if(change instanceof Delete){
+			// cast the change into the correct type
+			Delete change_move = (Delete) change;	
+		
+			// extract the change entities
+			sce = change_move.getChangedEntity();
+		
+			// extract the ranges in the document
+			sce_start 	= sce.getStartPosition();
+			sce_end 	= sce.getEndPosition();
+		}
+		else{
+			String errorMessage = "Impossible exception location.";
+			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			throw new IllegalStateException(errorMessage);
+		}
+		
+		// extract information for file
+		NodeFinder nodeFinder = new NodeFinder(postfixed_preperator.getAST(), sce_start, sce_end - sce_start + 1);
+		ASTNode expr = nodeFinder.getCoveringNode();
+
+		// run the mutation operator check
+		this.checker.checkForMutationOperators(expr, change);
+	}
+
 	private void checkChangeTwoVersions(SourceCodeChange change) {
 		// initialize variables
 		SourceCodeEntity sce_old;
