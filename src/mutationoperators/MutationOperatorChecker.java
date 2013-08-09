@@ -98,7 +98,6 @@ public class MutationOperatorChecker {
 	}
 
 	public void checkForMutationOperators(ASTNode node, SourceCodeChange change) {
-		//
 		if (change instanceof Insert) {
 			this.check(node, (Insert) change);
 		} else if (change instanceof Delete) {
@@ -129,7 +128,6 @@ public class MutationOperatorChecker {
 	 */
 	public void checkForMutationOperators(ASTNode leftNode, ASTNode rightNode,
 			SourceCodeChange change) {
-		//
 		if (change instanceof Update) {
 			this.check(leftNode, rightNode, (Update) change);
 		} else if (change instanceof Move) {
@@ -141,6 +139,11 @@ public class MutationOperatorChecker {
 	}
 
 	private void check(ASTNode node, Insert change) {
+		// get the correct list of MutationOperator's to check
+		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
+		// filter the list of mutationOperators
+
+		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
@@ -155,8 +158,11 @@ public class MutationOperatorChecker {
 			case ALTERNATIVE_PART_INSERT:
 			case STATEMENT_INSERT:
 			case UNCLASSIFIED_CHANGE:
-				// default case means some error
+				runMutationOperators(mutationOperatorList, node);
+				break;
+				
 			default:
+				// default case means some error
 				throw new IllegalStateException(
 						"Expected body insert, but found "
 								+ change.getChangeType().toString());
@@ -183,6 +189,11 @@ public class MutationOperatorChecker {
 	}
 
 	private void check(ASTNode node, Delete change) {
+		// get the correct list of MutationOperator's to check
+		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
+		// filter the list of mutationOperators
+		
+		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
 			// in case of a body change
@@ -196,8 +207,11 @@ public class MutationOperatorChecker {
 			case REMOVED_OBJECT_STATE:
 			case STATEMENT_DELETE:
 			case UNCLASSIFIED_CHANGE:
-				// default case means some error
+				runMutationOperators(mutationOperatorList, node);
+				break;
+			
 			default:
+				// default case means some error
 				throw new IllegalStateException(
 						"Expected body delete, but found "
 								+ change.getChangeType().toString());
@@ -378,14 +392,36 @@ public class MutationOperatorChecker {
 	 * @param rightNode
 	 *            The postfixed version.
 	 */
-	private void runMutationOperators(List<MutationOperator> operatorlist,
-			ASTNode leftNode, ASTNode rightNode) {
+	private void runMutationOperators(List<MutationOperator> operatorlist, ASTNode leftNode, ASTNode rightNode) {
 		// initialize a variable which counts the number of detected
 		// applications
 		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
 			detected_applications += operator.check(leftNode, rightNode);
+		}
+		// fire event when there was no matching detected
+		if (detected_applications == 0) {
+			this.listener.OnNoMatchingFound(operatorlist);
+		}
+	}
+	
+	/**
+	 * Helper method. Check for each MutationOperator in operatorlist, 
+	 * if node applied to corresponding operator
+	 * @param operatorlist
+	 * 		A {@link List} of {@link MutationOperator} containing all
+	 *      MutationOperators to check in this case.
+	 * @param node
+	 * 		The version to check
+	 */
+	private void runMutationOperators(List<MutationOperator> operatorlist, ASTNode node) {
+		// initialize a variable which counts the number of detected
+		// applications
+		int detected_applications = 0;
+		// check all mutation operators
+		for (MutationOperator operator : operatorlist) {
+			detected_applications += operator.check(node);
 		}
 		// fire event when there was no matching detected
 		if (detected_applications == 0) {
@@ -411,4 +447,6 @@ public class MutationOperatorChecker {
 			}
 		}
 	}
+	
+
 }
