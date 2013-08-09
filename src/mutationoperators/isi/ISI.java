@@ -16,8 +16,8 @@ public class ISI extends MutationOperator {
 	
 	public ISI(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new ISI_Matcher(this);
-		this.visitor = new ISI_Visitor(this.matcher);
+		this.twoAST_matcher = new ISI_Matcher(this);
+		this.twoAST_visitor = new ISI_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

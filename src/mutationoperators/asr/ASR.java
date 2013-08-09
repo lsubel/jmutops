@@ -13,8 +13,8 @@ public class ASR extends MutationOperator {
 	
 	public ASR(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new ASR_Matcher(this);
-		this.visitor = new ASR_Visitor(this.matcher);
+		this.twoAST_matcher = new ASR_Matcher(this);
+		this.twoAST_visitor = new ASR_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

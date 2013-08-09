@@ -13,8 +13,8 @@ public class SOR extends MutationOperator {
 	
 	public SOR(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new SOR_Matcher(this);
-		this.visitor = new SOR_Visitor(this.matcher);
+		this.twoAST_matcher = new SOR_Matcher(this);
+		this.twoAST_visitor = new SOR_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

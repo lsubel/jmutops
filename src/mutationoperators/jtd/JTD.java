@@ -16,8 +16,8 @@ public class JTD extends MutationOperator {
 	
 	public JTD(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new JTD_Matcher(this);
-		this.visitor = new JTD_Visitor(matcher);
+		this.twoAST_matcher = new JTD_Matcher(this);
+		this.twoAST_visitor = new JTD_Visitor(twoAST_matcher);
 	}
 
 	@Override

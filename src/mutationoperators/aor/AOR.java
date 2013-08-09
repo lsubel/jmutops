@@ -13,8 +13,8 @@ public class AOR extends MutationOperator {
 	
 	public AOR(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new AOR_Matcher(this);
-		this.visitor = new AOR_Visitor(this.matcher);
+		this.twoAST_matcher = new AOR_Matcher(this);
+		this.twoAST_visitor = new AOR_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

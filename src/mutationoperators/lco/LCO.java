@@ -13,8 +13,8 @@ public class LCO extends MutationOperator {
 	
 	public LCO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new LCO_Matcher(this);
-		this.visitor = new LCO_Visitor(this.matcher);
+		this.twoAST_matcher = new LCO_Matcher(this);
+		this.twoAST_visitor = new LCO_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

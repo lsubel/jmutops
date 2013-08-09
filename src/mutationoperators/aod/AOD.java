@@ -13,8 +13,8 @@ public class AOD extends MutationOperator {
 	
 	public AOD(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new AOD_Matcher(this);
-		this.visitor = new AOD_Visitor(this.matcher);
+		this.twoAST_matcher = new AOD_Matcher(this);
+		this.twoAST_visitor = new AOD_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

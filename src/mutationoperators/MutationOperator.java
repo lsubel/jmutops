@@ -40,12 +40,12 @@ public abstract class MutationOperator{
 	/**
 	 * Reference to the TwoASTVisitor related to this Mutation Operator.
 	 */
-	protected TwoASTVisitor visitor;
+	protected TwoASTVisitor twoAST_visitor;
 	
 	/**
 	 * Reference to the ASTMatcher related to this Mutation Operator
 	 */
-	protected TwoASTMatcher matcher;
+	protected TwoASTMatcher twoAST_matcher;
 	
 	/**
 	 * Internal counter which collects the number of detected matchings within a {@link mutationoperators.MutationOperator#check(ASTNode, ASTNode) check(ASTNode, ASTNode)} call.
@@ -95,8 +95,8 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		this.visitor.setParallelTree(right);
-		left.accept(visitor);
+		this.twoAST_visitor.setParallelTree(right);
+		left.accept(twoAST_visitor);
 		// return the number of detected matches
 		return this.application_counter;		
 	}
@@ -111,7 +111,7 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		node.accept(visitor);
+		node.accept(twoAST_visitor);
 		// return the number of detected matches
 		return this.application_counter;	
 	}

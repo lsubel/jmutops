@@ -13,8 +13,8 @@ public class LOR extends MutationOperator {
 	
 	public LOR(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new LOR_Matcher(this);
-		this.visitor = new LOR_Visitor(this.matcher);
+		this.twoAST_matcher = new LOR_Matcher(this);
+		this.twoAST_visitor = new LOR_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

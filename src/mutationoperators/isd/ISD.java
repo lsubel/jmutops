@@ -13,8 +13,8 @@ public class ISD extends MutationOperator {
 	
 	public ISD(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new ISD_Matcher(this);
-		this.visitor = new ISD_Visitor(this.matcher);
+		this.twoAST_matcher = new ISD_Matcher(this);
+		this.twoAST_visitor = new ISD_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

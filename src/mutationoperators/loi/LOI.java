@@ -16,8 +16,8 @@ public class LOI extends MutationOperator {
 	
 	public LOI(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new LOI_Matcher(this);
-		this.visitor = new LOI_Visitor(this.matcher);
+		this.twoAST_matcher = new LOI_Matcher(this);
+		this.twoAST_visitor = new LOI_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

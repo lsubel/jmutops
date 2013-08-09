@@ -13,8 +13,8 @@ public class CRO extends MutationOperator {
 	
 	public CRO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new CRO_Matcher(this);
-		this.visitor = new CRO_Visitor(this.matcher);
+		this.twoAST_matcher = new CRO_Matcher(this);
+		this.twoAST_visitor = new CRO_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

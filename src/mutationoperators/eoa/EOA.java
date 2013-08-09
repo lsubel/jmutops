@@ -13,8 +13,8 @@ public class EOA extends MutationOperator {
 	
 	public EOA(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new EOA_Matcher(this);
-		this.visitor = new EOA_Visitor(this.matcher);
+		this.twoAST_matcher = new EOA_Matcher(this);
+		this.twoAST_visitor = new EOA_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

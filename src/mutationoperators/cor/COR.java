@@ -13,8 +13,8 @@ public class COR extends MutationOperator {
 	
 	public COR(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new COR_Matcher(this);
-		this.visitor = new COR_Visitor(this.matcher);
+		this.twoAST_matcher = new COR_Matcher(this);
+		this.twoAST_visitor = new COR_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

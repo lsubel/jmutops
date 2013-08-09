@@ -17,8 +17,8 @@ public class SCO extends MutationOperator {
 	
 	public SCO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new SCO_Matcher(this);
-		this.visitor = null;
+		this.twoAST_matcher = new SCO_Matcher(this);
+		this.twoAST_visitor = null;
 	}
 
 	@Override
@@ -41,11 +41,11 @@ public class SCO extends MutationOperator {
 		// we directly call the matcher with the parent nodes
 		if(leftParent instanceof Block){
 			Block leftBlock = (Block) leftParent; 
-			this.matcher.match(leftBlock, rightParent);
+			this.twoAST_matcher.match(leftBlock, rightParent);
 		}
 		else if (rightParent instanceof Block){
 			Block rightBlock = (Block) rightParent; 
-			this.matcher.match(rightBlock, leftParent);
+			this.twoAST_matcher.match(rightBlock, leftParent);
 		}
 		// return the number of detected matches
 		return this.application_counter;		

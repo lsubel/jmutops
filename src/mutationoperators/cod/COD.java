@@ -13,8 +13,8 @@ public class COD extends MutationOperator {
 	
 	public COD(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new COD_Matcher(this);
-		this.visitor = new COD_Visitor(this.matcher);
+		this.twoAST_matcher = new COD_Matcher(this);
+		this.twoAST_visitor = new COD_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

@@ -13,8 +13,8 @@ public class ROR extends MutationOperator {
 	
 	public ROR(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new ROR_Matcher(this);
-		this.visitor = new ROR_Visitor(this.matcher);
+		this.twoAST_matcher = new ROR_Matcher(this);
+		this.twoAST_visitor = new ROR_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

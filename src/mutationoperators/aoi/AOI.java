@@ -16,8 +16,8 @@ public class AOI extends MutationOperator {
 	
 	public AOI(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new AOI_Matcher(this);
-		this.visitor = new AOI_Visitor(this.matcher);
+		this.twoAST_matcher = new AOI_Matcher(this);
+		this.twoAST_visitor = new AOI_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

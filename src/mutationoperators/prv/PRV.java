@@ -13,8 +13,8 @@ public class PRV extends MutationOperator {
 	
 	public PRV(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new PRV_Matcher(this);
-		this.visitor = new PRV_Visitor(this.matcher);
+		this.twoAST_matcher = new PRV_Matcher(this);
+		this.twoAST_visitor = new PRV_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

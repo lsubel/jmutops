@@ -13,8 +13,8 @@ public class ACO extends MutationOperator {
 	
 	public ACO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new ACO_Matcher(this);
-		this.visitor = new ACO_Visitor(matcher);
+		this.twoAST_matcher = new ACO_Matcher(this);
+		this.twoAST_visitor = new ACO_Visitor(twoAST_matcher);
 	}
 
 	@Override

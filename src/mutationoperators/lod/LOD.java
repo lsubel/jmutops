@@ -13,8 +13,8 @@ public class LOD extends MutationOperator {
 	
 	public LOD(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new LOD_Matcher(this);
-		this.visitor = new LOD_Visitor(this.matcher);
+		this.twoAST_matcher = new LOD_Matcher(this);
+		this.twoAST_visitor = new LOD_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

@@ -13,8 +13,8 @@ public class AFRO extends MutationOperator {
 	
 	public AFRO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new AFRO_Matcher(this);
-		this.visitor = new AFRO_Visitor(matcher);
+		this.twoAST_matcher = new AFRO_Matcher(this);
+		this.twoAST_visitor = new AFRO_Visitor(twoAST_matcher);
 	}
 
 	@Override

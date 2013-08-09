@@ -13,8 +13,8 @@ public class PCC extends MutationOperator {
 	
 	public PCC(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new PCC_Matcher(this);
-		this.visitor = new PCC_Visitor(this.matcher);
+		this.twoAST_matcher = new PCC_Matcher(this);
+		this.twoAST_visitor = new PCC_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

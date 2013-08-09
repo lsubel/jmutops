@@ -13,8 +13,8 @@ public class MNRO extends MutationOperator {
 	
 	public MNRO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new MNRO_Matcher(this);
-		this.visitor = new MNRO_Visitor(this.matcher);
+		this.twoAST_matcher = new MNRO_Matcher(this);
+		this.twoAST_visitor = new MNRO_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

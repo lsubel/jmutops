@@ -16,8 +16,8 @@ public class COI extends MutationOperator {
 	
 	public COI(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new COI_Matcher(this);
-		this.visitor = new COI_Visitor(this.matcher);
+		this.twoAST_matcher = new COI_Matcher(this);
+		this.twoAST_visitor = new COI_Visitor(this.twoAST_matcher);
 	}
 
 	@Override

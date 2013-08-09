@@ -13,8 +13,8 @@ public class JTI extends MutationOperator {
 	
 	public JTI(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new JTI_Matcher(this);
-		this.visitor = new JTI_Visitor(matcher);
+		this.twoAST_matcher = new JTI_Matcher(this);
+		this.twoAST_visitor = new JTI_Visitor(twoAST_matcher);
 	}
 
 	@Override

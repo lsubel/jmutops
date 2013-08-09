@@ -16,8 +16,8 @@ public class PCI extends MutationOperator {
 	
 	public PCI(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.matcher = new PCI_Matcher(this);
-		this.visitor = new PCI_Visitor(this.matcher);
+		this.twoAST_matcher = new PCI_Matcher(this);
+		this.twoAST_visitor = new PCI_Visitor(this.twoAST_matcher);
 	}
 
 	@Override
