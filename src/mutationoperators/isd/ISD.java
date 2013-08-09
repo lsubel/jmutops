@@ -26,5 +26,4 @@ public class ISD extends MutationOperator {
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 	}
 
-
 }
