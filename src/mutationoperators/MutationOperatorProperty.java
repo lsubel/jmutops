@@ -58,6 +58,19 @@ public class MutationOperatorProperty {
 	 */
 	private boolean isUpdate = false;
 	
+	/**
+	 * True iff the mutation operator should be able to handle one AST cases.
+	 * Default is false.
+	 */
+	private boolean canOneAST = false;
+	
+	/**
+	 * True iff the mutation operator should be able to handle two AST cases.
+	 * Default is false.
+	 */
+	private boolean canTwoAST = false;
+	
+	
 	//////////////////////////////////////////////////////////////
 	///		Methods
 	//////////////////////////////////////////////////////////////	
@@ -145,6 +158,22 @@ public class MutationOperatorProperty {
 
 	public void setUpdate() {
 		this.isUpdate = true;
+	}
+
+	public boolean canHandleOneAST() {
+		return canOneAST;
+	}
+
+	public void setCanOneAST() {
+		this.canOneAST = true;
+	}
+
+	public boolean canHandleTwoASTs() {
+		return canTwoAST;
+	}
+
+	public void setCanTwoAST() {
+		this.canTwoAST = true;
 	}
 	
 	

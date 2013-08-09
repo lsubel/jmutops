@@ -142,7 +142,7 @@ public class MutationOperatorChecker {
 		// get the correct list of MutationOperator's to check
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
-
+		filterOneAST(mutationOperatorList, true);
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -192,7 +192,7 @@ public class MutationOperatorChecker {
 		// get the correct list of MutationOperator's to check
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
-		
+		filterOneAST(mutationOperatorList, true);
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -238,6 +238,7 @@ public class MutationOperatorChecker {
 		// get the correct list of MutationOperator's to check
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
+		filterTwoAST(mutationOperatorList, true);
 		filterMove(mutationOperatorList, true);
 		
 		// check the location of update
@@ -275,6 +276,7 @@ public class MutationOperatorChecker {
 		// get the correct list of MutationOperator's to check
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
+		filterTwoAST(mutationOperatorList, true);
 		filterMove(mutationOperatorList, false);
 		
 		// check the location of update
@@ -448,5 +450,32 @@ public class MutationOperatorChecker {
 		}
 	}
 	
-
+	/**
+	 * Removes all {@link MutationOperator} from {@code list} where the canOneAST property is equal to {@code oneASTValue}.
+	 * @param list The list of {@link MutationOperator} to filter.
+	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the canOneAST field.
+	 */
+	private void filterOneAST(ArrayList<MutationOperator> list, boolean oneASTValue){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
+			if(mutop.mutopproperty.canHandleOneAST() != oneASTValue){
+				list.remove(mutop);
+			}
+		}
+	}
+	
+	/**
+	 * Removes all {@link MutationOperator} from {@code list} where the canOneAST property is equal to {@code oneTwoValue}.
+	 * @param list The list of {@link MutationOperator} to filter.
+	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the oneTwoValue field.
+	 */
+	private void filterTwoAST(ArrayList<MutationOperator> list, boolean oneTwoValue){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
+			if(mutop.mutopproperty.canHandleTwoASTs() != oneTwoValue){
+				list.remove(mutop);
+			}
+		}
+	}	
+	
 }
