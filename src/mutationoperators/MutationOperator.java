@@ -95,8 +95,10 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		this.twoAST_visitor.setParallelTree(right);
-		left.accept(twoAST_visitor);
+		if(twoAST_visitor != null){
+			this.twoAST_visitor.setParallelTree(right);
+			left.accept(twoAST_visitor);
+		}
 		// return the number of detected matches
 		return this.application_counter;		
 	}
@@ -111,7 +113,9 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		node.accept(twoAST_visitor);
+		if(oneAST_visitor != null){
+			node.accept(oneAST_visitor);
+		}
 		// return the number of detected matches
 		return this.application_counter;	
 	}
