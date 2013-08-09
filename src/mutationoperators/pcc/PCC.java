@@ -24,6 +24,8 @@ public class PCC extends MutationOperator {
 		this.mutopproperty.setDescription("Change the type that a variable is to be cast into.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 
 }

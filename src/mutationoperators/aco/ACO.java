@@ -24,6 +24,8 @@ public class ACO extends MutationOperator {
 		this.mutopproperty.setDescription("This operator changes the number, position of arguments in ClassInstanceCreationExpression and MethodInvocationExpression.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 
 }

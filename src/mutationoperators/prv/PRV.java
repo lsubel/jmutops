@@ -24,6 +24,8 @@ public class PRV extends MutationOperator {
 		this.mutopproperty.setDescription("Changes operands of a reference assignment to be assigned to objects of subclasses.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 
 }

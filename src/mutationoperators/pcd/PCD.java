@@ -24,5 +24,7 @@ public class PCD extends MutationOperator {
 		this.mutopproperty.setDescription("Deletes type casting operator.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 }

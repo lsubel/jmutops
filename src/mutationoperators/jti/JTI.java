@@ -24,5 +24,7 @@ public class JTI extends MutationOperator {
 		this.mutopproperty.setDescription("Inserts the keyword this.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 }

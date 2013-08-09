@@ -27,6 +27,8 @@ public class COI extends MutationOperator {
 		this.mutopproperty.setDescription("Insert unary conditional operators.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 	
 	@Override

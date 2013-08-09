@@ -24,6 +24,8 @@ public class ISD extends MutationOperator {
 		this.mutopproperty.setDescription("Deletes occurrences of the super keyword so that a reference to the variable or the method goes to the overriding instance variable or method.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 
 }

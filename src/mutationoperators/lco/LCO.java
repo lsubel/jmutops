@@ -24,5 +24,7 @@ public class LCO extends MutationOperator {
 		this.mutopproperty.setDescription("Increase/decrease numeric values; swap boolean literal.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 }

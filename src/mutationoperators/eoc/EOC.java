@@ -24,6 +24,8 @@ public class EOC extends MutationOperator {
 		this.mutopproperty.setDescription("Replaces comparision of operators with method call of equals().");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 
 

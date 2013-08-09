@@ -24,5 +24,7 @@ public class ASR extends MutationOperator {
 		this.mutopproperty.setDescription("Replace short-cut assignment operators with other short-cut operators of the same kind");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 }

@@ -27,6 +27,8 @@ public class PCI extends MutationOperator {
 		this.mutopproperty.setDescription("Changes the actual type of an object reference to the parent or child of the original declared type.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setUpdate();
 	}
 	
 	@Override
