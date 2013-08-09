@@ -1,14 +1,14 @@
 package mutationoperators.pcc;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CastExpression;
 
-public class PCC_Visitor extends BaseASTVisitor {
+public class PCC_Visitor extends TwoASTVisitor {
 
-	public PCC_Visitor(BaseASTMatcher matcher) {
+	public PCC_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

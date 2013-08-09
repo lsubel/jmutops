@@ -3,12 +3,12 @@ package mutationoperators.cor;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
-public class COR_Visitor extends BaseASTVisitor {
+public class COR_Visitor extends TwoASTVisitor {
 
-	public COR_Visitor(BaseASTMatcher matcher) {
+	public COR_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 	

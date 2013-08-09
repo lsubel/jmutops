@@ -1,12 +1,12 @@
 package mutationoperators.pcc;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-public class PCC_Matcher extends BaseASTMatcher {
+public class PCC_Matcher extends TwoASTMatcher {
 
 	public PCC_Matcher(MutationOperator mutop) {
 		super(mutop);

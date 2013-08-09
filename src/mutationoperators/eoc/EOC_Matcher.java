@@ -1,6 +1,6 @@
 package mutationoperators.eoc;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
-public class EOC_Matcher extends BaseASTMatcher {
+public class EOC_Matcher extends TwoASTMatcher {
 
 	public EOC_Matcher(MutationOperator mutop) {
 		super(mutop);

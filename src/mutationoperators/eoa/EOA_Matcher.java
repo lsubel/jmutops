@@ -1,6 +1,6 @@
 package mutationoperators.eoa;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 
-public class EOA_Matcher extends BaseASTMatcher {
+public class EOA_Matcher extends TwoASTMatcher {
 
 	public EOA_Matcher(MutationOperator mutop) {
 		super(mutop);

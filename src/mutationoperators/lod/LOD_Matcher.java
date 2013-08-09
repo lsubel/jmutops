@@ -3,10 +3,10 @@ package mutationoperators.lod;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
-public class LOD_Matcher extends BaseASTMatcher {
+public class LOD_Matcher extends TwoASTMatcher {
 
 	public LOD_Matcher(MutationOperator mutop) {
 		super(mutop);

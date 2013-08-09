@@ -4,12 +4,12 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
-public class COD_Visitor extends BaseASTVisitor {
+public class COD_Visitor extends TwoASTVisitor {
 
-	public COD_Visitor(BaseASTMatcher matcher) {
+	public COD_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

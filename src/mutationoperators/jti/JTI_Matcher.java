@@ -2,7 +2,7 @@ package mutationoperators.jti;
 
 
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.Expression;
@@ -13,7 +13,7 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.ThisExpression;
 
 
-public class JTI_Matcher extends BaseASTMatcher {
+public class JTI_Matcher extends TwoASTMatcher {
 
 	public JTI_Matcher(MutationOperator mutop) {
 		super(mutop);

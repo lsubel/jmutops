@@ -1,12 +1,12 @@
 package mutationoperators.cro;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 
-public class CRO_Matcher extends BaseASTMatcher {
+public class CRO_Matcher extends TwoASTMatcher {
 
 	public CRO_Matcher(MutationOperator mutop) {
 		super(mutop);

@@ -1,6 +1,6 @@
 package mutationoperators.isd;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SuperFieldAccess;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
-public class ISD_Matcher extends BaseASTMatcher {
+public class ISD_Matcher extends TwoASTMatcher {
 
 	public ISD_Matcher(MutationOperator mutop) {
 		super(mutop);

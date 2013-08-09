@@ -3,10 +3,10 @@ package mutationoperators.asr;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
-public class ASR_Matcher extends BaseASTMatcher {
+public class ASR_Matcher extends TwoASTMatcher {
 
 	public ASR_Matcher(MutationOperator mutop) {
 		super(mutop);

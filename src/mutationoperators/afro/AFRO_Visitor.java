@@ -1,13 +1,13 @@
 package mutationoperators.afro;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.FieldAccess;
 
-public class AFRO_Visitor extends BaseASTVisitor {
+public class AFRO_Visitor extends TwoASTVisitor {
 
-	public AFRO_Visitor(BaseASTMatcher matcher) {
+	public AFRO_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

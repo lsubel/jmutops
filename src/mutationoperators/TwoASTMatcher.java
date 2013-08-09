@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.ASTMatcher;
  * @author Lukas Subel
  *
  */
-public abstract class BaseASTMatcher extends ASTMatcher {
+public abstract class TwoASTMatcher extends ASTMatcher {
 	
 	/**
 	 * Reference to the mutation operator to call the corresponding found().
@@ -23,9 +23,9 @@ public abstract class BaseASTMatcher extends ASTMatcher {
 	/**
 	 * Default constructor.
 	 * 
-	 * @param mutop The {@link MutationOperator} which is linked to this {@link BaseASTMatcher}.
+	 * @param mutop The {@link MutationOperator} which is linked to this {@link TwoASTMatcher}.
 	 */
-	public BaseASTMatcher(MutationOperator mutop) {
+	public TwoASTMatcher(MutationOperator mutop) {
 		this.mutop = mutop;
 		this.defaultMatcher = new ASTMatcher();
 	}

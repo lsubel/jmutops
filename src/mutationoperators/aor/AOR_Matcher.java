@@ -1,6 +1,6 @@
 package mutationoperators.aor;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTMatcher;
@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-public class AOR_Matcher extends BaseASTMatcher {
+public class AOR_Matcher extends TwoASTMatcher {
 
 	public AOR_Matcher(MutationOperator mutop) {
 		super(mutop);

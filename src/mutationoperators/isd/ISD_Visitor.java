@@ -1,7 +1,7 @@
 package mutationoperators.isd;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.FieldAccess;
@@ -10,9 +10,9 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.SuperFieldAccess;
 import org.eclipse.jdt.core.dom.SuperMethodInvocation;
 
-public class ISD_Visitor extends BaseASTVisitor {
+public class ISD_Visitor extends TwoASTVisitor {
 
-	public ISD_Visitor(BaseASTMatcher matcher) {
+	public ISD_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

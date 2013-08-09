@@ -1,12 +1,12 @@
 package mutationoperators.afro;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-public class AFRO_Matcher extends BaseASTMatcher {
+public class AFRO_Matcher extends TwoASTMatcher {
 
 	public AFRO_Matcher(MutationOperator mutop) {
 		super(mutop);

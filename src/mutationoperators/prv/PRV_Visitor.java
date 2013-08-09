@@ -1,7 +1,7 @@
 package mutationoperators.prv;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 
-public class PRV_Visitor extends BaseASTVisitor {
+public class PRV_Visitor extends TwoASTVisitor {
 
-	public PRV_Visitor(BaseASTMatcher matcher) {
+	public PRV_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

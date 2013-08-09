@@ -2,10 +2,10 @@ package mutationoperators.ror;
 
 import org.eclipse.jdt.core.dom.InfixExpression;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
-public class ROR_Matcher extends BaseASTMatcher {
+public class ROR_Matcher extends TwoASTMatcher {
 
 	public ROR_Matcher(MutationOperator mutop) {
 		super(mutop);

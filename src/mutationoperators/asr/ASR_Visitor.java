@@ -3,12 +3,12 @@ package mutationoperators.asr;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
-public class ASR_Visitor extends BaseASTVisitor {
+public class ASR_Visitor extends TwoASTVisitor {
 
-	public ASR_Visitor(BaseASTMatcher matcher) {
+	public ASR_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 	

@@ -1,13 +1,13 @@
 package mutationoperators.sco;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 
-public class SCO_Matcher extends BaseASTMatcher {
+public class SCO_Matcher extends TwoASTMatcher {
 
 	public SCO_Matcher(MutationOperator mutop) {
 		super(mutop);

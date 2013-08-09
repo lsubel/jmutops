@@ -1,14 +1,14 @@
 package mutationoperators.cro;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 
-public class CRO_Visitor extends BaseASTVisitor {
+public class CRO_Visitor extends TwoASTVisitor {
 
-	public CRO_Visitor(BaseASTMatcher matcher) {
+	public CRO_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

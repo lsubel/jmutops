@@ -1,11 +1,11 @@
 package mutationoperators.lco;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 
-public class LCO_Matcher extends BaseASTMatcher {
+public class LCO_Matcher extends TwoASTMatcher {
 
 	public LCO_Matcher(MutationOperator mutop) {
 		super(mutop);

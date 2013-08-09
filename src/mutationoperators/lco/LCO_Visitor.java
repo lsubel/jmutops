@@ -1,14 +1,14 @@
 package mutationoperators.lco;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.BooleanLiteral;
 
-public class LCO_Visitor extends BaseASTVisitor {
+public class LCO_Visitor extends TwoASTVisitor {
 
-	public LCO_Visitor(BaseASTMatcher matcher) {
+	public LCO_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

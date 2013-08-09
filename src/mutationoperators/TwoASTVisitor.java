@@ -98,7 +98,7 @@ import org.eclipse.jdt.core.dom.WildcardType;
  * @author Lukas Subel
  *
  */
-public abstract class BaseASTVisitor extends ASTVisitor {
+public abstract class TwoASTVisitor extends ASTVisitor {
 
 	/**
 	 * Reference to the second AST which will be traversed in parallel.
@@ -113,14 +113,14 @@ public abstract class BaseASTVisitor extends ASTVisitor {
 	/**
 	 * Mutation operator specific matcher.
 	 */
-	protected BaseASTMatcher matcher;
+	protected TwoASTMatcher matcher;
 	
 	/**
 	 * Default constructor.
-	 * @param matcher The method operator specific {@link BaseASTMatcher} 
+	 * @param matcher The method operator specific {@link TwoASTMatcher} 
 	 * 	which can be called when detecting a possible matching {@link ASTNode}.
 	 */
-	public BaseASTVisitor(BaseASTMatcher matcher) {
+	public TwoASTVisitor(TwoASTMatcher matcher) {
 		this.matcher = matcher;
 		this.defaultMatcher = new ASTMatcher();
 	}

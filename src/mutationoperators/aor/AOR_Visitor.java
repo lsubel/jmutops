@@ -7,12 +7,12 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
-public class AOR_Visitor extends BaseASTVisitor {
+public class AOR_Visitor extends TwoASTVisitor {
 
-	public AOR_Visitor(BaseASTMatcher matcher) {
+	public AOR_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

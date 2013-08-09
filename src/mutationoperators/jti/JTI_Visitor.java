@@ -2,8 +2,8 @@ package mutationoperators.jti;
 
 
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;
@@ -13,9 +13,9 @@ import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 
 
-public class JTI_Visitor extends BaseASTVisitor {
+public class JTI_Visitor extends TwoASTVisitor {
 	
-	public JTI_Visitor(BaseASTMatcher matcher) {
+	public JTI_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

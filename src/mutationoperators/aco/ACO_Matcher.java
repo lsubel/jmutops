@@ -2,7 +2,7 @@ package mutationoperators.aco;
 
 import java.util.HashMap;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
-public class ACO_Matcher extends BaseASTMatcher {
+public class ACO_Matcher extends TwoASTMatcher {
 
 	public ACO_Matcher(MutationOperator mutop) {
 		super(mutop);

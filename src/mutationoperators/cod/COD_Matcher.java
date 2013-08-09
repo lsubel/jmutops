@@ -4,10 +4,10 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
-public class COD_Matcher extends BaseASTMatcher {
+public class COD_Matcher extends TwoASTMatcher {
 
 	public COD_Matcher(MutationOperator mutop) {
 		super(mutop);

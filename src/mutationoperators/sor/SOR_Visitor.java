@@ -3,12 +3,12 @@ package mutationoperators.sor;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
-public class SOR_Visitor extends BaseASTVisitor {
+public class SOR_Visitor extends TwoASTVisitor {
 
-	public SOR_Visitor(BaseASTMatcher matcher) {
+	public SOR_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

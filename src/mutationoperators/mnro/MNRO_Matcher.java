@@ -1,6 +1,6 @@
 package mutationoperators.mnro;
 
-import mutationoperators.BaseASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.MethodInvocation;
 
 import utils.Settings;
 
-public class MNRO_Matcher extends BaseASTMatcher {
+public class MNRO_Matcher extends TwoASTMatcher {
 
 	public MNRO_Matcher(MutationOperator mutop) {
 		super(mutop);

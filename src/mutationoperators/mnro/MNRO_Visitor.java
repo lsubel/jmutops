@@ -1,14 +1,14 @@
 package mutationoperators.mnro;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
-public class MNRO_Visitor extends BaseASTVisitor {
+public class MNRO_Visitor extends TwoASTVisitor {
 
-	public MNRO_Visitor(BaseASTMatcher matcher) {
+	public MNRO_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 

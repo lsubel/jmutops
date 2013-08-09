@@ -12,8 +12,8 @@ import enums.MutationOperatorLevel;
  * <ul>
  * <li>{@link BaseAstVisitor} <code>visitor</code> that traverse in a mutation operator specific way 
  * over the prefix and postfix ASTs. During the traversing there are some conditional checked 
- * and when the results are valid, the {@link BaseASTMatcher} <code>matcher</code> will be called. </li>
- * <li>{@link BaseASTMatcher} <code>matcher</code> that search for a mutation operator specific matching in two ASTNodes. 
+ * and when the results are valid, the {@link TwoASTMatcher} <code>matcher</code> will be called. </li>
+ * <li>{@link TwoASTMatcher} <code>matcher</code> that search for a mutation operator specific matching in two ASTNodes. 
  * Fires an event {@link results.JMutOpsEventListener#OnMatchingFound(MutationOperator, ASTNode, ASTNode) OnMatchingFound(MutationOperator, ASTNode, ASTNode)} when a matching was detected. 
  * </ul>
  * @author Lukas Subel
@@ -35,12 +35,12 @@ public abstract class MutationOperator{
 	/**
 	 * Reference to the ASTVisitor related to this Mutation Operator
 	 */
-	protected BaseASTVisitor visitor;
+	protected TwoASTVisitor visitor;
 	
 	/**
 	 * Reference to the ASTMatcher related to this Mutation Operator
 	 */
-	protected BaseASTMatcher matcher;
+	protected TwoASTMatcher matcher;
 	
 	/**
 	 * Internal counter which collects the number of detected matchings within a {@link mutationoperators.MutationOperator#check(ASTNode, ASTNode) check(ASTNode, ASTNode)} call.
@@ -94,6 +94,21 @@ public abstract class MutationOperator{
 		left.accept(visitor);
 		// return the number of detected matches
 		return this.application_counter;		
+	}
+	
+	/**
+	 * Check version of an source file for applied mutation operator.
+	 * 
+	 * @param leftNode The prefix code.
+	 * @param rightNode The postfix code.
+	 */
+	public int check(ASTNode node){
+		// reset application counter
+		this.application_counter = 0;
+		// start to visit the subAST
+		node.accept(visitor);
+		// return the number of detected matches
+		return this.application_counter;	
 	}
 	
 	/** 

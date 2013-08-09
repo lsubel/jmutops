@@ -1,15 +1,15 @@
 package mutationoperators.aco;
 
-import mutationoperators.BaseASTMatcher;
-import mutationoperators.BaseASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
-public class ACO_Visitor extends BaseASTVisitor {
+public class ACO_Visitor extends TwoASTVisitor {
 
-	public ACO_Visitor(BaseASTMatcher matcher) {
+	public ACO_Visitor(TwoASTMatcher matcher) {
 		super(matcher);
 	}
 
