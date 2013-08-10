@@ -1,10 +1,12 @@
 package mutationoperators.pcc;
 
-import mutationoperators.TwoASTMatcher;
 import mutationoperators.MutationOperator;
+import mutationoperators.TwoASTMatcher;
 
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+
+import utils.ITypeBindingUtils;
 
 public class PCC_Matcher extends TwoASTMatcher {
 
@@ -31,8 +33,10 @@ public class PCC_Matcher extends TwoASTMatcher {
 		
 		// since the casted types are related, one type has to be the XXX of the other one
 		// TODO: implement a method so this works over both versions
-		boolean validTyping = ((firstTypeBinding.isSubTypeCompatible(secondTypeBinding)) || (secondTypeBinding.isSubTypeCompatible(firstTypeBinding)));
-
+		boolean leftValidTyping = ITypeBindingUtils.isFirstTypeParentOfRightType(firstTypeBinding, secondTypeBinding);
+		boolean rightValidTyping = ITypeBindingUtils.isFirstTypeParentOfRightType(secondTypeBinding, firstTypeBinding);
+		boolean validTyping = leftValidTyping || rightValidTyping;
+		
 		if(sameExpression && differentCastTypes && validTyping){
 			mutop.found(node, node2);
 			return true;
@@ -40,7 +44,4 @@ public class PCC_Matcher extends TwoASTMatcher {
 		
 		return false;
 	}
-	
-	
-
 }
