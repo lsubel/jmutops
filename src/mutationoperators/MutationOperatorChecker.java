@@ -142,6 +142,7 @@ public class MutationOperatorChecker {
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
 		filterOneAST(mutationOperatorList, true);
+		filterInsert(mutationOperatorList, true);
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -192,6 +193,7 @@ public class MutationOperatorChecker {
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
 		filterOneAST(mutationOperatorList, true);
+		filterDelete(mutationOperatorList, true);
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -275,7 +277,7 @@ public class MutationOperatorChecker {
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
 		// filter the list of mutationOperators
 		filterTwoAST(mutationOperatorList, true);
-		filterMove(mutationOperatorList, false);
+		filterUpdate(mutationOperatorList, true);
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -443,6 +445,33 @@ public class MutationOperatorChecker {
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
 			if(mutop.mutopproperty.isMove() != moveValue){
+				list.remove(mutop);
+			}
+		}
+	}
+	
+	private void filterInsert(ArrayList<MutationOperator> list, boolean insertValue){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
+			if(mutop.mutopproperty.isInsert() != insertValue){
+				list.remove(mutop);
+			}
+		}
+	}
+	
+	private void filterDelete(ArrayList<MutationOperator> list, boolean deleteValue){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
+			if(mutop.mutopproperty.isDelete() != deleteValue){
+				list.remove(mutop);
+			}
+		}
+	}
+	
+	private void filterUpdate(ArrayList<MutationOperator> list, boolean updateValue){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
+			if(mutop.mutopproperty.isUpdate() != updateValue){
 				list.remove(mutop);
 			}
 		}
