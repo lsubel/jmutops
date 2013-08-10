@@ -53,8 +53,7 @@ public class MutationOperatorChecker {
 	/**
 	 * Default constructor.
 	 * 
-	 * @param listener
-	 *            TODO
+	 * @param listener Reference to the event multi caster so it can fire events.
 	 */
 	public MutationOperatorChecker(JMutOpsEventListenerMulticaster listener) {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
@@ -253,7 +252,6 @@ public class MutationOperatorChecker {
 			case STATEMENT_ORDERING_CHANGE:
 			case STATEMENT_PARENT_CHANGE:
 			case UNCLASSIFIED_CHANGE:
-				// TODO: improve the selection of mutationOperators here
 				runMutationOperators(mutationOperatorList, leftNode, rightNode);
 				break;
 			default:
