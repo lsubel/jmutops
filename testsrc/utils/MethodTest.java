@@ -19,12 +19,12 @@ public abstract class MethodTest extends BasicTest {
 	/**
 	 * The method name of the method where the snippets should be contained.
 	 */
-	protected static final String METHOD_NAME = "method";
+	protected static String METHOD_NAME = "method";
 	
 	/**
 	 * The class name of the file where the method is contained in.
 	 */
-	protected static final String CLASS_NAME = "Foo";
+	protected static String CLASS_NAME = "Foo";
 	
 	/////////////////////////////////////////
 	/// Fields
