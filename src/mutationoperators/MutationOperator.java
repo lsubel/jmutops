@@ -95,7 +95,7 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		if(twoAST_visitor != null){
+		if(canTwoAST()){
 			this.twoAST_visitor.setParallelTree(right);
 			left.accept(twoAST_visitor);
 		}
@@ -113,7 +113,7 @@ public abstract class MutationOperator{
 		// reset application counter
 		this.application_counter = 0;
 		// start to visit the subAST
-		if(oneAST_visitor != null){
+		if(canOneAST()){
 			node.accept(oneAST_visitor);
 		}
 		// return the number of detected matches
@@ -187,6 +187,15 @@ public abstract class MutationOperator{
 		return this.mutopproperty.getDescription();
 	}
 	
-	
+	/**
+	 * Check if the objects for two asts are assigned.
+	 * @return True iff {@link #twoAST_matcher} and {@link #twoAST_visitor} are assigned.
+	 */
+	public boolean canTwoAST(){
+		return (this.twoAST_matcher != null) && (this.twoAST_visitor != null);
+	}
 
+	public boolean canOneAST(){
+		return (this.oneAST_visitor != null);
+	}
 }
