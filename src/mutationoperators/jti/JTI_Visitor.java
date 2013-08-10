@@ -70,7 +70,7 @@ public class JTI_Visitor extends TwoASTVisitor {
 				// check the next stage
 				visitSubtree(expr, expr2);
 			}
-			// TODO: add exception
+			return false;
 		}
 		
 		return false;
