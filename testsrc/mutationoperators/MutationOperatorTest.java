@@ -2,6 +2,7 @@ package mutationoperators;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 
@@ -24,14 +25,18 @@ public class MutationOperatorTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.prefixFile = new File("C:" + File.separator + "Users" + File.separator + "sheak" + File.separator + "Desktop" + File.separator + "Bachelorarbeit" + File.separator + "Repository" + File.separator + "Code" + File.separator + "jMutOps" + File.separator + "testsrc" + File.separator + "resource" + File.separator + "prefix"  + File.separator + "Foo.java");
-		this.postfixFile = new File("C:" + File.separator + "Users" + File.separator + "sheak" + File.separator + "Desktop" + File.separator + "Bachelorarbeit" + File.separator + "Repository" + File.separator + "Code" + File.separator + "jMutOps" + File.separator + "testsrc" + File.separator + "resource" + File.separator + "postfix"  + File.separator + "Foo.java");
-		
-		this.extractor = new ExtractorForTests();
-		
-		this.jmutops = new JMutOps();
-		this.jmutops.addResultListener(extractor);
-		this.jmutops.checkFiles(prefixFile, postfixFile);
+		try {
+			this.prefixFile = File.createTempFile("tmp", "java");  
+			this.postfixFile = File.createTempFile("tmp2", "java");
+			
+			this.extractor = new ExtractorForTests();
+			
+			this.jmutops = new JMutOps();
+			this.jmutops.addResultListener(extractor);
+			this.jmutops.checkFiles(prefixFile, postfixFile);
+		} catch (Exception e) {
+			fail("Could not find file.");
+		}
 	}
 
 	@Test
