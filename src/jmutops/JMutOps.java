@@ -198,7 +198,7 @@ public class JMutOps {
 		SourceCodeEntity sce;
 		int sce_start;
 		int sce_end;
-		
+		ASTNode expr; 
 		// depending on the class of change, extract values 
 		if(change instanceof Insert){
 			// cast the change into the correct type
@@ -210,6 +210,10 @@ public class JMutOps {
 			// extract the ranges in the document
 			sce_start 	= sce.getStartPosition();
 			sce_end 	= sce.getEndPosition();
+			
+			// extract information for file
+			NodeFinder nodeFinder = new NodeFinder(postfixed_preperator.getAST(), sce_start, sce_end - sce_start + 1);
+			expr = nodeFinder.getCoveringNode();
 		}
 		else if(change instanceof Delete){
 			// cast the change into the correct type
@@ -221,6 +225,10 @@ public class JMutOps {
 			// extract the ranges in the document
 			sce_start 	= sce.getStartPosition();
 			sce_end 	= sce.getEndPosition();
+			
+			// extract information for file
+			NodeFinder nodeFinder = new NodeFinder(prefixed_preperator.getAST(), sce_start, sce_end - sce_start + 1);
+			expr = nodeFinder.getCoveringNode();
 		}
 		else{
 			String errorMessage = "Impossible exception location.";
@@ -228,10 +236,6 @@ public class JMutOps {
 			throw new IllegalStateException(errorMessage);
 		}
 		
-		// extract information for file
-		NodeFinder nodeFinder = new NodeFinder(postfixed_preperator.getAST(), sce_start, sce_end - sce_start + 1);
-		ASTNode expr = nodeFinder.getCoveringNode();
-
 		// run the mutation operator check
 		this.checker.checkForMutationOperators(expr, change);
 	}
