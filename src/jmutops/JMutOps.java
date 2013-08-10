@@ -11,6 +11,9 @@ import mutationoperators.aod.AOD;
 import mutationoperators.aoi.AOI;
 import mutationoperators.aor.AOR;
 import mutationoperators.asr.ASR;
+import mutationoperators.cfdo.CFDO_Delete;
+import mutationoperators.cfdo.CFDO_Insert;
+import mutationoperators.cfdo.CFDO_Update;
 import mutationoperators.cod.COD;
 import mutationoperators.coi.COI;
 import mutationoperators.cor.COR;
@@ -487,6 +490,9 @@ public class JMutOps {
 		this.checker.addMutationOperator(new ISI(this.listener));
 		this.checker.addMutationOperator(new IPC(this.listener));
 		this.checker.addMutationOperator(new PNC(this.listener));
+		this.checker.addMutationOperator(new CFDO_Insert(this.listener));
+		this.checker.addMutationOperator(new CFDO_Delete(this.listener));
+		this.checker.addMutationOperator(new CFDO_Update(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
