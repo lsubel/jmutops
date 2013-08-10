@@ -30,6 +30,7 @@ import mutationoperators.mnro.MNRO;
 import mutationoperators.pcc.PCC;
 import mutationoperators.pcd.PCD;
 import mutationoperators.pci.PCI;
+import mutationoperators.pnc.PNC;
 import mutationoperators.prv.PRV;
 import mutationoperators.ror.ROR;
 import mutationoperators.sco.SCO;
@@ -53,6 +54,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 import enums.OptionsVersion;
+
 
 
 /**
@@ -484,6 +486,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new ISD(this.listener));
 		this.checker.addMutationOperator(new ISI(this.listener));
 		this.checker.addMutationOperator(new IPC(this.listener));
+		this.checker.addMutationOperator(new PNC(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
