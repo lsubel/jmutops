@@ -22,15 +22,15 @@ public class PNC_Test extends MethodTest {
 
 	@Override
 	protected String getOtherClassContent() {
-		return 	"public Stack st1 = new Stack(); " +
-				"public Stack st2 = new Stack(); "; 
+		return 	"int a = 0;" +
+				"Parent p; ";
 	}
 
 	@Override
 	protected void initializeContextFiles() {
 		String fileContentParent =
-			"int value; " +
-			"String name = \"\"; " +
+			"public int value; " +
+			"public String name = \"\"; " +
 			"public Parent(){this.value = 0;} ";
 		addContextSourceFile("Parent", surroundWithClass("Parent", fileContentParent));
 		
@@ -45,24 +45,24 @@ public class PNC_Test extends MethodTest {
 	
 	@Test
 	public void testPNC_Test1(){
-		String pre 	= "Parent p; p = new Parent();";
-		String post	= "Parent p; p = new Child();";
+		String pre 	= "this.p = new Parent(); p.value = this.a; System.out.println(p.name);";
+		String post	= "this.p = new Child(); p.value = this.a; System.out.println(p.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
-	public void testPNC_Test2(){
-		String pre 	= "Parent p; p = new Parent();";
-		String post	= "Parent p; p = new Grandchild();";
+	public void testPNC_Test2(){ 
+		String pre 	= "this.p = new Parent(); 		p.value = this.a; System.out.println(p.name);";
+		String post	= "this.p = new Grandchild();  p.value = this.a; System.out.println(p.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
 	
 	@Test
 	public void testPNC_Test3(){
-		String pre 	= "Object p; p = new Grandchild();";
-		String post	= "Object p; p = new Child();";
+		String pre 	= "Child p; p = new Grandchild(); p.value = this.a; System.out.println(p.name);";
+		String post	= "Child p; p = new Child(); p.value = this.a; System.out.println(p.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
 	}
