@@ -1,5 +1,7 @@
 package utils;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import jmutops.JMutOps;
 import mutationoperators.MutationOperator;
@@ -155,6 +158,20 @@ public abstract class BasicTest {
 			resultMap.put(mutop, this.counter.getCount(mutop.getShortname()));
 		}
 		return resultMap;
+	}
+	
+	public void checkOtherMutationOperators(HashMap<MutationOperator, Integer> map, MutationOperator checkedOperators){
+		ArrayList<MutationOperator> list = new ArrayList<MutationOperator>();
+		list.add(checkedOperators);
+		checkOtherMutationOperators(map, list);
+	}	
+	
+	public void checkOtherMutationOperators(HashMap<MutationOperator, Integer> map, List<MutationOperator> checkedOperators){
+		for(MutationOperator mutop: map.keySet()){
+			if(!checkedOperators.contains(mutop)){
+				assertEquals(0, map.get(mutop).intValue());
+			}
+		}
 	}
 	
 	/**
