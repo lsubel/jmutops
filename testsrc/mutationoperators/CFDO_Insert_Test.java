@@ -12,7 +12,6 @@ import utils.MethodTest;
 
 public class CFDO_Insert_Test extends MethodTest {
 
-
 	MutationOperator mutop;
 	
 	@Override
