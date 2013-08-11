@@ -66,6 +66,7 @@ public class ISI_Test extends InheritTest {
 		String post 	= "int v = super.value;  System.out.println(v);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -74,6 +75,7 @@ public class ISI_Test extends InheritTest {
 		String post 	= "String n = super.name;  System.out.println(n);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -82,6 +84,7 @@ public class ISI_Test extends InheritTest {
 		String post 	= "int v = super.getValue();  System.out.println(v);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -90,5 +93,6 @@ public class ISI_Test extends InheritTest {
 		String post 	= "String n = super.getName();  System.out.println(n);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

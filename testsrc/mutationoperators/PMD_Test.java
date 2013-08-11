@@ -49,6 +49,7 @@ public class PMD_Test extends MethodTest {
 		String post	= "System.out.println(this.a); Parent b; b = new Child(); System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -57,6 +58,7 @@ public class PMD_Test extends MethodTest {
 		String post	= "System.out.println(this.a); Parent b; b = new Grandchild(); System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -65,6 +67,7 @@ public class PMD_Test extends MethodTest {
 		String post	= "System.out.println(this.a); Object b; b = new Parent(); System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -73,5 +76,6 @@ public class PMD_Test extends MethodTest {
 		String post	= "System.out.println(this.a); Object b; b = \"Hello World\"; System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

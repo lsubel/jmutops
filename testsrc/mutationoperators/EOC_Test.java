@@ -45,6 +45,7 @@ public class EOC_Test extends MethodTest {
 		String post	= "Stack s = new Stack(); s.push(this.st1); boolean b = (this.st2.equals(s));";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -53,6 +54,7 @@ public class EOC_Test extends MethodTest {
 		String post	= "Stack s = new Stack(); s.otherStack = this.st1; boolean b = (this.st1.equals(s.otherStack));";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -61,6 +63,7 @@ public class EOC_Test extends MethodTest {
 		String post	= "Stack s = new Stack(); s.otherStack = this.st1; boolean b = (s.otherStack.equals(this.st1));";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 
 }

@@ -45,6 +45,7 @@ public class EOA_Test extends MethodTest {
 		String post	= "Stack s = new Stack(); s.push(this.st1); this.st2 = s.clone();"; 
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -53,5 +54,6 @@ public class EOA_Test extends MethodTest {
 		String post	= "Stack s = new Stack(); s.otherStack = this.st1; this.st1 = s.otherStack.clone();";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

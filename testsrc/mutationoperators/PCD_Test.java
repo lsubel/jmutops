@@ -48,6 +48,7 @@ public class PCD_Test extends MethodTest {
 		String post = 	"System.out.println(); (this.i).toString(); System.out.println(this.s);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue()); 
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -56,6 +57,7 @@ public class PCD_Test extends MethodTest {
 		String post = 	"if((this.s).hashCode() > 0){System.out.println(this.s);} ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -64,6 +66,7 @@ public class PCD_Test extends MethodTest {
 		String post = 	"Computer c = new Smartphone(); System.out.println(c.getProcessorNumber());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue()); 
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -72,6 +75,7 @@ public class PCD_Test extends MethodTest {
 		String post = 	"Smartphone c = new Smartphone(); System.out.println(c.equals(null));";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -80,5 +84,6 @@ public class PCD_Test extends MethodTest {
 		String post = 	"Smartphone c = new Smartphone(); System.out.println(c.equals(null));";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

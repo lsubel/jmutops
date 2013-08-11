@@ -56,6 +56,7 @@ public class IPC_Test extends ConstructorTest {
 		String post	= "System.out.println(this.size);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 
 	@Test
@@ -65,6 +66,7 @@ public class IPC_Test extends ConstructorTest {
 		String post	= "System.out.println(this.size);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 
 	@Test
@@ -74,5 +76,6 @@ public class IPC_Test extends ConstructorTest {
 		String post	= "System.out.println(this.size);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

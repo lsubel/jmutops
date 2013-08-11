@@ -37,7 +37,7 @@ public class PRV_Test extends MethodTest {
 		
 		String fileContentBarSubClass1 =  
 				"Object specialField = null; " ;
-			addContextSourceFile("SubClass1", surroundWithClass("SubClass1", "RootClass", "", fileContentBarSubClass1));
+		addContextSourceFile("SubClass1", surroundWithClass("SubClass1", "RootClass", "", fileContentBarSubClass1));
 	}
 
 	@Test
@@ -46,6 +46,7 @@ public class PRV_Test extends MethodTest {
 		String post = "Object obj; String s = \"Hello\"; Integer i = new Integer(4); obj = i; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -54,6 +55,7 @@ public class PRV_Test extends MethodTest {
 		String post = "Object objtarget; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); objtarget = sc1; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -62,6 +64,7 @@ public class PRV_Test extends MethodTest {
 		String post = "RootClass rctarget; RootClass rcsrc = new RootClass(); SubClass1 scsrc = new SubClass1(); rctarget = scsrc; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -70,6 +73,7 @@ public class PRV_Test extends MethodTest {
 		String post = "RootClass rcl = new RootClass(); SubClass1 sc1 = new SubClass1(); this.rc = sc1; System.out.println();";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue()); 
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -78,5 +82,6 @@ public class PRV_Test extends MethodTest {
 		String post = "Integer i = new Integer(4); this.obj = i; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

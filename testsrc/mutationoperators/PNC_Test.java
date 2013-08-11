@@ -49,6 +49,7 @@ public class PNC_Test extends MethodTest {
 		String post	= "this.p = new Child(); p.value = this.a; System.out.println(p.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -57,6 +58,7 @@ public class PNC_Test extends MethodTest {
 		String post	= "this.p = new Grandchild();  p.value = this.a; System.out.println(p.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -65,5 +67,6 @@ public class PNC_Test extends MethodTest {
 		String post	= "Child p; p = new Child(); p.value = this.a; System.out.println(p.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

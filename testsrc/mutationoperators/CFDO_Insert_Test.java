@@ -34,6 +34,7 @@ public class CFDO_Insert_Test extends MethodTest {
 		String post	= "for(int i=0; i < a2; i++){System.out.println(i); a1 += i; if(b){a2 += 1; break;}} System.out.println(a1);"; 
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -42,6 +43,7 @@ public class CFDO_Insert_Test extends MethodTest {
 		String post	= "while(true){if(a1>a2){System.out.println(a1);break;}a1 += a2;}"; 
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
@@ -50,5 +52,6 @@ public class CFDO_Insert_Test extends MethodTest {
 		String post	= "while(true){do{if(b){a2 += 1;break;}; a1 += a2;}while(a1 < a2);}"; 
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
 	}
 }
