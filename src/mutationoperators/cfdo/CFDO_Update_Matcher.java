@@ -22,7 +22,7 @@ public class CFDO_Update_Matcher extends TwoASTMatcher {
 		BreakStatement node2 = (BreakStatement) other;
 		
 		// check if the labels are different
-		boolean differentLabel = (node.getLabel().subtreeMatch(defaultMatcher, node2.getLabel()));		
+		boolean differentLabel = !(node.getLabel().subtreeMatch(defaultMatcher, node2.getLabel()));		
 		
 		if(differentLabel){
 			this.mutop.found(node, node2);
@@ -42,7 +42,7 @@ public class CFDO_Update_Matcher extends TwoASTMatcher {
 		ContinueStatement node2 = (ContinueStatement) other;
 		
 		// check if the labels are different
-		boolean differentLabel = (node.getLabel().subtreeMatch(defaultMatcher, node2.getLabel()));		
+		boolean differentLabel = !(node.getLabel().subtreeMatch(defaultMatcher, node2.getLabel()));		
 		
 		if(differentLabel){
 			this.mutop.found(node, node2);
