@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="testsrc"/>
+	<classpathentry kind="src" path="mutationoperator"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.core.resources_3.8.1.v20121114-124432.jar"/>
 	<classpathentry kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.jdt.core_3.8.3.v20130121-145325.jar" sourcepath="/org.eclipse.jdt.core">
