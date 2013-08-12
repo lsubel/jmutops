@@ -70,6 +70,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 			int value = this.counter.get(operatorName);
 			System.out.println(operatorName + ": " + value);
 		}
+		System.out.println("");
 	}
 	
 	public Integer getCount(String operator){
