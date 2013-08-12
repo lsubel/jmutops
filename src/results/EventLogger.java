@@ -1,11 +1,13 @@
 package results;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import mutationoperators.MutationOperator;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
@@ -23,6 +25,8 @@ public class EventLogger implements JMutOpsEventListener {
 			ASTNode postfix) {
 		Date now = new Date();
 		logger.append(now.toString() + " - Matching was detected:"  + "\n");
+		logger.append("\t" + "Mutation Operator: " + "\n"); 
+		logger.append("\t" + "\t" + operator.getShortname() +  "\n");
 		logger.append("\t" + "Prefix version: " + "\n");
 		logger.append("\t\t" + "Content: " + prefix.toString()  + "\n");
 		logger.append("\t\t" + "Node type: " + prefix.getClass().toString() + "\n");
@@ -38,6 +42,7 @@ public class EventLogger implements JMutOpsEventListener {
 	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
 		Date now = new Date();
 		logger.append(now.toString() + " - Matching was detected:"  + "\n");
+		logger.append("\t" + "Mutation Operator: " + operator.getShortname() +  "\n");
 		logger.append("\t" + "Version: " + "\n");
 		logger.append("\t\t" + "Content: " + node.toString()  + "\n");
 		logger.append("\t\t" + "Node type: " + node.getClass().toString() + "\n");
@@ -58,7 +63,7 @@ public class EventLogger implements JMutOpsEventListener {
 	@Override
 	public void OnBugChanged(String bugID, String urlToBugreport) {
 		Date now = new Date();
-		logger.append(now.toString() + " - Initialized a new bug with ID " + bugID + ".");
+		logger.append(now.toString() + " - Initialized a new bug with ID " + bugID + "." + "\n");
 		logger.append("\n");
 	}
 
@@ -67,14 +72,30 @@ public class EventLogger implements JMutOpsEventListener {
 		Date now = new Date();
 		logger.append(now.toString() + " - Started to compare two files:" + "\n");
 		logger.append("\t" + prefixedFile.getAbsolutePath()  + "\n");
+		try {
+			List<String> list = FileUtils.readLines(prefixedFile);
+			for(String s: list){
+				logger.append("\t" + "\t" + s + "\n");	
+			}
+		} catch (IOException e) {
+			logger.append("\t" + "Could not read content!" + "\n" );
+		}
 		logger.append("\t" + postfixedFile.getAbsolutePath()  + "\n");
+		try {
+			List<String> list = FileUtils.readLines(postfixedFile);
+			for(String s: list){
+				logger.append("\t" + "\t" + s + "\n");	
+			}
+		} catch (IOException e) {
+			logger.append("\t" + "Could not read content!" + "\n");
+		}
 		logger.append("\n");
 	}
 
 	@Override
 	public void OnFileCheckFinished() {
 		Date now = new Date();
-		logger.append(now.toString() + " - Finished to compare the two files.");
+		logger.append(now.toString() + " - Finished to compare the two files." + "\n");
 		logger.append("\n");
 	}
 
@@ -136,7 +157,7 @@ public class EventLogger implements JMutOpsEventListener {
 		logger.append(now.toString() + " - Mutation operator initialized:" + "\n");
 		logger.append("\t" + "Short name: " + mutop.getShortname() + "\n");
 		logger.append("\t" + "Full name: " + mutop.getFullname() + "\n");
-		logger.append("\t" + "Category: " + mutop.getCategory().toString());
+		logger.append("\t" + "Category: " + mutop.getCategory().toString()+ "\n");
 		logger.append("\n");
 	}
 
