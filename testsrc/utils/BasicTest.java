@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
 import org.junit.Before;
 
+import results.EventLogger;
 import enums.OptionsVersion;
 
 /**
@@ -47,6 +48,8 @@ public abstract class BasicTest {
 	ArrayList<File> tempfilelist;
 	
 	ArrayList<MutationOperator> listOfTestedMutationOperators;
+
+	private EventLogger logger;
 	
 	/////////////////////////////////////////
 	/// Methods
@@ -70,6 +73,9 @@ public abstract class BasicTest {
 		// initialize ApplicationCounter which counts the number of applied mutation operators
 		this.counter = new ApplicationCounter();
 		
+		// initialize the EventLogger for debug purpose
+		this.logger = new EventLogger();
+		
 		// initialize jMutOps
 		this.jmutops = new JMutOps();
 		this.jmutops.initProgram("Internal testSuite", "Used during the JUnitTests", "", "");
@@ -81,6 +87,9 @@ public abstract class BasicTest {
 	    
 	    // add the ApplicationsCounter to jMutOps so we can count the applications
 		this.jmutops.addResultListener(counter);
+		
+	    // add the EventLogger to jMutOps so we can count debug results
+		this.jmutops.addResultListener(logger);
 		
 		// initialize test specific context 
 		initializeContextFiles();
@@ -94,9 +103,13 @@ public abstract class BasicTest {
 				tempfile.delete();
 			}
 		}
+		// output everything
+		this.jmutops.createResults();
+		
 		// remove objects
 		this.jmutops = null;
 		this.counter = null;
+		this.logger = null;
 	}
 
 	/**
