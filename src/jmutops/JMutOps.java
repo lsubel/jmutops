@@ -37,6 +37,7 @@ import mutationoperators.methodlevel.mnro.MNRO;
 import mutationoperators.methodlevel.pcc.PCC;
 import mutationoperators.methodlevel.pcd.PCD;
 import mutationoperators.methodlevel.pci.PCI;
+import mutationoperators.methodlevel.pmd.PMD;
 import mutationoperators.methodlevel.pnc.PNC;
 import mutationoperators.methodlevel.prv.PRV;
 import mutationoperators.methodlevel.ror.ROR;
@@ -498,6 +499,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new ISI(this.listener));
 		this.checker.addMutationOperator(new IPC(this.listener));
 		this.checker.addMutationOperator(new PNC(this.listener));
+		this.checker.addMutationOperator(new PMD(this.listener));
 		this.checker.addMutationOperator(new CFDO_Insert(this.listener));
 		this.checker.addMutationOperator(new CFDO_Delete(this.listener));
 		this.checker.addMutationOperator(new CFDO_Update(this.listener));
