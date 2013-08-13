@@ -26,5 +26,7 @@ public class IPC extends MutationOperator {
 		this.mutopproperty.setCanOneAST();
 		this.mutopproperty.setDelete();
 	}
+	
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=25665
 
 }
