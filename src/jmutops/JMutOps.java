@@ -5,6 +5,10 @@ import java.util.Hashtable;
 import java.util.List;
 
 import mutationoperator.MutationOperatorChecker;
+import mutationoperator.methodlevel.exco.EXCO_Delete;
+import mutationoperator.methodlevel.exco.EXCO_Insert;
+import mutationoperator.methodlevel.exco.EXCO_Move;
+import mutationoperator.methodlevel.exco.EXCO_Update;
 import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.afro.AFRO;
 import mutationoperators.methodlevel.aod.AOD;
@@ -497,6 +501,10 @@ public class JMutOps {
 		this.checker.addMutationOperator(new CFDO_Insert(this.listener));
 		this.checker.addMutationOperator(new CFDO_Delete(this.listener));
 		this.checker.addMutationOperator(new CFDO_Update(this.listener));
+		this.checker.addMutationOperator(new EXCO_Insert(this.listener));
+		this.checker.addMutationOperator(new EXCO_Delete(this.listener));
+		this.checker.addMutationOperator(new EXCO_Move(this.listener));
+		this.checker.addMutationOperator(new EXCO_Update(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
