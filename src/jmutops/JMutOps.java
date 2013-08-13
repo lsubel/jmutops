@@ -295,7 +295,7 @@ public class JMutOps {
 		// extract information for second file
 		NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
 		ASTNode expr_right = nodeFinder_new.getCoveringNode();
-
+		
 		// run the mutation operator check
 		this.checker.checkForMutationOperators(expr_left, expr_right, change);	
 	}
