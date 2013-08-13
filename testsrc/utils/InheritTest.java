@@ -3,7 +3,7 @@ package utils;
 import java.io.File;
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
+import mutationoperator.MutationOperator;
 
 public abstract class InheritTest extends BasicTest {
 

@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import jmutops.JMutOps;
+import mutationoperator.MutationOperator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,20 +43,19 @@ public class MutationOperatorTest {
 	@Test
 	public void testMutationOperatorProperties() {
 		for(MutationOperator mutop: extractor.mutationOperatorList){
-			MutationOperatorProperty prop = mutop.mutopproperty;
 			
-			assertNotNull(prop.getCategory());
+			assertNotNull(mutop.getCategory());
 			
-			assertNotNull(prop.getLevel());
+			assertNotNull(mutop.getLevel());
 			
-			assertNotNull(prop.getDescription());
-			assertNotSame("", prop.getDescription());
+			assertNotNull(mutop.getDescription());
+			assertNotSame("", mutop.getDescription());
 			
-			assertNotNull(prop.getFullname());
-			assertNotSame("", prop.getFullname());
+			assertNotNull(mutop.getFullname());
+			assertNotSame("", mutop.getFullname());
 			
-			assertNotNull(prop.getShortname());
-			assertNotSame("", prop.getShortname());
+			assertNotNull(mutop.getShortname());
+			assertNotSame("", mutop.getShortname());
 		}
 	}
 

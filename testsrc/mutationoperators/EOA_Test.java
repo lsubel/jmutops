@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.eoa.EOA;
+import mutationoperator.MutationOperator;
+import mutationoperators.methodlevel.eoa.EOA;
 
 import org.junit.Test;
 

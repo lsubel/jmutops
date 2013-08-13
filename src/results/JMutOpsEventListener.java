@@ -3,7 +3,7 @@ package results;
 import java.io.File;
 import java.util.List;
 
-import mutationoperators.MutationOperator;
+import mutationoperator.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
@@ -82,14 +82,14 @@ public interface JMutOpsEventListener{
 	public void OnChangeChecked(SourceCodeChange change);
 	
 	/**
-	 * Event gets fired when a new mutation operator will be added to {@link mutationoperators.MutationOperatorChecker MutationOperatorChecker}.
-	 * @param mutop The initialized {@link mutationoperators.MutationOperator MutationOperator}.
+	 * Event gets fired when a new mutation operator will be added to {@link mutationoperator.MutationOperatorChecker MutationOperatorChecker}.
+	 * @param mutop The initialized {@link mutationoperator.MutationOperator MutationOperator}.
 	 */
 	public void OnMutationOperatorInit(MutationOperator mutop);
 	
 	/**
 	 * Event gets fired when there were no mutation operator detected in the last checked change.
-	 * @param operatorlist The list of checked {@link mutationoperators.MutationOperator MutationOperator}.
+	 * @param operatorlist The list of checked {@link mutationoperator.MutationOperator MutationOperator}.
 	 */
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist);
 }

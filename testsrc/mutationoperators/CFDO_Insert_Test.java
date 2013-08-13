@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.cfdo.CFDO_Insert;
+import mutationoperator.MutationOperator;
+import mutationoperators.methodlevel.cfdo.CFDO_Insert;
 
 import org.junit.Test;
 

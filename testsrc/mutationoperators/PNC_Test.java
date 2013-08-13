@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.pnc.PNC;
+import mutationoperator.MutationOperator;
+import mutationoperators.methodlevel.pnc.PNC;
 
 import org.junit.Test;
 

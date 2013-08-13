@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-import mutationoperators.MutationOperator;
+import mutationoperator.MutationOperator;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.dom.ASTNode;

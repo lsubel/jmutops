@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.asr.ASR;
+import mutationoperator.MutationOperator;
+import mutationoperators.methodlevel.asr.ASR;
 
 import org.junit.Test;
 

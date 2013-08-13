@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.pcd.PCD;
+import mutationoperator.MutationOperator;
+import mutationoperators.methodlevel.pcd.PCD;
 
 import org.junit.Test;
 

@@ -3,7 +3,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.afro.AFRO;
+import mutationoperator.MutationOperator;
+import mutationoperators.methodlevel.afro.AFRO;
 
 import org.junit.Test;
 

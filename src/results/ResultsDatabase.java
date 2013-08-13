@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-import mutationoperators.MutationOperator;
+import mutationoperator.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 
