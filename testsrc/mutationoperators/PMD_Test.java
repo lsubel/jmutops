@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.pmd.PMD;
 
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class PMD_Test extends MethodTest {
 	}
 	
 	@Test
-	public void testPNC_Test1(){
+	public void testPMD_Test1(){
 		String pre 	= "System.out.println(this.a); Child b; b = new Child(); System.out.println(b.toString());";
 		String post	= "System.out.println(this.a); Parent b; b = new Child(); System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
@@ -54,7 +53,7 @@ public class PMD_Test extends MethodTest {
 	}
 	
 	@Test
-	public void testPNC_Test2(){
+	public void testPMD_Test2(){
 		String pre 	= "System.out.println(this.a); Grandchild b; b = new Grandchild(); System.out.println(b.toString());";
 		String post	= "System.out.println(this.a); Parent b; b = new Grandchild(); System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
@@ -63,7 +62,7 @@ public class PMD_Test extends MethodTest {
 	}
 	
 	@Test
-	public void testPNC_Test3(){
+	public void testPMD_Test3(){
 		String pre 	= "System.out.println(this.a); Parent b; b = new Parent(); System.out.println(b.toString());";
 		String post	= "System.out.println(this.a); Object b; b = new Parent(); System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
@@ -72,7 +71,7 @@ public class PMD_Test extends MethodTest {
 	}
 	
 	@Test
-	public void testPNC_Test4(){
+	public void testPMD_Test4(){
 		String pre 	= "System.out.println(this.a); String b; b = \"Hello World\"; System.out.println(b.toString());";
 		String post	= "System.out.println(this.a); Object b; b = \"Hello World\"; System.out.println(b.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
