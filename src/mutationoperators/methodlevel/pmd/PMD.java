@@ -1,8 +1,6 @@
 package mutationoperators.methodlevel.pmd;
 
 import mutationoperators.MutationOperator;
-import mutationoperators.methodlevel.pci.PCI_Matcher;
-import mutationoperators.methodlevel.pci.PCI_Visitor;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
@@ -15,8 +13,8 @@ public class PMD extends MutationOperator {
 	
 	public PMD(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.twoAST_matcher = new PCI_Matcher(this);
-		this.twoAST_visitor = new PCI_Visitor(this.twoAST_matcher);
+		this.twoAST_matcher = new PMD_Matcher(this);
+		this.twoAST_visitor = new PMD_Visitor(this.twoAST_matcher);
 	}
 
 	@Override
