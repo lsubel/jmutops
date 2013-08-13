@@ -7,8 +7,8 @@ import org.eclipse.jdt.core.dom.InfixExpression;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import mutationoperator.TwoASTMatcher;
-import mutationoperator.TwoASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 public class AOR_Visitor extends TwoASTVisitor {
 

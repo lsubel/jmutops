@@ -1,7 +1,7 @@
 package mutationoperators.methodlevel.pmd;
 
-import mutationoperator.MutationOperator;
-import mutationoperator.TwoASTMatcher;
+import mutationoperators.MutationOperator;
+import mutationoperators.TwoASTMatcher;
 
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;

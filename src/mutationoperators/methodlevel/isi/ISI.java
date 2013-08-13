@@ -1,6 +1,6 @@
 package mutationoperators.methodlevel.isi;
 
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 

@@ -3,8 +3,8 @@ package mutationoperators.methodlevel.sor;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
-import mutationoperator.TwoASTMatcher;
-import mutationoperator.TwoASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 public class SOR_Visitor extends TwoASTVisitor {
 

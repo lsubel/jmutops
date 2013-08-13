@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import jmutops.JMutOps;
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 
 import org.junit.Before;
 import org.junit.Test;

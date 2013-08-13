@@ -1,6 +1,6 @@
 package mutationoperators.methodlevel.pmd;
 
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.pci.PCI_Matcher;
 import mutationoperators.methodlevel.pci.PCI_Visitor;
 import results.JMutOpsEventListenerMulticaster;

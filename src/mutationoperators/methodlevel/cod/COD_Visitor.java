@@ -4,8 +4,8 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.PostfixExpression;
 import org.eclipse.jdt.core.dom.PrefixExpression;
 
-import mutationoperator.TwoASTMatcher;
-import mutationoperator.TwoASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 public class COD_Visitor extends TwoASTVisitor {
 

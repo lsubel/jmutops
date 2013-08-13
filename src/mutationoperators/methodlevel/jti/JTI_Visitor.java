@@ -2,8 +2,8 @@ package mutationoperators.methodlevel.jti;
 
 
 
-import mutationoperator.TwoASTMatcher;
-import mutationoperator.TwoASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Expression;

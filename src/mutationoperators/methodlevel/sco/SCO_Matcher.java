@@ -1,7 +1,7 @@
 package mutationoperators.methodlevel.sco;
 
-import mutationoperator.MutationOperator;
-import mutationoperator.TwoASTMatcher;
+import mutationoperators.MutationOperator;
+import mutationoperators.TwoASTMatcher;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;

@@ -1,6 +1,6 @@
 package mutationoperators.methodlevel.jtd;
 
-import mutationoperator.TwoASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.methodlevel.jti.JTI_Visitor;
 
 public class JTD_Visitor extends JTI_Visitor {

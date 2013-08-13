@@ -3,8 +3,8 @@ package mutationoperators.methodlevel.asr;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.InfixExpression;
 
-import mutationoperator.MutationOperator;
-import mutationoperator.TwoASTMatcher;
+import mutationoperators.MutationOperator;
+import mutationoperators.TwoASTMatcher;
 
 public class ASR_Matcher extends TwoASTMatcher {
 

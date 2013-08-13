@@ -1,7 +1,7 @@
 package mutationoperators.methodlevel.aor;
 
-import mutationoperator.MutationOperator;
-import mutationoperator.TwoASTMatcher;
+import mutationoperators.MutationOperator;
+import mutationoperators.TwoASTMatcher;
 
 import org.eclipse.jdt.core.dom.ASTMatcher;
 import org.eclipse.jdt.core.dom.InfixExpression;

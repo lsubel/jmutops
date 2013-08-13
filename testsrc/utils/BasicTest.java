@@ -13,7 +13,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import jmutops.JMutOps;
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;

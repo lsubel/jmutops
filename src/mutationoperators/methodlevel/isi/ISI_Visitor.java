@@ -1,6 +1,6 @@
 package mutationoperators.methodlevel.isi;
 
-import mutationoperator.TwoASTMatcher;
+import mutationoperators.TwoASTMatcher;
 import mutationoperators.methodlevel.isd.ISD_Visitor;
 
 public class ISI_Visitor extends ISD_Visitor {

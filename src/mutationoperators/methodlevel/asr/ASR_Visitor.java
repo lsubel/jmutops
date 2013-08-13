@@ -3,8 +3,8 @@ package mutationoperators.methodlevel.asr;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Assignment;
 
-import mutationoperator.TwoASTMatcher;
-import mutationoperator.TwoASTVisitor;
+import mutationoperators.TwoASTMatcher;
+import mutationoperators.TwoASTVisitor;
 
 public class ASR_Visitor extends TwoASTVisitor {
 

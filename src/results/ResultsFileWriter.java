@@ -9,7 +9,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 

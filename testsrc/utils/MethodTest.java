@@ -3,7 +3,7 @@ package utils;
 import java.io.File;
 import java.util.HashMap;
 
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 
 /**
  * General (abstract) class which should be used for method level related tests.

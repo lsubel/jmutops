@@ -1,6 +1,6 @@
 package mutationoperators.methodlevel.sco;
 
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;

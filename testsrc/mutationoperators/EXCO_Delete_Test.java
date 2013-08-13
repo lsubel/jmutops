@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperator.MutationOperator;
-import mutationoperator.methodlevel.exco.EXCO_Delete;
+import mutationoperators.MutationOperator;
+import mutationoperators.methodlevel.exco.EXCO_Delete;
 
 import org.junit.Test;
 

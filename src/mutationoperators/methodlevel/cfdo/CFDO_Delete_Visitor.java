@@ -1,7 +1,7 @@
 package mutationoperators.methodlevel.cfdo;
 
-import mutationoperator.MutationOperator;
-import mutationoperator.OneASTVisitor;
+import mutationoperators.MutationOperator;
+import mutationoperators.OneASTVisitor;
 
 import org.eclipse.jdt.core.dom.BreakStatement;
 import org.eclipse.jdt.core.dom.ContinueStatement;

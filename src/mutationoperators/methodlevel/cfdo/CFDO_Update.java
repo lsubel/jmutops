@@ -1,6 +1,6 @@
 package mutationoperators.methodlevel.cfdo;
 
-import mutationoperator.MutationOperator;
+import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
