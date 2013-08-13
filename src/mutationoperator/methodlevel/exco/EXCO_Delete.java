@@ -13,7 +13,7 @@ public class EXCO_Delete extends MutationOperator {
 	
 	public EXCO_Delete(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.oneAST_visitor = new EXCO_Insert_Visitor(this);
+		this.oneAST_visitor = new EXCO_Delete_Visitor(this);
 	}
 
 	@Override

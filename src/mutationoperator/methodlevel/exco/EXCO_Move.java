@@ -13,8 +13,8 @@ public class EXCO_Move extends MutationOperator {
 	
 	public EXCO_Move(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
-		this.twoAST_matcher = new EXCO_Update_Matcher(this);
-		this.twoAST_visitor = new EXCO_Update_Visitor(this.twoAST_matcher);
+		this.twoAST_matcher = new EXCO_Move_Matcher(this);
+		this.twoAST_visitor = new EXCO_Move_Visitor(this.twoAST_matcher);
 	}
 
 	@Override
