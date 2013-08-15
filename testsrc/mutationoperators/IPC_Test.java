@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.ipc.IPC;
 
 import org.junit.Test;
@@ -73,7 +72,7 @@ public class IPC_Test extends ConstructorTest {
 	@Test
 	public void testIPC_Method3(){
 		String args = "int i";
-		String pre 	= "super(); System.out.println(this.size);";
+		String pre 	= "super(i); System.out.println(this.size);";
 		String post	= "System.out.println(this.size);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
