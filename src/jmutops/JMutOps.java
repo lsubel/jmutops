@@ -1,6 +1,5 @@
 package jmutops;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -51,6 +50,7 @@ import results.JMutOpsEventListener;
 import results.JMutOpsEventListenerMulticaster;
 import utils.Preperator;
 import utils.Settings;
+import utils.SourceCodeChangeUtils;
 import utils.TestUtilities;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller;
 import ch.uzh.ifi.seal.changedistiller.ChangeDistiller.Language;
@@ -170,7 +170,7 @@ public class JMutOps {
 		
 		// try to summarize some of the changes
 		if(Settings.TRY_TO_SUMMARIZE_CHANGES){
-			changes = summarizeChanges(changes);
+			changes = SourceCodeChangeUtils.summarizeChanges(changes, prefixed_preperator, postfixed_preperator);
 		}
 		
 		// handle each change
@@ -301,78 +301,7 @@ public class JMutOps {
 		this.checker.checkForMutationOperators(expr_left, expr_right, change);	
 	}
 
-	private List<SourceCodeChange> summarizeChanges(
-			List<SourceCodeChange> changes) {
-		List<SourceCodeChange> newList = new ArrayList<SourceCodeChange>();
 
-		while(changes.size() != 0){
-			
-			SourceCodeChange change = changes.get(0);
-			
-			if(change instanceof Insert){
-				Insert castedChange = (Insert) change;
-				changes.remove(change);
-				
-				for(SourceCodeChange change2: changes){
-					if(change2 instanceof Delete){
-						Delete castedChange2 = (Delete) change2;
-						
-						boolean sameRange = 
-								(castedChange.getChangedEntity().getStartPosition() == castedChange2.getChangedEntity().getStartPosition())
-								&& (castedChange.getChangedEntity().getEndPosition() == castedChange2.getChangedEntity().getEndPosition());
-						boolean sameParentEntity = castedChange.getParentEntity() == castedChange2.getParentEntity();
-						boolean sameRootEntity = castedChange.getRootEntity() == castedChange2.getRootEntity();
-						if(sameRange && sameParentEntity && sameRootEntity){
-							Update newUpdate = new Update(castedChange.getRootEntity(), castedChange2.getChangedEntity(), castedChange.getChangedEntity(), castedChange.getParentEntity());
-							changes.remove(change);
-							changes.remove(change2);
-							castedChange = null;
-							newList.add(newUpdate);
-							break;
-						}
-					}
-				}
-				
-				if(castedChange != null){
-					newList.add(castedChange);
-				}
-			}
-			
-			else if(change instanceof Delete){
-				Delete castedChange = (Delete) change;
-				changes.remove(change);
-				
-				for(SourceCodeChange change2: changes){
-					if(change2 instanceof Insert){
-						Insert castedChange2 = (Insert) change2;
-						
-						boolean sameRange = 
-								(castedChange.getChangedEntity().getStartPosition() == castedChange2.getChangedEntity().getStartPosition())
-								&& (castedChange.getChangedEntity().getEndPosition() == castedChange2.getChangedEntity().getEndPosition());
-						boolean sameParentEntity = castedChange.getParentEntity() == castedChange2.getParentEntity();
-						boolean sameRootEntity = castedChange.getRootEntity() == castedChange2.getRootEntity();
-						if(sameRange && sameParentEntity && sameRootEntity){
-							Update newUpdate = new Update(castedChange.getRootEntity(), castedChange.getChangedEntity(), castedChange2.getChangedEntity(), castedChange.getParentEntity());
-							changes.remove(change2);
-							castedChange = null;
-							newList.add(newUpdate);
-							break;
-						}
-					}
-				}
-				
-				if(castedChange != null){
-					newList.add(castedChange);
-				}
-			}
-			else{
-				newList.add(change);
-				changes.remove(change);
-			}
-			
-		}
-		return newList;
-	}
 
 	/**
 	 * Initial a new program to check.
