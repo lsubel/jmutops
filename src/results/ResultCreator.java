@@ -19,7 +19,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
  * @author Lukas Subel
  *
  */
-public class ResultsFileWriter implements JMutOpsEventListener{
+public class ResultCreator implements JMutOpsEventListener{
 
 	//////////////////////////////////////////
 	///	Fields
@@ -52,13 +52,13 @@ public class ResultsFileWriter implements JMutOpsEventListener{
 	///	Constructor
 	//////////////////////////////////////////
 
-	public ResultsFileWriter() {
+	public ResultCreator() {
 		this.shouldOutputConsole = false;
 		this.shouldOutputFile = true;
 		this.output_path = null;
 	}
 	
-	public ResultsFileWriter(boolean console, boolean file, File path) {
+	public ResultCreator(boolean console, boolean file, File path) {
 		this.shouldOutputConsole 	= console;
 		this.shouldOutputFile 		= file;
 		this.output_path 			= path;
