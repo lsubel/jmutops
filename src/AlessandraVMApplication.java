@@ -8,7 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
 
 import results.EventLogger;
-import results.ResultsFileWriter;
+import results.ResultCreator;
 import enums.OptionsVersion;
 
 
@@ -69,8 +69,7 @@ public class AlessandraVMApplication {
 		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
 		
 		// 
-		ResultsFileWriter fr = new ResultsFileWriter();
-		fr.setResultingFileName("results_" + iBugs_ID + ".txt");
+		ResultCreator fr = new ResultCreator();
 		jmutops.addResultListener(fr);
 		
 		EventLogger ol = new EventLogger();
