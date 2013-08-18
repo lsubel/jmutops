@@ -28,12 +28,16 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
  */
 public class ResultsDatabase implements JMutOpsEventListener {
 
+	//////////////////////////////////////////
+	/// Fields
+	//////////////////////////////////////////
+	
 	/**
 	 * Connection values for the database
 	 */
-	private static final String DB_ADDRESS = "jdbc:postgresql://avanti.st.cs.uni-saarland.de/jmutops";
-	private static final String DB_USERNAME = "jmutops";
-	private static final String DB_PASSWORD = "jmutops";
+	private final String db_address; //  = "jdbc:postgresql://avanti.st.cs.uni-saarland.de/jmutops";
+	private final String db_username; // = "jmutops";
+	private final String db_password; // = "jmutops";
 
 	/**
 	 * Logger
@@ -66,13 +70,16 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	/**
 	 * Initialize the database object
 	 */
-	public ResultsDatabase() {
+	public ResultsDatabase(String address, String user, String pw) {
+		// store the results
+		this.db_address  = address;
+		this.db_username = user;
+		this.db_password = pw;
+		
 		// Initialize the connection to and PostgreqSQL database
 		log.info("Try to initialize PostgreSQL JDBC Connection");
 		try {
-
 			Class.forName("org.postgresql.Driver");
-
 		} catch (ClassNotFoundException e) {
 			log.severe("PostgreSQL JDBC Driver was not found!");
 			e.printStackTrace();
@@ -80,8 +87,8 @@ public class ResultsDatabase implements JMutOpsEventListener {
 		}
 		log.info("PostgreSQL JDBC Driver Registered!");
 		try {
-			connection = DriverManager.getConnection(DB_ADDRESS, DB_USERNAME,
-					DB_PASSWORD);
+			connection = DriverManager.getConnection(db_address, db_username,
+					db_password);
 		} catch (SQLException e) {
 			log.severe("Connection Failed! Check output console!");
 			e.printStackTrace();
@@ -649,11 +656,5 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	@Override
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 		// TODO: create a table which stores the changes with no matching operator
-	}
-	
-	public static void main(String[] args) {
-		ResultsDatabase res = new ResultsDatabase();
-		res.dropTables();
-		res.initializeTables();
 	}
 }
