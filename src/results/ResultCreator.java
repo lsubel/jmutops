@@ -123,7 +123,7 @@ public class ResultCreator implements JMutOpsEventListener{
 			File resultingFile = null;
 			BufferedWriter bw = null;
 			try {
-				String path = (this.output_path == null) ? "result.txt" : this.output_path.getAbsolutePath() + File.pathSeparator + "result.txt";
+				String path = this.output_path.getAbsolutePath();
 				resultingFile = new File(path);				
 				resultingFile.createNewFile();
 				bw = new BufferedWriter(new FileWriter(resultingFile));

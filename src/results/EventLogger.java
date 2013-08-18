@@ -147,7 +147,7 @@ public class EventLogger implements JMutOpsEventListener {
 			File resultingFile = null;
 			BufferedWriter bw = null;
 			try {
-				String path = (this.output_path == null) ? "log.txt" : this.output_path.getAbsolutePath() + File.pathSeparator + "log.txt";
+				String path = this.output_path.getAbsolutePath();
 				resultingFile = new File(path);
 				resultingFile.createNewFile();
 				bw = new BufferedWriter(new FileWriter(resultingFile));
