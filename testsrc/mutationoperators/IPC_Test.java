@@ -78,4 +78,24 @@ public class IPC_Test extends ConstructorTest {
 		assertEquals(1, resultMap.get(mutop).intValue());
 		checkOtherMutationOperators(resultMap, mutop);
 	}
+	
+	@Test
+	public void testIPC_NoMatch1(){
+		String args = "int i";
+		String pre 	= "super(); System.out.println(this.size);";
+		String post	= "System.out.println(this.size);";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(0, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testIPC_NoMatch2(){
+		String args = "int i";
+		String pre 	= "super(); System.out.println(this.size);";
+		String post	= "super(i); System.out.println(this.size);";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(0, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
 }
