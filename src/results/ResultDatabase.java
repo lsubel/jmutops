@@ -26,7 +26,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
  * @author sheak
  * 
  */
-public class ResultsDatabase implements JMutOpsEventListener {
+public class ResultDatabase implements JMutOpsEventListener {
 
 	//////////////////////////////////////////
 	/// Fields
@@ -42,7 +42,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	/**
 	 * Logger
 	 */
-	private static final Logger log = Logger.getLogger(ResultsDatabase.class
+	private static final Logger log = Logger.getLogger(ResultDatabase.class
 			.getName());
 
 	/**
@@ -70,7 +70,7 @@ public class ResultsDatabase implements JMutOpsEventListener {
 	/**
 	 * Initialize the database object
 	 */
-	public ResultsDatabase(String address, String user, String pw) {
+	public ResultDatabase(String address, String user, String pw) {
 		// store the results
 		this.db_address  = address;
 		this.db_username = user;
