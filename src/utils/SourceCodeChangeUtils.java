@@ -3,9 +3,11 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 import org.eclipse.jdt.core.dom.NodeFinder;
 
+import ch.uzh.ifi.seal.changedistiller.model.classifiers.ChangeType;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
@@ -14,7 +16,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 public class SourceCodeChangeUtils {
 	
 	public static List<SourceCodeChange> summarizeChanges(List<SourceCodeChange> changes, Preperator preperator, Preperator preperator2) {
-		// initialize return list
+		// initialize return list		
 		ArrayList<SourceCodeChange> returnList = new ArrayList<SourceCodeChange>();
 		
 		while(!changes.isEmpty()) {
@@ -25,7 +27,7 @@ public class SourceCodeChangeUtils {
 			if(change instanceof Insert){
 				for(SourceCodeChange change2: changes) {
 					if(change2 instanceof Delete) {
-						// Insert / Delete
+						// Insert / Delete ~> Update
 						boolean sameLocation = checkLocationInASTS((Delete) change2, (Insert) change, preperator, preperator2);
 						if (sameLocation){
 							change = new Update(change.getRootEntity(), change2.getChangedEntity(), change.getChangedEntity(), change.getParentEntity());
@@ -37,7 +39,7 @@ public class SourceCodeChangeUtils {
 			else if(change instanceof Delete) {
 				for(SourceCodeChange change2: changes) {
 					if(change2 instanceof Insert) {
-						// Insert / Delete
+						// Insert / Delete ~> Update
 						boolean sameLocation = checkLocationInASTS((Delete) change, (Insert) change2, preperator2, preperator);
 						if (sameLocation){
 							change = new Update(change.getRootEntity(), change.getChangedEntity(), change2.getChangedEntity(), change.getParentEntity());
@@ -45,6 +47,16 @@ public class SourceCodeChangeUtils {
 						}
 					}
 				}				
+			}
+			else if(change instanceof Update) {
+				// Update of super() ~> Delete
+				boolean removeSuper 			= Pattern.matches("super(.+);", ((Update) change).getChangedEntity().getUniqueName()); 
+				boolean insertDefaultSuper 		= (((Update) change).getNewEntity().getUniqueName().equals("super();"));
+				String substring 				= preperator2.getFileContent().substring(((Update) change).getNewEntity().getStartPosition(), ((Update) change).getNewEntity().getEndPosition());
+				boolean differentValueInRange 	= !(substring.equals("super();"));
+				if(insertDefaultSuper && differentValueInRange && removeSuper) {
+					change = new Delete(ChangeType.STATEMENT_DELETE ,((Update) change).getRootEntity(), ((Update) change).getChangedEntity(), ((Update) change).getParentEntity());
+				}
 			}
 			
 			// write the result back to the new list
