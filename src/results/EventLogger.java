@@ -26,6 +26,9 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
  */
 public class EventLogger implements JMutOpsEventListener {
 
+	/**
+	 * This StringBuffer stores all created event messages.
+	 */
 	private StringBuffer logger = new StringBuffer();
 	
 	private final boolean shouldOutputFile;
@@ -144,7 +147,8 @@ public class EventLogger implements JMutOpsEventListener {
 			File resultingFile = null;
 			BufferedWriter bw = null;
 			try {
-				resultingFile = new File(this.output_path.getAbsolutePath() + File.pathSeparator + "log.txt");
+				String path = (this.output_path == null) ? "log.txt" : this.output_path.getAbsolutePath() + File.pathSeparator + "log.txt";
+				resultingFile = new File(path);
 				resultingFile.createNewFile();
 				bw = new BufferedWriter(new FileWriter(resultingFile));
 			} catch (IOException e) {
