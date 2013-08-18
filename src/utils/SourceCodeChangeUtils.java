@@ -32,6 +32,7 @@ public class SourceCodeChangeUtils {
 						if (sameLocation){
 							change = new Update(change.getRootEntity(), change2.getChangedEntity(), change.getChangedEntity(), change.getParentEntity());
 							changes.remove(change2);
+							break;
 						}
 					}
 				}
@@ -44,6 +45,7 @@ public class SourceCodeChangeUtils {
 						if (sameLocation){
 							change = new Update(change.getRootEntity(), change.getChangedEntity(), change2.getChangedEntity(), change.getParentEntity());
 							changes.remove(change2);
+							break;
 						}
 					}
 				}				
