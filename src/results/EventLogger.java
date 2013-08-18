@@ -1,6 +1,8 @@
 package results;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +18,41 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 
+/**
+ * Class which logs all occurred events in chronological order. <p>
+ * This class is able to print out the results on console and/or store it in a file. <p>
+ * @author Lukas Subel
+ *
+ */
 public class EventLogger implements JMutOpsEventListener {
 
-	StringBuffer logger = new StringBuffer();
+	private StringBuffer logger = new StringBuffer();
+	
+	private final boolean shouldOutputFile;
+	
+	private final boolean shouldOutputConsole;
+	
+	private final File output_path;
+	
+	/**
+	 * Default constructor. By default, the log is printed out on the console.
+	 */
+	public EventLogger() {
+		this.shouldOutputConsole 	= true;
+		this.shouldOutputFile 		= false;
+		this.output_path 			= null;
+	}
+	
+	/**
+	 * Explicit constructor to set up how the results should be made available.
+	 * @param console True iff the results should be print out on console.
+	 * @param file True iff the results should be stored in a file.
+	 */
+	public EventLogger(boolean console, boolean file, File path) {
+		this.shouldOutputConsole 	= console;
+		this.shouldOutputFile 		= file;
+		this.output_path 			= path;
+	}
 	
 	@Override
 	public void OnMatchingFound(MutationOperator operator, ASTNode prefix,
@@ -101,7 +135,29 @@ public class EventLogger implements JMutOpsEventListener {
 
 	@Override
 	public void OnCreatingResult() {
-		System.out.println(logger.toString());
+		// check if they should output the result on console
+		if(this.shouldOutputConsole) {
+			System.out.println(logger.toString());
+		}
+		// check if they should output the result in a file
+		if(this.shouldOutputFile) {
+			File resultingFile = null;
+			BufferedWriter bw = null;
+			try {
+				resultingFile = new File(this.output_path.getAbsolutePath() + File.pathSeparator + "log.txt");
+				resultingFile.createNewFile();
+				bw = new BufferedWriter(new FileWriter(resultingFile));
+			} catch (IOException e) {
+				System.out.println("Eventlogger - Could not create.");
+				System.exit(0);
+			}
+			try {
+				bw.write(logger.toString());
+				bw.close();
+			} catch (IOException e) {
+				System.out.println("Eventlogger - Could not write all results into file.");
+			}
+		}
 	}
 
 	@Override
