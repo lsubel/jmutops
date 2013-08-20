@@ -70,11 +70,16 @@ public class MutationOperatorProperty {
 	 */
 	private boolean canTwoAST = false;
 	
+	/**
+	 * True if the mutation operator should be able to check properties with all changes.
+	 * Default is false;
+	 */
+	private boolean canPreCheck = false;
 	
 	//////////////////////////////////////////////////////////////
 	///		Methods
 	//////////////////////////////////////////////////////////////	
-	
+
 	public MutationOperatorProperty(){
 	}
 	
@@ -176,5 +181,12 @@ public class MutationOperatorProperty {
 		this.canTwoAST = true;
 	}
 	
-	
+	public boolean isCanPreCheck() {
+		return canPreCheck;
+	}
+
+	public void setCanPreCheck(boolean canPreCheck) {
+		this.canPreCheck = canPreCheck;
+	}
+
 }

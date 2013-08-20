@@ -1,8 +1,12 @@
 package mutationoperators;
 
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import results.JMutOpsEventListenerMulticaster;
+import utils.Preperator;
+import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import enums.MutationOperatorLevel;
 
 /**
@@ -118,6 +122,11 @@ public abstract class MutationOperator{
 		}
 		// return the number of detected matches
 		return this.application_counter;	
+	}
+	
+	public int preCheck(List<SourceCodeChange> changes,
+			Preperator prefixed_preperator, Preperator postfixed_preperator) {
+		return 0;
 	}
 	
 	/** 

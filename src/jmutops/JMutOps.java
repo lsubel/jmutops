@@ -173,6 +173,9 @@ public class JMutOps {
 			changes = SourceCodeChangeUtils.summarizeChanges(changes, prefixed_preperator, postfixed_preperator);
 		}
 		
+		// first check for mutation operators which are running on top, f.e. SWO
+		preCheckOperators(changes);
+		
 		// handle each change
 		for(SourceCodeChange change: changes){
 			
@@ -198,6 +201,10 @@ public class JMutOps {
 		this.listener.OnFileCheckFinished();
 	}
 	
+	private void preCheckOperators(List<SourceCodeChange> changes) {
+		this.checker.preCheckForMutationOperators(changes, this.prefixed_preperator, this.postfixed_preperator);
+	}
+
 	private void checkChangeOneVersion(SourceCodeChange change) {
 		// initialize variables
 		SourceCodeEntity sce;

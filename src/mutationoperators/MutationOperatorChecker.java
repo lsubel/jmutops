@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 
 import results.JMutOpsEventListenerMulticaster;
+import utils.Preperator;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
@@ -137,6 +138,18 @@ public class MutationOperatorChecker {
 		}
 	}
 
+
+	public void preCheckForMutationOperators(List<SourceCodeChange> changes,
+			Preperator prefixed_preperator, Preperator postfixed_preperator) {
+		// get the correct list of MutationOperator's to check
+		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(changes);
+		// filter out all mutation operator which do not implement it
+		filterPreCheck(mutationOperatorList, true);
+		
+		// perform the pre check on all remaining mutation operators
+		preRunMutationOperators(mutationOperatorList, changes, prefixed_preperator, postfixed_preperator);
+	}
+	
 	private void check(ASTNode node, Insert change) {
 		// get the correct list of MutationOperator's to check
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(change);
@@ -381,6 +394,23 @@ public class MutationOperatorChecker {
 		}
 		return mutationOperatorList;
 	}
+	
+	private ArrayList<MutationOperator> getInitialMutationOperators(List<SourceCodeChange> changes) {
+		ArrayList<MutationOperator> mutationOperatorList = new ArrayList<MutationOperator>();
+		boolean isMethod = false;
+		boolean isClass = false;
+		for(SourceCodeChange change: changes) {
+			if(change.getChangeType().isBodyChange() && (!isMethod)){
+				isMethod = true;
+				mutationOperatorList.addAll(getCopyOfList(methodlevel_list));
+			}
+			else if(!change.getChangeType().isBodyChange() && (!isClass)){
+				isClass = true;
+				mutationOperatorList.addAll(getCopyOfList(classlevel_list));
+			}
+		}
+		return mutationOperatorList;
+	}
 
 	/**
 	 * Helper method. Check for each MutationOperator in operatorlist, if
@@ -430,6 +460,23 @@ public class MutationOperatorChecker {
 			this.listener.OnNoMatchingFound(operatorlist);
 		}
 	}
+	
+	private void preRunMutationOperators(
+			ArrayList<MutationOperator> operatorlist,
+			List<SourceCodeChange> changes, Preperator prefixed_preperator,
+			Preperator postfixed_preperator) {
+		// initialize a variable which counts the number of detected
+		// applications
+		int detected_applications = 0;
+		// check all mutation operators
+		for (MutationOperator operator : operatorlist) {
+			detected_applications += operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
+		}
+		// fire event when there was no matching detected
+		if (detected_applications == 0) {
+			this.listener.OnNoMatchingFound(operatorlist);
+		}
+	}	
 
 	private ArrayList<MutationOperator> getCopyOfList(
 			ArrayList<MutationOperator> list) {
@@ -492,7 +539,7 @@ public class MutationOperatorChecker {
 	}
 	
 	/**
-	 * Removes all {@link MutationOperator} from {@code list} where the canOneAST property is equal to {@code oneTwoValue}.
+	 * Removes all {@link MutationOperator} from {@code list} where the canTwoAST property is equal to {@code oneTwoValue}.
 	 * @param list The list of {@link MutationOperator} to filter.
 	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the oneTwoValue field.
 	 */
@@ -503,6 +550,21 @@ public class MutationOperatorChecker {
 				list.remove(mutop);
 			}
 		}
-	}	
+	}
+
+	/**
+	 * Removes all {@link MutationOperator} from {@code list} where the preCheck property is equal to {@code precheckValue}.
+	 * @param list The list of {@link MutationOperator} to filter.
+	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the precheckValue field.
+	 */
+	private void filterPreCheck(ArrayList<MutationOperator> list, boolean precheckValue){
+		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
+		for(MutationOperator mutop: copy){
+			if(mutop.mutopproperty.isCanPreCheck() != precheckValue){
+				list.remove(mutop);
+			}
+		}
+	}
+
 	
 }
