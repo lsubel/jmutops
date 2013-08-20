@@ -47,282 +47,264 @@ public class PathExtractor extends ASTVisitor {
 	}
 
 	@Override
-	public boolean visit(AssertStatement node) {
+	public void endVisit(AssertStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 	
 	@Override
-	public boolean visit(Block node) {
+	public void endVisit(Block node) {
 		List stmts = node.statements();
 		for(int i = 0; i < stmts.size(); i++) {
 			if(this.child.subtreeMatch(defaultMatcher, stmts.get(i))) {
 				stack.push(new Integer(i));
 				this.child = node;
-				return false;
+				return;
 			}
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(BreakStatement node) {
+	public void endVisit(BreakStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getLabel())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 	
 	@Override
-	public boolean visit(ContinueStatement node) {
+	public void endVisit(ContinueStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getLabel())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 	
 	@Override
-	public boolean visit(DoStatement node) {
+	public void endVisit(DoStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(EmptyStatement node) {
-		return false;
+	public void endVisit(EmptyStatement node) {
+		return;
 	}
 
 	@Override
-	public boolean visit(EnhancedForStatement node) { 
+	public void endVisit(EnhancedForStatement node) { 
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(ExpressionStatement node) {
+	public void endVisit(ExpressionStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(ForStatement node) {
+	public void endVisit(ForStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(IfStatement node) {
+	public void endVisit(IfStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getThenStatement())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getElseStatement())) {
 			stack.push(2);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(LabeledStatement node) {
+	public void endVisit(LabeledStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getLabel())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(ReturnStatement node) {
+	public void endVisit(ReturnStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(SwitchStatement node) {
+	public void endVisit(SwitchStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node; 
-			return false;
+			return;
 		}
 		List stmts = node.statements();
 		for(int i = 0; i < stmts.size(); i++) {
 			if(this.child.subtreeMatch(defaultMatcher, stmts.get(i))) {
 				stack.push(new Integer(1 + i));
 				this.child = node;
-				return false;
+				return;
 			}
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(SynchronizedStatement node) {
+	public void endVisit(SynchronizedStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(ThrowStatement node) {
+	public void endVisit(ThrowStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(TryStatement node) {
+	public void endVisit(TryStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody() )) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getFinally())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		List stmts = node.catchClauses();
 		for(int i = 0; i < stmts.size(); i++) {
 			if(this.child.subtreeMatch(defaultMatcher, stmts.get(i))) {
 				stack.push(new Integer(2 + i));
 				this.child = node;
-				return false;
+				return;
 			}
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(TypeDeclarationStatement node) {
+	public void endVisit(TypeDeclarationStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getDeclaration())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(VariableDeclarationStatement node) {
+	public void endVisit(VariableDeclarationStatement node) {
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 
 	@Override
-	public boolean visit(WhileStatement node) {
+	public void endVisit(WhileStatement node) {
 		if(this.child.subtreeMatch(defaultMatcher, node.getExpression())) {
 			stack.push(0);
 			this.child = node;
-			return false;
+			return;
 		}
 		if(this.child.subtreeMatch(defaultMatcher, node.getBody())) {
 			stack.push(1);
 			this.child = node;
-			return false;
+			return;
 		}
 		stack.push(new Integer(-1));
 		this.child = node;
-		return false;
 	}
 }
