@@ -491,7 +491,7 @@ public class MutationOperatorChecker {
 	private void filterMove(ArrayList<MutationOperator> list, boolean moveValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.isMove() != moveValue){
+			if(mutop.mutopproperty.canMove() != moveValue){
 				list.remove(mutop);
 			}
 		}
@@ -500,7 +500,7 @@ public class MutationOperatorChecker {
 	private void filterInsert(ArrayList<MutationOperator> list, boolean insertValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.isInsert() != insertValue){
+			if(mutop.mutopproperty.canInsert() != insertValue){
 				list.remove(mutop);
 			}
 		}
@@ -509,7 +509,7 @@ public class MutationOperatorChecker {
 	private void filterDelete(ArrayList<MutationOperator> list, boolean deleteValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.isDelete() != deleteValue){
+			if(mutop.mutopproperty.canDelete() != deleteValue){
 				list.remove(mutop);
 			}
 		}
@@ -518,7 +518,7 @@ public class MutationOperatorChecker {
 	private void filterUpdate(ArrayList<MutationOperator> list, boolean updateValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.isUpdate() != updateValue){
+			if(mutop.mutopproperty.canUpdate() != updateValue){
 				list.remove(mutop);
 			}
 		}
@@ -560,7 +560,7 @@ public class MutationOperatorChecker {
 	private void filterPreCheck(ArrayList<MutationOperator> list, boolean precheckValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.isCanPreCheck() != precheckValue){
+			if(mutop.mutopproperty.canHandlePreCheck() != precheckValue){
 				list.remove(mutop);
 			}
 		}

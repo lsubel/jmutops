@@ -27,7 +27,7 @@ public class JTD extends MutationOperator {
 		this.mutopproperty.setDescription("Deletes uses of the keyword this.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 

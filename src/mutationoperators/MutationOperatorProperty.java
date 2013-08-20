@@ -38,43 +38,43 @@ public class MutationOperatorProperty {
 	 * True iff the mutation operator should detect deletion of statements
 	 * Default is false.
 	 */
-	private boolean isDelete = false;
+	private boolean canHandleDeleteChanges = false;
 	
 	/**
 	 * True iff the mutation operator should detect insertions of statements
 	 * Default is false.
 	 */
-	private boolean isInsert = false;
+	private boolean canHandleInsertChanges = false;
 	
 	/**
 	 * True iff the mutation operator should detect movement of statements
 	 * Default is false.
 	 */
-	private boolean isMove = false;
+	private boolean canHandleMoveChanges = false;
 	
 	/**
 	 * True iff the mutation operator should detect update of statements
 	 * Default is false.
 	 */
-	private boolean isUpdate = false;
+	private boolean canHandleUpdateChanges = false;
 	
 	/**
 	 * True iff the mutation operator should be able to handle one AST cases.
 	 * Default is false.
 	 */
-	private boolean canOneAST = false;
+	private boolean canHandleOneAST = false;
 	
 	/**
 	 * True iff the mutation operator should be able to handle two AST cases.
 	 * Default is false.
 	 */
-	private boolean canTwoAST = false;
+	private boolean canHandleTwoASTs = false;
 	
 	/**
 	 * True if the mutation operator should be able to check properties with all changes.
 	 * Default is false;
 	 */
-	private boolean canPreCheck = false;
+	private boolean canHandlePreCheck = false;
 	
 	//////////////////////////////////////////////////////////////
 	///		Methods
@@ -133,60 +133,60 @@ public class MutationOperatorProperty {
 		this.category = category;
 	}
 	
-	public boolean isMove() {
-		return isMove;
+	public boolean canMove() {
+		return canHandleMoveChanges;
 	}
 
 	public void setMove() {
-		this.isMove = true;
+		this.canHandleMoveChanges = true;
 	}
 
-	public boolean isDelete() {
-		return isDelete;
+	public boolean canDelete() {
+		return canHandleDeleteChanges;
 	}
 
 	public void setDelete() {
-		this.isDelete = true;
+		this.canHandleDeleteChanges = true;
 	}
 
-	public boolean isInsert() {
-		return isInsert;
+	public boolean canInsert() {
+		return canHandleInsertChanges;
 	}
 
 	public void setInsert() {
-		this.isInsert = true;
+		this.canHandleInsertChanges = true;
 	}
 
-	public boolean isUpdate() {
-		return isUpdate;
+	public boolean canUpdate() {
+		return canHandleUpdateChanges;
 	}
 
 	public void setUpdate() {
-		this.isUpdate = true;
+		this.canHandleUpdateChanges = true;
 	}
 
 	public boolean canHandleOneAST() {
-		return canOneAST;
+		return canHandleOneAST;
 	}
 
-	public void setCanOneAST() {
-		this.canOneAST = true;
+	public void setOneAST() {
+		this.canHandleOneAST = true;
 	}
 
 	public boolean canHandleTwoASTs() {
-		return canTwoAST;
-	}
-
-	public void setCanTwoAST() {
-		this.canTwoAST = true;
+		return canHandleTwoASTs;
 	}
 	
-	public boolean isCanPreCheck() {
-		return canPreCheck;
+	public void setTwoAST() {
+		this.canHandleTwoASTs = true;
+	}
+	
+	public boolean canHandlePreCheck() {
+		return canHandlePreCheck;
 	}
 
-	public void setCanPreCheck(boolean canPreCheck) {
-		this.canPreCheck = canPreCheck;
+	public void setPreCheck() {
+		this.canHandlePreCheck = true;
 	}
 
 }

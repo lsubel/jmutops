@@ -24,7 +24,7 @@ public class CFDO_Update extends MutationOperator {
 		this.mutopproperty.setDescription("Disrupting normal control-flow.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 

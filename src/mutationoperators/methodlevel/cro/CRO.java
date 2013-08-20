@@ -24,7 +24,7 @@ public class CRO extends MutationOperator {
 		this.mutopproperty.setDescription("This operator replaces a constructor call in ClassInstanceCreationExpression with other constructors of the same class type (i.e., the constructors with different parameters) and the constructors of compatible types.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 	

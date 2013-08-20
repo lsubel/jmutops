@@ -27,7 +27,7 @@ public class ISI extends MutationOperator {
 		this.mutopproperty.setDescription("Inserts the super keyword so that a reference to the variable or the method goes to the overridden instance variable or method.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 

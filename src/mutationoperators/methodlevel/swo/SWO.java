@@ -24,7 +24,7 @@ public class SWO extends MutationOperator {
 		this.mutopproperty.setDescription("Changes the order of statements (Case-block-statements, statements in if-then-else, expressions before & after condition operator).");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setMove();
 	}
 }

@@ -24,7 +24,7 @@ public class PNC extends MutationOperator {
 		this.mutopproperty.setDescription("Changes the instantiated type of an object reference. This causes the object reference to refer to an object of a type that is different from the declared type.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 }

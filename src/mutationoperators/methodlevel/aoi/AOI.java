@@ -27,7 +27,7 @@ public class AOI extends MutationOperator {
 		this.mutopproperty.setDescription("Insert basic unary/short-cut arithmetic operators.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 

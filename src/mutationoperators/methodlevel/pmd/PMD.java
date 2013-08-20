@@ -24,7 +24,7 @@ public class PMD extends MutationOperator {
 		this.mutopproperty.setDescription("Changes the declared type of an object reference to the parent of the original declared type.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 

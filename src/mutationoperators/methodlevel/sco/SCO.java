@@ -28,7 +28,7 @@ public class SCO extends MutationOperator {
 		this.mutopproperty.setDescription("Moves the location of local variable declaration to outer/inner blocks.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setMove();
 	}
 	

@@ -24,7 +24,7 @@ public class AFRO extends MutationOperator {
 		this.mutopproperty.setDescription("Replaces a field name in FieldAccessExpression with other field names in the class");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 }

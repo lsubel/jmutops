@@ -24,7 +24,7 @@ public class EOA extends MutationOperator {
 		this.mutopproperty.setDescription("Replaces an assignment of a pointer reference with a copy of the object, using the Java convention of a clone() method.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanTwoAST();
+		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
 
