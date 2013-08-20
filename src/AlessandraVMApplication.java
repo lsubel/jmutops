@@ -1,6 +1,10 @@
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Properties;
 
 import jmutops.JMutOps;
 
@@ -9,6 +13,7 @@ import org.eclipse.jdt.core.JavaCore;
 
 import results.EventLogger;
 import results.ResultCreator;
+import results.ResultDatabase;
 import enums.OptionsVersion;
 
 
@@ -68,12 +73,65 @@ public class AlessandraVMApplication {
 		jmutops.setOptions(options, OptionsVersion.PREFIX);
 		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
 		
-		// 
-		ResultCreator fr = new ResultCreator();
-		jmutops.addResultListener(fr);
-		
-		EventLogger ol = new EventLogger();
-		jmutops.addResultListener(ol);
+		// load the properties
+		Properties properties = new Properties();
+		try {
+			BufferedInputStream stream = new BufferedInputStream(new FileInputStream("results.properties"));
+			properties.loadFromXML(stream);
+			stream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// register the user defined JMutOpsEventListener
+		boolean regEventLogger 		= properties.getProperty("eventlogger-active").equals("true");
+		boolean regResultcreator 	= properties.getProperty("resultcreator-active").equals("true");
+		boolean regDbResult 		= properties.getProperty("db-active").equals("true");
+		if(regEventLogger) {
+			boolean console = properties.getProperty("eventlogger-output-console").equals("true");
+			boolean file	= properties.getProperty("eventlogger-output-file").equals("true");
+			String filePath	= properties.getProperty("eventlogger-output-file-path");
+			if(filePath != "") {
+				filePath += File.separator + iBugs_ID + "_event.log";
+			}
+			else {
+				filePath = iBugs_ID + "_event.log";
+			}
+			try {
+				EventLogger el = new EventLogger(console, file, filePath);
+				jmutops.addResultListener(el);
+			} catch (Exception e) {
+				System.out.println("Could not initialize EventLogger: " + "\n" + e.getMessage());
+			}
+		}
+		if(regResultcreator) {
+			boolean console = properties.getProperty("resultcreator-output-console").equals("true");
+			boolean file	= properties.getProperty("resultcreator-output-file").equals("true");
+			String filePath	= properties.getProperty("resultcreator-output-file-path");
+			if(filePath != "") {
+				filePath += File.separator + iBugs_ID + "_result.txt";
+			}
+			else {
+				filePath = iBugs_ID + "_result.txt";
+			}
+			try {
+				ResultCreator rc = new ResultCreator(console, file, filePath);
+				jmutops.addResultListener(rc);
+			} catch (Exception e) {
+				System.out.println("Could not initialize ResultCreator: " + "\n" + e.getMessage());
+			}
+		}
+		if(regDbResult) {
+			String address 	= properties.getProperty("db-address");
+			String name 	= properties.getProperty("db-username");
+			String pw 		= properties.getProperty("db-password");
+			try {
+				ResultDatabase rd = new ResultDatabase(address, name, pw);
+				jmutops.addResultListener(rd);
+			} catch (Exception e) {
+				System.out.println("Could not initialize ResultDatabase: " + "\n" + e.getMessage());
+			}
+		}
 		
 		// look for source folders in pathToSources
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
