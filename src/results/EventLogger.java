@@ -35,7 +35,7 @@ public class EventLogger implements JMutOpsEventListener {
 	
 	private final boolean shouldOutputConsole;
 	
-	private final File output_path;
+	private final String output_path;
 	
 	/**
 	 * Default constructor. By default, the log is printed out on the console.
@@ -51,7 +51,7 @@ public class EventLogger implements JMutOpsEventListener {
 	 * @param console True iff the results should be print out on console.
 	 * @param file True iff the results should be stored in a file.
 	 */
-	public EventLogger(boolean console, boolean file, File path) {
+	public EventLogger(boolean console, boolean file, String path) {
 		this.shouldOutputConsole 	= console;
 		this.shouldOutputFile 		= file;
 		this.output_path 			= path;
@@ -147,19 +147,21 @@ public class EventLogger implements JMutOpsEventListener {
 			File resultingFile = null;
 			BufferedWriter bw = null;
 			try {
-				String path = this.output_path.getAbsolutePath();
+				String path = this.output_path;
 				resultingFile = new File(path);
-				resultingFile.createNewFile();
+				if(!resultingFile.exists()) {
+					resultingFile.createNewFile();
+				}
 				bw = new BufferedWriter(new FileWriter(resultingFile));
 			} catch (IOException e) {
-				System.out.println("Eventlogger - Could not create.");
+				System.out.println("Eventlogger - Could not create output file: " + e.getMessage());
 				System.exit(0);
 			}
 			try {
 				bw.write(logger.toString());
 				bw.close();
 			} catch (IOException e) {
-				System.out.println("Eventlogger - Could not write all results into file.");
+				System.out.println("Eventlogger - Could not write all results into file: " + e.getMessage());
 			}
 		}
 	}
