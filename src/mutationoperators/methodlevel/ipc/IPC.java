@@ -23,7 +23,7 @@ public class IPC extends MutationOperator {
 		this.mutopproperty.setDescription("Deletes super constructor calls, causing the default constructor of the parent class to be called.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanOneAST();
+		this.mutopproperty.setOneAST();
 		this.mutopproperty.setDelete();
 	}
 	

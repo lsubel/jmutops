@@ -23,7 +23,7 @@ public class CFDO_Insert extends MutationOperator {
 		this.mutopproperty.setDescription("Disrupting normal control-flow.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanOneAST();
+		this.mutopproperty.setOneAST();
 		this.mutopproperty.setInsert();
 	}
 

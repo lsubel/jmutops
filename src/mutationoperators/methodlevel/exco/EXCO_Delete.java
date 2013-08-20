@@ -23,7 +23,7 @@ public class EXCO_Delete extends MutationOperator {
 		this.mutopproperty.setDescription("Insert, delete, move, update one or multiple catch clauses from an try-catch-construction.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setCanOneAST();
+		this.mutopproperty.setOneAST();
 		this.mutopproperty.setDelete();
 	}
 
