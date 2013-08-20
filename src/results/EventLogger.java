@@ -227,6 +227,10 @@ public class EventLogger implements JMutOpsEventListener {
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 		Date now = new Date();
 		logger.append(now.toString() + " - No matching mutation operator found." + "\n");
+		logger.append("\t" + "The following mutation operators were used:" + "\n");
+		for(MutationOperator mutop: operatorlist) {
+			logger.append("\t\t" + mutop.getShortname() + " - " + mutop.getFullname() + "\n");
+		}
 		logger.append("\n");
 		
 	}
