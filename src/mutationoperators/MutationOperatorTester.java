@@ -26,7 +26,7 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
  * @author Lukas Subel
  * 
  */
-public class MutationOperatorChecker {
+public class MutationOperatorTester {
 
 	// ////////////////////////////////////////////////////
 	// / Fields
@@ -56,7 +56,7 @@ public class MutationOperatorChecker {
 	 * 
 	 * @param listener Reference to the event multi caster so it can fire events.
 	 */
-	public MutationOperatorChecker(JMutOpsEventListenerMulticaster listener) {
+	public MutationOperatorTester(JMutOpsEventListenerMulticaster listener) {
 		this.methodlevel_list = new ArrayList<MutationOperator>();
 		this.classlevel_list = new ArrayList<MutationOperator>();
 		this.listener = listener;

@@ -82,7 +82,7 @@ public interface JMutOpsEventListener{
 	public void OnChangeChecked(SourceCodeChange change);
 	
 	/**
-	 * Event gets fired when a new mutation operator will be added to {@link mutationoperators.MutationOperatorChecker MutationOperatorChecker}.
+	 * Event gets fired when a new mutation operator will be added to {@link mutationoperators.MutationOperatorTester MutationOperatorChecker}.
 	 * @param mutop The initialized {@link mutationoperators.MutationOperator MutationOperator}.
 	 */
 	public void OnMutationOperatorInit(MutationOperator mutop);

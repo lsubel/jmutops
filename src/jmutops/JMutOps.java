@@ -3,7 +3,7 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
 
-import mutationoperators.MutationOperatorChecker;
+import mutationoperators.MutationOperatorTester;
 import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.afro.AFRO;
 import mutationoperators.methodlevel.aod.AOD;
@@ -85,7 +85,7 @@ public class JMutOps {
 	/**
 	 * MutationOperatorChecker handles all implemented MutationOperators.
 	 */
-	private MutationOperatorChecker checker;
+	private MutationOperatorTester checker;
 	
 	/**
 	 * Preperation class used to retrieve information for the prefixed code.
@@ -117,7 +117,7 @@ public class JMutOps {
 		// initialize variables
 		this.prefixed_preperator  = new Preperator(this.listener, TestUtilities.getDefaultPrefixFolder());
 		this.postfixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPostfixFolder());
-		this.checker			  = new MutationOperatorChecker(this.listener);
+		this.checker			  = new MutationOperatorTester(this.listener);
 	}
 	
 	/////////////////////////////////////////
