@@ -78,4 +78,31 @@ public class PMD_Test extends MethodTest {
 		assertEquals(1, resultMap.get(mutop).intValue());
 		checkOtherMutationOperators(resultMap, mutop);
 	}
+	
+	@Test
+	public void testPMD_TestSecondLevel1(){
+		String pre 	= "System.out.println(this.a); if(true) {String b; b = \"Hello World\"; } System.out.println(b.toString());";
+		String post	= "System.out.println(this.a); if(true) {Object b; b = \"Hello World\"; } System.out.println(b.toString());";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testPMD_TestSecondLevel2(){
+		String pre 	= "System.out.println(this.a); while(true) {String b; b = \"Hello World\"; break; } System.out.println(b.toString());";
+		String post	= "System.out.println(this.a); while(true) {Object b; b = \"Hello World\"; break;} System.out.println(b.toString());";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testPMD_TestThirdLevel1(){
+		String pre 	= "System.out.println(this.a); if(true) { System.out.println(\"Reached first level\"); while(true) {String b; b = \"Hello World\"; break; }} System.out.println(b.toString());";
+		String post	= "System.out.println(this.a); if(true) { System.out.println(\"Reached first level\"); while(true) {Object b; b = \"Hello World\"; break;}} System.out.println(b.toString());";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
 }
