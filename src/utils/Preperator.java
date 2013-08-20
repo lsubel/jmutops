@@ -10,9 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.logging.Logger;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -116,10 +114,13 @@ public class Preperator {
 			// write occuring problems into the logger
 		    IProblem[] problems = this.m_OutputAST.getProblems();
 		    if (problems != null && problems.length > 0) {
-		    	this.listener.OnErrorDetected("Preperator - prepare", problems.length + " different errors detected.");
-		        for (IProblem problem : problems) {
-					this.listener.OnErrorDetected("Preperator - prepare", problem.getMessage());
+		    	// create and send a error message:
+		    	StringBuffer errorMessage = new StringBuffer();
+		    	errorMessage.append(problems.length + " different errors detected." + "\n");
+		        for (IProblem problem : problems) { 
+					errorMessage.append("\t" + "In " + new String(problem.getOriginatingFileName()) + ": " + problem.getMessage() + "\n");
 		        }
+		        this.listener.OnErrorDetected("Preperator - prepare", errorMessage.toString());
 		    }
 		
 	} catch (FileNotFoundException e) {
