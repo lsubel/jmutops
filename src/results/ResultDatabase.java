@@ -155,7 +155,8 @@ public class ResultDatabase implements JMutOpsEventListener {
 		initializeTable("NoMatchings", 
 				"CREATE TABLE NoMatchings ("
 				+ "ID_nomatching SERIAL PRIMARY KEY, "
-				+ "ID_changingfiles INTEGER NOT NULL" + ")");
+				+ "ID_changingfiles INTEGER NOT NULL,"  
+				+ "numberOfOperators INTEGER NOT NULL" +")");
 		
 		// TABLE MutationOperator
 		initializeTable("MutationOperator",
@@ -667,6 +668,44 @@ public class ResultDatabase implements JMutOpsEventListener {
 
 	@Override
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
-		// TODO: create a table which stores the changes with no matching operator
+		// check of non null arguments
+		assert operatorlist != null;
+		
+		// initialize variables
+		PreparedStatement stmt = null;
+		ResultSet resultset = null;
+		int rowcount = 0;
+		int numberOfOperators = operatorlist.size();
+		int dbNumberOfOperators = -1;
+		
+		// check if there exists an application at this are for the specific operatorat these locations
+		try {
+			stmt = this.connection.prepareStatement("SELECT * FROM NoMatchings WHERE (ID_changingfiles = ?)");
+			stmt.setInt(0, this.ID_changingfiles);
+			resultset = stmt.executeQuery();
+			stmt.close();
+			resultset.last();
+			rowcount = resultset.getRow();
+		} catch (SQLException e) {
+			log.warning("Could not create and fill prepared statement to detect existing matching!");
+			e.printStackTrace();
+			return;
+		}
+		
+		// check if there exists not an corresponding entry
+		if(rowcount == 0){
+			// generate a new entry
+			try {
+				stmt = this.connection.prepareStatement("INSERT INTO NoMatchings (ID_changingfiles, numberOfOperators) VALUES (?, ?)");
+				stmt.setInt(0, this.ID_changingfiles);
+				stmt.setInt(1, numberOfOperators);
+				stmt.executeUpdate();
+				stmt.close();
+			} catch (SQLException e) {
+				log.warning("Could not create, fill and execute prepared statement to add entry for matching!");
+				e.printStackTrace();
+				return;
+			}	
+		}
 	}
 }
