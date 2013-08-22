@@ -193,6 +193,7 @@ public class MutationOperatorTester {
 			case PARENT_CLASS_INSERT:
 			case PARENT_INTERFACE_INSERT:
 			case RETURN_TYPE_INSERT:
+				break;
 			default:
 				throw new IllegalStateException(
 						"Expected class insert, but found "
@@ -240,6 +241,7 @@ public class MutationOperatorTester {
 			case PARENT_CLASS_DELETE:
 			case PARENT_INTERFACE_DELETE:
 			case RETURN_TYPE_DELETE:
+				break;
 			default:
 				throw new IllegalStateException(
 						"Expected class delete, but found "
