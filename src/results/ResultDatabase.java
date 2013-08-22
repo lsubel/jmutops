@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import mutationoperators.MutationOperator;
@@ -75,6 +76,11 @@ public class ResultDatabase implements JMutOpsEventListener {
 		this.db_address  = address;
 		this.db_username = user;
 		this.db_password = pw;
+		
+		Properties props = new Properties();
+		props.setProperty("user", db_username);
+		props.setProperty("password", db_password);
+		props.setProperty("ssl", "false");
 		
 		// Initialize the connection to and PostgreqSQL database
 		log.info("Try to initialize PostgreSQL JDBC Connection");
@@ -145,6 +151,12 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "postfixStart INTEGER,"
 				+ "postfixEnd INTEGER" + ")");
 
+		// TABLE NoMatchings
+		initializeTable("NoMatchings", 
+				"CREATE TABLE NoMatchings ("
+				+ "ID_nomatching SERIAL PRIMARY KEY, "
+				+ "ID_changingfiles INTEGER NOT NULL" + ")");
+		
 		// TABLE MutationOperator
 		initializeTable("MutationOperator",
 				"CREATE TABLE MutationOperator ("
