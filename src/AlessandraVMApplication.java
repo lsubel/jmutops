@@ -66,12 +66,15 @@ public class AlessandraVMApplication {
 		
 		// initialize jMutOps
 		JMutOps jmutops = new JMutOps();
-		jmutops.initProgram("iBugs", "", "", "");
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
 		jmutops.setOptions(options, OptionsVersion.PREFIX);
 		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
+		
+		// initialise program and bug
+		jmutops.initProgram("iBugs", "", "", "");
+		jmutops.initBug(new Integer(iBugs_ID).toString(), "");
 		
 		// load the properties
 		Properties properties = new Properties();
