@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.NodeFinder;
 import ch.uzh.ifi.seal.changedistiller.model.classifiers.ChangeType;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 
@@ -97,6 +98,62 @@ public class SourceCodeChangeUtils {
 		Stack<Integer> way_delete = PathExtractor.calculatePathToMethod(nf_delete.getCoveringNode());
 		// finally compare these stacks and return the result
 		return way_insert.equals(way_delete);
+	}
+	
+	
+	public static int[] getNodeFinderInput(Insert change) {
+		int[] result = new int[2];
+		// extract the ranges in the document
+		int startPos 	= change.getChangedEntity().getStartPosition();
+		int endPos	 	= change.getChangedEntity().getEndPosition();
+
+		result[0] = startPos;
+		result[1] = endPos	 - startPos + 1;
+		
+		return result;
+	}
+	
+	public static int[] getNodeFinderInput(Delete change) {
+		int[] result = new int[2];
+		// extract the ranges in the document
+		int startPos 	= change.getChangedEntity().getStartPosition();
+		int endPos	 	= change.getChangedEntity().getEndPosition();
+
+		result[0] = startPos;
+		result[1] = endPos - startPos + 1;
+		
+		return result;
+	}
+	
+	public static int[] getNodeFinderInput(Update change) {
+		int[] result = new int[4];
+		// extract the ranges in the document
+		int old_start 	= change.getChangedEntity().getStartPosition();
+		int old_end 	= change.getChangedEntity().getEndPosition();
+		int new_start 	= change.getNewEntity().getStartPosition();
+		int new_end 	= change.getNewEntity().getEndPosition();
+		
+		result[0] = old_start;
+		result[1] = old_end - old_start + 1;
+		result[2] = new_start;
+		result[3] = new_end - new_start + 1;
+		return result;
+	}
+	
+	
+	public static int[] getNodeFinderInput(Move change) {
+		int[] result = new int[4];
+		// extract the ranges in the document
+		int old_start 	= change.getChangedEntity().getStartPosition();
+		int old_end 	= change.getChangedEntity().getEndPosition();
+		int new_start 	= change.getNewEntity().getStartPosition();
+		int new_end 	= change.getNewEntity().getEndPosition();
+		
+		result[0] = old_start;
+		result[1] = old_end - old_start + 1;
+		result[2] = new_start;
+		result[3] = new_end - new_start + 1;
+		return result;
 	}
 }
 
