@@ -59,7 +59,6 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
-import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeEntity;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 import enums.OptionsVersion;
 
@@ -206,40 +205,23 @@ public class JMutOps {
 	}
 
 	private void checkChangeOneVersion(SourceCodeChange change) {
-		// initialize variables
-		SourceCodeEntity sce;
-		int sce_start;
-		int sce_end;
+		// define variables
 		ASTNode expr; 
 		// depending on the class of change, extract values 
 		if(change instanceof Insert){
-			// cast the change into the correct type
-			Insert change_insert = (Insert) change;	
-		
-			// extract the change entities
-			sce = change_insert.getChangedEntity();
-		
-			// extract the ranges in the document
-			sce_start 	= sce.getStartPosition();
-			sce_end 	= sce.getEndPosition();
+			// extract the inputs for the NodeFinder
+			int[] input = SourceCodeChangeUtils.getNodeFinderInput((Insert) change);
 			
 			// extract information for file
-			NodeFinder nodeFinder = new NodeFinder(postfixed_preperator.getAST(), sce_start, sce_end - sce_start + 1);
+			NodeFinder nodeFinder = new NodeFinder(postfixed_preperator.getAST(), input[0], input[1]);
 			expr = nodeFinder.getCoveringNode();
 		}
 		else if(change instanceof Delete){
-			// cast the change into the correct type
-			Delete change_move = (Delete) change;	
-		
-			// extract the change entities
-			sce = change_move.getChangedEntity();
-		
-			// extract the ranges in the document
-			sce_start 	= sce.getStartPosition();
-			sce_end 	= sce.getEndPosition();
+			// extract the inputs for the NodeFinder
+			int[] input = SourceCodeChangeUtils.getNodeFinderInput((Delete) change);
 			
 			// extract information for file
-			NodeFinder nodeFinder = new NodeFinder(prefixed_preperator.getAST(), sce_start, sce_end - sce_start + 1);
+			NodeFinder nodeFinder = new NodeFinder(prefixed_preperator.getAST(), input[0], input[1]);
 			expr = nodeFinder.getCoveringNode();
 		}
 		else{
@@ -253,42 +235,17 @@ public class JMutOps {
 	}
 
 	private void checkChangeTwoVersions(SourceCodeChange change) {
-		// initialize variables
-		SourceCodeEntity sce_old;
-		SourceCodeEntity sce_new;
-		int sce_old_start;
-		int sce_old_end;
-		int sce_new_start;
-		int sce_new_end;
+		// define variables
+		int[] input;
 		
 		// depending on the class of change, extract values 
 		if(change instanceof Update){
-			// cast the change into the correct type
-			Update change_update = (Update) change;	
-		
-			// extract the change entities
-			sce_old = change_update.getChangedEntity();
-			sce_new = change_update.getNewEntity();
-		
-			// extract the ranges in the document
-			sce_old_start 	= sce_old.getStartPosition();
-			sce_old_end 	= sce_old.getEndPosition();
-			sce_new_start 	= sce_new.getStartPosition();
-			sce_new_end 	= sce_new.getEndPosition();
+			// extract the inputs for the NodeFinder
+			input = SourceCodeChangeUtils.getNodeFinderInput((Update) change);
 		}
 		else if(change instanceof Move){
-			// cast the change into the correct type
-			Move change_move = (Move) change;	
-		
-			// extract the change entities
-			sce_old = change_move.getChangedEntity();
-			sce_new = change_move.getNewEntity();
-		
-			// extract the ranges in the document
-			sce_old_start 	= sce_old.getStartPosition();
-			sce_old_end 	= sce_old.getEndPosition();
-			sce_new_start 	= sce_new.getStartPosition();
-			sce_new_end 	= sce_new.getEndPosition();
+			// extract the inputs for the NodeFinder
+			input = SourceCodeChangeUtils.getNodeFinderInput((Move) change);
 		}
 		else{
 			String errorMessage = "Impossible exception location.";
@@ -297,11 +254,11 @@ public class JMutOps {
 		}
 
 		// extract information for first file
-		NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), sce_old_start, sce_old_end - sce_old_start + 1);
+		NodeFinder nodeFinder_old = new NodeFinder(prefixed_preperator.getAST(), input[0], input[1]);
 		ASTNode expr_left = nodeFinder_old.getCoveringNode();
 		
 		// extract information for second file
-		NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), sce_new_start, sce_new_end - sce_new_start + 1);
+		NodeFinder nodeFinder_new = new NodeFinder(postfixed_preperator.getAST(), input[2], input[3]);
 		ASTNode expr_right = nodeFinder_new.getCoveringNode();
 		
 		// run the mutation operator check
