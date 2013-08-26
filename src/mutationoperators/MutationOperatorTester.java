@@ -467,16 +467,9 @@ public class MutationOperatorTester {
 			ArrayList<MutationOperator> operatorlist,
 			List<SourceCodeChange> changes, Preperator prefixed_preperator,
 			Preperator postfixed_preperator) {
-		// initialize a variable which counts the number of detected
-		// applications
-		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
-			detected_applications += operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
-		}
-		// fire event when there was no matching detected
-		if (detected_applications == 0) {
-			this.listener.OnNoMatchingFound(operatorlist);
+			operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
 		}
 	}	
 
