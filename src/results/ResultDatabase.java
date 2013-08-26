@@ -288,6 +288,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				"CREATE TABLE Changes ("
 				+ "ID_change SERIAL PRIMARY KEY, "
 				+ "ID_changingfiles INTEGER NOT NULL, "
+				+ "isMethodChange BOOLEAN, "
 				+ "changetype VARCHAR(31), "
 				+ "changedEntity TEXT, "  
 				+ "newEntity TEXT " + ")");
@@ -310,6 +311,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				"CREATE TABLE NoMatchings ("
 				+ "ID_nomatching SERIAL PRIMARY KEY, "
 				+ "ID_change INTEGER NOT NULL,"  
+				+ "operators TEXT, "
 				+ "numberOfOperators INTEGER NOT NULL" +")");
 		
 		// TABLE MutationOperator
@@ -507,8 +509,10 @@ public class ResultDatabase implements JMutOpsEventListener {
 		
 		// extract information out of the SourceCodeChange
 		String strType = change.getChangeType().toString();
+		boolean isMethodChange = change.getChangeType().isBodyChange();
 		String changedEntity = "";
 		String newEntity = "";
+		
 		if(change instanceof Insert) {
 			isPrefix	  = false;
 			Insert insert = (Insert) change;
@@ -529,25 +533,27 @@ public class ResultDatabase implements JMutOpsEventListener {
 			changedEntity = move.getChangedEntity().toString();
 			newEntity     = move.getNewEntity().toString();
 		};
-		
+
 		// first insert a new entry but only if it does not exist
 		try {
 			String strSQL = 
 				"INSERT INTO Changes " 
-					+ "(ID_changingfiles, changetype, changedEntity, newEntity) "
-					+ "SELECT ?, ?, ?, ? " 
+					+ "(ID_changingfiles, changetype, changedEntity, newEntity, isMethodChange) "
+					+ "SELECT ?, ?, ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
-					+ 	"SELECT * FROM Changes WHERE (ID_changingfiles = ?) AND (changetype = ?) AND (changedEntity = ?) AND (newEntity = ?)"
+					+ 	"SELECT * FROM Changes WHERE (ID_changingfiles = ?) AND (changetype = ?) AND (changedEntity = ?) AND (newEntity = ?) AND (isMethodChange = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
 			stmt.setInt(1, this.ID_changingfiles);
 			stmt.setString(2, strType);
 			stmt.setString(3, changedEntity);
 			stmt.setString(4, newEntity);
-			stmt.setInt(5, this.ID_changingfiles);
-			stmt.setString(6, strType);
-			stmt.setString(7, changedEntity);
-			stmt.setString(8, newEntity);
+			stmt.setBoolean(5, isMethodChange);
+			stmt.setInt(6, this.ID_changingfiles);
+			stmt.setString(7, strType);
+			stmt.setString(8, changedEntity);
+			stmt.setString(9, newEntity);
+			stmt.setBoolean(10, isMethodChange);
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -720,69 +726,42 @@ public class ResultDatabase implements JMutOpsEventListener {
 		// initialize variables
 		PreparedStatement stmt = null;
 		ResultSet resultset = null;
-		int rowcount = 0;
 		
-		// first check if there exists the corresponding mutation operator in table MutationOperator
+		// first insert a new entry but only if it does not exist
 		try {
-			stmt = connection.prepareStatement("SELECT * FROM MutationOperator WHERE (mutationOperatorAbbreviation = ?)");
-			stmt.setString(1, mutop.getClass().toString());
-			resultset = stmt.executeQuery();
-			resultset.next();
-			rowcount = resultset.getRow();
-		} catch (SQLException e) {
-			log.warning("Could not create and fill prepared statement to detect existing mutation operator!");
-			e.printStackTrace();
+			String strSQL = 
+				"INSERT INTO MutationOperator " 
+					+ "(mutationoperatordescription, mutationoperatorfullname, mutationoperatorabbreviation)" 
+					+ "SELECT ?, ?, ? " 
+					+ "WHERE NOT EXISTS (" 
+					+ 	"SELECT * FROM MutationOperator WHERE mutationOperatorAbbreviation = ?"
+					+ ")";
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setString(1, mutop.getDescription());
+			stmt.setString(2, mutop.getFullname());
+			stmt.setString(3, mutop.getShortname());
+			stmt.setString(4, mutop.getShortname());
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e1) {
+			log.warning("Could not create and fill prepared statement to detect existing mutation operators!");
+			e1.printStackTrace();
 			return;
 		}
-		
-		// if there exists an entry
-		if((rowcount > 0) && (rowcount == 1)){
-			// retrieve and store the corresponding ID
-			try {
-				resultset.first();
-				int ID_mutationoperator = resultset.getInt("ID_mutationoperator");
-				this.mapMutopsToDB.put(mutop, ID_mutationoperator);
-				stmt.close();
-			} catch (SQLException e) {
-				log.warning("Could not retrieve ID_mutationoperator of detected mutation operator!");
-				e.printStackTrace();
-				return;
-			}
-		}
-		// otherwise
-		else{
-			// create a parameterized statement to insert the new data
-			try {
-				stmt = connection.prepareStatement("INSERT INTO MutationOperator (mutationOperatorDescription, mutationOperatorFullname, mutationOperatorAbbreviation) VALUES(?, ?, ?)");
-				stmt.setString(1, mutop.getDescription());
-				stmt.setString(2, mutop.getFullname());
-				stmt.setString(3, mutop.getShortname());
-				stmt.executeUpdate();
-				stmt.close();
-			} catch (SQLException e) {
-				log.warning("Could not create and fill prepared statement to insert a new mutation operator!");
-				e.printStackTrace();
-				return;
-			}
-			
-			// retrieve the ID_mutationoperator of the newly inserted entry
-			try {
-				stmt = connection.prepareStatement("SELECT * FROM MutationOperator WHERE (mutationOperatorAbbreviation = ?)");
-				stmt.setString(1, mutop.getShortname());
-				resultset = stmt.executeQuery();
-				if(resultset.next()){
-					int input = resultset.getInt("ID_mutationoperator");
-					this.mapMutopsToDB.put(mutop, input);
-					stmt.close();
-				}
-				else {
-					throw new UnknownError("Could not retrieve newly inserted inserted mutation operator.");
-				}
-			} catch (SQLException e) {
-				log.warning("Could not create and fill prepared statement to detect existing mutation operator!");
-				e.printStackTrace();
-				return;
-			}
+
+		// retrieve the ID_program
+		try {
+			stmt = this.connection.prepareStatement("SELECT * FROM MutationOperator WHERE mutationOperatorAbbreviation = ?");
+			stmt.setString(1, mutop.getShortname());
+			resultset = stmt.executeQuery();
+			resultset.next();
+			int ID_mutationoperator = resultset.getInt("id_mutationoperator");
+			this.mapMutopsToDB.put(mutop, ID_mutationoperator);
+			stmt.close();
+		} catch (SQLException e) {
+			log.warning("Could not retrieve id_mutationoperator from MutationOperator!");
+			e.printStackTrace();
+			return;
 		}
 	}
 	
@@ -796,10 +775,18 @@ public class ResultDatabase implements JMutOpsEventListener {
 		
 		// insert a new entry but only if it does not exist
 		try {
+			String listText = "";
+			for(MutationOperator mutop: operatorlist) {
+				if(listText != "") {
+					listText += ", ";
+				}
+				listText += mutop.getShortname();
+			}
+			
 			String strSQL = 
 				"INSERT INTO NoMatchings " 
-					+ "(ID_change, numberOfOperators) "
-					+ "SELECT ?, ? " 
+					+ "(ID_change, numberOfOperators, operators) "
+					+ "SELECT ?, ?, ?" 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * " 
 					+	"FROM NoMatchings "
@@ -808,7 +795,8 @@ public class ResultDatabase implements JMutOpsEventListener {
 			stmt = this.connection.prepareStatement(strSQL);
 			stmt.setInt(1, this.ID_change);
 			stmt.setInt(2, operatorlist.size());
-			stmt.setInt(3, this.ID_change);
+			stmt.setString(3, listText);
+			stmt.setInt(4, this.ID_change);
 		
 			stmt.executeUpdate();
 			stmt.close();
