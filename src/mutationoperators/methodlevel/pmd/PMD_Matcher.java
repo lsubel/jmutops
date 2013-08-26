@@ -28,6 +28,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			
 			// check if the new type is a parent class of the old one
 			boolean validType = ITypeBindingUtils.isFirstTypeParentOfRightType(secondBinding, firstBinding);
+			boolean differentTypes = !(secondBinding.isEqualTo(firstBinding));
 			
 			// check for the same variable name
 			boolean oneDecleration = (node.fragments().size() == 1) && (node2.fragments().size() == 1);
@@ -39,7 +40,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			}
 			
 			// if all conditions are valid, we notify a match
-			if(validType && oneDecleration && sameVariableName){
+			if(validType && differentTypes && oneDecleration && sameVariableName){
 				this.mutop.found(node, node2);
 			}
 		}
@@ -58,6 +59,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			
 			// check if the new type is a parent class of the old one
 			boolean validType = ITypeBindingUtils.isFirstTypeParentOfRightType(secondBinding, firstBinding);
+			boolean differentTypes = !(secondBinding.isEqualTo(firstBinding));
 			
 			// check for the same variable name
 			boolean oneDecleration = (node.fragments().size() == 1) && (node2.fragments().size() == 1);
@@ -69,7 +71,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			}
 			
 			// if all conditions are valid, we notify a match
-			if(validType && oneDecleration && sameVariableName){
+			if(validType && differentTypes && oneDecleration && sameVariableName){
 				this.mutop.found(node, node2);
 			}
 		}
