@@ -190,7 +190,17 @@ public class ResultDatabase implements JMutOpsEventListener {
 			log.warning("Could not drop table Matchings!");
 			e.printStackTrace();
 		}
-
+		// TABLE NoMatchings
+		try {
+			stmt = connection.prepareStatement("DROP TABLE NoMatchings");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table NoMatchings was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table NoMatchings!");
+			e.printStackTrace();
+		}
+		
 		// TABLE MutationOperator
 		try {
 			stmt = connection.prepareStatement("DROP TABLE MutationOperator");
@@ -201,14 +211,24 @@ public class ResultDatabase implements JMutOpsEventListener {
 			log.warning("Could not drop table MutationOperator!");
 			e.printStackTrace();
 		}
-		// TABLE Literature
+		// TABLE Errors
 		try {
-			stmt = connection.prepareStatement("DROP TABLE Literature");
+			stmt = connection.prepareStatement("DROP TABLE Errors");
 			stmt.executeUpdate();
 			stmt.close();
-			log.info("Table Literature was dropped!");
+			log.info("Table Errors was dropped!");
 		} catch (SQLException e) {
-			log.warning("Could not drop table Literature!");
+			log.warning("Could not drop table Errors!");
+			e.printStackTrace();
+		}
+		// TABLE Changes
+		try {
+			stmt = connection.prepareStatement("DROP TABLE Changes");
+			stmt.executeUpdate();
+			stmt.close();
+			log.info("Table Changes was dropped!");
+		} catch (SQLException e) {
+			log.warning("Could not drop table Changes!");
 			e.printStackTrace();
 		}
 		// finishing message
@@ -253,7 +273,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_bugreport SERIAL PRIMARY KEY, "
 				+ "ID_program INTEGER NOT NULL, "
 				+ "urlToBugreport VARCHAR(511), "
-				+ "officalID INTEGER " + ")");
+				+ "officalID VARCHAR(255) " + ")");
 
 		// TABLE ChangingFiles
 		initializeTable("ChangingFiles", 
@@ -269,8 +289,8 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_change SERIAL PRIMARY KEY, "
 				+ "ID_changingfiles INTEGER NOT NULL, "
 				+ "changetype VARCHAR(31), "
-				+ "changedEntity VARCHAR(511), "  
-				+ "newEntity VARCHAR(511) " + ")");
+				+ "changedEntity TEXT, "  
+				+ "newEntity TEXT " + ")");
 		
 		// TABLE Matchings
 		initializeTable("Matchings", 
@@ -280,8 +300,10 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_mutationoperator INTEGER NOT NULL, "
 				+ "prefixStart INTEGER,"
 				+ "prefixEnd INTEGER,"
+				+ "prefixText TEXT,"
 				+ "postfixStart INTEGER,"
-				+ "postfixEnd INTEGER" + ")");
+				+ "postfixEnd INTEGER," 
+				+ "postfixText TEXT" + ")");
 
 		// TABLE NoMatchings
 		initializeTable("NoMatchings", 
@@ -296,7 +318,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_mutationoperator SERIAL PRIMARY KEY, "
 				+ "mutationOperatorDescription VARCHAR(1023),"
 				+ "mutationOperatorFullname VARCHAR(63),"
-				+ "mutationOperatorAbbreviation VARCHAR(7)" + ")");
+				+ "mutationOperatorAbbreviation UNIQUE VARCHAR(7)" + ")");
 		
 		// TABLE Errors
 		initializeTable("Errors", 
@@ -307,7 +329,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_changingfiles INTEGER NOT NULL,"  
 				+ "ID_change INTEGER NOT NULL,"  
 				+ "location VARCHAR(127),"  
-				+ "message VARCHAR(1023)" +")");
+				+ "message TEXT" +")");
 		
 		// finished Message
 		log.info("Initialization of database tables finished!");
@@ -343,12 +365,12 @@ public class ResultDatabase implements JMutOpsEventListener {
 					+ 	"SELECT * FROM Program WHERE programName = ?"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setString(0, newProgramName);
-			stmt.setString(1, programDescription);
-			stmt.setString(2, urlToProjectPage);
-			stmt.setString(3, urlToBugtracker);
-			stmt.setString(4, newProgramName);
-			resultset = stmt.executeQuery();
+			stmt.setString(1, newProgramName);
+			stmt.setString(2, programDescription);
+			stmt.setString(3, urlToProjectPage);
+			stmt.setString(4, urlToBugtracker);
+			stmt.setString(5, newProgramName);
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -359,11 +381,11 @@ public class ResultDatabase implements JMutOpsEventListener {
 		// retrieve the ID_program
 		try {
 			stmt = this.connection.prepareStatement("SELECT * FROM Program WHERE programName = ?");
-			stmt.setString(0, newProgramName);
+			stmt.setString(1, newProgramName);
 			resultset = stmt.executeQuery();
-			stmt.close();
-			resultset.first();
+			resultset.next();
 			this.ID_program = resultset.getInt("ID_program");
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not retrieve ID_program from Program!");
 			e.printStackTrace();
@@ -389,15 +411,15 @@ public class ResultDatabase implements JMutOpsEventListener {
 					+ "(ID_program, urlToBugreport, officalID)" 
 					+ "SELECT ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
-					+ 	"SELECT * FROM Bugreport WHERE (ID_program = ?) and (officialID = ?)"
+					+ 	"SELECT * FROM Bugreport WHERE (ID_program = ?) and (officalID = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_program);
-			stmt.setString(1, urlToBugreport);
-			stmt.setString(2, bugID);
-			stmt.setInt(3, this.ID_program);
-			stmt.setString(4, bugID);
-			resultset = stmt.executeQuery();
+			stmt.setInt(1, this.ID_program);
+			stmt.setString(2, urlToBugreport);
+			stmt.setString(3, bugID);
+			stmt.setInt(4, this.ID_program);
+			stmt.setString(5, bugID);
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -407,13 +429,13 @@ public class ResultDatabase implements JMutOpsEventListener {
 		
 		// retrieve the ID_bugreport of the newly inserted entry
 		try {
-			stmt = this.connection.prepareStatement("SELECT * FROM Bugreport WHERE (ID_program = ?) AND (officialID = ?)");
-			stmt.setInt(0, this.ID_program);
-			stmt.setString(1, bugID);
+			stmt = this.connection.prepareStatement("SELECT * FROM Bugreport WHERE (ID_program = ?) AND (officalID = ?)");
+			stmt.setInt(1, this.ID_program);
+			stmt.setString(2, bugID);
 			resultset = stmt.executeQuery();
-			stmt.close();
-			resultset.first();
+			resultset.next();
 			this.ID_bugreport = resultset.getInt("ID_bugreport");
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not retrieve ID_bugreport from Bugreport!");
 			e.printStackTrace();
@@ -437,18 +459,18 @@ public class ResultDatabase implements JMutOpsEventListener {
 			String strSQL = 
 				"INSERT INTO ChangingFiles " 
 					+ "(ID_bugreport, prefixedFile, postfixedFile) "
-					+ "SELECT (?, ?, ?)" 
+					+ "SELECT ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * FROM ChangingFiles WHERE (ID_bugreport = ?) AND (prefixedFile = ?) AND (postfixedFile = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_bugreport);
-			stmt.setString(1, prefixedFile.getName());
-			stmt.setString(2, postfixedFile.getName());
-			stmt.setInt(3, this.ID_bugreport);
-			stmt.setString(4, prefixedFile.getName());
-			stmt.setString(5, postfixedFile.getName());
-			resultset = stmt.executeQuery();
+			stmt.setInt(1, this.ID_bugreport);
+			stmt.setString(2, prefixedFile.getName());
+			stmt.setString(3, postfixedFile.getName());
+			stmt.setInt(4, this.ID_bugreport);
+			stmt.setString(5, prefixedFile.getName());
+			stmt.setString(6, postfixedFile.getName());
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -459,13 +481,13 @@ public class ResultDatabase implements JMutOpsEventListener {
 		// retrieve the ID_changingfiles
 		try {
 			stmt = connection.prepareStatement("SELECT * FROM ChangingFiles WHERE (ID_bugreport = ?) AND (prefixedFile = ?) AND (postfixedFile = ?)");
-			stmt.setInt(0, this.ID_bugreport);
-			stmt.setString(1, prefixedFile.getName());
-			stmt.setString(2, postfixedFile.getName());
+			stmt.setInt(1, this.ID_bugreport);
+			stmt.setString(2, prefixedFile.getName());
+			stmt.setString(3, postfixedFile.getName());
 			resultset = stmt.executeQuery();
-			stmt.close();
-			resultset.first();
+			resultset.next();
 			this.ID_changingfiles = resultset.getInt("ID_changingfiles");
+			stmt.close();
 		} catch (SQLException e) {
 			log.warning("Could not retrieve ID_changingfiles from ChangingFiles!");
 			e.printStackTrace();
@@ -513,21 +535,21 @@ public class ResultDatabase implements JMutOpsEventListener {
 			String strSQL = 
 				"INSERT INTO Changes " 
 					+ "(ID_changingfiles, changetype, changedEntity, newEntity) "
-					+ "SELECT (?, ?, ?, ?)" 
+					+ "SELECT ?, ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * FROM Changes WHERE (ID_changingfiles = ?) AND (changetype = ?) AND (changedEntity = ?) AND (newEntity = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_changingfiles);
-			stmt.setString(1, strType);
-			stmt.setString(2, changedEntity);
-			stmt.setString(3, newEntity);
-			stmt.setInt(4, this.ID_changingfiles);
-			stmt.setString(5, strType);
-			stmt.setString(6, changedEntity);
-			stmt.setString(7, newEntity);
+			stmt.setInt(1, this.ID_changingfiles);
+			stmt.setString(2, strType);
+			stmt.setString(3, changedEntity);
+			stmt.setString(4, newEntity);
+			stmt.setInt(5, this.ID_changingfiles);
+			stmt.setString(6, strType);
+			stmt.setString(7, changedEntity);
+			stmt.setString(8, newEntity);
 			
-			resultset = stmt.executeQuery();
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -542,15 +564,16 @@ public class ResultDatabase implements JMutOpsEventListener {
 				"FROM Changes " +
 				"WHERE (ID_changingfiles = ?) AND (changetype = ?) AND (changedEntity = ?) AND (newEntity = ?)"; 
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_changingfiles);
-			stmt.setString(1, strType);
-			stmt.setString(2, changedEntity);
-			stmt.setString(3, newEntity);
+			stmt.setInt(1, this.ID_changingfiles);
+			stmt.setString(2, strType);
+			stmt.setString(3, changedEntity);
+			stmt.setString(4, newEntity);
 			
 			resultset = stmt.executeQuery();
-			stmt.close();
-			resultset.first();
+			resultset.next();
 			this.ID_change = resultset.getInt("ID_change");
+			
+			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not retrieve ID_change from Changes!");
 			e1.printStackTrace();
@@ -575,8 +598,8 @@ public class ResultDatabase implements JMutOpsEventListener {
 			try {
 				String strSQL = 
 					"INSERT INTO Matchings " 
-						+ "(ID_change, ID_mutationoperator, prefixStart, prefixEnd) "
-						+ "SELECT (?, ?, ?, ?, ?, ?)" 
+						+ "(ID_change, ID_mutationoperator, prefixStart, prefixEnd, prefixText) "
+						+ "SELECT (?, ?, ?, ?, ?)" 
 						+ "WHERE NOT EXISTS (" 
 						+ 	"SELECT * " 
 						+	"FROM Matchings "
@@ -584,16 +607,17 @@ public class ResultDatabase implements JMutOpsEventListener {
 						+ 	"AND (prefixStart = ?) AND (prefixEnd = ?)"
 						+ ")";
 				stmt = this.connection.prepareStatement(strSQL);
-				stmt.setInt(0, this.ID_change);
-				stmt.setInt(1, mapMutopsToDB.get(operator));
-				stmt.setInt(2, nodeStart);
-				stmt.setInt(3, nodeEnd);
-				stmt.setInt(4, this.ID_change);
-				stmt.setInt(5, mapMutopsToDB.get(operator));
-				stmt.setInt(6, nodeStart);
-				stmt.setInt(7, nodeEnd);
+				stmt.setInt(1, this.ID_change);
+				stmt.setInt(2, mapMutopsToDB.get(operator));
+				stmt.setInt(3, nodeStart);
+				stmt.setInt(4, nodeEnd);
+				stmt.setString(5, node.toString());
+				stmt.setInt(6, this.ID_change);
+				stmt.setInt(7, mapMutopsToDB.get(operator));
+				stmt.setInt(8, nodeStart);
+				stmt.setInt(9, nodeEnd);
 				
-				stmt.executeQuery();
+				stmt.executeUpdate();
 				stmt.close();
 			} catch (SQLException e1) {
 				log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -615,16 +639,16 @@ public class ResultDatabase implements JMutOpsEventListener {
 						+ 	"AND (postfixStart = ?) AND (postfixEnd = ?)"
 						+ ")";
 				stmt = this.connection.prepareStatement(strSQL);
-				stmt.setInt(0, this.ID_change);
-				stmt.setInt(1, mapMutopsToDB.get(operator));
-				stmt.setInt(2, nodeStart);
-				stmt.setInt(3, nodeEnd);
-				stmt.setInt(4, this.ID_change);
-				stmt.setInt(5, mapMutopsToDB.get(operator));
-				stmt.setInt(6, nodeStart);
-				stmt.setInt(7, nodeEnd);
+				stmt.setInt(1, this.ID_change);
+				stmt.setInt(2, mapMutopsToDB.get(operator));
+				stmt.setInt(3, nodeStart);
+				stmt.setInt(4, nodeEnd);
+				stmt.setInt(5, this.ID_change);
+				stmt.setInt(6, mapMutopsToDB.get(operator));
+				stmt.setInt(7, nodeStart);
+				stmt.setInt(8, nodeEnd);
 				
-				stmt.executeQuery();
+				stmt.executeUpdate();
 				stmt.close();
 			} catch (SQLException e1) {
 				log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -654,8 +678,8 @@ public class ResultDatabase implements JMutOpsEventListener {
 		try {
 			String strSQL = 
 				"INSERT INTO Matchings " 
-					+ "(ID_change, ID_mutationoperator, prefixStart, prefixEnd, postfixStart, postfixEnd) "
-					+ "SELECT (?, ?, ?, ?, ?, ?)" 
+					+ "(ID_change, ID_mutationoperator, prefixStart, prefixEnd, prefixText, postfixStart, postfixEnd, postfixText) "
+					+ "SELECT ?, ?, ?, ?, ?, ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * " 
 					+	"FROM Matchings "
@@ -664,20 +688,22 @@ public class ResultDatabase implements JMutOpsEventListener {
 					+ 	"AND (postfixStart = ?) AND (postfixEnd = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_change);
-			stmt.setInt(1, mapMutopsToDB.get(operator));
-			stmt.setInt(2, prefixStart);
-			stmt.setInt(3, prefixEnd);
-			stmt.setInt(4, postfixStart);
-			stmt.setInt(5, postfixEnd);
-			stmt.setInt(7, this.ID_change);
-			stmt.setInt(8, mapMutopsToDB.get(operator));
-			stmt.setInt(9, prefixStart);
-			stmt.setInt(10, prefixEnd);
-			stmt.setInt(11, postfixStart);
-			stmt.setInt(12, postfixEnd);
+			stmt.setInt(1, this.ID_change);
+			stmt.setInt(2, mapMutopsToDB.get(operator));
+			stmt.setInt(3, prefixStart);
+			stmt.setInt(4, prefixEnd);
+			stmt.setString(5, prefix.toString());
+			stmt.setInt(6, postfixStart);
+			stmt.setInt(7, postfixEnd);
+			stmt.setString(8, postfix.toString());
+			stmt.setInt(9, this.ID_change);
+			stmt.setInt(10, mapMutopsToDB.get(operator));
+			stmt.setInt(11, prefixStart);
+			stmt.setInt(12, prefixEnd);
+			stmt.setInt(13, postfixStart);
+			stmt.setInt(14, postfixEnd);
 		
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -699,10 +725,9 @@ public class ResultDatabase implements JMutOpsEventListener {
 		// first check if there exists the corresponding mutation operator in table MutationOperator
 		try {
 			stmt = connection.prepareStatement("SELECT * FROM MutationOperator WHERE (mutationOperatorAbbreviation = ?)");
-			stmt.setString(0, mutop.getClass().toString());
+			stmt.setString(1, mutop.getClass().toString());
 			resultset = stmt.executeQuery();
-			stmt.close();
-			resultset.last();
+			resultset.next();
 			rowcount = resultset.getRow();
 		} catch (SQLException e) {
 			log.warning("Could not create and fill prepared statement to detect existing mutation operator!");
@@ -717,6 +742,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				resultset.first();
 				int ID_mutationoperator = resultset.getInt("ID_mutationoperator");
 				this.mapMutopsToDB.put(mutop, ID_mutationoperator);
+				stmt.close();
 			} catch (SQLException e) {
 				log.warning("Could not retrieve ID_mutationoperator of detected mutation operator!");
 				e.printStackTrace();
@@ -728,9 +754,9 @@ public class ResultDatabase implements JMutOpsEventListener {
 			// create a parameterized statement to insert the new data
 			try {
 				stmt = connection.prepareStatement("INSERT INTO MutationOperator (mutationOperatorDescription, mutationOperatorFullname, mutationOperatorAbbreviation) VALUES(?, ?, ?)");
-				stmt.setString(0, mutop.getDescription());
-				stmt.setString(1, mutop.getFullname());
-				stmt.setString(2, mutop.getShortname());
+				stmt.setString(1, mutop.getDescription());
+				stmt.setString(2, mutop.getFullname());
+				stmt.setString(3, mutop.getShortname());
 				stmt.executeUpdate();
 				stmt.close();
 			} catch (SQLException e) {
@@ -742,11 +768,16 @@ public class ResultDatabase implements JMutOpsEventListener {
 			// retrieve the ID_mutationoperator of the newly inserted entry
 			try {
 				stmt = connection.prepareStatement("SELECT * FROM MutationOperator WHERE (mutationOperatorAbbreviation = ?)");
-				stmt.setString(0, mutop.getClass().toString());
+				stmt.setString(1, mutop.getShortname());
 				resultset = stmt.executeQuery();
-				stmt.close();
-				resultset.first();
-				this.mapMutopsToDB.put(mutop, resultset.getInt("ID_mutationoperator"));
+				if(resultset.next()){
+					int input = resultset.getInt("ID_mutationoperator");
+					this.mapMutopsToDB.put(mutop, input);
+					stmt.close();
+				}
+				else {
+					throw new UnknownError("Could not retrieve newly inserted inserted mutation operator.");
+				}
 			} catch (SQLException e) {
 				log.warning("Could not create and fill prepared statement to detect existing mutation operator!");
 				e.printStackTrace();
@@ -767,18 +798,19 @@ public class ResultDatabase implements JMutOpsEventListener {
 		try {
 			String strSQL = 
 				"INSERT INTO NoMatchings " 
-					+ "(ID_change) "
-					+ "SELECT (?, ?, ?, ?, ?, ?)" 
+					+ "(ID_change, numberOfOperators) "
+					+ "SELECT ?, ? " 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * " 
 					+	"FROM NoMatchings "
 					+   "WHERE (ID_change = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_change);
 			stmt.setInt(1, this.ID_change);
+			stmt.setInt(2, operatorlist.size());
+			stmt.setInt(3, this.ID_change);
 		
-			stmt.executeQuery();
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -805,7 +837,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 			String strSQL = 
 				"INSERT INTO Errors " 
 					+ "(ID_program, ID_bugreport, ID_changingfiles, ID_change, location, message) "
-					+ "SELECT (?, ?, ?, ?, ?, ?, 9)" 
+					+ "SELECT ?, ?, ?, ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * " 
 					+	"FROM Errors "
@@ -815,20 +847,19 @@ public class ResultDatabase implements JMutOpsEventListener {
 					+ 	"AND (message = ?)"
 					+ ")";
 			stmt = this.connection.prepareStatement(strSQL);
-			stmt.setInt(0, this.ID_program);
-			stmt.setInt(1, this.ID_bugreport);
-			stmt.setInt(2, this.ID_changingfiles);
-			stmt.setInt(3, this.ID_change);
-			stmt.setString(4, location);
-			stmt.setString(5, errorMessage);
-			stmt.setInt(6, this.ID_program);
-			stmt.setInt(7, this.ID_bugreport);
-			stmt.setInt(8, this.ID_changingfiles);
-			stmt.setInt(9, this.ID_change);
-			stmt.setString(10, location);
-			stmt.setString(11, errorMessage);
-			
-			stmt.executeQuery();
+			stmt.setInt(1, this.ID_program);
+			stmt.setInt(2, this.ID_bugreport);
+			stmt.setInt(3, this.ID_changingfiles);
+			stmt.setInt(4, this.ID_change);
+			stmt.setString(5, location);
+			stmt.setString(6, errorMessage);
+			stmt.setInt(7, this.ID_program);
+			stmt.setInt(8, this.ID_bugreport);
+			stmt.setInt(9, this.ID_changingfiles);
+			stmt.setInt(10, this.ID_change);
+			stmt.setString(11, location);
+			stmt.setString(12, errorMessage);
+			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
 			log.warning("Could not create and fill prepared statement to detect existing program!");
@@ -839,8 +870,16 @@ public class ResultDatabase implements JMutOpsEventListener {
 
 	@Override
 	public void OnFileCheckFinished() {
+		this.ID_changingfiles = -1;
+		this.ID_change		  = -1;
 	}
 
-	
+	public static void main(String[] args) {
+		// drop all tables
+		ResultDatabase rd = new ResultDatabase("jdbc:postgresql://localhost:5432/jmutops_results", "postgres", "asteria");
+		rd.dropTables();
+		rd.initializeTables();
+		System.out.println("Done");
+	}
 }
 
