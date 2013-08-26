@@ -27,7 +27,7 @@ public class SourceCodeChangeUtils {
 			
 			if(change instanceof Insert){
 				for(SourceCodeChange change2: changes) {
-					if(change2 instanceof Delete) {
+					if((change2 instanceof Delete) && (change.getChangeType().isBodyChange() == change2.getChangeType().isBodyChange())) {
 						// Insert / Delete ~> Update
 						boolean sameLocation = checkLocationInASTS((Delete) change2, (Insert) change, preperator, preperator2);
 						if (sameLocation){
@@ -40,7 +40,7 @@ public class SourceCodeChangeUtils {
 			}
 			else if(change instanceof Delete) {
 				for(SourceCodeChange change2: changes) {
-					if(change2 instanceof Insert) {
+					if((change2 instanceof Insert) && (change.getChangeType().isBodyChange() == change2.getChangeType().isBodyChange())) {
 						// Insert / Delete ~> Update
 						boolean sameLocation = checkLocationInASTS((Delete) change, (Insert) change2, preperator2, preperator);
 						if (sameLocation){
