@@ -27,6 +27,9 @@ public class ResultCreator implements JMutOpsEventListener{
 	
 	private ArrayList<Dictionary<String, String>> results = new ArrayList<Dictionary<String, String>>();; 
 	
+	private ArrayList<String> error_location = new ArrayList<String>();
+	private ArrayList<String> error_message = new ArrayList<String>();
+	
 	/**
 	 * Counts the number of undetected matches.
 	 */
@@ -90,7 +93,8 @@ public class ResultCreator implements JMutOpsEventListener{
 	public void OnCreatingResult() {
 		// initialize a object which stores the result
 		StringBuffer result = new StringBuffer();
-		// calculate the output
+		
+		// add the result output
 		result.append("///////////////////////////////////////////////////////" + "\n");
 		result.append("						Results							 " + "\n");
 		result.append("///////////////////////////////////////////////////////" + "\n");
@@ -110,9 +114,28 @@ public class ResultCreator implements JMutOpsEventListener{
 			result.append("\n");
 		}
 		result.append("Number of changes with no matching operators: " + undetected_matches + "\n");
+		result.append("\n");
 		result.append("///////////////////////////////////////////////////////" + "\n");
 		result.append("						End of results					 " + "\n");
 		result.append("///////////////////////////////////////////////////////" + "\n");	
+		
+		
+		// add error output
+		result.append("///////////////////////////////////////////////////////" + "\n");
+		result.append("						Errors					 " + "\n");
+		result.append("///////////////////////////////////////////////////////" + "\n");
+		result.append("\n");
+		for(int i = 0; i < (this.error_location.size() - 1); i++) {
+			result.append("\t" + "Location: " + this.error_location.get(i) + "\n");
+			result.append("\t" + "Message: " + this.error_message.get(i) + "\n");
+			result.append("\n");
+		}
+		
+		result.append("///////////////////////////////////////////////////////" + "\n");
+		result.append("						End of errors					 " + "\n");
+		result.append("///////////////////////////////////////////////////////" + "\n");
+		
+		
 		
 		// check if they should output the result on console
 		if(this.shouldOutputConsole) {
@@ -160,6 +183,8 @@ public class ResultCreator implements JMutOpsEventListener{
 	
 	@Override
 	public void OnErrorDetected(String location, String errorMessage) {
+		error_location.add(location);
+		error_message.add(errorMessage);
 	}
 
 	@Override
