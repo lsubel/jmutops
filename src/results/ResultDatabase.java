@@ -320,7 +320,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_mutationoperator SERIAL PRIMARY KEY, "
 				+ "mutationOperatorDescription VARCHAR(1023),"
 				+ "mutationOperatorFullname VARCHAR(63),"
-				+ "mutationOperatorAbbreviation UNIQUE VARCHAR(7)" + ")");
+				+ "mutationOperatorAbbreviation VARCHAR(7) UNIQUE " + ")");
 		
 		// TABLE Errors
 		initializeTable("Errors", 
