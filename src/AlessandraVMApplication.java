@@ -37,6 +37,11 @@ public class AlessandraVMApplication {
 	 */
 	public static void main(String[] args) {
 		// parse the parameters
+		if(args.length != 3) {
+			System.out.println("Please set up exactly three parameters. You provided " + args.length + ".");
+			System.exit(0);
+		}
+		
 		String pathToIDFolders 	= args[0];
 		if(pathToIDFolders == null){
 			System.out.println("Please set up the first parameter.");
@@ -49,12 +54,12 @@ public class AlessandraVMApplication {
 			System.out.println("Please set up a correct integer as second parameter.");
 			System.exit(0);			
 		}
-		String pathToSources 	= args[2];
+		String pathToSources = args[2];
 		if(pathToSources == null){
 			System.out.println("Please set up the third parameter.");
 			System.exit(0);
 		}
-		
+
 		// extract the different paths
 		String initialPath = pathToIDFolders + File.separator + iBugs_ID;
 		String prefixFolder  = initialPath + File.separator + PREFIX;
@@ -71,10 +76,6 @@ public class AlessandraVMApplication {
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
 		jmutops.setOptions(options, OptionsVersion.PREFIX);
 		jmutops.setOptions(options, OptionsVersion.POSTFIX);  
-		
-		// initialise program and bug
-		jmutops.initProgram("iBugs", "", "", "");
-		jmutops.initBug(new Integer(iBugs_ID).toString(), "");
 		
 		// load the properties
 		Properties properties = new Properties();
@@ -135,6 +136,10 @@ public class AlessandraVMApplication {
 				System.out.println("Could not initialize ResultDatabase: " + "\n" + e.getMessage());
 			}
 		}
+		
+		// initialise program and bug
+		jmutops.initProgram("iBugs", "", "", "");
+		jmutops.initBug(new Integer(iBugs_ID).toString(), "");
 		
 		// look for source folders in pathToSources
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
