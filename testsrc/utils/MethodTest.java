@@ -17,7 +17,7 @@ public abstract class MethodTest extends BasicTest {
 	/////////////////////////////////////////
 	
 	/**
-	 * The method name of the method where the snippets should be contained.
+	 * The method name of the method where the snippet should be contained.
 	 */
 	protected static String METHOD_NAME = "method";
 	
