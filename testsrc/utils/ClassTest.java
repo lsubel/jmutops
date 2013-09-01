@@ -38,6 +38,11 @@ public abstract class ClassTest extends BasicTest {
 	 */
 	protected abstract String getOtherClassContent();
 	
+	protected String getImports() {
+		return "";
+	}
+	
+	
 	/**
 	 * Embed method or field into class, creates files for prefix and postfix version 
 	 * 	and calls {@link BasicTest#compareMatches(File, File) compareMatches(File, File)} in {@link BasicTest}.
@@ -77,7 +82,7 @@ public abstract class ClassTest extends BasicTest {
 	 * @return Returns the whole code of a .java class.
 	 */
 	protected String createClassSourceCode(String class_code){
-        return surroundWithClass(getOtherClassContent() + "\n" + class_code);		
+        return getImports() + "\n" + surroundWithClass(getOtherClassContent() + "\n" + class_code);		
 	}
 	
 	/**
