@@ -290,8 +290,13 @@ public class ResultDatabase implements JMutOpsEventListener {
 				+ "ID_changingfiles INTEGER NOT NULL, "
 				+ "isMethodChange BOOLEAN, "
 				+ "changetype VARCHAR(31), "
-				+ "changedEntity TEXT, "  
-				+ "newEntity TEXT " + ")");
+				+ "changedEntity TEXT, "
+				+ "changedStart INTEGER, "
+				+ "changedEnd INTEGER,"
+				+ "newEntity TEXT, " 
+				+ "newStart INTEGER, " 
+				+ "newEnd INTEGER"
+				+ ")");
 		
 		// TABLE Matchings
 		initializeTable("Matchings", 
@@ -512,6 +517,10 @@ public class ResultDatabase implements JMutOpsEventListener {
 		boolean isMethodChange = change.getChangeType().isBodyChange();
 		String changedEntity = "";
 		String newEntity = "";
+		int changedStart 	= -1;
+		int changedEnd		= -1;
+		int newStart		= -1;
+		int newEnd			= -1;
 		
 		if(change instanceof Insert) {
 			isPrefix	  = false;
@@ -534,12 +543,15 @@ public class ResultDatabase implements JMutOpsEventListener {
 			newEntity     = move.getNewEntity().toString();
 		};
 
+		
+		
+		
 		// first insert a new entry but only if it does not exist
 		try {
 			String strSQL = 
 				"INSERT INTO Changes " 
-					+ "(ID_changingfiles, changetype, changedEntity, newEntity, isMethodChange) "
-					+ "SELECT ?, ?, ?, ?, ? " 
+					+ "(ID_changingfiles, changetype, changedEntity, newEntity, isMethodChange, changedStart, changedEnd, newStart, newEnd) "
+					+ "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? " 
 					+ "WHERE NOT EXISTS (" 
 					+ 	"SELECT * FROM Changes WHERE (ID_changingfiles = ?) AND (changetype = ?) AND (changedEntity = ?) AND (newEntity = ?) AND (isMethodChange = ?)"
 					+ ")";
@@ -549,11 +561,15 @@ public class ResultDatabase implements JMutOpsEventListener {
 			stmt.setString(3, changedEntity);
 			stmt.setString(4, newEntity);
 			stmt.setBoolean(5, isMethodChange);
-			stmt.setInt(6, this.ID_changingfiles);
-			stmt.setString(7, strType);
-			stmt.setString(8, changedEntity);
-			stmt.setString(9, newEntity);
-			stmt.setBoolean(10, isMethodChange);
+			stmt.setInt(6, changedStart);
+			stmt.setInt(7, changedEnd);
+			stmt.setInt(8, newStart);
+			stmt.setInt(9, newEnd);
+			stmt.setInt(10, this.ID_changingfiles);
+			stmt.setString(11, strType);
+			stmt.setString(12, changedEntity);
+			stmt.setString(13, newEntity);
+			stmt.setBoolean(14, isMethodChange);
 			
 			stmt.executeUpdate();
 			stmt.close();
