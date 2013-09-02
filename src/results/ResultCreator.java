@@ -211,6 +211,10 @@ public class ResultCreator implements JMutOpsEventListener{
 		this.undetected_matches += 1;
 	}
 
+	@Override
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {		
+	}
+
 	
 	
 }

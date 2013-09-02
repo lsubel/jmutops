@@ -234,4 +234,15 @@ public class EventLogger implements JMutOpsEventListener {
 		logger.append("\n");
 		
 	}
+
+	@Override
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+		Date now = new Date();
+		logger.append(now.toString() + " - Started to check for mutation operator on multiple changes." + "\n");
+		logger.append("\t" + "The following changes are checked:" + "\n");
+		for(SourceCodeChange change: changes) {
+			logger.append("\t" + "\t" + change.toString() + "\n");
+		}
+		logger.append("\n");
+	}
 }

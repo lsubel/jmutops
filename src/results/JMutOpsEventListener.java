@@ -92,4 +92,10 @@ public interface JMutOpsEventListener{
 	 * @param operatorlist The list of checked {@link mutationoperators.MutationOperator MutationOperator}.
 	 */
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist);
+	
+	/**
+	 * Event gets fired when we start to check for mutation operator on multiple changes.
+	 * Counterpart to {@link #OnChangeChecked(SourceCodeChange)}.
+	 */
+	public void OnAllChangesChecked(List<SourceCodeChange> changes);
 }

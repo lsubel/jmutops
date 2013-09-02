@@ -502,6 +502,61 @@ public class ResultDatabase implements JMutOpsEventListener {
 		}
 	}
 	
+	@Override
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+		String CHANGETYPE_MULTIPLE_CHANGES = "MULTIPLE_CHANGES";
+		
+		assert changes != null;
+		
+		// initialize variables
+		PreparedStatement stmt = null;
+		ResultSet resultset = null;
+		
+		// first insert a new entry but only if it does not exist
+		try {
+			String strSQL = 
+				"INSERT INTO Changes " 
+					+ "(ID_changingfiles, changetype) "
+					+ "SELECT ?, ?, ?, ?, ?, ?, ?, ?, ? " 
+					+ "WHERE NOT EXISTS (" 
+					+ 	"SELECT * FROM Changes WHERE (ID_changingfiles = ?) AND (changetype = ?)"
+					+ ")";
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setInt(1, this.ID_changingfiles);
+			stmt.setString(2, CHANGETYPE_MULTIPLE_CHANGES);
+			stmt.setInt(3, this.ID_changingfiles);
+			stmt.setString(4, CHANGETYPE_MULTIPLE_CHANGES);
+
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e1) {
+			log.warning("Could not create and fill prepared statement to detect existing program!");
+			e1.printStackTrace();
+			return;
+		}
+
+		/// retrieve the ID_change from Changes
+		try {
+			String strSQL = 
+				"SELECT * " +
+				"FROM Changes " +
+				"WHERE (ID_changingfiles = ?) AND (changetype = ?)"; 
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setInt(1, this.ID_changingfiles);
+			stmt.setString(2, CHANGETYPE_MULTIPLE_CHANGES);
+			
+			resultset = stmt.executeQuery();
+			resultset.next();
+			this.ID_change = resultset.getInt("ID_change");
+			
+			stmt.close();
+		} catch (SQLException e1) {
+			log.warning("Could not retrieve ID_change from Changes!");
+			e1.printStackTrace();
+			return;
+		}		
+	}
+	
 	
 	@Override
 	public void OnChangeChecked(SourceCodeChange change) {

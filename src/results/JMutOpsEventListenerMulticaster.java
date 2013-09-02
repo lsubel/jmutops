@@ -110,4 +110,11 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 			rl.OnNoMatchingFound(operatorlist);
 		}
 	}
+
+	@Override
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+		for(JMutOpsEventListener rl: this.listener){
+			rl.OnAllChangesChecked(changes);
+		}
+	}
 }
