@@ -14,8 +14,6 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.SwitchCase;
 import org.eclipse.jdt.core.dom.SwitchStatement;
 
-import utils.ASTDiffUtils;
-
 public class SWO_Matcher extends TwoASTMatcher {
 
 	public SWO_Matcher(MutationOperator mutop) {
@@ -78,7 +76,7 @@ public class SWO_Matcher extends TwoASTMatcher {
 				ArrayList<Statement> node2_case_list = node2_case_map.get(sc2);
 				// check the conditions for a matching
 				boolean differentSwitch = !(sc.subtreeMatch(defaultMatcher, sc2));
-				boolean sameNodeList = ASTDiffUtils.sameASTNodeList(node_case_list, node2_case_list);
+				boolean sameNodeList = this.defaultMatcher.safeSubtreeListMatch(node_case_list, node2_case_list);
 				
 				// if all conditions are true, notify a matching
 				if(differentSwitch && sameNodeList) {

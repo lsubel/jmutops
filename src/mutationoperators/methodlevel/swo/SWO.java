@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.NodeFinder;
 
 import results.JMutOpsEventListenerMulticaster;
-import utils.ASTDiffUtils;
 import utils.Preperator;
 import utils.SourceCodeChangeUtils;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
@@ -114,10 +113,10 @@ public class SWO extends MutationOperator {
 				// check for the same header properties
 				boolean sameName = prefix.getName().subtreeMatch(defaultMatcher, postfix.getName());
 				boolean sameParametersSize = (prefix.parameters().size() == postfix.parameters().size()); 
-				boolean sameParameters = ASTDiffUtils.sameASTNodeList(prefix.parameters(), postfix.parameters());
-				boolean sameThrowExceptions = ASTDiffUtils.sameASTNodeList(prefix.thrownExceptions(), postfix.thrownExceptions());
-				boolean sameTypeParameters = ASTDiffUtils.sameASTNodeList(prefix.typeParameters(), postfix.typeParameters());
-				boolean sameModifiers = ASTDiffUtils.sameASTNodeList(prefix.modifiers(), postfix.modifiers());
+				boolean sameParameters = defaultMatcher.safeSubtreeListMatch(prefix.parameters(), postfix.parameters());
+				boolean sameThrowExceptions = defaultMatcher.safeSubtreeListMatch(prefix.thrownExceptions(), postfix.thrownExceptions());
+				boolean sameTypeParameters = defaultMatcher.safeSubtreeListMatch(prefix.typeParameters(), postfix.typeParameters());
+				boolean sameModifiers = defaultMatcher.safeSubtreeListMatch(prefix.modifiers(), postfix.modifiers());
 				boolean sameReturnType = ((prefix.getReturnType2() == null) && (postfix.getReturnType2() == null)) || prefix.getReturnType2().subtreeMatch(defaultMatcher, postfix.getReturnType2());
 				
 				// if all of these conditions are valid,
