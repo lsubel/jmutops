@@ -6,8 +6,6 @@ import mutationoperators.TwoASTMatcher;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
-import utils.Settings;
-
 public class MNRO_Matcher extends TwoASTMatcher {
 
 	public MNRO_Matcher(MutationOperator mutop) {
@@ -33,15 +31,10 @@ public class MNRO_Matcher extends TwoASTMatcher {
 			}
 			// check that the return type is the same;
 			// in case of unresolved bindings, use default value
-			boolean sameReturnType;
 			ITypeBinding prefixType 	= node.resolveTypeBinding();
 			ITypeBinding postfixType 	= node2.resolveTypeBinding();
-			if((prefixType != null) & (postfixType != null)){
-				sameReturnType = prefixType.isEqualTo(postfixType);
-			}
-			else{
-				sameReturnType = Settings.BINDING_DEFAULTVALUE;
-			}
+			boolean sameReturnType = ((prefixType == null && postfixType == null) || (prefixType != null && prefixType.isEqualTo(postfixType) || (postfixType != null && postfixType.isEqualTo(prefixType))));
+
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){
 				this.mutop.found(node, node2);
