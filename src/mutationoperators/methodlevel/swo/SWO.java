@@ -1,17 +1,30 @@
 package mutationoperators.methodlevel.swo;
 
+import java.util.HashSet;
 import java.util.List;
 
 import mutationoperators.MutationOperator;
+
+import org.eclipse.jdt.core.dom.ASTMatcher;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.NodeFinder;
+
 import results.JMutOpsEventListenerMulticaster;
+import utils.ASTDiffUtils;
 import utils.Preperator;
+import utils.SourceCodeChangeUtils;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Move;
 import ch.uzh.ifi.seal.changedistiller.model.entities.SourceCodeChange;
+import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
 import enums.MutationOperatorCategory;
 import enums.MutationOperatorLevel;
 
 public class SWO extends MutationOperator {
 
-	
+	SWO_MethodExtractor methodExtractor;
 	
 	public SWO() {
 		this(null);
@@ -19,6 +32,9 @@ public class SWO extends MutationOperator {
 	
 	public SWO(JMutOpsEventListenerMulticaster eventListener) {
 		super(eventListener);
+		this.twoAST_matcher = new SWO_Matcher(this);
+		this.twoAST_visitor = new SWO_Visitor(this.twoAST_matcher);
+		this.methodExtractor = new SWO_MethodExtractor();
 	}
 
 	@Override
@@ -37,17 +53,83 @@ public class SWO extends MutationOperator {
 		// since this mutation operator may need multiple changes for one application, 
 		// we have to implement a special case for him
 		
-		// first extract all nodes where such a reorder might occur
+		// reset application counter
+		this.application_counter = 0;
+		
+		// First extract all nodes where such a reorder might occur
 		// which are: 
 		// * switch-case
 		// * if-then-else
-		// therefore, extract all these node with help of an ASTVisitor 
+		// Therefore, extract all these node with help of an ASTVisitor
+		HashSet<MethodDeclaration> prefixMethodsToCheck 	= new HashSet<MethodDeclaration>();
+		HashSet<MethodDeclaration> postfixMethodsToCheck 	= new HashSet<MethodDeclaration>();
+		for(SourceCodeChange change: changes) {			
+			if(change instanceof Insert){
+				// extract all positions
+				int[] pos_array = SourceCodeChangeUtils.getNodeFinderInput((Insert) change);
+				// extract all newly changed methods
+				NodeFinder nodefinder = new NodeFinder(postfixed_preperator.getAST(), pos_array[0], pos_array[1]);
+				ASTNode expr = nodefinder.getCoveringNode();
+				postfixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+			} 	
+			else if(change instanceof Delete){
+				// extract all positions
+				int[] pos_array = SourceCodeChangeUtils.getNodeFinderInput((Delete) change);
+				// extract all changed methods
+				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
+				ASTNode expr = nodefinder.getCoveringNode();
+				prefixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+			}
+			else if(change instanceof Move){
+				// extract all positions
+				int[] pos_array = SourceCodeChangeUtils.getNodeFinderInput((Move) change);
+				// extract changed methods
+				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
+				ASTNode expr = nodefinder.getCoveringNode();
+				prefixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+				// extract new methods
+				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
+				ASTNode expr2 = nodefinder2.getCoveringNode();
+				postfixMethodsToCheck.add(methodExtractor.getMethodNode(expr2));
+			}
+			else if(change instanceof Update){
+				// extract all positions
+				int[] pos_array = SourceCodeChangeUtils.getNodeFinderInput((Update) change);
+				// extract changed methods
+				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
+				ASTNode expr = nodefinder.getCoveringNode();
+				prefixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+				// extract new methods
+				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
+				ASTNode expr2 = nodefinder2.getCoveringNode();
+				postfixMethodsToCheck.add(methodExtractor.getMethodNode(expr2));
+			}
+		}
+		
+		// so now we have all methods which are changed
+		// try to match pairs of methods
+		ASTMatcher defaultMatcher = new ASTMatcher();
+		for(MethodDeclaration prefix: prefixMethodsToCheck) {
+			for(MethodDeclaration postfix: postfixMethodsToCheck) {
+				// check for the same header properties
+				boolean sameName = prefix.getName().subtreeMatch(defaultMatcher, postfix.getName());
+				boolean sameParametersSize = (prefix.parameters().size() == postfix.parameters().size()); 
+				boolean sameParameters = ASTDiffUtils.sameASTNodeList(prefix.parameters(), postfix.parameters());
+				boolean sameThrowExceptions = ASTDiffUtils.sameASTNodeList(prefix.thrownExceptions(), postfix.thrownExceptions());
+				boolean sameTypeParameters = ASTDiffUtils.sameASTNodeList(prefix.typeParameters(), postfix.typeParameters());
+				boolean sameModifiers = ASTDiffUtils.sameASTNodeList(prefix.modifiers(), postfix.modifiers());
+				boolean sameReturnType = ((prefix.getReturnType2() == null) && (postfix.getReturnType2() == null)) || prefix.getReturnType2().subtreeMatch(defaultMatcher, postfix.getReturnType2());
+				
+				// if all of these conditions are valid,
+				// * traverse in parallel over both methods
+				// * at some special nodes, check for exchanged stuff
+				if(sameName && sameParametersSize && sameParameters && sameThrowExceptions && sameTypeParameters && sameModifiers && sameReturnType) {
+					this.check(prefix, postfix);
+				}
+			}
+		}
 		
 		
-		
-		
-		
-		// TODO Auto-generated method stub
-		return super.preCheck(changes, prefixed_preperator, postfixed_preperator);
+		return 0;
 	}
 }
