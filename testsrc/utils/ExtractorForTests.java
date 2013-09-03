@@ -63,4 +63,8 @@ public class ExtractorForTests implements JMutOpsEventListener {
 	public void OnMatchingFound(MutationOperator operator, ASTNode node) {
 	}
 
+	@Override
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+	}
+
 }

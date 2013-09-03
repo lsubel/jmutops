@@ -110,4 +110,10 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	public void OnNoMatchingFound(List<MutationOperator> operatorlist) {
 	}
 
+	@Override
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
