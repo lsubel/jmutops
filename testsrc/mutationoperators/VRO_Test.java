@@ -22,7 +22,8 @@ public class VRO_Test extends MethodTest {
 
 	@Override
 	protected String getOtherClassContent() {
-		return  "int i1 = 42; " +
+		return  "String message = \"HELLO MESSAGE HERE!\"; " +
+				"int i1 = 42; " +
 				"int i2 = 1;	" +
 				"Bar b = new Bar(); " +
 				"String str1 = \"Hello\"; " +
@@ -65,7 +66,7 @@ public class VRO_Test extends MethodTest {
 		String pre 	= "int x = 0; int y = 1; x += y; System.out.println(i1 + i2);";
 		String post = "int x = 0; int y = 1; x += y; System.out.println(i1 + i1);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(2, resultMap.get(mutop).intValue());
+		assertEquals(1, resultMap.get(mutop).intValue());
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -111,6 +112,15 @@ public class VRO_Test extends MethodTest {
 		String post = "int x = 0; int y = 1; x += y; System.out.println(1 + 2);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(2, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testVRO_VariableToConstant3() {
+		String pre 	= "String output = message; System.out.println(output);";
+		String post = "String output = \"MESSAGE\"; System.out.println(output);";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }
