@@ -43,6 +43,7 @@ import mutationoperators.methodlevel.ror.ROR;
 import mutationoperators.methodlevel.sco.SCO;
 import mutationoperators.methodlevel.sor.SOR;
 import mutationoperators.methodlevel.swo.SWO;
+import mutationoperators.methodlevel.vro.VRO;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.NodeFinder;
@@ -402,6 +403,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new EXCO_Move(this.listener));
 		this.checker.addMutationOperator(new EXCO_Update(this.listener));
 		this.checker.addMutationOperator(new SWO(this.listener));
+		this.checker.addMutationOperator(new VRO(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
