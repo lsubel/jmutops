@@ -27,7 +27,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			ITypeBinding secondBinding = node2.resolveTypeBinding();
 			
 			// check if the new type is a parent class of the old one
-			boolean validType = ITypeBindingUtils.isFirstTypeParentOfRightType(secondBinding, firstBinding);
+			boolean validType = ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding);
 			boolean differentTypes = !(secondBinding.isEqualTo(firstBinding));
 			
 			// check for the same variable name
@@ -58,7 +58,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			ITypeBinding secondBinding = node2.getType().resolveBinding(); 
 			
 			// check if the new type is a parent class of the old one
-			boolean validType = ITypeBindingUtils.isFirstTypeParentOfRightType(secondBinding, firstBinding);
+			boolean validType = ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding);
 			boolean differentTypes = !(secondBinding.isEqualTo(firstBinding));
 			
 			// check for the same variable name

@@ -11,7 +11,7 @@ public class ITypeBindingUtils {
 	 * @param right The second {@link ITypeBinding}.
 	 * @return True iff the first type is a super type of the second one.
 	 */
-	public static boolean isFirstTypeParentOfRightType(ITypeBinding left, ITypeBinding right){
+	public static boolean isTypeParentOfOtherType(ITypeBinding left, ITypeBinding right){
 		ITypeBinding temp = right;
 		do{
 			if(left.isEqualTo(temp)){

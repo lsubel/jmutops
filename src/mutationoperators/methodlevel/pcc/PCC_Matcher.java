@@ -32,8 +32,8 @@ public class PCC_Matcher extends TwoASTMatcher {
 		boolean differentCastTypes = !(firstTypeBinding.isEqualTo(secondTypeBinding));
 		
 		// since the casted types are related, one type has to be the super class of the other one
-		boolean leftValidTyping = ITypeBindingUtils.isFirstTypeParentOfRightType(firstTypeBinding, secondTypeBinding);
-		boolean rightValidTyping = ITypeBindingUtils.isFirstTypeParentOfRightType(secondTypeBinding, firstTypeBinding);
+		boolean leftValidTyping = ITypeBindingUtils.isTypeParentOfOtherType(firstTypeBinding, secondTypeBinding);
+		boolean rightValidTyping = ITypeBindingUtils.isTypeParentOfOtherType(secondTypeBinding, firstTypeBinding);
 		boolean validTyping = leftValidTyping || rightValidTyping;
 		
 		if(sameExpression && differentCastTypes && validTyping){

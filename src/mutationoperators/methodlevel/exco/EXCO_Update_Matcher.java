@@ -31,7 +31,7 @@ public class EXCO_Update_Matcher extends TwoASTMatcher {
 		ITypeBinding secondBinding = node2.getType().resolveBinding();
 		
 		// check if these are compatible types, so one type is the parent of the other one
-		boolean isCompatible = ITypeBindingUtils.isFirstTypeParentOfRightType(firstBinding, secondBinding) || ITypeBindingUtils.isFirstTypeParentOfRightType(secondBinding, firstBinding); 
+		boolean isCompatible = ITypeBindingUtils.isTypeParentOfOtherType(firstBinding, secondBinding) || ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding); 
 		
 		// if all conditions are true, we have a match
 		if(sameVariableName && isCompatible){
