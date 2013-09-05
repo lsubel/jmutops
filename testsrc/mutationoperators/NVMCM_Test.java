@@ -12,7 +12,7 @@ import utils.MethodTest;
 
 public class NVMCM_Test extends MethodTest {
 
-MutationOperator mutop;
+	MutationOperator mutop;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
