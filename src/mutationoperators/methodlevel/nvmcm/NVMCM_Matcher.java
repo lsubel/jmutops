@@ -24,9 +24,10 @@ public class NVMCM_Matcher extends TwoASTMatcher {
 			
 			// check for conditions
 			boolean isObjectReturnType =  !(node.resolveMethodBinding().getReturnType().isPrimitive());
+			boolean isMethod = !(node.resolveMethodBinding().isConstructor());
 			
 			// if all conditions are true, notify a matching
-			if(isObjectReturnType) {
+			if(isObjectReturnType && isMethod) {
 				mutop.found(node, node2);
 			}
 		}
@@ -39,10 +40,10 @@ public class NVMCM_Matcher extends TwoASTMatcher {
 			boolean isFalse = !(node2.booleanValue());
 			boolean isPrimitive =  node.resolveMethodBinding().getReturnType().isPrimitive();
 			boolean isBooleanReturnType = node.resolveMethodBinding().getReturnType().getName().equals("boolean");
-			
+			boolean isMethod = !(node.resolveMethodBinding().isConstructor());
 			
 			// if all conditions are true, notify a matching
-			if(isFalse && isPrimitive && isBooleanReturnType) {
+			if(isFalse && isPrimitive && isBooleanReturnType && isMethod) {
 				mutop.found(node, node2);
 			}
 		}
@@ -56,9 +57,10 @@ public class NVMCM_Matcher extends TwoASTMatcher {
 			boolean isDefaultCharacterLiteral = (node2_value == '\u0000');
 			boolean isPrimitive =  node.resolveMethodBinding().getReturnType().isPrimitive();
 			boolean isCharReturnType = node.resolveMethodBinding().getReturnType().getName().equals("char");
-					
+			boolean isMethod = !(node.resolveMethodBinding().isConstructor());
+			
 			// if all conditions are true, notify a matching
-			if(isDefaultCharacterLiteral && isPrimitive && isCharReturnType) {
+			if(isDefaultCharacterLiteral && isPrimitive && isCharReturnType && isMethod) {
 				mutop.found(node, node2);
 			}
 			
@@ -73,9 +75,10 @@ public class NVMCM_Matcher extends TwoASTMatcher {
 			boolean isDefaultIntLiteral = (node2_value == 0);
 			boolean isPrimitive =  node.resolveMethodBinding().getReturnType().isPrimitive();
 			boolean isIntReturnType = node.resolveMethodBinding().getReturnType().getName().equals("int");
-					
+			boolean isMethod = !(node.resolveMethodBinding().isConstructor());
+			
 			// if all conditions are true, notify a matching
-			if(isDefaultIntLiteral && isPrimitive && isIntReturnType) {
+			if(isDefaultIntLiteral && isPrimitive && isIntReturnType && isMethod) {
 				mutop.found(node, node2);
 			}
 		}
