@@ -33,6 +33,7 @@ import mutationoperators.methodlevel.lod.LOD;
 import mutationoperators.methodlevel.loi.LOI;
 import mutationoperators.methodlevel.lor.LOR;
 import mutationoperators.methodlevel.mnro.MNRO;
+import mutationoperators.methodlevel.nvmcm.NVMCM;
 import mutationoperators.methodlevel.pcc.PCC;
 import mutationoperators.methodlevel.pcd.PCD;
 import mutationoperators.methodlevel.pci.PCI;
@@ -406,6 +407,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new SWO(this.listener));
 		this.checker.addMutationOperator(new VRO(this.listener));
 		this.checker.addMutationOperator(new VMCM(this.listener));
+		this.checker.addMutationOperator(new NVMCM(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
