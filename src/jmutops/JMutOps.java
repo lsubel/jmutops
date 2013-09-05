@@ -10,6 +10,7 @@ import mutationoperators.methodlevel.aod.AOD;
 import mutationoperators.methodlevel.aoi.AOI;
 import mutationoperators.methodlevel.aor.AOR;
 import mutationoperators.methodlevel.asr.ASR;
+import mutationoperators.methodlevel.ccm.CCM;
 import mutationoperators.methodlevel.cfdo.CFDO_Delete;
 import mutationoperators.methodlevel.cfdo.CFDO_Insert;
 import mutationoperators.methodlevel.cfdo.CFDO_Update;
@@ -408,6 +409,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new VRO(this.listener));
 		this.checker.addMutationOperator(new VMCM(this.listener));
 		this.checker.addMutationOperator(new NVMCM(this.listener));
+		this.checker.addMutationOperator(new CCM(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
