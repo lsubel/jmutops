@@ -42,6 +42,7 @@ import mutationoperators.methodlevel.pmd.PMD;
 import mutationoperators.methodlevel.pnc.PNC;
 import mutationoperators.methodlevel.prv.PRV;
 import mutationoperators.methodlevel.ror.ROR;
+import mutationoperators.methodlevel.rvm.RVM;
 import mutationoperators.methodlevel.sco.SCO;
 import mutationoperators.methodlevel.sor.SOR;
 import mutationoperators.methodlevel.swo.SWO;
@@ -410,6 +411,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new VMCM(this.listener));
 		this.checker.addMutationOperator(new NVMCM(this.listener));
 		this.checker.addMutationOperator(new CCM(this.listener));
+		this.checker.addMutationOperator(new RVM(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
