@@ -111,9 +111,7 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
-		// TODO Auto-generated method stub
-		
+	public void OnAllChangesChecked(List<SourceCodeChange> changes) {	
 	}
 
 }
