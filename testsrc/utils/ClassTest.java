@@ -93,4 +93,13 @@ public abstract class ClassTest extends BasicTest {
 	protected String surroundWithClass(String snippet){
 		return CLASS_HEADER + "\n" + " { \n" + snippet + " \n};";
 	}
+	
+	/**
+	 * Adds class stuff around the snippet.
+	 * @param snippet
+	 * @return The complete file content.
+	 */
+	protected String surroundWithClass(String classname, String snippet){
+		return "public class " + classname + " { \n" + snippet + " \n};";
+	}
 }
