@@ -85,7 +85,7 @@ public class ResultCreator implements JMutOpsEventListener{
 		entry.put("postfix-content", postfix.toString());
 		entry.put("postfix-node", postfix.getClass().toString());
 		entry.put("postfix-range", postfix.getStartPosition() + "-" + (postfix.getStartPosition() + postfix.getLength() - 1));		
-		entry.put("postfix-file", this.prefix.getAbsolutePath());
+		entry.put("postfix-file", this.postfix.getAbsolutePath());
 		this.results.add(entry);
 	}
 	
