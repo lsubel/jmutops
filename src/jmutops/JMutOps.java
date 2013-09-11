@@ -24,6 +24,7 @@ import mutationoperators.methodlevel.exco.EXCO_Delete;
 import mutationoperators.methodlevel.exco.EXCO_Insert;
 import mutationoperators.methodlevel.exco.EXCO_Move;
 import mutationoperators.methodlevel.exco.EXCO_Update;
+import mutationoperators.methodlevel.icm.ICM;
 import mutationoperators.methodlevel.ipc.IPC;
 import mutationoperators.methodlevel.isd.ISD;
 import mutationoperators.methodlevel.isi.ISI;
@@ -412,6 +413,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new NVMCM(this.listener));
 		this.checker.addMutationOperator(new CCM(this.listener));
 		this.checker.addMutationOperator(new RVM(this.listener));
+		this.checker.addMutationOperator(new ICM(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
