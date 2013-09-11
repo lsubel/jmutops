@@ -110,7 +110,7 @@ public class Preperator {
 			
 			// generate an AST for this file
 			this.m_OutputAST = (CompilationUnit) this.parser.createAST(null);
-			
+		
 			// write occuring problems into the logger
 		    IProblem[] problems = this.m_OutputAST.getProblems();
 		    if (problems != null && problems.length > 0) {
