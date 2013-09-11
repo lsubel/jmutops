@@ -17,9 +17,7 @@ public class PRV_Matcher extends TwoASTMatcher {
 
 	@Override
 	public boolean match(FieldAccess node, Object other) {
-		boolean firstObjectCompatibleToVar;
-		boolean secondObjectCompatibleToVar;
-		
+
 		// define variables
 		boolean differentVariables;
 		boolean differentClasses;
