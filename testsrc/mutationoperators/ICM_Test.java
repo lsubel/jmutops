@@ -255,4 +255,22 @@ public class ICM_Test extends MethodTest {
 		assertEquals(1, resultMap.get(mutop).intValue());
 		checkOtherMutationOperators(resultMap, mutop);
 	}
+	
+	@Test
+	public void testICM_NoMatching1() { 
+		String pre 	= "System.out.println(\"START PROGRAM\"); final double d2 = Double.MIN_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
+		String post = "System.out.println(\"START PROGRAM\"); final double d2 = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testICM_NoMatching2() { 
+		String pre 	= "System.out.println(\"START PROGRAM\"); final boolean b2 = false; if(this.b) {System.out.println(\"END PROGRAM\");}";
+		String post = "System.out.println(\"START PROGRAM\"); final boolean b2 = true; if(this.b) {System.out.println(\"END PROGRAM\");}";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
 }
