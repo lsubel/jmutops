@@ -80,8 +80,6 @@ public class RVM_Matcher extends TwoASTMatcher {
 			boolean bothPrimitive = ((node_binding.isPrimitive()) && (node2_binding.isPrimitive()));
 			boolean sameType 	  = ((node_binding.isEqualTo(node2_binding)));
 			
-
-			
 			if(bothPrimitive && sameType) {
 				// 2.1) integer, byte, short
 				boolean isInt = node_binding.getName().equals("int");
