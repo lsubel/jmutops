@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.prv.PRV;
 
 import org.junit.Test;
@@ -83,6 +82,15 @@ public class PRV_Test extends MethodTest {
 		String post = "Integer i = new Integer(4); this.obj = i; ";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testPRV_NoMatching1() {
+		String pre 	= "Integer i = new Integer(4); Integer i2 = new Integer(5); this.obj = i; ";
+		String post = "Integer i = new Integer(4); Integer i2 = new Integer(5); this.obj = i2; ";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, resultMap.get(mutop).intValue());
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }
