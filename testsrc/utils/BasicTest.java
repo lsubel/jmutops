@@ -172,6 +172,14 @@ public abstract class BasicTest {
 		return resultMap;
 	}
 	
+	public void checkOtherMutationOperators(HashMap<String, Integer> map){
+		List<String> list = new ArrayList<String>();
+		for(MutationOperator mutop: this.listOfTestedMutationOperators) {
+			list.add(mutop.getShortname());
+		}
+		checkRemainingOperators(map, list);
+	}	
+	
 	public void checkOtherMutationOperators(HashMap<String, Integer> map, MutationOperator checkedOperators){
 		List<String> list = new ArrayList<String>();
 		list.add(checkedOperators.getShortname());
