@@ -45,7 +45,7 @@ MutationOperator mutop;
 	}
 	
 	@Test
-	public void testTRO_localVariable1(){
+	public void testTRO_LocalVariable1(){
 		String pre 	= "Parent p1 = new Child(); p1.value = 42; System.out.println(p1.name);";
 		String post	= "Child p1 = new Child(); p1.value = 42; System.out.println(p1.name);";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
@@ -54,7 +54,7 @@ MutationOperator mutop;
 	}
 	
 	@Test
-	public void testTRO_localVariable2(){
+	public void testTRO_LocalVariable2(){
 		String pre 	= "Object p1 = new String(); System.out.println(p1.toString());";
 		String post	= "String p1 = new String(); System.out.println(p1.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
@@ -63,11 +63,29 @@ MutationOperator mutop;
 	}
 	
 	@Test
-	public void testTRO_localVariable3(){
+	public void testTRO_LocalVariable3(){
 		String pre 	= "Child p1 = new Grandchild(); p1.name = \"GRANDCHILD\"; System.out.println(p1.toString());";
 		String post	= "Grandchild p1 = new Grandchild(); p1.name = \"GRANDCHILD\"; System.out.println(p1.toString());";
 		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testTRO_CastExpression1(){
+		String pre 	= "Parent p1 = new Grandchild(); Grandchild g1 = (Child) p1; System.out.println(g1.toString());";
+		String post	= "Parent p1 = new Grandchild(); Grandchild g1 = (Grandchild) p1; System.out.println(g1.toString());";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testTRO_CastExpression2(){
+		String pre 	= "Object o1 = \"NAME\"; String s1 = (Object) o1; System.out.println(s1.toString());";
+		String post	= "Object o1 = \"NAME\"; String s1 = (String) o1; System.out.println(s1.toString());";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue()); 
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }
