@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.pcc.PCC;
+import mutationoperators.methodlevel.tro.TRO_Methodlevel;
 
 import org.junit.Test;
 
@@ -12,12 +14,18 @@ import utils.MethodTest;
 
 public class PCC_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_pcc;
+	MutationOperator mutop_tro;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new PCC();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_pcc = new PCC();
+		this.addMutationOperatorToTest(mutop_pcc);
+		this.mutop_tro = new TRO_Methodlevel();
+		this.addMutationOperatorToTest(mutop_tro);
+		this.mutop_aco = new ACO();
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
@@ -47,8 +55,10 @@ public class PCC_Test extends MethodTest {
 		String pre = 	"System.out.println(); ((Integer) this.i).toString(); System.out.println(this.s);";
 		String post = 	"System.out.println(); ((Object) this.i).toString(); System.out.println(this.s);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop)); 
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pcc)); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro)); 
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco)); 
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -56,8 +66,10 @@ public class PCC_Test extends MethodTest {
 		String pre = 	"if(((Object) this.s).hashCode() > 0){System.out.println(this.s);} ";
 		String post = 	"if(((String) this.s).hashCode() > 0){System.out.println(this.s);} ";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro)); 
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco)); 
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -65,8 +77,10 @@ public class PCC_Test extends MethodTest {
 		String pre = 	"Object c = new Smartphone(); System.out.println(((Computer) c).getProcessorNumber());";
 		String post = 	"Object c = new Smartphone(); System.out.println(((Smartphone) c).getProcessorNumber());";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop)); 
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro)); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco)); 
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -74,7 +88,9 @@ public class PCC_Test extends MethodTest {
 		String pre = 	"Smartphone c = new Smartphone(); System.out.println(((Computer) c).equals(null));";
 		String post = 	"Smartphone c = new Smartphone(); System.out.println(((Object) c).equals(null));";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro)); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco)); 
+		checkOtherMutationOperators(resultMap);
 	}
 }
