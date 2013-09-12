@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.cro.CRO;
+import mutationoperators.methodlevel.pnc.PNC;
 
 import org.junit.Test;
 
@@ -12,12 +14,18 @@ import utils.MethodTest;
 
 public class CRO_Test_MultipleFiles extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_cro;
+	MutationOperator mutop_pnc;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new CRO();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_cro = new CRO();
+		this.addMutationOperatorToTest(mutop_cro);
+		this.mutop_pnc = new PNC();
+		this.addMutationOperatorToTest(mutop_pnc);
+		this.mutop_aco = new ACO();
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
@@ -61,85 +69,111 @@ public class CRO_Test_MultipleFiles extends MethodTest {
 	
 	@Test
 	public void testCRO_SameConstructorMethod1() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Building();", "Building b = new Garage();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Building b = new Building();";
+		String post = "Building b = new Garage();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_SameConstructorMethod2() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Home();", "Building b = new HolidayHome();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Home b = new Home();";
+		String post = "Home b = new HolidayHome();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_SameConstructorMethod3() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Building();", "Building b = new HolidayHome();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Building b = new Building();";
+		String post = "Building b = new HolidayHome();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_SameConstructorMethod4() {
-		HashMap<String, Integer> resultMap = compareMatches("Home h = new Home();", "Home h = new HolidayHome();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Home h = new Home();";
+		String post = "Home h = new HolidayHome();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_SameConstructorMethod5() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Garage(2);", "Building b = new Home(2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Home b = new HolidayHome(2);";
+		String post = "Home b = new Home(2);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_SameConstructorMethod6() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Building(50000, 50000);", "Building b = new Home(2, 2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Building b = new Building(50000, 50000);";
+		String post = "Building b = new Home(2, 2);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_SameConstructorMethod7() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Building(4, 4);", "Building b = new Home(4, 4);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
-	
-	@Test
-	public void testCRO_SameConstructorMethod8() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Garage();", "Building b = new Garage(2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
-	
-	@Test
-	public void testCRO_SameConstructorMethod9() {
-		HashMap<String, Integer> resultMap = compareMatches("Garage g = new Garage();", "Garage g = new Garage(2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Building b = new Building(4, 4);";
+		String post = "Building b = new Home(4, 4);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_DifferentParameterNumber1() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Building();", "Building b = new Garage(2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Building b = new Building();";
+		String post = "Building b = new Building(2, 5);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_DifferentParameterNumber2() {
-		HashMap<String, Integer> resultMap = compareMatches("Building b = new Building(50000, 1);", "Building b = new Garage(2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Building b = new Building(50000, 1);";
+		String post = "Building b = new Garage(2);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testCRO_DifferentParameterNumber3() {
-		HashMap<String, Integer> resultMap = compareMatches("Home h = new HolidayHome();", "Home h = new Home(2);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Home h = new HolidayHome();";
+		String post = "Home h = new Home(2);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 }
