@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.methodlevel.jtd.JTD;
 import mutationoperators.methodlevel.jti.JTI;
 
 import org.junit.Test;
@@ -14,14 +13,11 @@ import utils.MethodTest;
 public class JTI_Test extends MethodTest {
 
 	MutationOperator mutop_jti;
-	MutationOperator mutop_jtd;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
 		this.mutop_jti = new JTI();
-		this.mutop_jtd = new JTD();
 		this.addMutationOperatorToTest(mutop_jti);
-		this.addMutationOperatorToTest(mutop_jtd);
 	}
 
 	@Override
@@ -107,44 +103,5 @@ public class JTI_Test extends MethodTest {
 		assertEquals(1, getApplicationValue(resultMap, mutop_jti));
 		checkOtherMutationOperators(resultMap);
 	}
-	
-	@Test
-	public void testJTI_NoMatch1() {
-		HashMap<String, Integer> resultMap = compareMatches("test4(this.b, this.b);", "test4(b, this.b);");
-		assertEquals(0, getApplicationValue(resultMap, mutop_jti));
-		assertEquals(1, getApplicationValue(resultMap, mutop_jtd));
-		checkOtherMutationOperators(resultMap);
-	}
-	
-	@Test
-	public void testJTI_NoMatch2() {
-		HashMap<String, Integer> resultMap = compareMatches("a = this.a*2;", "a = a*2;");
-		assertEquals(0, getApplicationValue(resultMap, mutop_jti));
-		assertEquals(1, getApplicationValue(resultMap, mutop_jtd));
-		checkOtherMutationOperators(resultMap);
-	}	
-	
-	@Test
-	public void testJTI_NoMatch3() {
-		HashMap<String, Integer> resultMap = compareMatches("this.a = 5;", "a = 5;");
-		assertEquals(0, getApplicationValue(resultMap, mutop_jti));
-		assertEquals(1, getApplicationValue(resultMap, mutop_jtd));
-		checkOtherMutationOperators(resultMap);
-	}
-	
-	@Test
-	public void testJTI_NoMatch4() {
-		HashMap<String, Integer> resultMap = compareMatches("this.a = 5;", "this.c = 5;");
-		assertEquals(0, getApplicationValue(resultMap, mutop_jti));
-		assertEquals(1, getApplicationValue(resultMap, mutop_jtd));
-		checkOtherMutationOperators(resultMap);
-	}
-	
-	@Test
-	public void testJTI_NoMatch5() {
-		HashMap<String, Integer> resultMap = compareMatches("a = this.a*2;", "a = this.c*2;");
-		assertEquals(0, getApplicationValue(resultMap, mutop_jti));
-		assertEquals(1, getApplicationValue(resultMap, mutop_jtd));
-		checkOtherMutationOperators(resultMap);
-	}	
+
 }
