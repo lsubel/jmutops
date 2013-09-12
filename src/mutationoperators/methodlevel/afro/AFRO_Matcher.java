@@ -5,6 +5,9 @@ import mutationoperators.TwoASTMatcher;
 
 import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.ITypeBinding;
+import org.eclipse.jdt.core.dom.IVariableBinding;
+
+import utils.ITypeBindingUtils;
 
 public class AFRO_Matcher extends TwoASTMatcher {
 
@@ -22,16 +25,20 @@ public class AFRO_Matcher extends TwoASTMatcher {
 
 		// try to check for the same class binding
 		FieldAccess node2 = (FieldAccess) other;
-		ITypeBinding firstClass = node.resolveFieldBinding().getDeclaringClass();
-		ITypeBinding secondClass = node2.resolveFieldBinding().getDeclaringClass();
-		boolean sameDeclaringClass = firstClass.isEqualTo(secondClass);
+		IVariableBinding node_fieldbinding 	= node.resolveFieldBinding();
+		IVariableBinding node2_fieldbinding = node2.resolveFieldBinding();
+		ITypeBinding node_fieldbinding_declaringclass 	= node_fieldbinding.getDeclaringClass();
+		ITypeBinding node2_fieldbinding_declaringclass 	= node2_fieldbinding.getDeclaringClass();
 		
-		// check if both FieldAccess are describing different fields
-		boolean differentFieldName = !(node.getName().subtreeMatch(defaultMatcher, (node2.getName())));
+		
+		// check the conditions
+		boolean sameDeclaringClass 		= (node_fieldbinding_declaringclass.isEqualTo(node2_fieldbinding_declaringclass) || ITypeBindingUtils.isTypeParentOfOtherType(node_fieldbinding_declaringclass, node2_fieldbinding_declaringclass) || ITypeBindingUtils.isTypeParentOfOtherType(node2_fieldbinding_declaringclass, node_fieldbinding_declaringclass));
+		boolean differentAccessedField 	= !(node.subtreeMatch(defaultMatcher, node2));
+		boolean differentBindedField 	= !(node.resolveFieldBinding().isEqualTo(node2.resolveFieldBinding()));
 		
 		// if both fields are declared in the same class and both fields are different,
 		// we have found a matching
-		if(sameDeclaringClass && differentFieldName){
+		if(sameDeclaringClass && differentAccessedField){
 			mutop.found(node, node2);
 			return true;			
 		}
