@@ -74,13 +74,6 @@ public class SOR_Test extends MethodTest {
 		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
-	
-	@Test
-	public void testSOR_notShift2() {
-		HashMap<String, Integer> resultMap = compareMatches("int result = b >>> 25 ;System.out.println();", "int result = a >>> 25 ;System.out.println();");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
 	 
 	@Test
 	public void testSOR_multipleShift1() {
