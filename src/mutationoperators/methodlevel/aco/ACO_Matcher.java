@@ -25,23 +25,29 @@ public class ACO_Matcher extends TwoASTMatcher {
 			// cast other node
 			MethodInvocation node2 = (MethodInvocation) other;
 			
+			// if both methods have no parameters, we can abort
+			boolean noArguments = (node.resolveMethodBinding().getParameterTypes().length == 0) && (node2.resolveMethodBinding().getParameterTypes().length == 0);
+			if(noArguments) {
+				return false;
+			}
+			
 			// first check if both methods have the same method name
 			boolean sameMethodName = node.getName().subtreeMatch(defaultMatcher, node2.getName());
 			
 			if(sameMethodName){
 				// resolve the bindings
-				IMethodBinding method1 = node.resolveMethodBinding();
-				IMethodBinding method2 = node2.resolveMethodBinding();
+				IMethodBinding node_methodbinding = node.resolveMethodBinding();
+				IMethodBinding node2_methodbinding = node2.resolveMethodBinding();
 				
 				// check if both methods are equal
-				boolean sameMethods = method1.isEqualTo(method2);
+				boolean sameMethods = node_methodbinding.isEqualTo(node2_methodbinding);
 				
 				if(sameMethods){
-					assert method1.getParameterTypes().equals(method2.getParameterTypes());
+					assert node_methodbinding.getParameterTypes().equals(node2_methodbinding.getParameterTypes());
 					
-					// check for changes position of arguments
+					// check conditions
 					boolean argumentPositionChanged = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
-					
+							
 					if (argumentPositionChanged) {
 						this.mutop.found(node, node2);
 						return true;
@@ -50,14 +56,15 @@ public class ACO_Matcher extends TwoASTMatcher {
 				// otherwise we have different methods
 				else{
 					// check if the different constructors have the same number of arguments
-					boolean sameArgumentNumber = (method1.getParameterTypes().length == method2.getParameterTypes().length);
+					boolean nonEmptyArguments  = (node_methodbinding.getParameterTypes().length != 0) && (node2_methodbinding.getParameterTypes().length != 0);
+					boolean sameArgumentNumber = (node_methodbinding.getParameterTypes().length == node2_methodbinding.getParameterTypes().length);
 					
 					// if both have the sane argument length
-					if(sameArgumentNumber){
+					if(nonEmptyArguments && sameArgumentNumber){
 						// we have to check for a different ordering
 						// => we check if there is the same number of types declared in both parameters
-						ITypeBinding[] parameterTypes1 = method1.getParameterTypes();
-						ITypeBinding[] parameterTypes2 = method2.getParameterTypes();
+						ITypeBinding[] parameterTypes1 = node_methodbinding.getParameterTypes();
+						ITypeBinding[] parameterTypes2 = node2_methodbinding.getParameterTypes();
 						
 						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
 						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
@@ -72,8 +79,8 @@ public class ACO_Matcher extends TwoASTMatcher {
 					}
 					// otherwise we also have a different number of arguments
 					else{
-						ITypeBinding[] parameterTypes1 = method1.getTypeParameters();
-						ITypeBinding[] parameterTypes2 = method2.getTypeParameters();
+						ITypeBinding[] parameterTypes1 = node_methodbinding.getTypeParameters();
+						ITypeBinding[] parameterTypes2 = node2_methodbinding.getTypeParameters();
 						
 						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
 						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
