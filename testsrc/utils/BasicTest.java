@@ -161,29 +161,52 @@ public abstract class BasicTest {
 	 * @param postFix The postfix version of code.
 	 * @return The map.
 	 */
-	public HashMap<MutationOperator, Integer> compareMatches(File preFix, File postFix) {
+	public HashMap<String, Integer> compareMatches(File preFix, File postFix) {
 		// initialize the hashmap which contains the result
-		HashMap<MutationOperator, Integer> resultMap = new HashMap<MutationOperator, Integer>();
+		HashMap<String, Integer> resultMap = new HashMap<String, Integer>();
 		// run jMutOps on both files
 		this.jmutops.checkFiles(preFix, postFix);
-		// fill the HashMap
-		for(MutationOperator mutop: this.listOfTestedMutationOperators){
-			resultMap.put(mutop, this.counter.getCount(mutop.getShortname()));
+		// fill the HashMap 
+		for(String mutop_shortcut: this.counter.getAllInitializedMutationOperators()){
+			resultMap.put(mutop_shortcut, this.counter.getCount(mutop_shortcut));
 		}
 		return resultMap;
 	}
 	
-	public void checkOtherMutationOperators(HashMap<MutationOperator, Integer> map, MutationOperator checkedOperators){
-		ArrayList<MutationOperator> list = new ArrayList<MutationOperator>();
-		list.add(checkedOperators);
-		checkOtherMutationOperators(map, list);
+	public void checkOtherMutationOperators(HashMap<String, Integer> map, MutationOperator checkedOperators){
+		List<String> list = new ArrayList<String>();
+		list.add(checkedOperators.getShortname());
+		checkRemainingOperators(map, list);
 	}	
 	
-	public void checkOtherMutationOperators(HashMap<MutationOperator, Integer> map, List<MutationOperator> checkedOperators){
-		for(MutationOperator mutop: map.keySet()){
-			if(!checkedOperators.contains(mutop)){
-				assertEquals(0, map.get(mutop).intValue());
+	public void checkOtherMutationOperators(HashMap<String, Integer> map, List<MutationOperator> checkedOperators){
+		List<String> mutop_list = new ArrayList<String>();
+		for(MutationOperator mutop: checkedOperators) {
+			mutop_list.add(mutop.getShortname());
+		}
+		checkRemainingOperators(map, mutop_list);
+	}
+	
+	public void checkOtherMutationOperators(HashMap<String, Integer> map, String checkedOperators){
+		List<String> list = new ArrayList<String>();
+		list.add(checkedOperators);
+		checkRemainingOperators(map, list);
+	}	
+	
+	private void checkRemainingOperators(HashMap<String, Integer> map, List<String> checkedOperators){
+		for(String mutop_shortcut: map.keySet()){
+			if(!checkedOperators.contains(mutop_shortcut)){
+				assertEquals(0, map.get(mutop_shortcut).intValue());
 			}
+		}
+	}
+	
+	protected int getApplicationValue(HashMap<String, Integer> map, MutationOperator mutop) {
+		if(map.containsKey(mutop.getShortname())) {
+			return map.get(mutop.getShortname()).intValue();
+		}
+		else {
+			return 0;
 		}
 	}
 	

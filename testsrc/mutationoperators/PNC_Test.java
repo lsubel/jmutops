@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.pnc.PNC;
 
 import org.junit.Test;
@@ -48,8 +47,8 @@ public class PNC_Test extends MethodTest {
 	public void testPNC_Test1(){
 		String pre 	= "this.p = new Parent(); p.value = this.a; System.out.println(p.name);";
 		String post	= "this.p = new Child(); p.value = this.a; System.out.println(p.name);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -57,8 +56,8 @@ public class PNC_Test extends MethodTest {
 	public void testPNC_Test2(){ 
 		String pre 	= "this.p = new Parent(); 		p.value = this.a; System.out.println(p.name);";
 		String post	= "this.p = new Grandchild();  p.value = this.a; System.out.println(p.name);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -66,8 +65,8 @@ public class PNC_Test extends MethodTest {
 	public void testPNC_Test3(){
 		String pre 	= "Child p; p = new Grandchild(); p.value = this.a; System.out.println(p.name);";
 		String post	= "Child p; p = new Child(); p.value = this.a; System.out.println(p.name);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

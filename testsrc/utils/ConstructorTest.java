@@ -43,7 +43,7 @@ public abstract class ConstructorTest extends InheritTest {
 	* @param postfixMethodBody The postfix method body.
 	* @return The number of applications of the {@link MutationOperator} under test.
 	*/
-	public HashMap<MutationOperator, Integer> compareMatches(String arguments, String prefixMethodBody, String postfixMethodBody) {
+	public HashMap<String, Integer> compareMatches(String arguments, String prefixMethodBody, String postfixMethodBody) {
 		File preFix = this.createPrefixSourceFile(this.createFieldConstructorSourceCode(arguments, prefixMethodBody));
 		File postFix = this.createPostfixSourceFile(this.createFieldConstructorSourceCode(arguments, postfixMethodBody));
 		

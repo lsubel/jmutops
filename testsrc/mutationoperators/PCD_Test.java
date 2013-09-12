@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.pcd.PCD;
 
 import org.junit.Test;
@@ -47,8 +46,8 @@ public class PCD_Test extends MethodTest {
 	public void testPCDClassField1() {
 		String pre = 	"System.out.println(); ((Object) this.i).toString(); System.out.println(this.s);";
 		String post = 	"System.out.println(); (this.i).toString(); System.out.println(this.s);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue()); 
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop)); 
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -56,8 +55,8 @@ public class PCD_Test extends MethodTest {
 	public void testPCD_ClassField2() {
 		String pre = 	"if(((Object) this.s).hashCode() > 0){System.out.println(this.s);} ";
 		String post = 	"if((this.s).hashCode() > 0){System.out.println(this.s);} ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -65,8 +64,8 @@ public class PCD_Test extends MethodTest {
 	public void testPCD_LocalVar1() {
 		String pre = 	"Computer c = new Smartphone(); System.out.println((Smartphone) c.getProcessorNumber());";
 		String post = 	"Computer c = new Smartphone(); System.out.println(c.getProcessorNumber());";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue()); 
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop)); 
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -74,8 +73,8 @@ public class PCD_Test extends MethodTest {
 	public void testPCD_LocalVar2() {
 		String pre = 	"Smartphone c = new Smartphone(); System.out.println((Object) c.equals(null));";
 		String post = 	"Smartphone c = new Smartphone(); System.out.println(c.equals(null));";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -83,8 +82,8 @@ public class PCD_Test extends MethodTest {
 	public void testPCD_FailingTest1() {
 		String pre = 	"Smartphone c = new Smartphone(); System.out.println(((Object) c).equals(null));";
 		String post = 	"Smartphone c = new Smartphone(); System.out.println(c.equals(null));";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

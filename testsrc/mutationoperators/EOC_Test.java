@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.eoc.EOC;
 
 import org.junit.Test;
@@ -44,8 +43,8 @@ public class EOC_Test extends MethodTest {
 	public void testEOC_oneDepth(){
 		String pre 	= "Stack s = new Stack(); s.push(this.st1); boolean b = (this.st2 == s);";
 		String post	= "Stack s = new Stack(); s.push(this.st1); boolean b = (this.st2.equals(s));";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -53,8 +52,8 @@ public class EOC_Test extends MethodTest {
 	public void testEOC_twoDepth1(){
 		String pre 	= "Stack s = new Stack(); s.otherStack = this.st1; boolean b = (this.st1 == s.otherStack);";
 		String post	= "Stack s = new Stack(); s.otherStack = this.st1; boolean b = (this.st1.equals(s.otherStack));";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -62,8 +61,8 @@ public class EOC_Test extends MethodTest {
 	public void testEOC_twoDepth2(){
 		String pre 	= "Stack s = new Stack(); s.otherStack = this.st1; boolean b = (s.otherStack == this.st1);";
 		String post	= "Stack s = new Stack(); s.otherStack = this.st1; boolean b = (s.otherStack.equals(this.st1));";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 

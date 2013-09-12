@@ -44,8 +44,8 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_LocalObject1() {
 		String pre 	= "Object obj; String s = \"Hello\"; Integer i = new Integer(4); obj = s; ";
 		String post = "Object obj; String s = \"Hello\"; Integer i = new Integer(4); obj = i; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -53,8 +53,8 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_LocalObject2() {
 		String pre 	= "Object objtarget; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); objtarget = rc; ";
 		String post = "Object objtarget; RootClass rc = new RootClass(); SubClass1 sc1 = new SubClass1(); objtarget = sc1; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -62,8 +62,8 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_LocalObject3() {
 		String pre 	= "RootClass rctarget; RootClass rcsrc = new RootClass(); SubClass1 scsrc = new SubClass1(); rctarget = rcsrc; ";
 		String post = "RootClass rctarget; RootClass rcsrc = new RootClass(); SubClass1 scsrc = new SubClass1(); rctarget = scsrc; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -71,8 +71,8 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_ClassField1() {
 		String pre 	= "RootClass rcl = new RootClass(); SubClass1 sc1 = new SubClass1(); this.rc = rcl; System.out.println();";
 		String post = "RootClass rcl = new RootClass(); SubClass1 sc1 = new SubClass1(); this.rc = sc1; System.out.println();";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue()); 
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop)); 
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -80,8 +80,8 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_ClassField2() {
 		String pre 	= "Integer i = new Integer(4); this.obj = this.s1; ";
 		String post = "Integer i = new Integer(4); this.obj = i; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -89,8 +89,8 @@ public class PRV_Test extends MethodTest {
 	public void testPRV_NoMatching1() {
 		String pre 	= "Integer i = new Integer(4); Integer i2 = new Integer(5); this.obj = i; ";
 		String post = "Integer i = new Integer(4); Integer i2 = new Integer(5); this.obj = i2; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(0, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

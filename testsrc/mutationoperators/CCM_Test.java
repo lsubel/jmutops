@@ -63,8 +63,8 @@ public class CCM_Test extends MethodTest {
 	public void testCCM_RemoveObject1() {
 		String pre 	= "String message = \"START PROCESS\"; System.out.println(message); Building b = new Building(); ";
 		String post = "String message = \"START PROCESS\"; System.out.println(message); Building b = null; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}	
 	
@@ -72,8 +72,8 @@ public class CCM_Test extends MethodTest {
 	public void testCCM_RemoveObject2() {
 		String pre 	= "Home h = new Home(2); System.out.println(); Garage g = new Garage(); ";
 		String post = "Home h = null; System.out.println(); Garage g = null; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(2, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(2, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}	
 	
@@ -81,8 +81,8 @@ public class CCM_Test extends MethodTest {
 	public void testCCM_RemoveObject3() {
 		String pre 	= "Home h = new Home(); String s = new String(); System.out.println(); ";
 		String post = "Home h = new Home(); String s = null; System.out.println(); ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}	
 }

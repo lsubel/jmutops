@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.cro.CRO;
 
 import org.junit.Test;
@@ -37,29 +36,29 @@ public class CRO_Test_SameClass extends MethodTest {
 
 	@Test
 	public void testCRO_LocalReplacement1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testCRO_LocalReplacement2() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1, null);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo Temp = new Foo();", "Foo Temp = new Foo(1, null);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 
 	@Test
 	public void testCRO_SameArgumentNumber1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(1);", "childRight = new Foo(); Foo Temp = new Foo(childRight);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(1);", "childRight = new Foo(); Foo Temp = new Foo(childRight);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testCRO_SameArgumentNumber2() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(childRight, childRight);", "childRight = new Foo(); Foo Temp = new Foo(42, childRight);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(childRight, childRight);", "childRight = new Foo(); Foo Temp = new Foo(42, childRight);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 

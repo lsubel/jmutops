@@ -54,8 +54,8 @@ public class IPC_Test extends ConstructorTest {
 		String args = "int i";
 		String pre 	= "super(i); System.out.println(this.size);";
 		String post	= "System.out.println(this.size);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 
@@ -64,8 +64,8 @@ public class IPC_Test extends ConstructorTest {
 		String args = "Object o";
 		String pre 	= "super(1); System.out.println(this.size);";
 		String post	= "System.out.println(this.size);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 
@@ -74,8 +74,8 @@ public class IPC_Test extends ConstructorTest {
 		String args = "int i";
 		String pre 	= "super(i); System.out.println(this.size);";
 		String post	= "System.out.println(this.size);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -84,8 +84,8 @@ public class IPC_Test extends ConstructorTest {
 		String args = "int i";
 		String pre 	= "super(); System.out.println(this.size);";
 		String post	= "System.out.println(this.size);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
-		assertEquals(0, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -94,8 +94,8 @@ public class IPC_Test extends ConstructorTest {
 		String args = "int i";
 		String pre 	= "super(); System.out.println(this.size);";
 		String post	= "super(i); System.out.println(this.size);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(args, pre, post);
-		assertEquals(0, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(args, pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

@@ -38,78 +38,78 @@ public class ACO_Test extends MethodTest {
 	
 	@Test
 	public void testACO_MethodNumberChanged1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("setValue(1);", "setValue(1, 2);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("setValue(1);", "setValue(1, 2);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_MethodNumberChanged2() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f1, f2);", "Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f2);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f1, f2);", "Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f2);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 
 	@Test
 	public void testACO_ConstructorNumberChanged1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(0, 4);", "Foo f1 = new Foo();");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(0, 4);", "Foo f1 = new Foo();");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 
 	@Test
 	public void testACO_ConstructorNumberChanged2() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(0);", "Foo f1 = new Foo(6, 1);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(0);", "Foo f1 = new Foo(6, 1);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_ConstructorReordering1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(42, 0);", "Foo f1 = new Foo(0, 42);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(42, 0);", "Foo f1 = new Foo(0, 42);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_MethodReordering1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f1, f2);", "Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f2, f1);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f1, f2);", "Foo f1 = new Foo(); Foo f2 = new Foo(2); setValue(f2, f1);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_MethodReordering2() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("setValue(2, 1);", "setValue(1, 2);");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("setValue(2, 1);", "setValue(1, 2);");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_NoMatching1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("int i = getZero();", "int i = getValue();");
-		assertEquals(0, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("int i = getZero();", "int i = getValue();");
+		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_NoMatching2() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); ", "Foo f1 = new Foo(); Foo f2 = new Foo(f1); ");
-		assertEquals(0, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(); Foo f2 = new Foo(2); ", "Foo f1 = new Foo(); Foo f2 = new Foo(f1); ");
+		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_NoMatching3() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo f1 = new Foo(); setValue(f1); ", "Foo f1 = new Foo(); setValue(1); ");
-		assertEquals(0, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo f1 = new Foo(); setValue(f1); ", "Foo f1 = new Foo(); setValue(1); ");
+		assertEquals(0, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
 	@Test
 	public void testACO_ExampleAspectj1() {
-		HashMap<MutationOperator, Integer> resultMap = compareMatches("Foo concreteAspect = new Foo(); String aspectCode = \"CODE\"; StringBuffer namespace = new StringBuffer(); namespace = namespace.append((\";\" + aspectCode));", "Foo concreteAspect = new Foo(); String aspectCode = \"CODE\"; StringBuffer namespace = new StringBuffer(); namespace = namespace.append((\";\" + concreteAspect.name));");
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches("Foo concreteAspect = new Foo(); String aspectCode = \"CODE\"; StringBuffer namespace = new StringBuffer(); namespace = namespace.append((\";\" + aspectCode));", "Foo concreteAspect = new Foo(); String aspectCode = \"CODE\"; StringBuffer namespace = new StringBuffer(); namespace = namespace.append((\";\" + concreteAspect.name));");
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

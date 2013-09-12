@@ -50,7 +50,7 @@ public abstract class ClassTest extends BasicTest {
 	 * @param postfixMethodBody The postfix method body.
 	 * @return The number of applications of the {@link MutationOperator} under test.
 	 */
-	public HashMap<MutationOperator, Integer> compareMatches(String prefixItem, String postfixItem) {
+	public HashMap<String, Integer> compareMatches(String prefixItem, String postfixItem) {
 		File preFix = this.createPrefixSourceFile(this.createClassSourceCode(prefixItem));
 		File postFix = this.createPostfixSourceFile(this.createClassSourceCode(postfixItem));
 

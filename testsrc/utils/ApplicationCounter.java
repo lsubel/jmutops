@@ -3,6 +3,7 @@ package utils;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import mutationoperators.MutationOperator;
 
@@ -29,6 +30,19 @@ public class ApplicationCounter implements JMutOpsEventListener {
 	public ApplicationCounter() {
 		this.counter = new HashMap<String, Integer>();
 	}
+	
+	public Integer getCount(String operator){
+		if(this.counter.containsKey(operator)){
+			return this.counter.get(operator);
+		} else{
+			return 0;
+		}
+	}
+	
+	public Set<String> getAllInitializedMutationOperators(){
+		return this.counter.keySet();
+	}
+	
 	
 	@Override
 	public void OnMutationOperatorInit(MutationOperator mutop) {
@@ -71,14 +85,6 @@ public class ApplicationCounter implements JMutOpsEventListener {
 			System.out.println(operatorName + ": " + value);
 		}
 		System.out.println("");
-	}
-	
-	public Integer getCount(String operator){
-		if(this.counter.containsKey(operator)){
-			return this.counter.get(operator);
-		} else{
-			return 0;
-		}
 	}
 
 	@Override

@@ -46,8 +46,8 @@ public class NVMCM_Test extends MethodTest {
 	public void testNVMCM_RemoveLocalMethod1() {
 		String pre 	= "resetCounter(); if(isZero()) {int result = getCounter(); System.out.println(result);} ";
 		String post = "resetCounter(); if(false) {int result = getCounter(); System.out.println(result);} ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 
@@ -55,8 +55,8 @@ public class NVMCM_Test extends MethodTest {
 	public void testNVMCM_RemoveLocalMethod2() {
 		String pre 	= "resetName(); name = \"NAME\"; int length = getNameLength(); System.out.println(length);";
 		String post = "resetName(); name = \"NAME\"; int length = 0; System.out.println(length);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -64,8 +64,8 @@ public class NVMCM_Test extends MethodTest {
 	public void testNVMCM_RemoveLocalMethod3() {
 		String pre 	= "resetCounter(); incrementCounter(1); System.out.println(getFirstCharOfName());";
 		String post = "resetCounter(); incrementCounter(1); System.out.println('\u0000');";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 	
@@ -73,8 +73,8 @@ public class NVMCM_Test extends MethodTest {
 	public void testNVMCM_RemoveLocalMethod4() {
 		String pre 	= "resetCounter(); incrementCounter(1); String s = getName(); ";
 		String post = "resetCounter(); incrementCounter(1); String s = null; ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.isd.ISD;
 
 import org.junit.Test;
@@ -65,8 +64,8 @@ public class ISD_Test extends InheritTest {
 	public void testISD_Field1(){
 		String pre 	= "int v = super.value;  System.out.println(v);";
 		String post	= "int v = value;  System.out.println(v);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -74,8 +73,8 @@ public class ISD_Test extends InheritTest {
 	public void testISD_Field2(){
 		String pre 	= "String n = super.name;  System.out.println(n);";
 		String post	= "String n = name;  System.out.println(n);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -83,8 +82,8 @@ public class ISD_Test extends InheritTest {
 	public void testISD_Method1(){
 		String pre 	= "int v = super.getValue();  System.out.println(v);";
 		String post	= "int v = getValue();  System.out.println(v);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 	
@@ -92,8 +91,8 @@ public class ISD_Test extends InheritTest {
 	public void testISD_Method2(){
 		String pre 	= "String n = super.getName();  System.out.println(n);";
 		String post	= "String n = getName();  System.out.println(n);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
 	}
 }

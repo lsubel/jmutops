@@ -45,8 +45,8 @@ MutationOperator mutop;
 	public void testVMCM_RemoveLocalMethod1() {
 		String pre 	= "resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter(); System.out.println(result);";
 		String post = "resetCounter(); incrementCounter(5); int result = getCounter(); System.out.println(result);";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 
@@ -54,8 +54,8 @@ MutationOperator mutop;
 	public void testVMCM_RemoveLocalMethod2() {
 		String pre 	= "resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter(); System.out.println(result);";
 		String post = "resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter();";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 	
@@ -63,8 +63,8 @@ MutationOperator mutop;
 	public void testVMCM_RemoveLocalMethod3() {
 		String pre 	= "resetCounter(); incrementCounter(1); System.out.println(getName());";
 		String post = "resetCounter(); incrementCounter(1); ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 	
@@ -72,8 +72,8 @@ MutationOperator mutop;
 	public void testVMCM_RemoveLocalMethod4() {
 		String pre 	= "resetCounter(); incrementCounter(1); this.getName().notify(); ";
 		String post = "resetCounter(); incrementCounter(1); ";
-		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, resultMap.get(mutop).intValue());
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
 }
