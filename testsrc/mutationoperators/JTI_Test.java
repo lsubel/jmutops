@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.jti.JTI;
 
 import org.junit.Test;
@@ -13,11 +14,14 @@ import utils.MethodTest;
 public class JTI_Test extends MethodTest {
 
 	MutationOperator mutop_jti;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
 		this.mutop_jti = new JTI();
+		this.mutop_aco = new ACO();
 		this.addMutationOperatorToTest(mutop_jti);
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
@@ -101,6 +105,7 @@ public class JTI_Test extends MethodTest {
 	public void testJTI_Argument2() {
 		HashMap<String, Integer> resultMap = compareMatches("test4(b, b);", "test4(b, this.b);");
 		assertEquals(1, getApplicationValue(resultMap, mutop_jti));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 
