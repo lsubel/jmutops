@@ -86,9 +86,10 @@ public class VRO_Matcher extends TwoASTMatcher {
 			
 			// check conditions
 			boolean differentNodes = !(node.subtreeMatch(defaultMatcher, node2));
+			boolean differentName  = !(node.resolveBinding().isEqualTo(node2.getName().resolveBinding()));
 			boolean isCastCompatible = ITypeBindingUtils.isTypeParentOfOtherType(type, type2) || ITypeBindingUtils.isTypeParentOfOtherType(type2, type);
 			
-			if(differentNodes && isCastCompatible) {
+			if(differentNodes && differentName && isCastCompatible) {
 				this.mutop.found(node, node2);
 				return false;
 			}
