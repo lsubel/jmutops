@@ -4,6 +4,7 @@ import mutationoperators.TwoASTMatcher;
 import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
@@ -11,6 +12,25 @@ public class TRO_Visitor_Methodlevel extends TwoASTVisitor {
 
 	public TRO_Visitor_Methodlevel(TwoASTMatcher matcher) {
 		super(matcher);
+	}
+	
+	@Override
+	public boolean visit(CastExpression node) {
+		// locally store the AST
+		ASTNode localStoredTree = getParallelTree();
+
+		if(localStoredTree instanceof CastExpression){
+			// cast other node
+			CastExpression cast = (CastExpression) localStoredTree;
+			
+			// check for an application
+			matcher.match(node, cast);
+			
+			// visit the expression node
+			visitSubtree(node.getExpression(), cast.getExpression());
+		}
+		
+		return false;
 	}
 
 	@Override
@@ -24,6 +44,9 @@ public class TRO_Visitor_Methodlevel extends TwoASTVisitor {
 			
 			// check for an application
 			matcher.match(node, vde);
+			
+			// visit the fragement nodes
+			visitSubtrees(node.fragments(), vde.fragments());
 		}
 		
 		return false;
@@ -40,6 +63,9 @@ public class TRO_Visitor_Methodlevel extends TwoASTVisitor {
 
 			// check for an application
 			matcher.match(node, vds);
+			
+			// visit the fragement nodes
+			visitSubtrees(node.fragments(), vds.fragments());
 		}
 		
 		return false;
