@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.nvmcm.NVMCM;
 
 import org.junit.Test;
@@ -12,12 +13,15 @@ import utils.MethodTest;
 
 public class NVMCM_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_nvmcm;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new NVMCM();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_nvmcm = new NVMCM();
+		this.addMutationOperatorToTest(mutop_nvmcm);
+		this.mutop_aco = new ACO();
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
@@ -47,8 +51,9 @@ public class NVMCM_Test extends MethodTest {
 		String pre 	= "resetCounter(); if(isZero()) {int result = getCounter(); System.out.println(result);} ";
 		String post = "resetCounter(); if(false) {int result = getCounter(); System.out.println(result);} ";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_nvmcm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap); 
 	}
 
 	@Test 
@@ -56,8 +61,9 @@ public class NVMCM_Test extends MethodTest {
 		String pre 	= "resetName(); name = \"NAME\"; int length = getNameLength(); System.out.println(length);";
 		String post = "resetName(); name = \"NAME\"; int length = 0; System.out.println(length);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_nvmcm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test 
@@ -65,8 +71,9 @@ public class NVMCM_Test extends MethodTest {
 		String pre 	= "resetCounter(); incrementCounter(1); System.out.println(getFirstCharOfName());";
 		String post = "resetCounter(); incrementCounter(1); System.out.println('\u0000');";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_nvmcm));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap); 
 	}
 	
 	@Test 
@@ -74,8 +81,9 @@ public class NVMCM_Test extends MethodTest {
 		String pre 	= "resetCounter(); incrementCounter(1); String s = getName(); ";
 		String post = "resetCounter(); incrementCounter(1); String s = null; ";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_nvmcm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap); 
 	}
 
 }
