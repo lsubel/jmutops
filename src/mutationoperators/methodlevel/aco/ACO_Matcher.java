@@ -40,8 +40,8 @@ public class ACO_Matcher extends TwoASTMatcher {
 					assert method1.getParameterTypes().equals(method2.getParameterTypes());
 					
 					// check for changes position of arguments
-					boolean argumentPositionChanged = !(node.arguments().equals(node2.arguments()));
-
+					boolean argumentPositionChanged = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
+					
 					if (argumentPositionChanged) {
 						this.mutop.found(node, node2);
 						return true;
@@ -119,8 +119,7 @@ public class ACO_Matcher extends TwoASTMatcher {
 							.equals(constructor2.getParameterTypes()));
 
 					// check for changes position of arguments
-					boolean argumentPositionChanged = !(node.arguments()
-							.equals(node2.arguments()));
+					boolean argumentPositionChanged = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
 
 					if (argumentPositionChanged) {
 						this.mutop.found(node, node2);
