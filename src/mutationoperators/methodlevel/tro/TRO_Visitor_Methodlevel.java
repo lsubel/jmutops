@@ -5,6 +5,8 @@ import mutationoperators.TwoASTVisitor;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CastExpression;
+import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
@@ -30,6 +32,46 @@ public class TRO_Visitor_Methodlevel extends TwoASTVisitor {
 			visitSubtree(node.getExpression(), cast.getExpression());
 		}
 		
+		return false;
+	}
+
+	@Override
+	public boolean visit(CatchClause node) {
+		// locally store the AST
+		ASTNode localStoredTree = getParallelTree();
+		
+		// check for same node type in parallel tree
+		if(localStoredTree instanceof CatchClause){
+			CatchClause cc = (CatchClause) localStoredTree;
+		
+			// since in this case only the exception might be a match, 
+			// we call the matcher
+			this.matcher.match(node.getException(), cc.getException());
+			
+			// visit the block node
+			visitSubtree(node.getBody(), cc.getBody());
+		}
+		return false;
+	}
+	
+	
+	
+	@Override
+	public boolean visit(ThrowStatement node) {
+		// locally store the AST
+		ASTNode localStoredTree = getParallelTree();
+		
+		// check for same node type in parallel tree
+		if(localStoredTree instanceof ThrowStatement){
+			ThrowStatement ts = (ThrowStatement) localStoredTree;
+		
+			// since in this case only the exception might be a match, 
+			// we call the matcher
+			this.matcher.match(node, ts);
+			
+			// visit the block node
+			visitSubtree(node.getExpression(), ts.getExpression());
+		}
 		return false;
 	}
 

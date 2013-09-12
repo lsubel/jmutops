@@ -88,4 +88,22 @@ MutationOperator mutop;
 		assertEquals(1, resultMap.get(mutop).intValue()); 
 		checkOtherMutationOperators(resultMap, mutop);
 	}
+	
+	@Test
+	public void testTRO_ExceptionParamter1(){
+		String pre	= "try {Object o = null;o.equals(null);} catch (NullPointerException e) {System.out.println(\"NullPointerException\");}";
+		String post = "try {Object o = null;o.equals(null);} catch (Exception e) {System.out.println(\"NullPointerException\");}";
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
+	
+	@Test
+	public void testEHC_ThrowException1(){
+		String pre 	= "if(this.name.equals(\"EXCEPTION\")) {throw new IllegalStateException(\"Illegal State\");}"; 
+		String post	= "if(this.name.equals(\"EXCEPTION\")) {throw new Exception(\"Illegal State\");}"; 
+		HashMap<MutationOperator, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, resultMap.get(mutop).intValue());
+		checkOtherMutationOperators(resultMap, mutop);
+	}
 }
