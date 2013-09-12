@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.cor.COR;
 import mutationoperators.methodlevel.lor.LOR;
 
 import org.junit.Test;
@@ -12,12 +13,15 @@ import utils.MethodTest;
 
 public class LOR_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_lor;
+	MutationOperator mutop_cor;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new LOR();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_lor = new LOR();
+		this.addMutationOperatorToTest(mutop_lor);
+		this.mutop_cor = new COR();
+		this.addMutationOperatorToTest(mutop_cor);
 	}
 
 	@Override
@@ -30,58 +34,82 @@ public class LOR_Test extends MethodTest {
 	
 	@Test
 	public void testLOR_constantComparision1(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = (true & false); System.out.println();", "boolean result = (true | false); System.out.println();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = (true & false); System.out.println();";
+		String post = "boolean result = (true | false); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 
 	@Test
 	public void testLOR_constantComparision2(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = (true ^ false); System.out.println();", "boolean result = (true & false); System.out.println();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = (true ^ false); System.out.println();";
+		String post = "boolean result = (true & false); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testLOR_constantComparision3(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = (false | false); System.out.println();", "boolean result = (false ^ false); System.out.println();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = (false | false); System.out.println();";
+		String post = "boolean result = (false ^ false); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testLOR_multipleConstantComparision1(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = ((true ^ false) | true); System.out.println();", "boolean result = ((true & false) | true); System.out.println();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = ((true ^ false) | true); System.out.println();";
+		String post = "boolean result = ((true & false) | true); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testLOR_multipleConstantComparision2(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = ((true & false) | (true ^ false)); System.out.println();", "boolean result = ((true | false) | (true & false)); System.out.println();");
-		assertEquals(2, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = ((true & false) | (true ^ false)); System.out.println();";
+		String post = "boolean result = ((true | false) | (true & false)); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(2, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(2, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testLOR_fieldComparision1(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = ((a | b) | (c | d)); System.out.println();", "boolean result = ((a & b) ^ (c & d)); System.out.println();");
-		assertEquals(3, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = ((a | b) | (c | d)); System.out.println();";
+		String post = "boolean result = ((a & b) ^ (c & d)); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(3, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(3, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testLOR_fieldComparision2(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = ((a & b) & c); System.out.println();", "boolean result = ((a ^ b) & c); System.out.println();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = ((a & b) & c); System.out.println();";
+		String post = "boolean result = ((a ^ b) & c); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testLOR_fieldComparision3(){
-		HashMap<String, Integer> resultMap = compareMatches("boolean result = ((a ^ b) | c); System.out.println();", "boolean result = ((a | b) & c); System.out.println();");
-		assertEquals(2, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean result = ((a ^ b) | c); System.out.println();";
+		String post = "boolean result = ((a | b) & c); System.out.println();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(2, getApplicationValue(resultMap, mutop_lor));
+		assertEquals(2, getApplicationValue(resultMap, mutop_cor));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 }
