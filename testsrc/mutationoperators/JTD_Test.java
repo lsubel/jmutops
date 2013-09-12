@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.jtd.JTD;
 
 import org.junit.Test;
@@ -12,12 +13,15 @@ import utils.MethodTest;
 
 public class JTD_Test extends MethodTest {
 
-MutationOperator mutop;
+	MutationOperator mutop_jdt;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new JTD();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_jdt = new JTD();
+		this.addMutationOperatorToTest(mutop_jdt);
+		this.mutop_aco = new ACO();
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
@@ -36,107 +40,102 @@ MutationOperator mutop;
 	
 	@Test
 	public void testJTD_FieldAssign1() {
-		HashMap<String, Integer> resultMap = compareMatches("this.a = 5;", "a = 5;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "this.a = 5;";
+		String post = "a = 5;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 
 	@Test
 	public void testJTD_FieldAssign2() {
-		HashMap<String, Integer> resultMap = compareMatches("this.b = \"Test\";", "b = \"Test\";");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "this.b = \"Test\";";
+		String post = "b = \"Test\";";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 
 	@Test
 	public void testJTD_FieldUsage1() {
-		HashMap<String, Integer> resultMap = compareMatches("a = this.a*2;", "a = a*2;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "a = this.a*2;";
+		String post = "a = a*2;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}	
 
 	@Test
 	public void testJTD_FieldUsage2() {
-		HashMap<String, Integer> resultMap = compareMatches("b = this.b + b;", "b = b + b;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "b = this.b + b;";
+		String post = "b = b + b;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 
 	@Test
 	public void testJTD_FieldUsage3() {
-		HashMap<String, Integer> resultMap = compareMatches("a = this.a + this.a;", "a = a + a;");
-		assertEquals(2, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "a = this.a + this.a;";
+		String post = "a = a + a;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(2, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testJTD_MethodCall1() {
-		HashMap<String, Integer> resultMap = compareMatches("this.test();", "test();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "this.test();";
+		String post = "test();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testJTD_MethodCall2() {
-		HashMap<String, Integer> resultMap = compareMatches("this.a = this.test1();", "a = test1();");
-		assertEquals(2, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "this.a = this.test1();";
+		String post = "a = test1();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(2, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testJTD_MethodCall3() {
-		HashMap<String, Integer> resultMap = compareMatches("this.b = this.test2();", "b = test2();");
-		assertEquals(2, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "this.b = this.test2();";
+		String post = "b = test2();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(2, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testJTD_Argument1() {
-		HashMap<String, Integer> resultMap = compareMatches("test3(this.b);", "test3(b);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "test3(this.b);";
+		String post = "test3(b);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testJTD_Argument2() {
-		HashMap<String, Integer> resultMap = compareMatches("test4(b, this.b);", "test4(b, b);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
-	
-	@Test
-	public void testJTD_NoMatch1() {
-		HashMap<String, Integer> resultMap = compareMatches("test4(b, this.b);", "test4(this.b, this.b);");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
-	
-	@Test
-	public void testJTD_NoMatch2() {
-		HashMap<String, Integer> resultMap = compareMatches("a = a*2;", "a = this.a*2;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}	
-	
-	@Test
-	public void testJTD_NoMatch3() {
-		HashMap<String, Integer> resultMap = compareMatches("a = 5;", "this.a = 5;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
-	
-	@Test
-	public void testJTD_NoMatch4() {
-		HashMap<String, Integer> resultMap = compareMatches("this.c = 5;", "this.a = 5;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
-	}
-	
-	@Test
-	public void testJTD_NoMatch5() {
-		HashMap<String, Integer> resultMap = compareMatches("a = this.c*2;", "a = this.a*2;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "test4(b, this.b);";
+		String post = "test4(b, b);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_jdt));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 
 }
