@@ -1,7 +1,5 @@
 package utils;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +15,7 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 
 import results.EventLogger;
@@ -196,7 +195,10 @@ public abstract class BasicTest {
 	private void checkRemainingOperators(HashMap<String, Integer> map, List<String> checkedOperators){
 		for(String mutop_shortcut: map.keySet()){
 			if(!checkedOperators.contains(mutop_shortcut)){
-				assertEquals(0, map.get(mutop_shortcut).intValue());
+				int value = map.get(mutop_shortcut).intValue();
+				if(value != 0) {
+					Assert.fail("Expected mutation operator " + mutop_shortcut + " to have no matching, but found " + value + " applications.");
+				}
 			}
 		}
 	}
