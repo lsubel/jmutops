@@ -1,6 +1,8 @@
 package mutationoperators.methodlevel.aco;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import mutationoperators.MutationOperator;
 import mutationoperators.TwoASTMatcher;
@@ -188,44 +190,99 @@ public class ACO_Matcher extends TwoASTMatcher {
 
 	private boolean checkForReducedTypes(HashMap<ITypeBinding, Integer> count1,
 			HashMap<ITypeBinding, Integer> count2) {
-		boolean reducedTypeNumbers = true;
-		if(count1.size() > count2.size()){
-			for(ITypeBinding parameterType: count1.keySet()){
-				Integer i2 = count2.get(parameterType);
-				if((i2 != null) || (count1.get(parameterType).intValue() > count2.get(parameterType).intValue())){
-					reducedTypeNumbers = false;
+		boolean foundEntryWithReducedNumber = false;
+		Set<ITypeBinding> setOfRetrievedBindings = new HashSet<ITypeBinding>();
+		
+		// since we check for reduced case (=> arguments were removed),
+		// we have to assume that count1.keySet().size() >= count1.keySet().size()
+		if(count1.keySet().size() < count2.keySet().size()) {
+			return false;
+		} 
+		// now check for each ITypeBinding in count1 that in count2
+		// * exists no entry
+		// * all entries have the same or less numbers of arguments
+		// * at least one entry has the less numbers of arguments
+		outer_loop:
+		for(ITypeBinding parameterType1: count1.keySet()) {
+			// first search for an entry in count2 with the same ITypeBinding
+			for(ITypeBinding parameterType2: count2.keySet()) {
+				if(parameterType1.isEqualTo(parameterType2)) {
+					
+					// retrieve the values for both bindings
+					int value1 = count1.get(parameterType1).intValue();
+					int value2 = count2.get(parameterType2).intValue();
+					
+					// if value1 < value2, we have found a incrementation of an argument type
+					// => we have detected that parameters were not reduced
+					if(value1 < value2) {
+						return false;
+					}
+					
+					// if value1 > value2, we have found that parameter(s) were removed
+					if(value1 > value2) {
+						foundEntryWithReducedNumber = true;
+					}
+					
+					// add that the parameterType2 was tested
+					setOfRetrievedBindings.add(parameterType2);
+					
+					continue outer_loop;
 				}
 			}
-		}else{
-			for(ITypeBinding parameterType: count2.keySet()){
-				Integer i1 = count1.get(parameterType);
-				if((i1 != null) || (count1.get(parameterType).intValue() > count2.get(parameterType).intValue())){
-					reducedTypeNumbers = false;
-				}
-			}			
+			// if we reached this point, 
+			// we have not found any corresponding binding in count2
+			// therefore we know that no binding was found in the second method
+			// and we know that parameters were removed
+			foundEntryWithReducedNumber = true;
 		}
-		return reducedTypeNumbers;
+		
+		// at the end, check that all entries in count2 were tested
+		// if not, that new parameter types were introduced in the second method
+		if(!(count1.keySet().containsAll(setOfRetrievedBindings)) || !(setOfRetrievedBindings.containsAll(count1.keySet()))) {
+			return false;
+		}
+		
+		// if we reached this point, everything is fine and we can return true
+		return true;
 	}
 
 
 	private boolean checkForSameTypes(HashMap<ITypeBinding, Integer> count1,
 			HashMap<ITypeBinding, Integer> count2) {
-		boolean sameTypeNumbers = true;
-		for(ITypeBinding parameterType: count1.keySet()){
-			Integer i1 = count1.get(parameterType);
-			Integer i2 = count2.get(parameterType);
-			if((i1 == null) || (i2 == null) || (count1.get(parameterType).intValue() != count2.get(parameterType).intValue())){
-				sameTypeNumbers = false;
+		// since we check for the same case (=> arguments were not removed),
+		// we have to assume that count1.keySet().size() == count1.keySet().size()
+		if(count1.keySet().size() != count2.keySet().size()) {
+			return false;
+		} 
+		
+		// now we check that the keySets of both counts are the same
+		// otherwise the parameter list changed
+		if( !(count1.keySet().containsAll(count2.keySet())) || !(count2.keySet().containsAll(count1.keySet()))) {
+			return false;
+		}
+		
+		// now check for each ITypeBinding in count1 that in count2 and vice versa
+		// * all entries have the same numbers of arguments
+		for(ITypeBinding parameterType1: count1.keySet()) {
+			// first search for an entry in count2 with the same ITypeBinding
+			for(ITypeBinding parameterType2: count2.keySet()) {
+				if(parameterType1.isEqualTo(parameterType2)) {
+					
+					// retrieve the values for both bindings
+					int value1 = count1.get(parameterType1).intValue();
+					int value2 = count2.get(parameterType2).intValue();
+					
+					// if value1 < value2, we have found a incrementation of an argument type
+					// => we have detected that parameters were not reduced
+					if(value1 != value2) {
+						return false;
+					}
+				}
 			}
 		}
-		for(ITypeBinding parameterType: count2.keySet()){
-			Integer i1 = count1.get(parameterType);
-			Integer i2 = count2.get(parameterType);
-			if((i1 == null) || (i2 == null) || (count1.get(parameterType).intValue() != count2.get(parameterType).intValue())){
-				sameTypeNumbers = false;
-			}
-		}
-		return sameTypeNumbers;
+		
+		// if we reached this point, everything is fine and we can return true
+		return true;
 	}
 
 
