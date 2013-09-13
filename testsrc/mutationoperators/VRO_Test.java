@@ -125,7 +125,7 @@ public class VRO_Test extends MethodTest {
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
 		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
-		assertEquals(1, getApplicationValue(resultMap, mutop_afro)	);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
 		checkOtherMutationOperators(resultMap);
 	}
 	
