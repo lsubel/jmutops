@@ -109,25 +109,28 @@ public class ACO_Matcher extends TwoASTMatcher {
 		if(other instanceof ClassInstanceCreation){
 			// cast the parallel node
 			ClassInstanceCreation node2 = (ClassInstanceCreation) other;	
+
+			// if both methods have no parameters, we can abort
+			boolean noArguments = (node.resolveConstructorBinding().getParameterTypes().length == 0) && (node2.resolveConstructorBinding().getParameterTypes().length == 0);
+			if(noArguments) {
+				return false;
+			}
 			
 			// first check if both constructors have the same name
 			boolean sameConstructorName = node.getType().subtreeMatch(defaultMatcher, node2.getType());
-			
 			if (sameConstructorName) {
 				// resolve the bindings 
 				IMethodBinding constructor1 = node.resolveConstructorBinding();
 				IMethodBinding constructor2 = node2.resolveConstructorBinding();
 				// check if both constructors are equal
-				boolean sameConstructors = (constructor1
-						.isEqualTo(constructor2));
+				boolean sameConstructors = (constructor1.isEqualTo(constructor2));
 				// if we have the same constructor method
 				if (sameConstructors) {
-					assert (constructor1.getParameterTypes()
-							.equals(constructor2.getParameterTypes()));
-
-					// check for changes position of arguments
+					// check for reordering of arguments
+					// which is equal to different argument trees
+					assert (constructor1.getParameterTypes().equals(constructor2.getParameterTypes()));
+					
 					boolean argumentPositionChanged = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
-
 					if (argumentPositionChanged) {
 						this.mutop.found(node, node2);
 						return true;
@@ -138,20 +141,23 @@ public class ACO_Matcher extends TwoASTMatcher {
 					// check if the different constructors have the same number of arguments
 					boolean sameArgumentNumber = (constructor1.getParameterTypes().length == constructor2.getParameterTypes().length);
 					
-					// if both have the sane argument length
+					// if both have the same argument length
 					if(sameArgumentNumber){
-						// we have to check for a different ordering
+						// so we have different constructors with the same number of arguments
+						// therefore we have to check for different argument type bindings
+						// and for different arguments
 						// => we check if there is the same number of types declared in both parameters
 						ITypeBinding[] parameterTypes1 = constructor1.getParameterTypes();
 						ITypeBinding[] parameterTypes2 = constructor2.getParameterTypes();
 						
 						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
 						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
-						
+
 						// check if there are the same values in both HashMaps
 						boolean sameTypeNumbers = checkForSameTypes(count1, count2);
+						boolean differentArguments = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
 						// if we have the same number of detected types, we have a match found
-						if(sameTypeNumbers){
+						if(sameTypeNumbers && differentArguments){
 							this.mutop.found(node, node2);
 							return true;
 						}
