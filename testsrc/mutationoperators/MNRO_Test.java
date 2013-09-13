@@ -3,6 +3,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.mnro.MNRO;
 
 import org.junit.Test;
@@ -13,12 +14,15 @@ import utils.MethodTest;
 
 public class MNRO_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_mnro;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new MNRO();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_mnro = new MNRO();
+		this.addMutationOperatorToTest(mutop_mnro);
+		this.mutop_aco = new ACO();
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
@@ -44,85 +48,121 @@ public class MNRO_Test extends MethodTest {
 	
 	@Test 
 	public void testMNRO_Match1() {
-		HashMap<String, Integer> resultMap = compareMatches("resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter();", "resetName(); incrementCounter(1); incrementCounter(5); int result = getCounter();");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "resetCounter(); incrementCounter(1); incrementCounter(5); int result = getCounter();";
+		String post = "resetName(); incrementCounter(1); incrementCounter(5); int result = getCounter();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_Match2() {
-		HashMap<String, Integer> resultMap = compareMatches("System.out.println(); int a = getCounter(); incrementCounter(a);", "System.out.println(); int a = getNameLength(); incrementCounter(a);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "System.out.println(); int a = getCounter(); incrementCounter(a);";
+		String post = "System.out.println(); int a = getNameLength(); incrementCounter(a);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_Match3() {
-		HashMap<String, Integer> resultMap = compareMatches("incrementCounter(5);", "resetCounter(5);");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "incrementCounter(5);";
+		String post = "resetCounter(5);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_Match4() {
-		HashMap<String, Integer> resultMap = compareMatches("if(isZero()){incrementCounter(1);};", "if(isOne()){incrementCounter(1);};");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "if(isZero()){incrementCounter(1);};";
+		String post = "if(isOne()){incrementCounter(1);};";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn1() {
-		HashMap<String, Integer> resultMap = compareMatches("resetCounter();", "getCounter();");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "resetCounter();";
+		String post = "getCounter();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn2() {
-		HashMap<String, Integer> resultMap = compareMatches("getName();", "getCounter();");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "getName();";
+		String post = "getCounter();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn3() {
-		HashMap<String, Integer> resultMap = compareMatches("getName();", "isOne();");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "getName();";
+		String post = "isOne();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentReturn4() {
-		HashMap<String, Integer> resultMap = compareMatches("getName();", "resetName();");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "getName();";
+		String post = "resetName();";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgLength1() {
-		HashMap<String, Integer> resultMap = compareMatches("resetCounter();", "incrementCounter(1);");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "resetCounter();";
+		String post = "incrementCounter(1);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgLength2() {
-		HashMap<String, Integer> resultMap = compareMatches("resetCounter();", "addSubstring(\"Test\");");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "resetCounter();";
+		String post = "addSubstring(\"Test\");";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgLength3() {
-		HashMap<String, Integer> resultMap = compareMatches("incrementCounter(1);", "incrementCounter(1, 2);");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "incrementCounter(1);";
+		String post = "incrementCounter(1, 2);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testMNRO_DifferentArgType1() {
-		HashMap<String, Integer> resultMap = compareMatches("int a = 0; incrementCounter(a);", "byte a = 0; incrementCounter(a);");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "int a = 0; incrementCounter(a);";
+		String post = "byte a = 0; incrementCounter(a);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
 	}
 }
