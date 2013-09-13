@@ -38,7 +38,7 @@ public class AFRO_Matcher extends TwoASTMatcher {
 		
 		// if both fields are declared in the same class and both fields are different,
 		// we have found a matching
-		if(sameDeclaringClass && differentAccessedField){
+		if(sameDeclaringClass && differentAccessedField && differentBindedField){
 			mutop.found(node, node2);
 			return true;			
 		}
