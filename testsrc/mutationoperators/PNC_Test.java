@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.cro.CRO;
 import mutationoperators.methodlevel.pnc.PNC;
 
 import org.junit.Test;
@@ -12,12 +13,15 @@ import utils.MethodTest;
 
 public class PNC_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_pnc;
+	MutationOperator mutop_cro;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new PNC();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_pnc = new PNC();
+		this.addMutationOperatorToTest(mutop_pnc);
+		this.mutop_cro = new CRO();
+		this.addMutationOperatorToTest(mutop_cro);
 	}
 
 	@Override
@@ -48,8 +52,9 @@ public class PNC_Test extends MethodTest {
 		String pre 	= "this.p = new Parent(); p.value = this.a; System.out.println(p.name);";
 		String post	= "this.p = new Child(); p.value = this.a; System.out.println(p.name);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -57,8 +62,9 @@ public class PNC_Test extends MethodTest {
 		String pre 	= "this.p = new Parent(); 		p.value = this.a; System.out.println(p.name);";
 		String post	= "this.p = new Grandchild();  p.value = this.a; System.out.println(p.name);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -66,7 +72,8 @@ public class PNC_Test extends MethodTest {
 		String pre 	= "Child p; p = new Grandchild(); p.value = this.a; System.out.println(p.name);";
 		String post	= "Child p; p = new Child(); p.value = this.a; System.out.println(p.name);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		checkOtherMutationOperators(resultMap);
 	}
 }
