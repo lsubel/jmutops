@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.cro.CRO;
+import mutationoperators.methodlevel.exco.EXCO_Update;
+import mutationoperators.methodlevel.pcc.PCC;
+import mutationoperators.methodlevel.pnc.PNC;
 import mutationoperators.methodlevel.tro.TRO_Methodlevel;
 
 import org.junit.Test;
@@ -12,12 +16,24 @@ import utils.MethodTest;
 
 public class TRO_Methodlevel_Test extends MethodTest {
 
-MutationOperator mutop;
+	MutationOperator mutop_tro_methodlevel;
+	MutationOperator mutop_pcc;
+	MutationOperator mutop_pnc;
+	MutationOperator mutop_exco;
+	MutationOperator mutop_cro;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new TRO_Methodlevel();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_tro_methodlevel = new TRO_Methodlevel();
+		this.addMutationOperatorToTest(mutop_tro_methodlevel);
+		this.mutop_pcc = new PCC();
+		this.addMutationOperatorToTest(mutop_pcc);
+		this.mutop_pnc = new PNC();
+		this.addMutationOperatorToTest(mutop_pnc);
+		this.mutop_exco = new EXCO_Update();
+		this.addMutationOperatorToTest(mutop_exco);
+		this.mutop_cro = new CRO();
+		this.addMutationOperatorToTest(mutop_cro);
 	}
 
 	@Override
@@ -49,8 +65,12 @@ MutationOperator mutop;
 		String pre 	= "Parent p1 = new Child(); p1.value = 42; System.out.println(p1.name);";
 		String post	= "Child p1 = new Child(); p1.value = 42; System.out.println(p1.name);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel));
+		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -58,8 +78,12 @@ MutationOperator mutop;
 		String pre 	= "Object p1 = new String(); System.out.println(p1.toString());";
 		String post	= "String p1 = new String(); System.out.println(p1.toString());";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel));
+		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -67,8 +91,12 @@ MutationOperator mutop;
 		String pre 	= "Child p1 = new Grandchild(); p1.name = \"GRANDCHILD\"; System.out.println(p1.toString());";
 		String post	= "Grandchild p1 = new Grandchild(); p1.name = \"GRANDCHILD\"; System.out.println(p1.toString());";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel));
+		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -76,8 +104,12 @@ MutationOperator mutop;
 		String pre 	= "Parent p1 = new Grandchild(); Grandchild g1 = (Child) p1; System.out.println(g1.toString());";
 		String post	= "Parent p1 = new Grandchild(); Grandchild g1 = (Grandchild) p1; System.out.println(g1.toString());";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel));
+		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -85,8 +117,12 @@ MutationOperator mutop;
 		String pre 	= "Object o1 = \"NAME\"; String s1 = (Object) o1; System.out.println(s1.toString());";
 		String post	= "Object o1 = \"NAME\"; String s1 = (String) o1; System.out.println(s1.toString());";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop)); 
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel)); 
+		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -94,8 +130,12 @@ MutationOperator mutop;
 		String pre	= "try {Object o = null;o.equals(null);} catch (NullPointerException e) {System.out.println(\"NullPointerException\");}";
 		String post = "try {Object o = null;o.equals(null);} catch (Exception e) {System.out.println(\"NullPointerException\");}";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel));
+		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -103,7 +143,11 @@ MutationOperator mutop;
 		String pre 	= "if(this.name.equals(\"EXCEPTION\")) {throw new IllegalStateException(\"Illegal State\");}"; 
 		String post	= "if(this.name.equals(\"EXCEPTION\")) {throw new Exception(\"Illegal State\");}"; 
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_tro_methodlevel));
+		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
+		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		checkOtherMutationOperators(resultMap);
 	}
 }
