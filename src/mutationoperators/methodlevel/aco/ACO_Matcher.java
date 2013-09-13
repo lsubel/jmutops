@@ -56,11 +56,10 @@ public class ACO_Matcher extends TwoASTMatcher {
 				// otherwise we have different methods
 				else{
 					// check if the different constructors have the same number of arguments
-					boolean nonEmptyArguments  = (node_methodbinding.getParameterTypes().length != 0) && (node2_methodbinding.getParameterTypes().length != 0);
 					boolean sameArgumentNumber = (node_methodbinding.getParameterTypes().length == node2_methodbinding.getParameterTypes().length);
 					
-					// if both have the sane argument length
-					if(nonEmptyArguments && sameArgumentNumber){
+					// if both have the same argument length
+					if(sameArgumentNumber){
 						// we have to check for a different ordering
 						// => we check if there is the same number of types declared in both parameters
 						ITypeBinding[] parameterTypes1 = node_methodbinding.getParameterTypes();
@@ -79,8 +78,8 @@ public class ACO_Matcher extends TwoASTMatcher {
 					}
 					// otherwise we also have a different number of arguments
 					else{
-						ITypeBinding[] parameterTypes1 = node_methodbinding.getTypeParameters();
-						ITypeBinding[] parameterTypes2 = node2_methodbinding.getTypeParameters();
+						ITypeBinding[] parameterTypes1 = node_methodbinding.getParameterTypes();
+						ITypeBinding[] parameterTypes2 = node2_methodbinding.getParameterTypes();
 						
 						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
 						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
@@ -164,8 +163,8 @@ public class ACO_Matcher extends TwoASTMatcher {
 					}
 					// otherwise we also have a different number of arguments
 					else{
-						ITypeBinding[] parameterTypes1 = constructor1.getTypeParameters();
-						ITypeBinding[] parameterTypes2 = constructor2.getTypeParameters();
+						ITypeBinding[] parameterTypes1 = constructor1.getParameterTypes();
+						ITypeBinding[] parameterTypes2 = constructor2.getParameterTypes();
 						
 						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
 						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
