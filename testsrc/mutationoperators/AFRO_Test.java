@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 
 import mutationoperators.methodlevel.afro.AFRO;
+import mutationoperators.methodlevel.vro.VRO;
 
 import org.junit.Test;
 
@@ -12,12 +13,15 @@ import utils.MethodTest;
 
 public class AFRO_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_afro;
+	MutationOperator mutop_vro;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new AFRO();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_afro = new AFRO();
+		this.addMutationOperatorToTest(mutop_afro);
+		this.mutop_vro = new VRO();
+		this.addMutationOperatorToTest(mutop_vro);
 	}
 
 	@Override
@@ -45,70 +49,100 @@ public class AFRO_Test extends MethodTest {
 
 	@Test
 	public void testAFRO_LocalReplacement1() {
-		HashMap<String, Integer> resultMap = compareMatches("int res = this.a1;", "int res = this.a2;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "int res = this.a1;";
+		String post = "int res = this.a2;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_LocalReplacement2() {
-		HashMap<String, Integer> resultMap = compareMatches("int res = this.a1++;", "int res = this.a2++;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "int res = this.a1++;";
+		String post = "int res = this.a2++;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_LocalReplacement3() {
-		HashMap<String, Integer> resultMap = compareMatches("boolean res = !this.b1;", "int res = !this.b2;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "boolean res = !this.b1;";
+		String post = "boolean res = !this.b2;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_InObjectReplacement1() {
-		HashMap<String, Integer> resultMap = compareMatches("int res = this.counter1.result;", "int res = this.counter1.counter;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "int res = this.counter1.result;";
+		String post = "int res = this.counter1.counter;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	@Test
 	public void testAFRO_InObjectReplacement2() {
-		HashMap<String, Integer> resultMap = compareMatches("Bar res = this.counter1;", "Bar res = this.counter2;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Bar res = this.counter1;";
+		String post = "Bar res = this.counter2;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_InObjectReplacement3() {
-		HashMap<String, Integer> resultMap = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter1.parentclass;");
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Bar res = this.counter1.subclass;";
+		String post = "Bar res = this.counter1.parentclass;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_NoMatch1() {
-		HashMap<String, Integer> resultMap = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter2.subclass;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Bar res = this.counter1.subclass;";
+		String post = "Bar res = this.counter2.subclass;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_NoMatch2() {
-		HashMap<String, Integer> resultMap = compareMatches("Bar res = this.counter1.subclass;", "Bar res = this.counter2.subclass;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Bar res = this.counter1.subclass;";
+		String post = "Bar res = this.counter2.subclass;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_NoMatch3() {
-		HashMap<String, Integer> resultMap = compareMatches("Foo foo = new Foo(); this.counter1.other = foo;", "Foo foo = new Foo(); this.counter2.other = foo;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "Foo foo = new Foo(); this.counter1.other = foo;";
+		String post = "Foo foo = new Foo(); this.counter2.other = foo;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
 	public void testAFRO_NoMatch4() {
-		HashMap<String, Integer> resultMap = compareMatches("int i = 0; this.a1 = 4;", "int i = 0; i = 4;");
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		String pre 	= "int i = 0; this.a1 = 4;";
+		String post = "int i = 0; i = 4;";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_vro));
+		checkOtherMutationOperators(resultMap);
 	}
 }
