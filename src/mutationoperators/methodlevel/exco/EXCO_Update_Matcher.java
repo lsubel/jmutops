@@ -36,7 +36,7 @@ public class EXCO_Update_Matcher extends TwoASTMatcher {
 		// if all conditions are true, we have a match
 		if(sameVariableName && isCompatible){
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;

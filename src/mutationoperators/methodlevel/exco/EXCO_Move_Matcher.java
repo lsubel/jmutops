@@ -43,7 +43,7 @@ public class EXCO_Move_Matcher extends TwoASTMatcher {
 		// if all of these conditions are true, we detected a matching
 		if(sameCatch && sameParentBody && differentIndices){
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;
