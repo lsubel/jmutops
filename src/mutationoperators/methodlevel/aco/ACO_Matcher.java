@@ -55,46 +55,11 @@ public class ACO_Matcher extends TwoASTMatcher {
 						return true;
 					}
 				}
-				// otherwise we have different methods
+				// otherwise we have the same method but with different parameters
+				// and therefore we can notify a matching
 				else{
-					// check if the different constructors have the same number of arguments
-					boolean sameArgumentNumber = (node_methodbinding.getParameterTypes().length == node2_methodbinding.getParameterTypes().length);
-					
-					// if both have the same argument length
-					if(sameArgumentNumber){
-						// we have to check for a different ordering
-						// => we check if there is the same number of types declared in both parameters
-						ITypeBinding[] parameterTypes1 = node_methodbinding.getParameterTypes();
-						ITypeBinding[] parameterTypes2 = node2_methodbinding.getParameterTypes();
-						
-						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
-						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
-						
-						// check if there are the same values in both HashMaps
-						boolean sameTypeNumbers = checkForSameTypes(count1, count2);
-						// if we have the same number of detected types, we have a match found
-						if(sameTypeNumbers){
-							this.mutop.found(node, node2);
-							return true;
-						}
-					}
-					// otherwise we also have a different number of arguments
-					else{
-						ITypeBinding[] parameterTypes1 = node_methodbinding.getParameterTypes();
-						ITypeBinding[] parameterTypes2 = node2_methodbinding.getParameterTypes();
-						
-						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
-						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
-						
-						
-						// check for reduced parameters
-						boolean reducedTypeNumbers = checkForReducedTypes(count1, count2);
-						// if we have a reduced number of detected types, we have a match found
-						if(reducedTypeNumbers){
-							this.mutop.found(node, node2);
-							return true;
-						}
-					}
+					this.mutop.found(node, node2);
+					return true;
 				}
 			}
 		}
