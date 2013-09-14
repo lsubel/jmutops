@@ -58,7 +58,7 @@ public class CRO_Test_SameClass extends MethodTest {
 	public void testCRO_SameArgumentNumber1() {
 		HashMap<String, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(1);", "childRight = new Foo(); Foo Temp = new Foo(childRight);");
 		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
-		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -66,7 +66,7 @@ public class CRO_Test_SameClass extends MethodTest {
 	public void testCRO_SameArgumentNumber2() {
 		HashMap<String, Integer> resultMap = compareMatches("childRight = new Foo(); Foo Temp = new Foo(childRight, childRight);", "childRight = new Foo(); Foo Temp = new Foo(42, childRight);");
 		assertEquals(1, getApplicationValue(resultMap, mutop_cro));
-		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 
