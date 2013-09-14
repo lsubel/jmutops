@@ -44,7 +44,7 @@ public class LCO_Test extends MethodTest {
 		String post = "if(false){System.out.println(b);};";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
-		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_icm));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -54,7 +54,7 @@ public class LCO_Test extends MethodTest {
 		String post = "while(false){this.b = true; this.b = false;}";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
-		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_icm));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -74,7 +74,7 @@ public class LCO_Test extends MethodTest {
 		String post = "if(true){System.out.println(42);};";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
-		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_icm));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -84,7 +84,7 @@ public class LCO_Test extends MethodTest {
 		String post = "while(true){this.b = true; this.b = false;}";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
-		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_icm));
 		checkOtherMutationOperators(resultMap);
 	}
 }
