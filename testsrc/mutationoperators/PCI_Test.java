@@ -62,8 +62,8 @@ public class PCI_Test extends MethodTest {
 	
 	@Test
 	public void testPCI_LocalVar1() {
-		String pre = 	"Computer c = new Smartphone(); System.out.println(c.getProcessorNumber());";
-		String post = 	"Computer c = new Smartphone(); System.out.println((Smartphone) c.getProcessorNumber());";
+		String pre = 	"Computer c = new Smartphone(); int numbers = c.getProcessorNumber(); System.out.println(\"Numbers:\" + numbers);";
+		String post = 	"Computer c = new Smartphone(); int numbers = (Smartphone) c.getProcessorNumber(); System.out.println(\"Numbers:\" + numbers);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop)); 
 		checkOtherMutationOperators(resultMap, mutop);
@@ -71,8 +71,8 @@ public class PCI_Test extends MethodTest {
 	
 	@Test
 	public void testPCI_LocalVar2() {
-		String pre = 	"Smartphone c = new Smartphone(); System.out.println(c.equals(null));";
-		String post = 	"Smartphone c = new Smartphone(); System.out.println((Object) c.equals(null));";
+		String pre = 	"Smartphone c = new Smartphone(); boolean theSame = c.equals(null);";
+		String post = 	"Smartphone c = new Smartphone(); boolean theSame = (Object) c.equals(null);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
@@ -80,8 +80,8 @@ public class PCI_Test extends MethodTest {
 	
 	@Test
 	public void testPCI_FailingTest1() {
-		String pre = 	"Smartphone c = new Smartphone(); System.out.println(c.equals(null));";
-		String post = 	"Smartphone c = new Smartphone(); System.out.println(((Object) c).equals(null));";
+		String pre = 	"Smartphone c = new Smartphone(); c.equals(null);";
+		String post = 	"Smartphone c = new Smartphone(); ((Object) c).equals(null);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop);
