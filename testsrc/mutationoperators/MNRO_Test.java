@@ -152,7 +152,7 @@ public class MNRO_Test extends MethodTest {
 		String post = "incrementCounter(1, 2);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(0, getApplicationValue(resultMap, mutop_mnro));
-		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 	
