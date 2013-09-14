@@ -104,47 +104,8 @@ public class ACO_Matcher extends TwoASTMatcher {
 				}
 				// otherwise we have different constructors
 				else {
-					// check if the different constructors have the same number of arguments
-					boolean sameArgumentNumber = (constructor1.getParameterTypes().length == constructor2.getParameterTypes().length);
-					
-					// if both have the same argument length
-					if(sameArgumentNumber){
-						// so we have different constructors with the same number of arguments
-						// therefore we have to check for different argument type bindings
-						// and for different arguments
-						// => we check if there is the same number of types declared in both parameters
-						ITypeBinding[] parameterTypes1 = constructor1.getParameterTypes();
-						ITypeBinding[] parameterTypes2 = constructor2.getParameterTypes();
-						
-						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
-						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
-
-						// check if there are the same values in both HashMaps
-						boolean sameTypeNumbers = checkForSameTypes(count1, count2);
-						boolean differentArguments = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
-						// if we have the same number of detected types, we have a match found
-						if(sameTypeNumbers && differentArguments){
-							this.mutop.found(node, node2);
-							return true;
-						}
-					}
-					// otherwise we also have a different number of arguments
-					else{
-						ITypeBinding[] parameterTypes1 = constructor1.getParameterTypes();
-						ITypeBinding[] parameterTypes2 = constructor2.getParameterTypes();
-						
-						HashMap<ITypeBinding, Integer> count1 = countTypesInParameters(parameterTypes1);
-						HashMap<ITypeBinding, Integer> count2 = countTypesInParameters(parameterTypes2);
-						
-						
-						// check for reduced parameters
-						boolean reducedTypeNumbers = checkForReducedTypes(count1, count2);
-						// if we have a reduced number of detected types, we have a match found
-						if(reducedTypeNumbers){
-							this.mutop.found(node, node2);
-							return true;
-						}
-					}
+					this.mutop.found(node, node2);
+					return true;
 				}
 			}
 		}
