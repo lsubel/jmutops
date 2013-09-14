@@ -3,6 +3,7 @@ package mutationoperators.methodlevel.vmcm;
 import mutationoperators.MutationOperator;
 import mutationoperators.OneASTVisitor;
 
+import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
@@ -28,6 +29,9 @@ public class VMCM_Visitor extends OneASTVisitor {
 		return false;
 	}
 
-	
+	@Override
+	public boolean visit(CatchClause node) {
+		return false;
+	}
 	
 }
