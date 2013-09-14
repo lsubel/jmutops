@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 
+import mutationoperators.methodlevel.aod.AOD;
 import mutationoperators.methodlevel.icm.ICM;
+import mutationoperators.methodlevel.lco.LCO;
 
 import org.junit.Test;
 
@@ -12,12 +14,18 @@ import utils.MethodTest;
 
 public class ICM_Test extends MethodTest {
 
-	MutationOperator mutop;
+	MutationOperator mutop_icm;
+	MutationOperator mutop_lco;
+	MutationOperator mutop_aod;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new ICM();
-		this.addMutationOperatorToTest(mutop);
+		this.mutop_icm = new ICM();
+		this.addMutationOperatorToTest(mutop_icm);
+		this.mutop_lco = new LCO();
+		this.addMutationOperatorToTest(mutop_lco);
+		this.mutop_aod = new AOD();
+		this.addMutationOperatorToTest(mutop_aod);
 	}
 
 	@Override
@@ -36,8 +44,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.b = true; if(this.b) {System.out.println(\"END PROGRAM\");}";
 		String post = "System.out.println(\"START PROGRAM\"); this.b = false; if(this.b) {System.out.println(\"END PROGRAM\");}";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 
 	@Test
@@ -45,8 +55,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.b = false; if(this.b) {System.out.println(\"END PROGRAM\");}";
 		String post = "System.out.println(\"START PROGRAM\"); this.b = true; if(this.b) {System.out.println(\"END PROGRAM\");}";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -54,8 +66,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.i = 1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.i = 0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -63,8 +77,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.by = -1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.by = 1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -72,8 +88,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.sh = 5; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.sh = -1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -81,8 +99,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.i = 42; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.i = 43; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -90,8 +110,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.i = -2; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.i = -1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -99,8 +121,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.i = 2; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.i = 3; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -108,8 +132,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.l = 1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.l = 0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -117,8 +143,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.l = 0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.l = 1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -126,8 +154,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.l = -1; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.l = 0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -135,8 +165,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.l = 3; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.l = 4; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -144,8 +176,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.l = (Long.MAX_VALUE - 1); System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.l = Long.MAX_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap); 
 	}
 	
 	@Test
@@ -153,8 +187,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.l = Long.MIN_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.l = (Long.MIN_VALUE + 1); System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap); 
 	}
 	
 	@Test
@@ -162,8 +198,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.f = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.f = 0.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -171,8 +209,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.f = 2.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.f = 0.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -180,8 +220,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.f = 0.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.f = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -189,8 +231,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.f = 42.4242; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.f = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -198,8 +242,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.f = Float.MAX_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.f = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop)); 
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm)); 
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -207,8 +253,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.f = Float.MIN_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.f = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -216,8 +264,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.d = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.d = 0.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -225,8 +275,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.d = 124.4214; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.d = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -234,8 +286,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.d = -42.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.d = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop); 
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap); 
 	}
 	
 	@Test
@@ -243,8 +297,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.d = Double.MAX_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.d = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -252,8 +308,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); this.d = Double.MIN_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); this.d = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(1, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(1, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -261,8 +319,10 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); final double d2 = Double.MIN_VALUE; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		String post = "System.out.println(\"START PROGRAM\"); final double d2 = 1.0; System.out.println(\"VALUE: \" + this.i); System.out.println(\"END PROGRAM\");";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(0, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(0, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 	
 	@Test
@@ -270,7 +330,9 @@ public class ICM_Test extends MethodTest {
 		String pre 	= "System.out.println(\"START PROGRAM\"); final boolean b2 = false; if(this.b) {System.out.println(\"END PROGRAM\");}";
 		String post = "System.out.println(\"START PROGRAM\"); final boolean b2 = true; if(this.b) {System.out.println(\"END PROGRAM\");}";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(0, getApplicationValue(resultMap, mutop));
-		checkOtherMutationOperators(resultMap, mutop);
+		assertEquals(0, getApplicationValue(resultMap, mutop_icm));
+		assertEquals(1, getApplicationValue(resultMap, mutop_lco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aod));
+		checkOtherMutationOperators(resultMap);
 	}
 }
