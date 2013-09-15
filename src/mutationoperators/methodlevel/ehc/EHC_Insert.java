@@ -6,9 +6,12 @@ import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CatchClause;
+import org.eclipse.jdt.core.dom.IMethodBinding;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.NodeFinder;
 
 import results.JMutOpsEventListenerMulticaster;
+import utils.JDT_Utils;
 import utils.Preperator;
 import utils.SourceCodeChangeUtils;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Insert;
@@ -47,7 +50,7 @@ public class EHC_Insert extends MutationOperator {
 				Insert insert = (Insert) change;
 				// check if the insert is related to a catch clause
 				if(insert.getChangedEntity().getType().name().equals("CATCH_CLAUSE")) {
-					// get the MethodBinding related to this catch clause
+					// get the IMethodBinding related to this catch clause
 					int[] input = SourceCodeChangeUtils.getNodeFinderInput((Insert) change);
 					NodeFinder nodeFinder = new NodeFinder(postfixed_preperator.getAST(), input[0], input[1]);
 					ASTNode expr = nodeFinder.getCoveringNode();
@@ -55,7 +58,9 @@ public class EHC_Insert extends MutationOperator {
 						continue;
 					}
 					CatchClause cc = (CatchClause) expr;
-					
+					MethodDeclaration postfix_method_decleration = JDT_Utils.getMethodNode(cc);
+					IMethodBinding postfix_method_binding = postfix_method_decleration.resolveBinding();
+				
 				}
 			}
 		}
