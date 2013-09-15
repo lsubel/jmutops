@@ -7,7 +7,8 @@ package enums;
  */
 public enum MutationOperatorLevel {
 	METHOD_LEVEL("Method-level operator"), 
-	CLASS_LEVEL("Class-level operator");
+	CLASS_LEVEL("Class-level operator"),
+	BOTH_LEVELS("Class- and Method-level operator");
 	
 	private final String label;
 	
