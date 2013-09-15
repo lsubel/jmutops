@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.NodeFinder;
 
 import results.JMutOpsEventListenerMulticaster;
+import utils.JDT_Utils;
 import utils.Preperator;
 import utils.SourceCodeChangeUtils;
 import ch.uzh.ifi.seal.changedistiller.model.entities.Delete;
@@ -23,8 +24,6 @@ import enums.MutationOperatorLevel;
 
 public class SWO extends MutationOperator {
 
-	SWO_MethodExtractor methodExtractor;
-	
 	public SWO() {
 		this(null);
 	}
@@ -33,7 +32,6 @@ public class SWO extends MutationOperator {
 		super(eventListener);
 		this.twoAST_matcher = new SWO_Matcher(this);
 		this.twoAST_visitor = new SWO_Visitor(this.twoAST_matcher);
-		this.methodExtractor = new SWO_MethodExtractor();
 	}
 
 	@Override
@@ -69,7 +67,7 @@ public class SWO extends MutationOperator {
 				// extract all newly changed methods
 				NodeFinder nodefinder = new NodeFinder(postfixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				postfixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+				postfixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
 			} 	
 			else if(change instanceof Delete){
 				// extract all positions
@@ -77,7 +75,7 @@ public class SWO extends MutationOperator {
 				// extract all changed methods
 				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				prefixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+				prefixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
 			}
 			else if(change instanceof Move){
 				// extract all positions
@@ -85,11 +83,11 @@ public class SWO extends MutationOperator {
 				// extract changed methods
 				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				prefixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+				prefixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
 				// extract new methods
 				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
 				ASTNode expr2 = nodefinder2.getCoveringNode();
-				postfixMethodsToCheck.add(methodExtractor.getMethodNode(expr2));
+				postfixMethodsToCheck.add(JDT_Utils.getMethodNode(expr2));
 			}
 			else if(change instanceof Update){
 				// extract all positions
@@ -97,11 +95,11 @@ public class SWO extends MutationOperator {
 				// extract changed methods
 				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				prefixMethodsToCheck.add(methodExtractor.getMethodNode(expr));
+				prefixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
 				// extract new methods
 				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
 				ASTNode expr2 = nodefinder2.getCoveringNode();
-				postfixMethodsToCheck.add(methodExtractor.getMethodNode(expr2));
+				postfixMethodsToCheck.add(JDT_Utils.getMethodNode(expr2));
 			}
 		}
 		

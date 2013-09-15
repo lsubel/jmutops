@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.FieldAccess;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.IVariableBinding;
 
-import utils.ITypeBindingUtils;
+import utils.JDT_Utils;
 
 public class AFRO_Matcher extends TwoASTMatcher {
 
@@ -32,7 +32,7 @@ public class AFRO_Matcher extends TwoASTMatcher {
 		
 		
 		// check the conditions
-		boolean sameDeclaringClass 		= (node_fieldbinding_declaringclass.isEqualTo(node2_fieldbinding_declaringclass) || ITypeBindingUtils.isTypeParentOfOtherType(node_fieldbinding_declaringclass, node2_fieldbinding_declaringclass) || ITypeBindingUtils.isTypeParentOfOtherType(node2_fieldbinding_declaringclass, node_fieldbinding_declaringclass));
+		boolean sameDeclaringClass 		= (node_fieldbinding_declaringclass.isEqualTo(node2_fieldbinding_declaringclass) || JDT_Utils.isTypeParentOfOtherType(node_fieldbinding_declaringclass, node2_fieldbinding_declaringclass) || JDT_Utils.isTypeParentOfOtherType(node2_fieldbinding_declaringclass, node_fieldbinding_declaringclass));
 		boolean differentAccessedField 	= !(node.subtreeMatch(defaultMatcher, node2));
 		boolean differentBindedField 	= !(node.resolveFieldBinding().isEqualTo(node2.resolveFieldBinding()));
 		

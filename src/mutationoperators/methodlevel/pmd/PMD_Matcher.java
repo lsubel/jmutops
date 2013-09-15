@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import utils.ITypeBindingUtils;
+import utils.JDT_Utils;
 
 public class PMD_Matcher extends TwoASTMatcher {
 
@@ -27,7 +27,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			ITypeBinding secondBinding = node2.resolveTypeBinding();
 			
 			// check if the new type is a parent class of the old one
-			boolean validType = ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding);
+			boolean validType = JDT_Utils.isTypeParentOfOtherType(secondBinding, firstBinding);
 			boolean differentTypes = !(secondBinding.isEqualTo(firstBinding));
 			
 			// check for the same variable name
@@ -58,7 +58,7 @@ public class PMD_Matcher extends TwoASTMatcher {
 			ITypeBinding secondBinding = node2.getType().resolveBinding(); 
 			
 			// check if the new type is a parent class of the old one
-			boolean validType = ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding);
+			boolean validType = JDT_Utils.isTypeParentOfOtherType(secondBinding, firstBinding);
 			boolean differentTypes = !(secondBinding.isEqualTo(firstBinding));
 			
 			// check for the same variable name

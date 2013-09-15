@@ -6,7 +6,7 @@ import mutationoperators.TwoASTMatcher;
 import org.eclipse.jdt.core.dom.CastExpression;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-import utils.ITypeBindingUtils;
+import utils.JDT_Utils;
 
 public class PCC_Matcher extends TwoASTMatcher {
 
@@ -32,8 +32,8 @@ public class PCC_Matcher extends TwoASTMatcher {
 		boolean differentCastTypes = !(firstTypeBinding.isEqualTo(secondTypeBinding));
 		
 		// since the casted types are related, one type has to be the super class of the other one
-		boolean leftValidTyping = ITypeBindingUtils.isTypeParentOfOtherType(firstTypeBinding, secondTypeBinding);
-		boolean rightValidTyping = ITypeBindingUtils.isTypeParentOfOtherType(secondTypeBinding, firstTypeBinding);
+		boolean leftValidTyping = JDT_Utils.isTypeParentOfOtherType(firstTypeBinding, secondTypeBinding);
+		boolean rightValidTyping = JDT_Utils.isTypeParentOfOtherType(secondTypeBinding, firstTypeBinding);
 		boolean validTyping = leftValidTyping || rightValidTyping;
 		
 		if(sameExpression && differentCastTypes && validTyping){

@@ -6,7 +6,7 @@ import mutationoperators.TwoASTMatcher;
 import org.eclipse.jdt.core.dom.ClassInstanceCreation;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 
-import utils.ITypeBindingUtils;
+import utils.JDT_Utils;
 
 public class PNC_Matcher extends TwoASTMatcher {
 
@@ -37,8 +37,8 @@ public class PNC_Matcher extends TwoASTMatcher {
 		}
 		
 		// since the casted types are related, one type has to be the super class of the other one
-		boolean leftValidTyping = ITypeBindingUtils.isTypeParentOfOtherType(firstTypeBinding, secondTypeBinding);
-		boolean rightValidTyping = ITypeBindingUtils.isTypeParentOfOtherType(secondTypeBinding, firstTypeBinding);
+		boolean leftValidTyping = JDT_Utils.isTypeParentOfOtherType(firstTypeBinding, secondTypeBinding);
+		boolean rightValidTyping = JDT_Utils.isTypeParentOfOtherType(secondTypeBinding, firstTypeBinding);
 		boolean validTyping = leftValidTyping || rightValidTyping;
 		
 		// check for all conditions

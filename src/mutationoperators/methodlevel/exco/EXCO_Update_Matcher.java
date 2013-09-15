@@ -6,7 +6,7 @@ import mutationoperators.TwoASTMatcher;
 import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 
-import utils.ITypeBindingUtils;
+import utils.JDT_Utils;
 
 public class EXCO_Update_Matcher extends TwoASTMatcher {
 
@@ -31,7 +31,7 @@ public class EXCO_Update_Matcher extends TwoASTMatcher {
 		ITypeBinding secondBinding = node2.getType().resolveBinding();
 		
 		// check if these are compatible types, so one type is the parent of the other one
-		boolean isCompatible = ITypeBindingUtils.isTypeParentOfOtherType(firstBinding, secondBinding) || ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding); 
+		boolean isCompatible = JDT_Utils.isTypeParentOfOtherType(firstBinding, secondBinding) || JDT_Utils.isTypeParentOfOtherType(secondBinding, firstBinding); 
 		
 		// if all conditions are true, we have a match
 		if(sameVariableName && isCompatible){

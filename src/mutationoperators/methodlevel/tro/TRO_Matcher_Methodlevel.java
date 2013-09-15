@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.ThrowStatement;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 
-import utils.ITypeBindingUtils;
+import utils.JDT_Utils;
 
 public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 
@@ -34,7 +34,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		boolean differentTypes = !(node.getType().subtreeMatch(defaultMatcher, node2.getType()));
 		boolean differentTypeBindings = !(node_type_binding.isEqualTo(node2_type_binding));
 		boolean sameExpressionType = node.getExpression().resolveTypeBinding().isEqualTo(node2.getExpression().resolveTypeBinding());
-		boolean compatibleTypes = ITypeBindingUtils.isTypeParentOfOtherType(node_type_binding, node2_type_binding) || ITypeBindingUtils.isTypeParentOfOtherType(node2_type_binding, node_type_binding);
+		boolean compatibleTypes = JDT_Utils.isTypeParentOfOtherType(node_type_binding, node2_type_binding) || JDT_Utils.isTypeParentOfOtherType(node2_type_binding, node_type_binding);
 		
 		// if all conditions are true, notify a matching
 		if(differentTypes && differentTypeBindings && sameExpressionType && compatibleTypes) {
@@ -59,7 +59,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		ITypeBinding secondBinding = node2.getType().resolveBinding();
 		
 		// check if these are compatible types, so one type is the parent of the other one
-		boolean isCompatible = ITypeBindingUtils.isTypeParentOfOtherType(firstBinding, secondBinding) || ITypeBindingUtils.isTypeParentOfOtherType(secondBinding, firstBinding); 
+		boolean isCompatible = JDT_Utils.isTypeParentOfOtherType(firstBinding, secondBinding) || JDT_Utils.isTypeParentOfOtherType(secondBinding, firstBinding); 
 		boolean sameVariableName = node.getName().subtreeMatch(defaultMatcher, node2.getName());
 		boolean differentTypes = !(firstBinding.isEqualTo(secondBinding));
 		
@@ -112,7 +112,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		// check for conditions
 		boolean differentTypes = !(node.getType().subtreeMatch(defaultMatcher, node2.getType()));
 		boolean sameModifiers = node.modifiers().equals(node2.modifiers());
-		boolean compatibleTypes = ITypeBindingUtils.isTypeParentOfOtherType(node_type_binding, node2_type_binding);
+		boolean compatibleTypes = JDT_Utils.isTypeParentOfOtherType(node_type_binding, node2_type_binding);
 		
 		// if all conditions are true, notify a matching
 		if(differentTypes && sameModifiers && compatibleTypes) {
@@ -138,7 +138,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		// check for conditions
 		boolean differentTypes = !(node.getType().subtreeMatch(defaultMatcher, node2.getType()));
 		boolean sameModifiers = node.modifiers().equals(node2.modifiers());
-		boolean compatibleTypes = ITypeBindingUtils.isTypeParentOfOtherType(node_type_binding, node2_type_binding);
+		boolean compatibleTypes = JDT_Utils.isTypeParentOfOtherType(node_type_binding, node2_type_binding);
 
 		// if all conditions are true, notify a matching
 		if(differentTypes && sameModifiers && compatibleTypes) {
