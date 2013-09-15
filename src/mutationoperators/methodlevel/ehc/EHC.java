@@ -2,6 +2,8 @@ package mutationoperators.methodlevel.ehc;
 
 import mutationoperators.MutationOperator;
 import results.JMutOpsEventListenerMulticaster;
+import enums.MutationOperatorCategory;
+import enums.MutationOperatorLevel;
 
 public class EHC extends MutationOperator {
 
@@ -19,8 +21,8 @@ public class EHC extends MutationOperator {
 		this.mutopproperty.setShortname("EHC");
 		this.mutopproperty.setFullname("Exception Handling Change");
 		this.mutopproperty.setDescription("Changes an exception handling statement to an exception propagation statement and vice versa.");
-	//	this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
-	//	this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setLevel(MutationOperatorLevel.BOTH_LEVELS);
+		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
 		this.mutopproperty.setPreCheck();
 	}
 
