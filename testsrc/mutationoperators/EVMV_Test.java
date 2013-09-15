@@ -6,10 +6,12 @@ import java.util.HashMap;
 
 import mutationoperators.methodlevel.emvm.EMVM;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import utils.ClassTest;
 
+@Ignore
 public class EVMV_Test extends ClassTest {
 
 	MutationOperator mutop;
