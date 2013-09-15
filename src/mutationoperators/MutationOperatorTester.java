@@ -43,6 +43,11 @@ public class MutationOperatorTester {
 	private ArrayList<MutationOperator> classlevel_list;
 
 	/**
+	 * Array containing all class and method level related mutation operators.
+	 */
+	private ArrayList<MutationOperator> bothlevel_list;
+	
+	/**
 	 * Multicaster which will talk to all ResultListeners which were added
 	 */
 	private JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
@@ -57,8 +62,9 @@ public class MutationOperatorTester {
 	 * @param listener Reference to the event multi caster so it can fire events.
 	 */
 	public MutationOperatorTester(JMutOpsEventListenerMulticaster listener) {
-		this.methodlevel_list = new ArrayList<MutationOperator>();
-		this.classlevel_list = new ArrayList<MutationOperator>();
+		this.methodlevel_list 	= new ArrayList<MutationOperator>();
+		this.classlevel_list 	= new ArrayList<MutationOperator>();
+		this.bothlevel_list 	= new ArrayList<MutationOperator>();
 		this.listener = listener;
 	}
 
@@ -92,6 +98,17 @@ public class MutationOperatorTester {
 			} else {
 				return false;
 			}
+		case BOTH_LEVELS:
+			this.listener.OnMutationOperatorInit(mutop);
+			// check if this operator was added before
+			if (!this.bothlevel_list.contains(mutop)) {
+				// if not, add it
+				this.bothlevel_list.add(mutop);
+				return true;
+			} else {
+				return false;
+			}
+			
 		default:
 			return false;
 		}
@@ -389,11 +406,14 @@ public class MutationOperatorTester {
 
 	private ArrayList<MutationOperator> getInitialMutationOperators(SourceCodeChange change) {
 		ArrayList<MutationOperator> mutationOperatorList;
+		// get level based operators
 		if (change.getChangeType().isBodyChange()) {
 			mutationOperatorList = getCopyOfList(methodlevel_list);
 		} else {
 			mutationOperatorList = getCopyOfList(classlevel_list);
 		}
+		// at both leveled operators to it
+		mutationOperatorList.addAll(bothlevel_list);
 		return mutationOperatorList;
 	}
 	
@@ -410,7 +430,12 @@ public class MutationOperatorTester {
 				isClass = true;
 				mutationOperatorList.addAll(getCopyOfList(classlevel_list));
 			}
+			if(isMethod && isClass) {
+				break;
+			}
 		}
+		// at both leveled operators to it
+		mutationOperatorList.addAll(bothlevel_list);
 		return mutationOperatorList;
 	}
 
