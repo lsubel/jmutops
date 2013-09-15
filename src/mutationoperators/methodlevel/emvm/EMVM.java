@@ -22,8 +22,8 @@ public class EMVM extends MutationOperator {
 		this.mutopproperty.setShortname("EMVM");
 		this.mutopproperty.setFullname("Experimental Member Variable Mutator ");
 		this.mutopproperty.setDescription("Removing assignments to member variables. The members will be initialized with their Java Default Value for the specific type.");
-		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
-		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
+		this.mutopproperty.setLevel(MutationOperatorLevel.CLASS_LEVEL);
+		this.mutopproperty.setCategory(MutationOperatorCategory.JAVA_SPECIFIC);
 		this.mutopproperty.setTwoAST();
 		this.mutopproperty.setUpdate();
 	}
