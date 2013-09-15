@@ -18,6 +18,7 @@ import mutationoperators.methodlevel.cod.COD;
 import mutationoperators.methodlevel.coi.COI;
 import mutationoperators.methodlevel.cor.COR;
 import mutationoperators.methodlevel.cro.CRO;
+import mutationoperators.methodlevel.emvm.EMVM;
 import mutationoperators.methodlevel.eoa.EOA;
 import mutationoperators.methodlevel.eoc.EOC;
 import mutationoperators.methodlevel.exco.EXCO_Delete;
@@ -416,6 +417,7 @@ public class JMutOps {
 		this.checker.addMutationOperator(new RVM(this.listener));
 		this.checker.addMutationOperator(new ICM(this.listener));
 		this.checker.addMutationOperator(new TRO_Methodlevel(this.listener));
+		this.checker.addMutationOperator(new EMVM(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
