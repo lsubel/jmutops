@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import mutationoperators.ClassTest;
 import mutationoperators.MutationOperator;
-import mutationoperators.methodlevel.ehc.EHC;
+import mutationoperators.methodlevel.ehc.EHC_Insert;
 
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class EHC_Test extends ClassTest {
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
-		this.mutop = new EHC();
+		this.mutop = new EHC_Insert();
 		this.addMutationOperatorToTest(mutop);
 	}
 
