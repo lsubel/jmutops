@@ -134,8 +134,6 @@ public class ICM_Matcher extends TwoASTMatcher {
 	//////////////////////////////////////////
 	/// private methods
 	//////////////////////////////////////////
-	
-	
 
 	private boolean checkBooleanMatch(Expression node_right_expr, Expression node2_right_expr) {
 		// check some conditions
