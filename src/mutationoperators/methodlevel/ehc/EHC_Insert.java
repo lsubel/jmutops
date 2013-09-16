@@ -58,9 +58,12 @@ public class EHC_Insert extends MutationOperator {
 						continue;
 					}
 					CatchClause cc = (CatchClause) expr;
-					MethodDeclaration postfix_method_decleration = JDT_Utils.getMethodNode(cc);
-					IMethodBinding postfix_method_binding = postfix_method_decleration.resolveBinding();
-				
+					
+					ASTNode found_method_declaration = JDT_Utils.searchForSpecificParentNode(cc, ASTNode.METHOD_DECLARATION);
+					if(found_method_declaration != null) {
+						MethodDeclaration postfix_method_decleration = (MethodDeclaration) found_method_declaration;
+						IMethodBinding postfix_method_binding = postfix_method_decleration.resolveBinding();
+					}
 				}
 			}
 		}

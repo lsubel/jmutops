@@ -67,7 +67,10 @@ public class SWO extends MutationOperator {
 				// extract all newly changed methods
 				NodeFinder nodefinder = new NodeFinder(postfixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				postfixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
+				ASTNode found_method_declaration = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				if(found_method_declaration != null) {
+					postfixMethodsToCheck.add((MethodDeclaration) found_method_declaration);
+				}
 			} 	
 			else if(change instanceof Delete){
 				// extract all positions
@@ -75,7 +78,10 @@ public class SWO extends MutationOperator {
 				// extract all changed methods
 				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				prefixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
+				ASTNode found_method_declaration = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				if(found_method_declaration != null) {
+					prefixMethodsToCheck.add((MethodDeclaration) found_method_declaration);
+				}
 			}
 			else if(change instanceof Move){
 				// extract all positions
@@ -83,11 +89,17 @@ public class SWO extends MutationOperator {
 				// extract changed methods
 				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				prefixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
+				ASTNode found_method_declaration = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				if(found_method_declaration != null) {
+					prefixMethodsToCheck.add((MethodDeclaration) found_method_declaration);
+				}
 				// extract new methods
 				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
 				ASTNode expr2 = nodefinder2.getCoveringNode();
-				postfixMethodsToCheck.add(JDT_Utils.getMethodNode(expr2));
+				ASTNode found_method_declaration2 = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				if(found_method_declaration2 != null) {
+					postfixMethodsToCheck.add((MethodDeclaration) found_method_declaration2);
+				}
 			}
 			else if(change instanceof Update){
 				// extract all positions
@@ -95,11 +107,17 @@ public class SWO extends MutationOperator {
 				// extract changed methods
 				NodeFinder nodefinder = new NodeFinder(prefixed_preperator.getAST(), pos_array[0], pos_array[1]);
 				ASTNode expr = nodefinder.getCoveringNode();
-				prefixMethodsToCheck.add(JDT_Utils.getMethodNode(expr));
+				ASTNode found_method_declaration = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				if(found_method_declaration != null) {
+					prefixMethodsToCheck.add((MethodDeclaration) found_method_declaration);
+				}
 				// extract new methods
 				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
 				ASTNode expr2 = nodefinder2.getCoveringNode();
-				postfixMethodsToCheck.add(JDT_Utils.getMethodNode(expr2));
+				ASTNode found_method_declaration2 = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				if(found_method_declaration2 != null) {
+					postfixMethodsToCheck.add((MethodDeclaration) found_method_declaration2);
+				}
 			}
 		}
 		

@@ -31,20 +31,20 @@ public class JDT_Utils {
 	
 	
 	/**
-	 * Gets the {@link MethodDeclaration} node related to the change node.
+	 * Gets the first detected {@link ASTNode} with the same {@code NodeType} value of {@code astnode_type}.
 	 * @param change The {@link ASTNode} related to the change.
+	 * @param astnode_type The {@code NodeType} value of the {@link ASTNode}. See {@link ASTNode#getNodeType()}.
 	 * @return The related {@link MethodDeclaration} node if method level change, otherwise {@code null}.
 	 */
-	public static MethodDeclaration getMethodNode(ASTNode change) {
-		
+	public static ASTNode searchForSpecificParentNode(ASTNode change, int astnode_type) {
 		ASTNode currentNode = change;
 		
 		// walk upwards until we reached the root node
 		while(currentNode != null) {
 			
 			// check if we reached the MethodDeclaration node
-			if(currentNode instanceof MethodDeclaration) {
-				return (MethodDeclaration) currentNode;
+			if(currentNode.getNodeType() == astnode_type) {
+				return currentNode;
 			}
 			
 			// otherwise go to the parent node
