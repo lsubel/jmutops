@@ -28,9 +28,9 @@ import ch.uzh.ifi.seal.changedistiller.model.entities.Update;
  */
 public class MutationOperatorTester {
 
-	// ////////////////////////////////////////////////////
-	// / Fields
-	// ////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////
+	/// Fields
+	//////////////////////////////////////////////////////
 
 	/**
 	 * Array containing all method level related mutation operators.
@@ -69,9 +69,8 @@ public class MutationOperatorTester {
 	}
 
 	/**
-	 * Add another MutationOperator to the Checker.
+	 * Add another {@link MutationOperator} to be included in testings.
 	 * <p>
-	 * 
 	 * @param mutop
 	 *            MutationOperator which should be used on checked ASTs.
 	 * @return True if the MutationOperator was added, otherwise false.
@@ -114,6 +113,12 @@ public class MutationOperatorTester {
 		}
 	}
 
+	/**
+	 * Check for any applied {@link MutationOperator} which occurred in the {@link ASTNode} {@code node} 
+	 * related to the {@link SourceCodeChange} {@code change}.
+	 * @param node The {@link ASTNode} related to the {@code change}.
+	 * @param change The {@link SourceCodeChange} retrieved from ChangeDistiller.
+	 */
 	public void checkForMutationOperators(ASTNode node, SourceCodeChange change) {
 		if (change instanceof Insert) {
 			this.check(node, (Insert) change);
@@ -136,12 +141,12 @@ public class MutationOperatorTester {
 	 * </ul>
 	 * 
 	 * @param leftNode
-	 *            AST with the prefix version.
+	 *            {@link ASTNode} with the prefix version.
 	 * @param rightNode
-	 *            AST with the postfix version.
+	 *            {@link ASTNode} with the postfix version.
 	 * @param change
 	 *            ChangeDistiller object describing the change related betweeen
-	 *            both AST versions.
+	 *            both {@link ASTNode} versions.
 	 */
 	public void checkForMutationOperators(ASTNode leftNode, ASTNode rightNode,
 			SourceCodeChange change) {
@@ -156,6 +161,13 @@ public class MutationOperatorTester {
 	}
 
 
+	/**
+	 * Check for {@link MutationOperator} which implement the method 
+	 * {@link MutationOperator#preCheck(List, Preperator, Preperator)}. 
+	 * @param changes All detected {@link SourceCodeChange} found in the file under test.
+	 * @param prefixed_preperator The {@link Preperator} related to the prefix file.
+	 * @param postfixed_preperator The {@link Preperator} related to the postfix file. 
+	 */
 	public void preCheckForMutationOperators(List<SourceCodeChange> changes,
 			Preperator prefixed_preperator, Preperator postfixed_preperator) {
 		// get the correct list of MutationOperator's to check
@@ -173,6 +185,7 @@ public class MutationOperatorTester {
 		// filter the list of mutationOperators
 		filterOneAST(mutationOperatorList, true);
 		filterInsert(mutationOperatorList, true);
+		
 		
 		// check the location of update
 		if (change.getChangeType().isBodyChange()) {
@@ -545,7 +558,7 @@ public class MutationOperatorTester {
 	}
 	
 	/**
-	 * Removes all {@link MutationOperator} from {@code list} where the canOneAST property is equal to {@code oneASTValue}.
+	 * Removes all {@link MutationOperator} from {@code list} where the canOneAST property is not equal to {@code oneASTValue}.
 	 * @param list The list of {@link MutationOperator} to filter.
 	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the canOneAST field.
 	 */
@@ -559,7 +572,7 @@ public class MutationOperatorTester {
 	}
 	
 	/**
-	 * Removes all {@link MutationOperator} from {@code list} where the canTwoAST property is equal to {@code oneTwoValue}.
+	 * Removes all {@link MutationOperator} from {@code list} where the canTwoAST property is not equal to {@code oneTwoValue}.
 	 * @param list The list of {@link MutationOperator} to filter.
 	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the oneTwoValue field.
 	 */
@@ -573,7 +586,7 @@ public class MutationOperatorTester {
 	}
 
 	/**
-	 * Removes all {@link MutationOperator} from {@code list} where the preCheck property is equal to {@code precheckValue}.
+	 * Removes all {@link MutationOperator} from {@code list} where the preCheck property is not equal to {@code precheckValue}.
 	 * @param list The list of {@link MutationOperator} to filter.
 	 * @param moveValue The expected value of {@link MutationOperatorProperty} related to the precheckValue field.
 	 */
@@ -585,6 +598,4 @@ public class MutationOperatorTester {
 			}
 		}
 	}
-
-	
 }
