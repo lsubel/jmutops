@@ -44,7 +44,7 @@ public class PNC_Matcher extends TwoASTMatcher {
 		// check for all conditions
 		if(sameArgumentLength && sameArgument && validTyping){
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;

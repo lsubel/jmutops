@@ -45,7 +45,7 @@ public class PRV_Matcher extends TwoASTMatcher {
 		
 		if(differentVariables && differentClasses){
 			mutop.found(node, (ASTNode) other);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -80,7 +80,7 @@ public class PRV_Matcher extends TwoASTMatcher {
 		
 		if(differentVariables && differentClasses){
 			mutop.found(node, (ASTNode) other);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -121,7 +121,7 @@ public class PRV_Matcher extends TwoASTMatcher {
 		
 		if(differentVariables && differentClasses){
 			mutop.found(node, (ASTNode) other);
-			return true;
+			return false;
 		}
 		
 		return false;

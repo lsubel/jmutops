@@ -15,6 +15,6 @@ public class CFDO_Insert_Visitor extends OneASTVisitor {
 	public boolean visit(BreakStatement node) {
 		// since we match with and without a label, we directly notify one
 		this.mutop.found(node);
-		return true;
+		return false;
 	}
 }

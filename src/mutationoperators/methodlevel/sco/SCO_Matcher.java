@@ -25,7 +25,7 @@ public class SCO_Matcher extends TwoASTMatcher {
 			if(differentDepth){
 				this.mutop.found(node, (ASTNode) other);
 			}
-			return true;
+			return false;
 		}
 		return false;
 	}

@@ -24,7 +24,7 @@ public class NVMCM_Visitor extends TwoASTVisitor {
 		// if the parallel is also a method invocation, do the 
 		if(localStoredTree instanceof MethodInvocation){
 			// call the super method, and follow the way there
-			
+			super.visit(node);
 		}
 		// if the parallel node is NullLiteral
 		else if(localStoredTree instanceof NullLiteral) {

@@ -202,11 +202,7 @@ public class ICM_Matcher extends TwoASTMatcher {
 		boolean OthersToIncrement = ((node_value != 1) && (node_value != -1) && (node_value != 5) && ((node_value + 1) == node2_value));
 		
 		// if all conditions are valid, notify a matching
-		if(OneToZero || MinusOneToOne || FiveToMinusOne || OthersToIncrement) {
-			return true;
-		}
-		
-		return false;
+		return (OneToZero || MinusOneToOne || FiveToMinusOne || OthersToIncrement);
 	}
 	
 	private boolean checkLongMatch(Expression node_right_expr,
@@ -246,10 +242,7 @@ public class ICM_Matcher extends TwoASTMatcher {
 		boolean OthersToIncrement = ((node_value != 1) && ((node_value + 1) == node2_value));
 		
 		// if all conditions are valid, notify a matching
-		if(OneToZero || OthersToIncrement) {
-			return true;
-		}
-		return false;
+		return (OneToZero || OthersToIncrement);
 	}
 	
 	private boolean checkDoubleMatch(Expression node_right_expr,
@@ -280,10 +273,7 @@ public class ICM_Matcher extends TwoASTMatcher {
 		boolean OthersToIncrement = ((node_value != 1.0) && (node2_value == 1.0));
 		
 		// if all conditions are valid, notify a matching
-		if(OneToZero || OthersToIncrement) {
-			return true;
-		}
-		return false;
+		return (OneToZero || OthersToIncrement);
 	}
 
 	private boolean checkFloatMatch(Expression node_right_expr,
@@ -331,10 +321,7 @@ public class ICM_Matcher extends TwoASTMatcher {
 		boolean OthersToIncrement = ((node_value != 1.0) && (node_value != 2.0) && (node2_value == 1.0));
 		
 		// if all conditions are valid, notify a matching
-		if(OneToZero || TwoToZero || OthersToIncrement) {
-			return true;
-		}
-		return false;
+		return (OneToZero || TwoToZero || OthersToIncrement);
 	}
 	
 }

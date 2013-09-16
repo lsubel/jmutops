@@ -38,7 +38,7 @@ public class PCC_Matcher extends TwoASTMatcher {
 		
 		if(sameExpression && differentCastTypes && validTyping){
 			mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;

@@ -30,7 +30,7 @@ public class SOR_Matcher extends TwoASTMatcher {
 			if(correctPrefixedOperator && correctPostfixedOperator && differentOperators){
 				this.mutop.found(node, ie);
 			}
-			return true; 
+			return false; 
 		}
 		return false;
 	}	

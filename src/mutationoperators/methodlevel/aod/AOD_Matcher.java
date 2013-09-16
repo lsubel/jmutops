@@ -29,7 +29,7 @@ public class AOD_Matcher extends TwoASTMatcher {
 		// if both conditions are true, notify a matching
 		if(validPostfixExpression && correctSubtree){
 			this.mutop.found(node, secondTree);
-			return true;
+			return false;
 		}
 		return false; 
 	}
@@ -54,7 +54,7 @@ public class AOD_Matcher extends TwoASTMatcher {
 		// if both conditions are true, notify a matching
 		if((validPrefixedUnaryOperator || validPrefixedShortcutOperator) && correctSubtree){
 			this.mutop.found(node, secondTree);
-			return true;
+			return false;
 		}
 		return false; 
 	}

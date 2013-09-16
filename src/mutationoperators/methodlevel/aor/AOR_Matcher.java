@@ -37,7 +37,6 @@ public class AOR_Matcher extends TwoASTMatcher {
 			if(correctPrefixedOperator && correctPostfixedOperator && differentOperators){
 				this.mutop.found(node, ie);
 			}
-			return true; 
 		}
 		return false;
 	}
@@ -63,7 +62,7 @@ public class AOR_Matcher extends TwoASTMatcher {
 			if( (correctPrefixedShortcutOperator && correctPostfixedShortcutOperator) && differentOperators){
 				this.mutop.found(node, pe);
 			}
-			return true; 
+			return false;
 		}
 		
 		
@@ -78,8 +77,9 @@ public class AOR_Matcher extends TwoASTMatcher {
 			if(correctPrefixedShortcutOperator && correctPostfixedShortcutOperator){
 				this.mutop.found(node, pe);
 			}
-			return true; 
+			return false;
 		}
+		
 		return false;
 	}
 	
@@ -104,7 +104,7 @@ public class AOR_Matcher extends TwoASTMatcher {
 			if(correctPrefixedShortcutOperator && correctPostfixedShortcutOperator){
 				this.mutop.found(node, pe);
 			}
-			return true; 
+			return false; 
 		}
 		
 		
@@ -129,7 +129,7 @@ public class AOR_Matcher extends TwoASTMatcher {
 					&& differentOperators){
 				this.mutop.found(node, pe);
 			}
-			return true; 
+			return false; 
 		}
 		return false;
 	}

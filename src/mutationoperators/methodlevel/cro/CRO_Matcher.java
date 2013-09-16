@@ -30,7 +30,7 @@ public class CRO_Matcher extends TwoASTMatcher {
 			
 			if(differentConstructors){
 				this.mutop.found(node, node2);
-				return true;
+				return false;
 			}
 		}
 		return false;

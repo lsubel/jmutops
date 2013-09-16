@@ -22,8 +22,8 @@ public class AOD_Visitor extends TwoASTVisitor {
 		// we just check for an application
 		matcher.match(node, localStoredTree);
 			
-		
-		return true;
+		// by default, no substatement should be checked
+		return false;
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class AOD_Visitor extends TwoASTVisitor {
 		// we just check for an application
 		matcher.match(node, localStoredTree);
 		
-		
-		return true;
+		// by default, no substatement should be checked
+		return false;
 	}
 
 }

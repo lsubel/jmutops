@@ -40,7 +40,7 @@ public class AFRO_Matcher extends TwoASTMatcher {
 		// we have found a matching
 		if(sameDeclaringClass && differentAccessedField && differentBindedField){
 			mutop.found(node, node2);
-			return true;			
+			return false;			
 		}
 		return false;
 	}

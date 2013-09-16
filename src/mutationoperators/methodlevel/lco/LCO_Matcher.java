@@ -23,7 +23,7 @@ public class LCO_Matcher extends TwoASTMatcher {
 			if(haveDifferentValue){
 				this.mutop.found(node, bl);
 			}
-			return true;
+			return false;
 		}
 		return false;
 	}

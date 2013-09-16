@@ -26,7 +26,7 @@ public class CFDO_Update_Matcher extends TwoASTMatcher {
 		
 		if(differentLabel){
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 
 		return false;
@@ -46,7 +46,7 @@ public class CFDO_Update_Matcher extends TwoASTMatcher {
 		
 		if(differentLabel){
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 
 		return false;

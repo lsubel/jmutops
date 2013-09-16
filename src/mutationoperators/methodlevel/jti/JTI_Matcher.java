@@ -35,7 +35,7 @@ public class JTI_Matcher extends TwoASTMatcher {
 		// check case: x() and this.x()
 		if( (node_expr == null) && (node2_expr instanceof ThisExpression)){
 			mutop.found(node, node2);
-			return true;
+			return false;
 		}
 
 		return false;
@@ -61,7 +61,7 @@ public class JTI_Matcher extends TwoASTMatcher {
 			boolean haveSameName = this.defaultMatcher.match(node, name2);
 			if((expr2 instanceof ThisExpression) && haveSameName){
 				mutop.found(node, node2);
-				return true;
+				return false;
 			}
 			
 		}

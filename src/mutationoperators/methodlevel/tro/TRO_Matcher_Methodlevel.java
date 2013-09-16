@@ -39,7 +39,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		// if all conditions are true, notify a matching
 		if(differentTypes && differentTypeBindings && sameExpressionType && compatibleTypes) {
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -66,7 +66,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		// if all conditions are true, we have a match
 		if(sameVariableName && isCompatible && differentTypes){
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -91,7 +91,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		
 		if(differentExpressions && differentBindings) {
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -117,7 +117,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		// if all conditions are true, notify a matching
 		if(differentTypes && sameModifiers && compatibleTypes) {
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -143,7 +143,7 @@ public class TRO_Matcher_Methodlevel extends TwoASTMatcher {
 		// if all conditions are true, notify a matching
 		if(differentTypes && sameModifiers && compatibleTypes) {
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;

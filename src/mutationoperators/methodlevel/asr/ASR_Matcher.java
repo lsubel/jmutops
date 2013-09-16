@@ -47,7 +47,7 @@ public class ASR_Matcher extends TwoASTMatcher {
 			if(correctPrefixedOperator && correctPostfixedOperator && differentOperators){
 				this.mutop.found(node, assign);
 			}
-			return true; 
+			return false; 
 		}
 		return false;
 	}
@@ -75,7 +75,7 @@ public class ASR_Matcher extends TwoASTMatcher {
 			if(correctPrefixedOperator && correctPostfixedOperator && differentOperators){
 				this.mutop.found(node, ie);
 			}
-			return true; 
+			return false; 
 		}
 		return false;
 	}	

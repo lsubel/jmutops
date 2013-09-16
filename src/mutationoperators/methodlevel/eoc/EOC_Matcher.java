@@ -42,7 +42,7 @@ public class EOC_Matcher extends TwoASTMatcher {
 		// we have found a matching
 		if(correctOperator && correctMethodName && correctParameterLength && correctLeftSide && correctRightSide){
 			mutop.found(node, node2);
-			return true;			
+			return false;			
 		}
 		return false;
 	}

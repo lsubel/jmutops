@@ -27,7 +27,7 @@ public class LOD_Matcher extends TwoASTMatcher {
 		// if both conditions are true, notify a matching
 		if(correctPrefixedUnaryOperator && correctSubtree){
 			this.mutop.found(node, secondTree);
-			return true;
+			return false;
 		}
 		return false; 
 	}

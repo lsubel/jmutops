@@ -48,7 +48,7 @@ public class SWO_Matcher extends TwoASTMatcher {
 		// if all conditions are true, we found a matching
 		if(swap_else_to_then && swap_then_to_else) {
 			this.mutop.found(node, node2);
-			return true;
+			return false;
 		}
 		
 		return false;
@@ -81,7 +81,7 @@ public class SWO_Matcher extends TwoASTMatcher {
 				// if all conditions are true, notify a matching
 				if(differentSwitch && sameNodeList) {
 					this.mutop.found(node, node2);
-					return true;
+					return false;
 				}
 			}
 		}

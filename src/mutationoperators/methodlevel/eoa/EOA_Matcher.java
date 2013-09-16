@@ -32,7 +32,7 @@ public class EOA_Matcher extends TwoASTMatcher {
 		// we have found a matching
 		if(isClone && sameObject){
 			mutop.found(node, node2);
-			return true;			
+			return false;			
 		}
 		return false;
 	}
@@ -55,7 +55,7 @@ public class EOA_Matcher extends TwoASTMatcher {
 		// we have found a matching
 		if(isClone && sameObject){
 			mutop.found(node, node2);
-			return true;			
+			return false;			
 		}
 		return false;
 	}
@@ -78,7 +78,7 @@ public class EOA_Matcher extends TwoASTMatcher {
 		// we have found a matching
 		if(isClone && sameObject){
 			mutop.found(node, node2);
-			return true;			
+			return false;			
 		}
 		return false;
 	}
