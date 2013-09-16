@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import mutationoperators.MethodTest;
 import mutationoperators.MutationOperator;
+import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.prv.PRV;
 import mutationoperators.methodlevel.vro.VRO;
 
@@ -16,6 +17,7 @@ public class PRV_Test extends MethodTest {
 
 	MutationOperator mutop_prv;
 	MutationOperator mutop_vro;
+	MutationOperator mutop_aco;
 	
 	@Override
 	protected void initializeMutationOperatorsToTest() {
@@ -23,11 +25,15 @@ public class PRV_Test extends MethodTest {
 		this.addMutationOperatorToTest(mutop_prv);
 		this.mutop_vro = new VRO();
 		this.addMutationOperatorToTest(mutop_vro);
+		this.mutop_aco = new ACO();
+		this.addMutationOperatorToTest(mutop_aco);
 	}
 
 	@Override
 	protected String getOtherClassContent() {
-		return  "Object obj;" + 
+		return  "public static int VALUE_1 = 0; " +
+				"public static int VALUE_2 = 1; " + 
+				"Object obj;" + 
 				"String s1 = \"Hello\";" +
 				"SubClass1 sc1 = null; " +
 				"RootClass rc = null; ";
@@ -52,6 +58,7 @@ public class PRV_Test extends MethodTest {
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_prv));
 		assertEquals(0, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -62,6 +69,7 @@ public class PRV_Test extends MethodTest {
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_prv));
 		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -72,6 +80,7 @@ public class PRV_Test extends MethodTest {
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_prv));
 		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -82,6 +91,7 @@ public class PRV_Test extends MethodTest {
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_prv)); 
 		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -92,6 +102,18 @@ public class PRV_Test extends MethodTest {
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop_prv));
 		assertEquals(0, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		checkOtherMutationOperators(resultMap);
+	}
+	
+	@Test
+	public void testPRV_NoMatching1() {
+		String pre 	= "Integer i = new Integer(4); String output = s1 + Integer.toHexString(VALUE_1); System.out.println(); ";
+		String post = "Integer i = new Integer(4); String output = s1 + Integer.toHexString(VALUE_2); System.out.println(); ";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(0, getApplicationValue(resultMap, mutop_prv));
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(1, getApplicationValue(resultMap, mutop_aco));
 		checkOtherMutationOperators(resultMap);
 	}
 }
