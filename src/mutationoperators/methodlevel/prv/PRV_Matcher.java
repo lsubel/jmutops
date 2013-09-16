@@ -9,6 +9,8 @@ import org.eclipse.jdt.core.dom.ITypeBinding;
 import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.SimpleName;
 
+import utils.JDT_Utils;
+
 public class PRV_Matcher extends TwoASTMatcher {
 
 	public PRV_Matcher(MutationOperator mutop) {
@@ -21,6 +23,8 @@ public class PRV_Matcher extends TwoASTMatcher {
 		// define variables
 		boolean differentVariables;
 		boolean differentClasses;
+		boolean nodeHasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node, ASTNode.ASSIGNMENT) != null);
+		boolean node2HasAssignmentAsParent = false;
 		
 		// check for an access to an object on the parallel one
 		// then check if the references classes are different
@@ -28,22 +32,25 @@ public class PRV_Matcher extends TwoASTMatcher {
 			FieldAccess node2 = (FieldAccess) other;
 			differentVariables = !(node.getName().subtreeMatch(defaultMatcher, node2.getName()));
 			differentClasses   = !(node.resolveTypeBinding().isEqualTo(node2.resolveTypeBinding()));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else if(other instanceof QualifiedName){
 			QualifiedName node2 = (QualifiedName) other;
 			differentVariables = !(node.getName().subtreeMatch(defaultMatcher, node2.getName()));
 			differentClasses   = !(node.resolveTypeBinding().isEqualTo(node2.resolveTypeBinding()));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else if(other instanceof SimpleName){
 			SimpleName node2 = (SimpleName) other;
 			differentVariables = !(node.subtreeMatch(defaultMatcher, node2));
 			differentClasses   = !(node.resolveTypeBinding().isEqualTo(node2.resolveTypeBinding()));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else{
 			return false;
 		}
 		
-		if(differentVariables && differentClasses){
+		if(differentVariables && differentClasses && nodeHasAssignmentAsParent && node2HasAssignmentAsParent){
 			mutop.found(node, (ASTNode) other);
 			return false;
 		}
@@ -56,6 +63,8 @@ public class PRV_Matcher extends TwoASTMatcher {
 		// define variables
 		boolean differentVariables;
 		boolean differentClasses;
+		boolean nodeHasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node, ASTNode.ASSIGNMENT) != null);
+		boolean node2HasAssignmentAsParent = false;
 		
 		// check for an access to an object on the parallel one
 		// then check if the references classes are different
@@ -63,22 +72,25 @@ public class PRV_Matcher extends TwoASTMatcher {
 			FieldAccess node2 = (FieldAccess) other;
 			differentVariables = !(node.getName().subtreeMatch(defaultMatcher, node2.getName()));
 			differentClasses   = !(node.resolveTypeBinding().isEqualTo(node2.resolveTypeBinding()));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else if(other instanceof QualifiedName){
 			QualifiedName node2 = (QualifiedName) other;
 			differentVariables = !(node.getName().subtreeMatch(defaultMatcher, node2.getName()));
 			differentClasses   = !(node.resolveTypeBinding().isEqualTo(node2.resolveTypeBinding()));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else if(other instanceof SimpleName){
 			SimpleName node2 = (SimpleName) other;
 			differentVariables = !(node.subtreeMatch(defaultMatcher, node2));
 			differentClasses   = !(node.resolveTypeBinding().isEqualTo(node2.resolveTypeBinding()));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else{
 			return false;
 		}
 		
-		if(differentVariables && differentClasses){
+		if(differentVariables && differentClasses && nodeHasAssignmentAsParent && node2HasAssignmentAsParent){
 			mutop.found(node, (ASTNode) other);
 			return false;
 		}
@@ -91,6 +103,8 @@ public class PRV_Matcher extends TwoASTMatcher {
 		// define variables
 		boolean differentVariables;
 		boolean differentClasses;
+		boolean nodeHasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node, ASTNode.ASSIGNMENT) != null);
+		boolean node2HasAssignmentAsParent = false;
 		
 		// check for an access to an object on the parallel one
 		// then check if the references classes are different
@@ -100,6 +114,7 @@ public class PRV_Matcher extends TwoASTMatcher {
 			ITypeBinding firstBinding = node.resolveTypeBinding();
 			ITypeBinding secondBinding = node2.resolveTypeBinding();
 			differentClasses   = (firstBinding != null) && (secondBinding != null)  && !(firstBinding.isEqualTo(secondBinding));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else if(other instanceof QualifiedName){
 			QualifiedName node2 = (QualifiedName) other;
@@ -107,6 +122,7 @@ public class PRV_Matcher extends TwoASTMatcher {
 			ITypeBinding firstBinding = node.resolveTypeBinding();
 			ITypeBinding secondBinding = node2.resolveTypeBinding();
 			differentClasses   = (firstBinding != null) && (secondBinding != null)  && !(firstBinding.isEqualTo(secondBinding));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else if(other instanceof SimpleName){
 			SimpleName node2 = (SimpleName) other;
@@ -114,12 +130,13 @@ public class PRV_Matcher extends TwoASTMatcher {
 			ITypeBinding firstBinding = node.resolveTypeBinding();
 			ITypeBinding secondBinding = node2.resolveTypeBinding();
 			differentClasses   = (firstBinding != null) && (secondBinding != null)  && !(firstBinding.isEqualTo(secondBinding));
+			node2HasAssignmentAsParent = (JDT_Utils.searchForSpecificParentNode(node2, ASTNode.ASSIGNMENT) != null);
 		}
 		else{
 			return false;
 		}
 		
-		if(differentVariables && differentClasses){
+		if(differentVariables && differentClasses && nodeHasAssignmentAsParent && node2HasAssignmentAsParent){
 			mutop.found(node, (ASTNode) other);
 			return false;
 		}
