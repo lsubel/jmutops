@@ -39,10 +39,11 @@ public class PNC_Matcher extends TwoASTMatcher {
 		// since the casted types are related, one type has to be the super class of the other one
 		boolean leftValidTyping = JDT_Utils.isTypeParentOfOtherType(firstTypeBinding, secondTypeBinding);
 		boolean rightValidTyping = JDT_Utils.isTypeParentOfOtherType(secondTypeBinding, firstTypeBinding);
-		boolean validTyping = leftValidTyping || rightValidTyping;
+		boolean validTyping = leftValidTyping ^ rightValidTyping;
+		boolean differentTypes = !(firstTypeBinding.isEqualTo(secondTypeBinding));
 		
 		// check for all conditions
-		if(sameArgumentLength && sameArgument && validTyping){
+		if(sameArgumentLength && sameArgument && validTyping && differentTypes){
 			this.mutop.found(node, node2);
 			return false;
 		}
