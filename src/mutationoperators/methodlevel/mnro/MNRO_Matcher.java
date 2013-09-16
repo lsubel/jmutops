@@ -20,12 +20,12 @@ public class MNRO_Matcher extends TwoASTMatcher {
 			// cast other node
 			MethodInvocation node2 = (MethodInvocation) other;
 			
-			// check if these the names are different
+			// check if the method names are different
 			boolean differentName = !(this.defaultMatcher.match(node.getName(), node2.getName()));
 			// check that the parameters are equal
 			boolean sameArgumentLength = (node.arguments().size() == node2.arguments().size());
 			// check for the same arguments
-			boolean sameArgument = true;
+			boolean sameArgument = false;
 			if(sameArgumentLength){
 				sameArgument = this.defaultMatcher.safeSubtreeListMatch(node.arguments(), node2.arguments());
 			}
@@ -38,7 +38,7 @@ public class MNRO_Matcher extends TwoASTMatcher {
 			// check for all conditions
 			if(differentName && sameArgumentLength && sameArgument && sameReturnType){
 				this.mutop.found(node, node2);
-				return true;
+				return false;
 			}
 		}
 		

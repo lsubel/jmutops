@@ -38,7 +38,7 @@ public class AOR_Visitor extends TwoASTVisitor {
 			visitSubtrees(node.extendedOperands(), ie.extendedOperands());			
 		}
 		
-		super.visit(node);
+		
 		return true;
 	}
 
@@ -68,7 +68,7 @@ public class AOR_Visitor extends TwoASTVisitor {
 		}
 			
 		
-		super.visit(node);
+		
 		return true;
 	}
 
@@ -97,7 +97,7 @@ public class AOR_Visitor extends TwoASTVisitor {
 			visitSubtree(node.getOperand(), pe.getOperand());
 		}
 		
-		super.visit(node);
+		
 		return true;
 	}
 	

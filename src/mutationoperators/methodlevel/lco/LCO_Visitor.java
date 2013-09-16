@@ -25,7 +25,7 @@ public class LCO_Visitor extends TwoASTVisitor {
 			
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 	
 }

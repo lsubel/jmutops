@@ -20,7 +20,7 @@ public class LOD_Visitor extends TwoASTVisitor {
 		// check for an application
 		matcher.match(node, localStoredTree);
 		
-		super.visit(node);
+		
 		return true;
 	}
 }

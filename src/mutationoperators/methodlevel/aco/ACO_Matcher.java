@@ -52,14 +52,14 @@ public class ACO_Matcher extends TwoASTMatcher {
 							
 					if (argumentPositionChanged) {
 						this.mutop.found(node, node2);
-						return true;
+						return false;
 					}
 				}
 				// otherwise we have the same method but with different parameters
 				// and therefore we can notify a matching
 				else{
 					this.mutop.found(node, node2);
-					return true;
+					return false;
 				}
 			}
 		}
@@ -99,13 +99,13 @@ public class ACO_Matcher extends TwoASTMatcher {
 					boolean argumentPositionChanged = !(safeSubtreeListMatch(node.arguments(), node2.arguments()));
 					if (argumentPositionChanged) {
 						this.mutop.found(node, node2);
-						return true;
+						return false;
 					}
 				}
 				// otherwise we have different constructors
 				else {
 					this.mutop.found(node, node2);
-					return true;
+					return false;
 				}
 			}
 		}

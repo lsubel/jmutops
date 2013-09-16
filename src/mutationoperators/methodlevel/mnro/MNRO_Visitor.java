@@ -31,7 +31,7 @@ public class MNRO_Visitor extends TwoASTVisitor {
 			visitSubtrees(node.arguments(), mi.arguments());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 	
 }

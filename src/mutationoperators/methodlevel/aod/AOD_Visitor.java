@@ -22,7 +22,7 @@ public class AOD_Visitor extends TwoASTVisitor {
 		// we just check for an application
 		matcher.match(node, localStoredTree);
 			
-		super.visit(node);
+		
 		return true;
 	}
 
@@ -35,7 +35,7 @@ public class AOD_Visitor extends TwoASTVisitor {
 		// we just check for an application
 		matcher.match(node, localStoredTree);
 		
-		super.visit(node);
+		
 		return true;
 	}
 

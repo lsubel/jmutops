@@ -40,7 +40,7 @@ public class ACO_Visitor extends TwoASTVisitor {
 			
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 	
 	
@@ -63,6 +63,6 @@ public class ACO_Visitor extends TwoASTVisitor {
 			visitSubtrees(node.arguments(), mi.arguments());
 		}
 		
-		return super.visit(node);
+		return false;
 	}
 }

@@ -34,7 +34,7 @@ public class ROR_Visitor extends TwoASTVisitor {
 			visitSubtrees(node.extendedOperands(), ie.extendedOperands());			
 		}
 		
-		super.visit(node);
+		
 		return true;
 	}
 }

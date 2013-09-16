@@ -37,7 +37,7 @@ public class EOA_Visitor extends TwoASTVisitor {
 			}		
 		}
 		
-		super.visit(node);
+		
 		return false;
 	}
 
@@ -58,7 +58,7 @@ public class EOA_Visitor extends TwoASTVisitor {
 				matcher.match(node, mi);
 			}
 		}
-		super.visit(node);
+		
 		return false;
 	}
 
@@ -79,7 +79,7 @@ public class EOA_Visitor extends TwoASTVisitor {
 				matcher.match(node, mi);
 			}
 		}
-		super.visit(node);
+		
 		return false;
 	}
 
@@ -100,7 +100,7 @@ public class EOA_Visitor extends TwoASTVisitor {
 				matcher.match(node, mi);
 			}
 		}
-		super.visit(node);
+		
 		return false;
 	}
 	
