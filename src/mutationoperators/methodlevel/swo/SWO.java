@@ -96,7 +96,7 @@ public class SWO extends MutationOperator {
 				// extract new methods
 				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
 				ASTNode expr2 = nodefinder2.getCoveringNode();
-				ASTNode found_method_declaration2 = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				ASTNode found_method_declaration2 = JDT_Utils.searchForSpecificParentNode(expr2, ASTNode.METHOD_DECLARATION);
 				if(found_method_declaration2 != null) {
 					postfixMethodsToCheck.add((MethodDeclaration) found_method_declaration2);
 				}
@@ -114,7 +114,7 @@ public class SWO extends MutationOperator {
 				// extract new methods
 				NodeFinder nodefinder2 = new NodeFinder(postfixed_preperator.getAST(), pos_array[2], pos_array[3]);
 				ASTNode expr2 = nodefinder2.getCoveringNode();
-				ASTNode found_method_declaration2 = JDT_Utils.searchForSpecificParentNode(expr, ASTNode.METHOD_DECLARATION);
+				ASTNode found_method_declaration2 = JDT_Utils.searchForSpecificParentNode(expr2, ASTNode.METHOD_DECLARATION);
 				if(found_method_declaration2 != null) {
 					postfixMethodsToCheck.add((MethodDeclaration) found_method_declaration2);
 				}
