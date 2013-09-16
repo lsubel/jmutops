@@ -93,9 +93,16 @@ public class SourceCodeChangeUtils {
 		int sce_end_insert 		= change_insert.getChangedEntity().getEndPosition();
 		NodeFinder nf_insert 	= new NodeFinder(preperator_insert.getAST(), sce_start_insert, sce_end_insert - sce_start_insert + 1);
 		
+		// check if both ASTNodes have the same type
+		boolean sameASTNodeType = (nf_delete.getCoveringNode().getNodeType() == nf_insert.getCoveringNode().getNodeType());
+		if(!sameASTNodeType) {
+			return false;
+		}
+		
 		// calculate the way from the statement to the method declaration
 		Stack<Integer> way_insert = PathExtractor.calculatePathToMethod(nf_insert.getCoveringNode());
 		Stack<Integer> way_delete = PathExtractor.calculatePathToMethod(nf_delete.getCoveringNode());
+		
 		// finally compare these stacks and return the result
 		return way_insert.equals(way_delete);
 	}
