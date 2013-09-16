@@ -70,7 +70,7 @@ public class TRO_Methodlevel_Test extends MethodTest {
 		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
 		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
 		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
-		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -83,7 +83,7 @@ public class TRO_Methodlevel_Test extends MethodTest {
 		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
 		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
 		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
-		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
 		checkOtherMutationOperators(resultMap);
 	}
 	
@@ -96,7 +96,7 @@ public class TRO_Methodlevel_Test extends MethodTest {
 		assertEquals(0, getApplicationValue(resultMap, mutop_cro));
 		assertEquals(0, getApplicationValue(resultMap, mutop_exco));
 		assertEquals(0, getApplicationValue(resultMap, mutop_pcc));
-		assertEquals(1, getApplicationValue(resultMap, mutop_pnc));
+		assertEquals(0, getApplicationValue(resultMap, mutop_pnc));
 		checkOtherMutationOperators(resultMap);
 	}
 	
