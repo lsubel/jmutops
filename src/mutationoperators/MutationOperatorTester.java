@@ -194,7 +194,7 @@ public class MutationOperatorTester {
 
 			case COMMENT_INSERT:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 			case ADDITIONAL_CLASS:
 			case ADDITIONAL_FUNCTIONALITY:
 			case ADDITIONAL_OBJECT_STATE:
@@ -215,7 +215,7 @@ public class MutationOperatorTester {
 			switch (change.getChangeType()) {
 			case DOC_INSERT:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 			case ADDING_ATTRIBUTE_MODIFIABILITY:
 			case ADDING_CLASS_DERIVABILITY:
 			case ADDING_METHOD_OVERRIDABILITY:
@@ -223,6 +223,7 @@ public class MutationOperatorTester {
 			case PARENT_CLASS_INSERT:
 			case PARENT_INTERFACE_INSERT:
 			case RETURN_TYPE_INSERT:
+				runMutationOperators(mutationOperatorList, node);
 				break;
 			default:
 				throw new IllegalStateException(
@@ -245,7 +246,7 @@ public class MutationOperatorTester {
 			switch (change.getChangeType()) {
 			case COMMENT_DELETE:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 			case ALTERNATIVE_PART_DELETE:
 			case REMOVED_CLASS:
 			case REMOVED_FUNCTIONALITY:
@@ -266,11 +267,12 @@ public class MutationOperatorTester {
 			switch (change.getChangeType()) {
 			case DOC_DELETE:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 			case PARAMETER_DELETE:
 			case PARENT_CLASS_DELETE:
 			case PARENT_INTERFACE_DELETE:
 			case RETURN_TYPE_DELETE:
+				runMutationOperators(mutationOperatorList, node);
 				break;
 			default:
 				throw new IllegalStateException(
@@ -294,7 +296,7 @@ public class MutationOperatorTester {
 
 			case COMMENT_MOVE:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 
 			case STATEMENT_ORDERING_CHANGE:
 			case STATEMENT_PARENT_CHANGE:
@@ -332,7 +334,7 @@ public class MutationOperatorTester {
 
 			case COMMENT_UPDATE:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 
 			case CONDITION_EXPRESSION_CHANGE:
 				// check only the condition of the node
@@ -380,7 +382,7 @@ public class MutationOperatorTester {
 			switch (change.getChangeType()) {
 			case DOC_UPDATE:
 				// since comment updates do not fix bugs, we ignore this case
-				break;
+				// break;
 
 			case ATTRIBUTE_RENAMING:
 			case ATTRIBUTE_TYPE_CHANGE:
@@ -407,6 +409,7 @@ public class MutationOperatorTester {
 			case RETURN_TYPE_CHANGE:
 
 			case UNCLASSIFIED_CHANGE:
+				runMutationOperators(mutationOperatorList, leftNode, rightNode);
 				break;
 			default:
 				throw new IllegalStateException(
