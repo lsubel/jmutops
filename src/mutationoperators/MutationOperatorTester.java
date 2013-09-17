@@ -125,8 +125,10 @@ public class MutationOperatorTester {
 		} else if (change instanceof Delete) {
 			this.check(node, (Delete) change);
 		} else {
-			throw new IllegalStateException(
-					"Could not found correct subclass for change on a single version.");
+			// default case means some error
+			String error_message = "Unexpected subclass for change on one version.: " + change.getClass().getSimpleName();
+			this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - checkForMutationOperators(ASTNode, SourceCodeChange)" , error_message);
+			throw new IllegalArgumentException(error_message);
 		}
 	}
 
@@ -155,8 +157,10 @@ public class MutationOperatorTester {
 		} else if (change instanceof Move) {
 			this.check(leftNode, rightNode, (Move) change);
 		} else {
-			throw new IllegalStateException(
-					"Could not found correct subclass for change on two versions.");
+			// default case means some error
+			String error_message = "Unexpected subclass for change on two versions.: " + change.getClass().getSimpleName();
+			this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - checkForMutationOperators(ASTNode, ASTNode, SourceCodeChange)" , error_message);
+			throw new IllegalArgumentException(error_message);
 		}
 	}
 
@@ -206,9 +210,9 @@ public class MutationOperatorTester {
 				
 			default:
 				// default case means some error
-				throw new IllegalStateException(
-						"Expected body insert, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected body insert, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, Insert)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		} else {
 			// in case of a class change
@@ -226,9 +230,9 @@ public class MutationOperatorTester {
 				runMutationOperators(mutationOperatorList, node);
 				break;
 			default:
-				throw new IllegalStateException(
-						"Expected class insert, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected class insert, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, Insert)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		}
 	}
@@ -258,9 +262,10 @@ public class MutationOperatorTester {
 			
 			default:
 				// default case means some error
-				throw new IllegalStateException(
-						"Expected body delete, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected body delete, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, Delete)" , error_message);
+				throw new IllegalStateException(error_message);
+						
 			}
 		} else {
 			// in case of a class change
@@ -275,9 +280,9 @@ public class MutationOperatorTester {
 				runMutationOperators(mutationOperatorList, node);
 				break;
 			default:
-				throw new IllegalStateException(
-						"Expected class delete, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected class delete, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, Delete)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		}
 	}
@@ -304,17 +309,17 @@ public class MutationOperatorTester {
 				runMutationOperators(mutationOperatorList, leftNode, rightNode);
 				break;
 			default:
-				throw new IllegalStateException(
-						"Expected body move, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected body move, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, ASTNode, Move)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
 			default:
-				throw new IllegalStateException(
-						"Expected class move, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected class move, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, ASTNode, Move)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		}
 	}
@@ -359,10 +364,9 @@ public class MutationOperatorTester {
 							((ForStatement) leftNode).getExpression(),
 							((ForStatement) rightNode).getExpression());
 				} else {
-					throw new IllegalStateException(
-							"Could not found ASTNode with condition: "
-									+ leftNode.getClass().getName() + " & "
-									+ rightNode.getClass().getName());
+					String error_message = "Could not find ASTNode with same nodetype on changetype CONDITION_EXPRESSION_CHANGE: " + leftNode.getClass().getName() + " & " + rightNode.getClass().getName();
+					this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, ASTNode, Update)" , error_message);
+					throw new IllegalStateException(error_message);
 				}
 				break;
 
@@ -373,9 +377,9 @@ public class MutationOperatorTester {
 				break;
 
 			default:
-				throw new IllegalStateException(
-						"Expected body update, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected body update, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, ASTNode, Update)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		} else {
 			// in case of a class change
@@ -412,9 +416,9 @@ public class MutationOperatorTester {
 				runMutationOperators(mutationOperatorList, leftNode, rightNode);
 				break;
 			default:
-				throw new IllegalStateException(
-						"Expected class change, but found "
-								+ change.getChangeType().toString());
+				String error_message = "Expected class update, but found " + change.getChangeType().toString();
+				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, Update)" , error_message);
+				throw new IllegalStateException(error_message);
 			}
 		}
 
