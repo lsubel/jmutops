@@ -142,12 +142,12 @@ public class JMutOps {
 		// check for null argument
 		if(prefixedFile == null){
 			String errorMessage = "First argument must not be null.";
-			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			this.listener.OnErrorDetected("JMutOps - checkFiles(File, File)", errorMessage);
 			throw new IllegalArgumentException(errorMessage);
 		}
 		if(postfixedFile == null){
 			String errorMessage = "Second argument must not be null.";
-			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			this.listener.OnErrorDetected("JMutOps - checkFiles(File, File)", errorMessage);
 			throw new IllegalArgumentException(errorMessage);
 		}
 		
@@ -163,7 +163,7 @@ public class JMutOps {
 		    distiller.extractClassifiedSourceCodeChanges(prefixed_preperator.getFile(), postfixed_preperator.getFile());
 		} catch(Exception e) {
 			String errorMessage = e.getMessage();
-			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			this.listener.OnErrorDetected("JMutOps - checkFiles(File, File)", errorMessage);
 			return;
 		}
 		
@@ -171,7 +171,7 @@ public class JMutOps {
 		List<SourceCodeChange> changes = distiller.getSourceCodeChanges();
 		if(changes == null){
 			String errorMessage = "No changes were found.";
-			this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
+			this.listener.OnErrorDetected("JMutOps - checkFiles(File, File)", errorMessage);
 			return;
 		}
 		
