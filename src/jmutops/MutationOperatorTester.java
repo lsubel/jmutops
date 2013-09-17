@@ -112,7 +112,10 @@ public class MutationOperatorTester {
 			}
 			
 		default:
-			return false;
+			// default case means some error
+			String error_message = "Unexpected MutationOperatorCategory in input MutationOperator: " + mutop.getCategory().toString();
+			this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - addMutationOperator(MutationOperator)" , error_message);
+			throw new IllegalArgumentException(error_message);
 		}
 	}
 
@@ -456,8 +459,8 @@ public class MutationOperatorTester {
 	}
 	
 	/**
-	 * Helper method. Check for each MutationOperator in operatorlist, 
-	 * if node applied to corresponding operator
+	 * Helper method. Check for each MutationOperator in {@code operatorlist}, 
+	 * if one of the {@ink MutationOperator} in {@code operatorlist} could be applied to {@code node}.
 	 * @param operatorlist
 	 * 		A {@link List} of {@link MutationOperator} containing all
 	 *      MutationOperators to check in this case.
