@@ -200,6 +200,10 @@ public abstract class MutationOperator{
 		return this.mutopproperty.getLevel();
 	}
 	
+	public MutationOperatorProperty getProperty() {
+		return mutopproperty;
+	}
+	
 	/**
 	 * Check if the objects for two asts are assigned.
 	 * @return True iff {@link #twoAST_matcher} and {@link #twoAST_visitor} are assigned.

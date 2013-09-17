@@ -1,7 +1,10 @@
-package mutationoperators;
+package jmutops;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import mutationoperators.MutationOperator;
+import mutationoperators.MutationOperatorProperty;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.DoStatement;
@@ -424,40 +427,7 @@ public class MutationOperatorTester {
 
 	}
 
-	private ArrayList<MutationOperator> getInitialMutationOperators(SourceCodeChange change) {
-		ArrayList<MutationOperator> mutationOperatorList;
-		// get level based operators
-		if (change.getChangeType().isBodyChange()) {
-			mutationOperatorList = getCopyOfList(methodlevel_list);
-		} else {
-			mutationOperatorList = getCopyOfList(classlevel_list);
-		}
-		// at both leveled operators to it
-		mutationOperatorList.addAll(bothlevel_list);
-		return mutationOperatorList;
-	}
-	
-	private ArrayList<MutationOperator> getInitialMutationOperators(List<SourceCodeChange> changes) {
-		ArrayList<MutationOperator> mutationOperatorList = new ArrayList<MutationOperator>();
-		boolean isMethod = false;
-		boolean isClass = false;
-		for(SourceCodeChange change: changes) {
-			if(change.getChangeType().isBodyChange() && (!isMethod)){
-				isMethod = true;
-				mutationOperatorList.addAll(getCopyOfList(methodlevel_list));
-			}
-			else if(!change.getChangeType().isBodyChange() && (!isClass)){
-				isClass = true;
-				mutationOperatorList.addAll(getCopyOfList(classlevel_list));
-			}
-			if(isMethod && isClass) {
-				break;
-			}
-		}
-		// at both leveled operators to it
-		mutationOperatorList.addAll(bothlevel_list);
-		return mutationOperatorList;
-	}
+
 
 	/**
 	 * Helper method. Check for each MutationOperator in operatorlist, if
@@ -517,6 +487,41 @@ public class MutationOperatorTester {
 			operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
 		}
 	}	
+	
+	private ArrayList<MutationOperator> getInitialMutationOperators(SourceCodeChange change) {
+		ArrayList<MutationOperator> mutationOperatorList;
+		// get level based operators
+		if (change.getChangeType().isBodyChange()) {
+			mutationOperatorList = getCopyOfList(methodlevel_list);
+		} else {
+			mutationOperatorList = getCopyOfList(classlevel_list);
+		}
+		// at both leveled operators to it
+		mutationOperatorList.addAll(bothlevel_list);
+		return mutationOperatorList;
+	}
+	
+	private ArrayList<MutationOperator> getInitialMutationOperators(List<SourceCodeChange> changes) {
+		ArrayList<MutationOperator> mutationOperatorList = new ArrayList<MutationOperator>();
+		boolean isMethod = false;
+		boolean isClass = false;
+		for(SourceCodeChange change: changes) {
+			if(change.getChangeType().isBodyChange() && (!isMethod)){
+				isMethod = true;
+				mutationOperatorList.addAll(getCopyOfList(methodlevel_list));
+			}
+			else if(!change.getChangeType().isBodyChange() && (!isClass)){
+				isClass = true;
+				mutationOperatorList.addAll(getCopyOfList(classlevel_list));
+			}
+			if(isMethod && isClass) {
+				break;
+			}
+		}
+		// at both leveled operators to it
+		mutationOperatorList.addAll(bothlevel_list);
+		return mutationOperatorList;
+	}
 
 	private ArrayList<MutationOperator> getCopyOfList(
 			ArrayList<MutationOperator> list) {
@@ -531,7 +536,7 @@ public class MutationOperatorTester {
 	private void filterMove(ArrayList<MutationOperator> list, boolean moveValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canMove() != moveValue){
+			if(mutop.getProperty().canMove() != moveValue){
 				list.remove(mutop);
 			}
 		}
@@ -540,7 +545,7 @@ public class MutationOperatorTester {
 	private void filterInsert(ArrayList<MutationOperator> list, boolean insertValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canInsert() != insertValue){
+			if(mutop.getProperty().canInsert() != insertValue){
 				list.remove(mutop);
 			}
 		}
@@ -549,7 +554,7 @@ public class MutationOperatorTester {
 	private void filterDelete(ArrayList<MutationOperator> list, boolean deleteValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canDelete() != deleteValue){
+			if(mutop.getProperty().canDelete() != deleteValue){
 				list.remove(mutop);
 			}
 		}
@@ -558,7 +563,7 @@ public class MutationOperatorTester {
 	private void filterUpdate(ArrayList<MutationOperator> list, boolean updateValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canUpdate() != updateValue){
+			if(mutop.getProperty().canUpdate() != updateValue){
 				list.remove(mutop);
 			}
 		}
@@ -572,7 +577,7 @@ public class MutationOperatorTester {
 	private void filterOneAST(ArrayList<MutationOperator> list, boolean oneASTValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canHandleOneAST() != oneASTValue){
+			if(mutop.getProperty().canHandleOneAST() != oneASTValue){
 				list.remove(mutop);
 			}
 		}
@@ -586,7 +591,7 @@ public class MutationOperatorTester {
 	private void filterTwoAST(ArrayList<MutationOperator> list, boolean oneTwoValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canHandleTwoASTs() != oneTwoValue){
+			if(mutop.getProperty().canHandleTwoASTs() != oneTwoValue){
 				list.remove(mutop);
 			}
 		}
@@ -600,7 +605,7 @@ public class MutationOperatorTester {
 	private void filterPreCheck(ArrayList<MutationOperator> list, boolean precheckValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.mutopproperty.canHandlePreCheck() != precheckValue){
+			if(mutop.getProperty().canHandlePreCheck() != precheckValue){
 				list.remove(mutop);
 			}
 		}

@@ -3,7 +3,6 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
 
-import mutationoperators.MutationOperatorTester;
 import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.afro.AFRO;
 import mutationoperators.methodlevel.aod.AOD;
