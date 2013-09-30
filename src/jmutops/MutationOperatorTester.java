@@ -343,10 +343,6 @@ public class MutationOperatorTester {
 			// in case of a body change
 			switch (change.getChangeType()) {
 
-			case COMMENT_UPDATE:
-				// since comment updates do not fix bugs, we ignore this case
-				// break;
-
 			case CONDITION_EXPRESSION_CHANGE:
 				// check only the condition of the node
 				if ((leftNode instanceof IfStatement)
@@ -376,6 +372,7 @@ public class MutationOperatorTester {
 				}
 				break;
 
+			case COMMENT_UPDATE:
 			case STATEMENT_UPDATE:
 			case UNCLASSIFIED_CHANGE:
 				// in this case, we cannot specify the area to search
@@ -450,7 +447,15 @@ public class MutationOperatorTester {
 		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
-			detected_applications += operator.check(leftNode, rightNode);
+			try {
+				detected_applications += operator.check(leftNode, rightNode);
+			} catch (Exception e) {
+				String errorMessage = 
+					"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
+					+ e.toString();
+				this.listener.OnErrorDetected("MutationOperatorTester - runMutationOperators(List<MutationOperator>, ASTNode, ASTNode)", errorMessage);
+				continue;
+			}
 		}
 		// fire event when there was no matching detected
 		if (detected_applications == 0) {
@@ -473,7 +478,15 @@ public class MutationOperatorTester {
 		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
-			detected_applications += operator.check(node);
+			try {
+				detected_applications += operator.check(node);
+			} catch (Exception e) {
+				String errorMessage = 
+						"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
+						+ e.toString();
+				this.listener.OnErrorDetected("MutationOperatorTester - runMutationOperators(List<MutationOperator>, ASTNode)", errorMessage);
+				continue;
+			}
 		}
 		// fire event when there was no matching detected
 		if (detected_applications == 0) {
@@ -487,7 +500,15 @@ public class MutationOperatorTester {
 			Preperator postfixed_preperator) {
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
-			operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
+			try {
+				operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
+			} catch (Exception e) {
+				String errorMessage = 
+						"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
+						+ e.toString();
+				this.listener.OnErrorDetected("MutationOperatorTester - preRunMutationOperators(ArrayList<MutationOperator>, List<SourceCodeChange>, Preperator, Preperator)", errorMessage);
+				continue;
+			}
 		}
 	}	
 	
