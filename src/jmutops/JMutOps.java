@@ -186,21 +186,25 @@ public class JMutOps {
 		// handle each change
 		for(SourceCodeChange change: changes){
 			
-			// fire OnChangeChecked event
-			this.listener.OnChangeChecked(change);
-			
-			// depending on the class of change,
-			// call a different submethod which handles the different number of versions
-			if((change instanceof Update) || (change instanceof Move)){
-				checkChangeTwoVersions(change);
-			}
-			else if((change instanceof Insert) || (change instanceof Delete)){
-				checkChangeOneVersion(change);
-			}
-			else{
-				String errorMessage = "Impossible exception location.";
-				this.listener.OnErrorDetected("JMutOps - checkFiles", errorMessage);
-				throw new IllegalStateException(errorMessage);
+			try {
+				// fire OnChangeChecked event
+				this.listener.OnChangeChecked(change);
+				
+				// depending on the class of change,
+				// call a different submethod which handles the different number of versions
+				if((change instanceof Update) || (change instanceof Move)){
+					checkChangeTwoVersions(change);
+				}
+				else if((change instanceof Insert) || (change instanceof Delete)){
+					checkChangeOneVersion(change);
+				}
+				else{
+					String errorMessage = "Impossible exception location.";
+					throw new IllegalStateException(errorMessage);
+				}
+			} catch (Exception e) {
+				this.listener.OnErrorDetected("JMutOps - checkFiles", e.getMessage());
+				throw e;
 			}
 		}
 		
