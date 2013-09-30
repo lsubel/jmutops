@@ -226,12 +226,12 @@ public class MutationOperatorTester {
 			case DOC_INSERT:
 				// since comment updates do not fix bugs, we ignore this case
 				// break;
-			case ADDING_ATTRIBUTE_MODIFIABILITY:
 			case ADDING_CLASS_DERIVABILITY:
 			case ADDING_METHOD_OVERRIDABILITY:
 			case PARAMETER_INSERT:
 			case PARENT_CLASS_INSERT:
 			case PARENT_INTERFACE_INSERT:
+			case REMOVING_ATTRIBUTE_MODIFIABILITY:
 			case RETURN_TYPE_INSERT:
 				runMutationOperators(mutationOperatorList, node);
 				break;
@@ -276,9 +276,8 @@ public class MutationOperatorTester {
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
+			case ADDING_ATTRIBUTE_MODIFIABILITY:
 			case DOC_DELETE:
-				// since comment updates do not fix bugs, we ignore this case
-				// break;
 			case PARAMETER_DELETE:
 			case PARENT_CLASS_DELETE:
 			case PARENT_INTERFACE_DELETE:
@@ -409,7 +408,6 @@ public class MutationOperatorTester {
 			case PARENT_CLASS_CHANGE:
 			case PARENT_INTERFACE_CHANGE:
 
-			case REMOVING_ATTRIBUTE_MODIFIABILITY:
 			case REMOVING_CLASS_DERIVABILITY:
 			case REMOVING_METHOD_OVERRIDABILITY:
 
