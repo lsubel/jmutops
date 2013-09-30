@@ -118,7 +118,8 @@ public class Preperator {
 		    	StringBuffer errorMessage = new StringBuffer();
 		    	errorMessage.append(problems.length + " different errors detected." + "\n");
 		        for (IProblem problem : problems) { 
-					errorMessage.append("\t" + "In " + new String(problem.getOriginatingFileName()) + ": " + problem.getMessage() + "\n");
+		        	
+					errorMessage.append("\t" + (problem.isWarning() ? "Warning" : "Error") + " in " + new String(problem.getOriginatingFileName()) + ": " + problem.getMessage() + "\n");
 		        }
 		        this.listener.OnErrorDetected("Preperator - prepare", errorMessage.toString());
 		    }
