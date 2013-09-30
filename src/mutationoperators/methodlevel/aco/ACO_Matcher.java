@@ -27,8 +27,14 @@ public class ACO_Matcher extends TwoASTMatcher {
 			// cast other node
 			MethodInvocation node2 = (MethodInvocation) other;
 			
+			// resolve the bindings
+			IMethodBinding node_methodbinding = node.resolveMethodBinding();
+			IMethodBinding node2_methodbinding = node2.resolveMethodBinding();
+			
 			// if both methods have no parameters, we can abort
-			boolean noArguments = (node.resolveMethodBinding().getParameterTypes().length == 0) && (node2.resolveMethodBinding().getParameterTypes().length == 0);
+			ITypeBinding[] node_parametertypes  = node_methodbinding.getParameterTypes();
+			ITypeBinding[] node2_parametertypes = node2_methodbinding.getParameterTypes();
+			boolean noArguments = (node_parametertypes.length == 0) && (node2_parametertypes.length == 0);
 			if(noArguments) {
 				return false;
 			}
@@ -37,9 +43,6 @@ public class ACO_Matcher extends TwoASTMatcher {
 			boolean sameMethodName = node.getName().subtreeMatch(defaultMatcher, node2.getName());
 			
 			if(sameMethodName){
-				// resolve the bindings
-				IMethodBinding node_methodbinding = node.resolveMethodBinding();
-				IMethodBinding node2_methodbinding = node2.resolveMethodBinding();
 				
 				// check if both methods are equal
 				boolean sameMethods = node_methodbinding.isEqualTo(node2_methodbinding);
