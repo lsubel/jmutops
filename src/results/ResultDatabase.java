@@ -676,7 +676,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				String strSQL = 
 					"INSERT INTO Matchings " 
 						+ "(ID_change, ID_mutationoperator, prefixStart, prefixEnd, prefixText) "
-						+ "SELECT (?, ?, ?, ?, ?)" 
+						+ "SELECT ?, ?, ?, ?, ? " 
 						+ "WHERE NOT EXISTS (" 
 						+ 	"SELECT * " 
 						+	"FROM Matchings "
@@ -697,7 +697,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				stmt.executeUpdate();
 				stmt.close();
 			} catch (SQLException e1) {
-				log.warning("Could not create and fill prepared statement to detect existing program!");
+				log.warning("Could not create and fill prepared statement to detect existing program: " + e1);
 				e1.printStackTrace();
 				return;
 			}
@@ -708,7 +708,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 				String strSQL = 
 					"INSERT INTO Matchings " 
 						+ "(ID_change, ID_mutationoperator, postfixStart, postfixEnd) "
-						+ "SELECT (?, ?, ?, ?, ?, ?)" 
+						+ "SELECT ?, ?, ?, ? " 
 						+ "WHERE NOT EXISTS (" 
 						+ 	"SELECT * " 
 						+	"FROM Matchings "
@@ -783,7 +783,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 			stmt.executeUpdate();
 			stmt.close();
 		} catch (SQLException e1) {
-			log.warning("Could not create and fill prepared statement to detect existing program!");
+			log.warning("Could not create and fill prepared statement to detect existing program: " + e1);
 			e1.printStackTrace();
 			return;
 		}
