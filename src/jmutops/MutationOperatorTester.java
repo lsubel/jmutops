@@ -321,6 +321,9 @@ public class MutationOperatorTester {
 		} else {
 			// in case of a class change
 			switch (change.getChangeType()) {
+			case PARAMETER_ORDERING_CHANGE:
+				runMutationOperators(mutationOperatorList, leftNode, rightNode);
+				break;
 			default:
 				String error_message = "Expected class move, but found " + change.getChangeType().toString();
 				this.listener.OnErrorDetected(this.getClass().getSimpleName() + " - check(ASTNode, ASTNode, Move)" , error_message);
@@ -401,7 +404,6 @@ public class MutationOperatorTester {
 
 			case METHOD_RENAMING:
 
-			case PARAMETER_ORDERING_CHANGE:
 			case PARAMETER_RENAMING:
 			case PARAMETER_TYPE_CHANGE:
 
