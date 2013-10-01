@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -933,11 +934,158 @@ public class ResultDatabase implements JMutOpsEventListener {
 		this.ID_change		  = -1;
 	}
 
+	public void removeEntries(String official_id) {
+		// check of non null arguments
+		assert official_id != "";
+		
+		// initialize variables
+		PreparedStatement stmt = null;
+		int id_bugreport = 0;
+		ArrayList<Integer> array_id_changingfiles = new ArrayList<Integer>();
+		ArrayList<Integer> array_id_changes = new ArrayList<Integer>();
+		
+		// remove the entries in Bugreport
+		try {
+			String strSQL = 
+				"SELECT ID_bugreport " +
+				"FROM Bugreport " +
+				"WHERE (officalid = ?)";
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setString(1, official_id);
+			ResultSet results = stmt.executeQuery();
+			if(!results.next()) {
+				return;
+			}
+			id_bugreport = results.getInt("ID_bugreport");
+			stmt.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return;
+		}
+		try {
+			String strSQL = 
+				"DELETE FROM Bugreport " 
+					+ "WHERE (officalid = ?)";
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setString(1, official_id);
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return;
+		}	
+		
+		// remove the entries in ChangingFiles, 
+		// store the corresponding id's
+		try {
+			String strSQL = 
+				"SELECT ID_changingfiles " +
+				"FROM ChangingFiles " +
+				"WHERE (id_bugreport = ?)";
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setInt(1, id_bugreport);
+			ResultSet results = stmt.executeQuery();
+			if(!results.next()) {
+				return;
+			}
+			do {
+				array_id_changingfiles.add(new Integer(results.getInt("ID_changingfiles")));
+			} while(results.next());
+			stmt.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return;
+		}
+		try {
+			String strSQL = 
+				"DELETE FROM ChangingFiles " 
+					+ "WHERE (ID_bugreport = ?)";
+			stmt = this.connection.prepareStatement(strSQL);
+			stmt.setInt(1, id_bugreport);
+			stmt.executeUpdate();
+			stmt.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return;
+		}
+		
+		// remove the entries in Changes, 
+		// store the corresponding id's
+		for(int id_changingfiles: array_id_changingfiles) {
+			try {
+				String strSQL = 
+					"SELECT ID_change " +
+					"FROM Changes " +
+					"WHERE (id_chaningfiles = ?)";
+				stmt = this.connection.prepareStatement(strSQL);
+				stmt.setInt(1, id_changingfiles);
+				ResultSet results = stmt.executeQuery();
+				if(!results.next()) {
+					return;
+				}
+				do {
+					array_id_changes.add(new Integer(results.getInt("ID_change")));
+				} while(results.next());
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return;
+			}
+			
+			try {
+				String strSQL = 
+					"DELETE FROM Changes " 
+						+ "WHERE (id_chaningfiles = ?)";
+				stmt = this.connection.prepareStatement(strSQL);
+				stmt.setInt(1, id_changingfiles);
+				stmt.executeUpdate();
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return;
+			}
+		}
+		
+		// remove the entries in Matching,
+		// remove the entries in NoMatching,
+		for(int id_changes: array_id_changes) {
+			try {
+				String strSQL = 
+					"DELETE FROM Matchings " 
+						+ "WHERE (id_change = ?)";
+				stmt = this.connection.prepareStatement(strSQL);
+				stmt.setInt(1, id_changes);
+				stmt.executeUpdate();
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return;
+			}
+			
+			try {
+				String strSQL = 
+					"DELETE FROM NoMatchings " 
+						+ "WHERE (id_change = ?)";
+				stmt = this.connection.prepareStatement(strSQL);
+				stmt.setInt(1, id_changes);
+				stmt.executeUpdate();
+				stmt.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return;
+			}
+		}
+		
+		
+
+	}
+	
 	public static void main(String[] args) {
 		// drop all tables
 		ResultDatabase rd = new ResultDatabase("jdbc:postgresql://localhost:5432/jmutops_results", "postgres", "asteria");
 		rd.dropTables();
 		rd.initializeTables();
+		//rd.removeEntries("82062");
 		System.out.println("Done");
 	}
 }
