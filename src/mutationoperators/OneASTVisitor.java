@@ -2,6 +2,7 @@ package mutationoperators;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.LineComment;
 
 /**
  * General (abstract) class which traverse in a 
@@ -24,5 +25,10 @@ public abstract class OneASTVisitor extends ASTVisitor {
 	 */
 	public OneASTVisitor(MutationOperator mutop) {
 		this.mutop = mutop;
+	}
+	
+	@Override
+	public boolean visit(LineComment node) {
+		return false;
 	}
 }
