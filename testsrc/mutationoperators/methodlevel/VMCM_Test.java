@@ -79,8 +79,17 @@ MutationOperator mutop;
 	}
 	
 	@Test 
-	public void testVMCM_RemoveSysout() {
+	public void testVMCM_RemoveSysout1() {
 		String pre 	= "resetCounter(); incrementCounter(1); System.out.println(this.name); ";
+		String post = "resetCounter(); incrementCounter(1); "; 
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop));
+		checkOtherMutationOperators(resultMap, mutop); 
+	}
+	
+	@Test 
+	public void testVMCM_RemoveSysout2() {
+		String pre 	= "resetCounter(); incrementCounter(1); // COMMENT HERE \n System.out.println(this.name); ";
 		String post = "resetCounter(); incrementCounter(1); "; 
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(1, getApplicationValue(resultMap, mutop));
