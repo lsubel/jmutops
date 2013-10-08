@@ -31,7 +31,8 @@ public class SourceCodeChangeUtils {
 						// Insert / Delete ~> Update
 						boolean sameLocation = checkLocationInASTS((Delete) change2, (Insert) change, preperator, preperator2);
 						if (sameLocation){
-							change = new Update(change.getRootEntity(), change2.getChangedEntity(), change.getChangedEntity(), change.getParentEntity());
+							ChangeType new_change_type = getNewChangeType(change.getChangeType(), change2.getChangeType());
+							change = new Update(new_change_type, change.getRootEntity(), change2.getChangedEntity(), change.getChangedEntity(), change.getParentEntity());
 							changes.remove(change2);
 							break;
 						}
@@ -44,7 +45,8 @@ public class SourceCodeChangeUtils {
 						// Insert / Delete ~> Update
 						boolean sameLocation = checkLocationInASTS((Delete) change, (Insert) change2, preperator2, preperator);
 						if (sameLocation){
-							change = new Update(change.getRootEntity(), change.getChangedEntity(), change2.getChangedEntity(), change.getParentEntity());
+							ChangeType new_change_type = getNewChangeType(change.getChangeType(), change2.getChangeType());
+							change = new Update(new_change_type, change.getRootEntity(), change.getChangedEntity(), change2.getChangedEntity(), change.getParentEntity());
 							changes.remove(change2);
 							break;
 						}
@@ -70,6 +72,26 @@ public class SourceCodeChangeUtils {
 		return returnList;
 	}
 	
+	private static ChangeType getNewChangeType(ChangeType changeType,
+			ChangeType changeType2) {
+
+		// both ChangeType's are the same
+		if(changeType == changeType2) {
+			return changeType;
+		}
+		
+		// Statement Insert ^ Statement Delete -> Statement Update
+		if(
+			((changeType == ChangeType.STATEMENT_INSERT) && (changeType2 == ChangeType.STATEMENT_DELETE))
+			|| ((changeType == ChangeType.STATEMENT_DELETE) && (changeType2 == ChangeType.STATEMENT_INSERT))
+		) {
+			return ChangeType.STATEMENT_UPDATE;
+		}
+
+		// default case
+		return ChangeType.UNCLASSIFIED_CHANGE;
+	}
+
 	private static boolean checkLocationInASTS(Delete change_delete, Insert change_insert, Preperator preperator_delete, Preperator preperator_insert){
 		
 		// first check if both changes are occurring in method body; otherwise abort the process
