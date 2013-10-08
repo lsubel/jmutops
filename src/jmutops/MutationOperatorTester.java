@@ -203,8 +203,11 @@ public class MutationOperatorTester {
 			switch (change.getChangeType()) {
 
 			case COMMENT_INSERT:
-				// since comment updates do not fix bugs, we ignore this case
-				// break;
+				// since comment updates do not fix bugs, 
+				// we cannot find possible matches to this case
+				// and therefore return a "no matching found"
+				this.listener.OnNoMatchingFound(mutationOperatorList);
+				break;
 			case ADDITIONAL_CLASS:
 			case ADDITIONAL_FUNCTIONALITY:
 			case ADDITIONAL_OBJECT_STATE:
@@ -255,8 +258,11 @@ public class MutationOperatorTester {
 			// in case of a body change
 			switch (change.getChangeType()) {
 			case COMMENT_DELETE:
-				// since comment updates do not fix bugs, we ignore this case
-				// break;
+				// since comment updates do not fix bugs, 
+				// we cannot find possible matches to this case
+				// and therefore return a "no matching found"
+				this.listener.OnNoMatchingFound(mutationOperatorList);
+				break;
 			case ALTERNATIVE_PART_DELETE:
 			case REMOVED_CLASS:
 			case REMOVED_FUNCTIONALITY:
@@ -305,9 +311,11 @@ public class MutationOperatorTester {
 			switch (change.getChangeType()) {
 
 			case COMMENT_MOVE:
-				// since comment updates do not fix bugs, we ignore this case
-				// break;
-
+				// since comment updates do not fix bugs, 
+				// we cannot find possible matches to this case
+				// and therefore return a "no matching found"
+				this.listener.OnNoMatchingFound(mutationOperatorList);
+				break;
 			case STATEMENT_ORDERING_CHANGE:
 			case STATEMENT_PARENT_CHANGE:
 			case UNCLASSIFIED_CHANGE:
@@ -345,6 +353,13 @@ public class MutationOperatorTester {
 			// in case of a body change
 			switch (change.getChangeType()) {
 
+			case COMMENT_UPDATE:
+				// since comment updates do not fix bugs, 
+				// we cannot find possible matches to this case
+				// and therefore return a "no matching found"
+				this.listener.OnNoMatchingFound(mutationOperatorList);
+				break;
+			
 			case CONDITION_EXPRESSION_CHANGE:
 				// check only the condition of the node
 				if ((leftNode instanceof IfStatement)
@@ -373,8 +388,6 @@ public class MutationOperatorTester {
 					throw new IllegalStateException(error_message);
 				}
 				break;
-
-			case COMMENT_UPDATE:
 			case STATEMENT_UPDATE:
 			case UNCLASSIFIED_CHANGE:
 				// in this case, we cannot specify the area to search
