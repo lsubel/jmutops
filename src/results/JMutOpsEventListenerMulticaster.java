@@ -23,14 +23,15 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	 */
 	private ArrayList<JMutOpsEventListener> listener = new ArrayList<JMutOpsEventListener>();
 	
-	public void add(JMutOpsEventListener rl){
+	public boolean add(JMutOpsEventListener rl){
 		if(!(listener.contains(rl))){
-			listener.add(rl);
+			return listener.add(rl);
 		}
+		return false;
 	}
 	
-	public void remove(JMutOpsEventListener rl){
-		listener.remove(rl);
+	public boolean remove(JMutOpsEventListener rl){
+		return listener.remove(rl);
 	}
 	
 	@Override
