@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
 
+import mutationoperators.MutationOperator;
 import mutationoperators.methodlevel.aco.ACO;
 import mutationoperators.methodlevel.afro.AFRO;
 import mutationoperators.methodlevel.aod.AOD;
@@ -106,7 +107,7 @@ public class JMutOps {
 	/**
 	 * Multicaster which will talk to all ResultListeners which were added
 	 */
-	private JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
+	private final JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
 	
 	/**
 	 * Variable which is true iff {@link #checkFiles(File, File)} was called at least once.
@@ -367,6 +368,10 @@ public class JMutOps {
 			this.listener.OnErrorDetected("JMutOps - setOptions", errorMessage);
 			throw new IllegalArgumentException("Argument version has to be a correct value");
 		}		
+	}
+	
+	public boolean addMutationOperator(MutationOperator mutop) {
+		return this.checker.addMutationOperator(mutop);
 	}
 	
 	/**
