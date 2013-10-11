@@ -173,12 +173,12 @@ public class MutationOperatorTester {
 
 	/**
 	 * Check for {@link MutationOperator} which implement the method 
-	 * {@link MutationOperator#preCheck(List, Preperator, Preperator)}. 
+	 * {@link MutationOperator#check(List, Preperator, Preperator)}. 
 	 * @param changes All detected {@link SourceCodeChange} found in the file under test.
 	 * @param prefixed_preperator The {@link Preperator} related to the prefix file.
 	 * @param postfixed_preperator The {@link Preperator} related to the postfix file. 
 	 */
-	public void preCheckForMutationOperators(List<SourceCodeChange> changes,
+	public void checkForMutationOperators(List<SourceCodeChange> changes,
 			Preperator prefixed_preperator, Preperator postfixed_preperator) {
 		// get the correct list of MutationOperator's to check
 		ArrayList<MutationOperator> mutationOperatorList = getInitialMutationOperators(changes);
@@ -514,7 +514,7 @@ public class MutationOperatorTester {
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
 			try {
-				operator.preCheck(changes, prefixed_preperator, postfixed_preperator);
+				operator.check(changes, prefixed_preperator, postfixed_preperator);
 			} catch (Exception e) {
 				String errorMessage = 
 						"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
@@ -642,7 +642,7 @@ public class MutationOperatorTester {
 	private void filterPreCheck(ArrayList<MutationOperator> list, boolean precheckValue){
 		ArrayList<MutationOperator> copy = (ArrayList<MutationOperator>) list.clone();
 		for(MutationOperator mutop: copy){
-			if(mutop.getProperty().canHandlePreCheck() != precheckValue){
+			if(mutop.getProperty().canHandleMultipleChanges() != precheckValue){
 				list.remove(mutop);
 			}
 		}

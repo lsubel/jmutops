@@ -74,7 +74,7 @@ public class MutationOperatorProperty {
 	 * True if the mutation operator should be able to check properties with all changes.
 	 * Default is false;
 	 */
-	private boolean canHandlePreCheck = false;
+	private boolean canHandleMultipleChanges = false;
 	
 	//////////////////////////////////////////////////////////////
 	///		Methods
@@ -181,12 +181,12 @@ public class MutationOperatorProperty {
 		this.canHandleTwoASTs = true;
 	}
 	
-	public boolean canHandlePreCheck() {
-		return canHandlePreCheck;
+	public boolean canHandleMultipleChanges() {
+		return canHandleMultipleChanges;
 	}
 
-	public void setPreCheck() {
-		this.canHandlePreCheck = true;
+	public void setHandleMultipleChanges() {
+		this.canHandleMultipleChanges = true;
 	}
 
 }

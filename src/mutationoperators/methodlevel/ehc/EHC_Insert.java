@@ -36,11 +36,11 @@ public class EHC_Insert extends MutationOperator {
 		this.mutopproperty.setDescription("Changes an exception handling statement to an exception propagation statement and vice versa.");
 		this.mutopproperty.setLevel(MutationOperatorLevel.BOTH_LEVELS);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setPreCheck();
+		this.mutopproperty.setHandleMultipleChanges();
 	}
  
 	@Override
-	public int preCheck(List<SourceCodeChange> changes,
+	public int check(List<SourceCodeChange> changes,
 			Preperator prefixed_preperator, Preperator postfixed_preperator) {
 		// run over all all changes
 		for(SourceCodeChange change: changes) {

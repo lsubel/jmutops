@@ -213,7 +213,7 @@ public class JMutOps {
 	}
 	
 	private void preCheckOperators(List<SourceCodeChange> changes) {
-		this.checker.preCheckForMutationOperators(changes, this.prefixed_preperator, this.postfixed_preperator);
+		this.checker.checkForMutationOperators(changes, this.prefixed_preperator, this.postfixed_preperator);
 	}
 
 	private void checkChangeOneVersion(SourceCodeChange change) {

@@ -124,7 +124,7 @@ public abstract class MutationOperator{
 		return this.application_counter;	
 	}
 	
-	public int preCheck(List<SourceCodeChange> changes,
+	public int check(List<SourceCodeChange> changes,
 			Preperator prefixed_preperator, Preperator postfixed_preperator) {
 		return 0;
 	}

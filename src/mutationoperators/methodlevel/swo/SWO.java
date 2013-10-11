@@ -41,11 +41,11 @@ public class SWO extends MutationOperator {
 		this.mutopproperty.setDescription("Changes the order of statements (Case-block-statements, statements in if-then-else, expressions before & after condition operator).");
 		this.mutopproperty.setLevel(MutationOperatorLevel.METHOD_LEVEL);
 		this.mutopproperty.setCategory(MutationOperatorCategory.METHOD_LEVEL);
-		this.mutopproperty.setPreCheck();
+		this.mutopproperty.setHandleMultipleChanges();
 	}
 	
 	@Override
-	public int preCheck(List<SourceCodeChange> changes,
+	public int check(List<SourceCodeChange> changes,
 			Preperator prefixed_preperator, Preperator postfixed_preperator) {
 		// since this mutation operator may need multiple changes for one application, 
 		// we have to implement a special case for him
