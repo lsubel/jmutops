@@ -449,19 +449,19 @@ public class MutationOperatorTester {
 	 * @param operatorlist
 	 *            A {@link List} of {@link MutationOperator} containing all
 	 *            MutationOperators to check in this case.
-	 * @param leftNode
+	 * @param prefix
 	 *            The prefixed version.
-	 * @param rightNode
+	 * @param postfix
 	 *            The postfixed version.
 	 */
-	private void runMutationOperators(List<MutationOperator> operatorlist, ASTNode leftNode, ASTNode rightNode) {
+	private void runMutationOperators(List<MutationOperator> operatorlist, ASTNode prefix, ASTNode postfix) {
 		// initialize a variable which counts the number of detected
 		// applications
 		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
 			try {
-				detected_applications += operator.check(leftNode, rightNode);
+				detected_applications += operator.check(prefix, postfix);
 			} catch (Exception e) {
 				String errorMessage = 
 					"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
