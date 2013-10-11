@@ -103,7 +103,7 @@ public class AlessandraVMApplication {
 			}
 			try {
 				EventLogger el = new EventLogger(console, file, filePath);
-				jmutops.addResultListener(el);
+				jmutops.addEventListener(el);
 			} catch (Exception e) {
 				System.out.println("Could not initialize EventLogger: " + "\n" + e.getMessage());
 			}
@@ -120,7 +120,7 @@ public class AlessandraVMApplication {
 			}
 			try {
 				ResultCreator rc = new ResultCreator(console, file, filePath);
-				jmutops.addResultListener(rc);
+				jmutops.addEventListener(rc);
 			} catch (Exception e) {
 				System.out.println("Could not initialize ResultCreator: " + "\n" + e.getMessage());
 			}
@@ -131,14 +131,14 @@ public class AlessandraVMApplication {
 			String pw 		= properties.getProperty("db-password");
 			try {
 				ResultDatabase rd = new ResultDatabase(address, name, pw);
-				jmutops.addResultListener(rd);
+				jmutops.addEventListener(rd);
 			} catch (Exception e) {
 				System.out.println("Could not initialize ResultDatabase: " + "\n" + e.getMessage());
 			}
 		}
 		
 		// initialise program and bug
-		jmutops.initProgram("iBugs", "", "", "");
+		jmutops.initializeProgram("iBugs", "", "", "");
 		jmutops.initBug(new Integer(iBugs_ID).toString(), "");
 		
 		// look for source folders in pathToSources

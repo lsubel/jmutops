@@ -33,7 +33,7 @@ public class MutationOperatorTest {
 			this.extractor = new ExtractorForTests();
 			
 			this.jmutops = new JMutOps();
-			this.jmutops.addResultListener(extractor);
+			this.jmutops.addEventListener(extractor);
 			this.jmutops.checkFiles(prefixFile, postfixFile);
 		} catch (Exception e) {
 			fail("Could not find file.");

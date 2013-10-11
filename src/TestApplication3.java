@@ -22,7 +22,7 @@ public class TestApplication3 {
 		File postfixedFile = new File("C:\\Users\\sheak\\Desktop\\Bachelorarbeit\\Code\\Test\\12345\\Post\\Test1.java");
 		
 		JMutOps jmutops = new JMutOps();
-		jmutops.initProgram("iBugs", "", "", "");
+		jmutops.initializeProgram("iBugs", "", "", "");
 		jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);

@@ -34,7 +34,7 @@ public interface JMutOpsEventListener{
 	
 	/**
 	 * Event gets fired when a program was initialized. <p>
-	 * This event can be started by calling the method {@link jmutops.JMutOps#initProgram(String, String, String, String) initProgram(String, String, String, String)} in {@link jmutops.JMutOps JMutOps}.
+	 * This event can be started by calling the method {@link jmutops.JMutOps#initializeProgram(String, String, String, String) initProgram(String, String, String, String)} in {@link jmutops.JMutOps JMutOps}.
 	 * @param newProgramName The name of the program.
 	 * @param programDescription A short description of the program.
 	 * @param urlToProjectPage The weblink to the project's webpage.
@@ -97,5 +97,5 @@ public interface JMutOpsEventListener{
 	 * Event gets fired when we start to check for mutation operator on multiple changes.
 	 * Counterpart to {@link #OnChangeChecked(SourceCodeChange)}.
 	 */
-	public void OnAllChangesChecked(List<SourceCodeChange> changes);
+	public void OnAllChangesCheck(List<SourceCodeChange> changes);
 }

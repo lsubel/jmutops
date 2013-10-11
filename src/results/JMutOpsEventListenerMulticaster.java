@@ -112,9 +112,9 @@ public class JMutOpsEventListenerMulticaster implements JMutOpsEventListener {
 	}
 
 	@Override
-	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+	public void OnAllChangesCheck(List<SourceCodeChange> changes) {
 		for(JMutOpsEventListener rl: this.listener){
-			rl.OnAllChangesChecked(changes);
+			rl.OnAllChangesCheck(changes);
 		}
 	}
 }

@@ -79,7 +79,7 @@ public abstract class BasicTest {
 		
 		// initialize jMutOps
 		this.jmutops = new JMutOps();
-		this.jmutops.initProgram("Internal testSuite", "Used during the JUnitTests", "", "");
+		this.jmutops.initializeProgram("Internal testSuite", "Used during the JUnitTests", "", "");
 		this.jmutops.setIncludeRunningVMBootclasspath(true);
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
@@ -87,10 +87,10 @@ public abstract class BasicTest {
 	    this.jmutops.setOptions(options, OptionsVersion.POSTFIX); 
 	    
 	    // add the ApplicationsCounter to jMutOps so we can count the applications
-		this.jmutops.addResultListener(counter);
+		this.jmutops.addEventListener(counter);
 		
 	    // add the EventLogger to jMutOps so we can count debug results
-		this.jmutops.addResultListener(logger);
+		this.jmutops.addEventListener(logger);
 		
 		// initialize test specific context 
 		initializeContextFiles();

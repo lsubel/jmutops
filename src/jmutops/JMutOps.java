@@ -280,10 +280,10 @@ public class JMutOps {
 
 
 	/**
-	 * Initial a new program to check.
+	 * Initialize a new program to check.
 	 * @param programName The new program's name.
 	 */
-	public void initProgram(String programName, String programDescription, String urlToProjectPage, String urlToBugtracker){
+	public void initializeProgram(String programName, String programDescription, String urlToProjectPage, String urlToBugtracker){
 		this.listener.OnProgramChanged(programName, programDescription, urlToProjectPage, urlToBugtracker);
 	}
 	
@@ -291,7 +291,7 @@ public class JMutOps {
 	 * Initialize a new bug which related to the last initialized program.
 	 * @param officialID
 	 */
-	public void initBug(String officialID, String urlBugreport){
+	public void initializeBugreport(String officialID, String urlBugreport){
 		this.listener.OnBugChanged(officialID, urlBugreport);
 	}
 	
@@ -427,11 +427,11 @@ public class JMutOps {
 	//	ActionListener
 	//////////////////////////////////////////////////////
 
-	public void addResultListener(JMutOpsEventListener rl) {
+	public void addEventListener(JMutOpsEventListener rl) {
 		this.listener.add(rl);
 	}
 
-	public void removeResultListener(JMutOpsEventListener rl){
+	public void removeEventListener(JMutOpsEventListener rl){
 		this.listener.remove(rl);
 	}
 	

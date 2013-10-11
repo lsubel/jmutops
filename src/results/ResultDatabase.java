@@ -504,7 +504,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 	}
 	
 	@Override
-	public void OnAllChangesChecked(List<SourceCodeChange> changes) {
+	public void OnAllChangesCheck(List<SourceCodeChange> changes) {
 		String CHANGETYPE_MULTIPLE_CHANGES = "MULTIPLE_CHANGES";
 		
 		assert changes != null;
@@ -1082,7 +1082,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 	
 	public static void main(String[] args) {
 		// drop all tables
-		ResultDatabase rd = new ResultDatabase("jdbc:postgresql://localhost:5432/jmutops_results", "postgres", "asteria");
+		ResultDatabase rd = new ResultDatabase("jdbc:postgresql://localhost:5432/jmutops_results_20131008", "postgres", "asteria");
 		rd.dropTables();
 		rd.initializeTables();
 		//rd.removeEntries("82062");
