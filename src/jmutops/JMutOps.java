@@ -427,12 +427,12 @@ public class JMutOps {
 	//	ActionListener
 	//////////////////////////////////////////////////////
 
-	public boolean addEventListener(JMutOpsEventListener rl) {
-		return this.listener.add(rl);
+	public boolean addEventListener(JMutOpsEventListener listener) {
+		return this.listener.add(listener);
 	}
 
-	public boolean removeEventListener(JMutOpsEventListener rl){
-		return this.listener.remove(rl);
+	public boolean removeEventListener(JMutOpsEventListener listener){
+		return this.listener.remove(listener);
 	}
 	
 	public void createResults(){
