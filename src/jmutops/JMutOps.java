@@ -371,6 +371,7 @@ public class JMutOps {
 	}
 	
 	public boolean addMutationOperator(MutationOperator mutop) {
+		// TODO add an consistency check before adding operator
 		return this.checker.addMutationOperator(mutop);
 	}
 	
