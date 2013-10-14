@@ -93,7 +93,7 @@ public class JMutOps {
 	/**
 	 * MutationOperatorChecker handles all implemented MutationOperators.
 	 */
-	private MutationOperatorTester checker;
+	private MutationOperatorTester tester;
 	
 	/**
 	 * Preperation class used to retrieve information for the prefixed code.
@@ -125,7 +125,7 @@ public class JMutOps {
 		// initialize variables
 		this.prefixed_preperator  = new Preperator(this.listener, TestUtilities.getDefaultPrefixFolder());
 		this.postfixed_preperator = new Preperator(this.listener, TestUtilities.getDefaultPostfixFolder());
-		this.checker			  = new MutationOperatorTester(this.listener);
+		this.tester			  = new MutationOperatorTester(this.listener);
 	}
 	
 	/////////////////////////////////////////
@@ -214,7 +214,7 @@ public class JMutOps {
 	}
 	
 	private void preCheckOperators(List<SourceCodeChange> changes) {
-		this.checker.checkForMutationOperators(changes, this.prefixed_preperator, this.postfixed_preperator);
+		this.tester.checkForMutationOperators(changes, this.prefixed_preperator, this.postfixed_preperator);
 	}
 
 	private void checkChangeOneVersion(SourceCodeChange change) {
@@ -244,7 +244,7 @@ public class JMutOps {
 		}
 		
 		// run the mutation operator check
-		this.checker.checkForMutationOperators(expr, change);
+		this.tester.checkForMutationOperators(expr, change);
 	}
 
 	private void checkChangeTwoVersions(SourceCodeChange change) {
@@ -275,7 +275,7 @@ public class JMutOps {
 		ASTNode expr_right = nodeFinder_new.getCoveringNode();
 		
 		// run the mutation operator check
-		this.checker.checkForMutationOperators(expr_left, expr_right, change);	
+		this.tester.checkForMutationOperators(expr_left, expr_right, change);	
 	}
 
 
@@ -372,7 +372,7 @@ public class JMutOps {
 	
 	public boolean addMutationOperator(MutationOperator mutop) {
 		// TODO add an consistency check before adding operator
-		return this.checker.addMutationOperator(mutop);
+		return this.tester.addMutationOperator(mutop);
 	}
 	
 	/**
@@ -380,53 +380,53 @@ public class JMutOps {
 	 */
 	private void addImplementedMutationOperators() {
 		// TODO: add new mutation operators here
-		this.checker.addMutationOperator(new JTI(this.listener));
-		this.checker.addMutationOperator(new AOR(this.listener));
-		this.checker.addMutationOperator(new MNRO(this.listener));
-		this.checker.addMutationOperator(new LCO(this.listener));
-		this.checker.addMutationOperator(new ROR(this.listener));
-		this.checker.addMutationOperator(new COR(this.listener));
-		this.checker.addMutationOperator(new SOR(this.listener));
-		this.checker.addMutationOperator(new LOR(this.listener));
-		this.checker.addMutationOperator(new ASR(this.listener));
-		this.checker.addMutationOperator(new COD(this.listener));
-		this.checker.addMutationOperator(new LOD(this.listener));
-		this.checker.addMutationOperator(new AOD(this.listener));
-		this.checker.addMutationOperator(new AFRO(this.listener));
-		this.checker.addMutationOperator(new CRO(this.listener));
-		this.checker.addMutationOperator(new ACO(this.listener));
-		this.checker.addMutationOperator(new SCO(this.listener));
-		this.checker.addMutationOperator(new AOI(this.listener));
-		this.checker.addMutationOperator(new COI(this.listener));
-		this.checker.addMutationOperator(new LOI(this.listener));
-		this.checker.addMutationOperator(new JTD(this.listener));
-		this.checker.addMutationOperator(new EOA(this.listener));
-		this.checker.addMutationOperator(new EOC(this.listener));
-		this.checker.addMutationOperator(new PRV(this.listener));
-		this.checker.addMutationOperator(new PCC(this.listener));
-		this.checker.addMutationOperator(new PCD(this.listener));
-		this.checker.addMutationOperator(new PCI(this.listener));
-		this.checker.addMutationOperator(new ISD(this.listener));
-		this.checker.addMutationOperator(new ISI(this.listener));
-		this.checker.addMutationOperator(new IPC(this.listener));
-		this.checker.addMutationOperator(new PNC(this.listener));
-		this.checker.addMutationOperator(new PMD(this.listener));
-		this.checker.addMutationOperator(new CFDO_Insert(this.listener));
-		this.checker.addMutationOperator(new CFDO_Delete(this.listener));
-		this.checker.addMutationOperator(new CFDO_Update(this.listener));
-		this.checker.addMutationOperator(new EXCO_Insert(this.listener));
-		this.checker.addMutationOperator(new EXCO_Delete(this.listener));
-		this.checker.addMutationOperator(new EXCO_Move(this.listener));
-		this.checker.addMutationOperator(new EXCO_Update(this.listener));
-		this.checker.addMutationOperator(new SWO(this.listener));
-		this.checker.addMutationOperator(new VRO(this.listener));
-		this.checker.addMutationOperator(new VMCM(this.listener));
-		this.checker.addMutationOperator(new NVMCM(this.listener));
-		this.checker.addMutationOperator(new CCM(this.listener));
-		this.checker.addMutationOperator(new RVM(this.listener));
-		this.checker.addMutationOperator(new ICM(this.listener));
-		this.checker.addMutationOperator(new TRO_Methodlevel(this.listener));
-		this.checker.addMutationOperator(new EMVM(this.listener));
+		this.tester.addMutationOperator(new JTI(this.listener));
+		this.tester.addMutationOperator(new AOR(this.listener));
+		this.tester.addMutationOperator(new MNRO(this.listener));
+		this.tester.addMutationOperator(new LCO(this.listener));
+		this.tester.addMutationOperator(new ROR(this.listener));
+		this.tester.addMutationOperator(new COR(this.listener));
+		this.tester.addMutationOperator(new SOR(this.listener));
+		this.tester.addMutationOperator(new LOR(this.listener));
+		this.tester.addMutationOperator(new ASR(this.listener));
+		this.tester.addMutationOperator(new COD(this.listener));
+		this.tester.addMutationOperator(new LOD(this.listener));
+		this.tester.addMutationOperator(new AOD(this.listener));
+		this.tester.addMutationOperator(new AFRO(this.listener));
+		this.tester.addMutationOperator(new CRO(this.listener));
+		this.tester.addMutationOperator(new ACO(this.listener));
+		this.tester.addMutationOperator(new SCO(this.listener));
+		this.tester.addMutationOperator(new AOI(this.listener));
+		this.tester.addMutationOperator(new COI(this.listener));
+		this.tester.addMutationOperator(new LOI(this.listener));
+		this.tester.addMutationOperator(new JTD(this.listener));
+		this.tester.addMutationOperator(new EOA(this.listener));
+		this.tester.addMutationOperator(new EOC(this.listener));
+		this.tester.addMutationOperator(new PRV(this.listener));
+		this.tester.addMutationOperator(new PCC(this.listener));
+		this.tester.addMutationOperator(new PCD(this.listener));
+		this.tester.addMutationOperator(new PCI(this.listener));
+		this.tester.addMutationOperator(new ISD(this.listener));
+		this.tester.addMutationOperator(new ISI(this.listener));
+		this.tester.addMutationOperator(new IPC(this.listener));
+		this.tester.addMutationOperator(new PNC(this.listener));
+		this.tester.addMutationOperator(new PMD(this.listener));
+		this.tester.addMutationOperator(new CFDO_Insert(this.listener));
+		this.tester.addMutationOperator(new CFDO_Delete(this.listener));
+		this.tester.addMutationOperator(new CFDO_Update(this.listener));
+		this.tester.addMutationOperator(new EXCO_Insert(this.listener));
+		this.tester.addMutationOperator(new EXCO_Delete(this.listener));
+		this.tester.addMutationOperator(new EXCO_Move(this.listener));
+		this.tester.addMutationOperator(new EXCO_Update(this.listener));
+		this.tester.addMutationOperator(new SWO(this.listener));
+		this.tester.addMutationOperator(new VRO(this.listener));
+		this.tester.addMutationOperator(new VMCM(this.listener));
+		this.tester.addMutationOperator(new NVMCM(this.listener));
+		this.tester.addMutationOperator(new CCM(this.listener));
+		this.tester.addMutationOperator(new RVM(this.listener));
+		this.tester.addMutationOperator(new ICM(this.listener));
+		this.tester.addMutationOperator(new TRO_Methodlevel(this.listener));
+		this.tester.addMutationOperator(new EMVM(this.listener));
 	}
 	
 	//////////////////////////////////////////////////////
