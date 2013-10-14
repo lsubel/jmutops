@@ -80,11 +80,11 @@ public abstract class MutationOperator{
 	 * Check prefix and postfix versions of an source file for applied mutation operator.
 	 * Always should call {@link MutationOperator#check0(ASTNode, ASTNode)}.
 	 * 
-	 * @param leftNode The prefix code.
-	 * @param rightNode The postfix code.
+	 * @param prefix The prefix code.
+	 * @param postfix The postfix code.
 	 */
-	public int check(ASTNode leftNode, ASTNode rightNode){
-		return this.check0(leftNode, rightNode);
+	public int check(ASTNode prefix, ASTNode postfix){
+		return this.check0(prefix, postfix);
 	}
 	
 	
@@ -132,15 +132,15 @@ public abstract class MutationOperator{
 	/** 
 	 * Method called when an application of an mutation operator was found with two ASTs.
 	 * <p>
-	 * @param leftNode The prefix code.
-	 * @param rightNode The postfix code.
+	 * @param prefix The prefix code.
+	 * @param postfix The postfix code.
 	 */
-	public void found(ASTNode leftNode, ASTNode rightNode){
+	public void found(ASTNode prefix, ASTNode postfix){
 		// increment the number of detected applications
 		application_counter += 1;
 		// notify other ResultInterfaces
 		if(this.eventListener != null){
-			this.eventListener.OnMatchingFound(this, leftNode, rightNode);
+			this.eventListener.OnMatchingFound(this, prefix, postfix);
 		}
 	}
 	
