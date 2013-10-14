@@ -142,7 +142,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 		return true;
 	}
 	
-	public void dropTables() {
+	public boolean dropTables() {
 		log.info("Deletion of all database tables started!");
 
 		PreparedStatement stmt;
@@ -234,7 +234,7 @@ public class ResultDatabase implements JMutOpsEventListener {
 		}
 		// finishing message
 		log.info("Deletion of all database tables finished!");
-
+		return true;
 	}
 
 	// /////////////////////////////////////////////////
