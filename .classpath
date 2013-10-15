@@ -25,6 +25,7 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/sheak/Desktop/Bachelorarbeit/Repository/Code/jMutOps/lib/commons-io-2.4/commons-io-2.4-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/sheak/Desktop/Bachelorarbeit/Repository/Code/JFreeChart/jfreechart-1.0.16.zip"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
