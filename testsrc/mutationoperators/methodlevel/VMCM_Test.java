@@ -95,4 +95,6 @@ MutationOperator mutop;
 		assertEquals(1, getApplicationValue(resultMap, mutop));
 		checkOtherMutationOperators(resultMap, mutop); 
 	}
+	
+	// TODO check why so many method invocation deletion without matching VMCM
 }

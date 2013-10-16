@@ -362,6 +362,7 @@ public class MutationOperatorTester {
 			
 			case CONDITION_EXPRESSION_CHANGE:
 				// check only the condition of the node
+				// TODO check why arg.equals("-d") ~> arg.equals("-encoding") does not match ACO
 				if ((leftNode instanceof IfStatement)
 						&& (rightNode instanceof IfStatement)) {
 					runMutationOperators(mutationOperatorList,
@@ -377,6 +378,7 @@ public class MutationOperatorTester {
 					runMutationOperators(mutationOperatorList,
 							((DoStatement) leftNode).getExpression(),
 							((DoStatement) rightNode).getExpression());
+				// TODO check why j.hasNext() ~> it.hasNext() does not match VRO
 				} else if ((leftNode instanceof ForStatement)
 						&& (rightNode instanceof ForStatement)) {
 					runMutationOperators(mutationOperatorList,
