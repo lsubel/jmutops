@@ -139,7 +139,7 @@ public class AlessandraVMApplication {
 		
 		// initialise program and bug
 		jmutops.initializeProgram("iBugs", "", "", "");
-		jmutops.initBug(new Integer(iBugs_ID).toString(), "");
+		jmutops.initializeBugreport(new Integer(iBugs_ID).toString(), "");
 		
 		// look for source folders in pathToSources
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
