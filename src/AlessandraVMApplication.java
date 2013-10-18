@@ -145,6 +145,10 @@ public class AlessandraVMApplication {
 		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
 		checkForSrc(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
 		
+		// look for class folders in pathToSources
+		checkForClassfiles(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
+		checkForClassfiles(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
+		
 		// check each file in the prefix folder
 		for(File prefixFile: prefixFoldercontent){
 			File postfixFile = new File(postfixFolder + File.separator + prefixFile.getName());
@@ -183,4 +187,18 @@ public class AlessandraVMApplication {
 		}
 	}
 
+	public static void checkForClassfiles(JMutOps jmutops, File[] folderContent, OptionsVersion version){
+		for(File file: folderContent){
+			// if found a folder, search in it
+			if(file.isDirectory()){
+				// check all files in it
+				checkForClassfiles(jmutops, file.listFiles(), version);
+			}
+			// if file is a jar, add it to classfiles
+			else if(FilenameUtils.isExtension(file.getName(),"jar")) {
+				jmutops.addClasspathEntry(file.getAbsolutePath(), version);
+			}
+		}
+	}
+	
 }
