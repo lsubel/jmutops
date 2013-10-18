@@ -3,7 +3,6 @@ package mutationoperators.methodlevel.vmcm;
 import mutationoperators.MutationOperator;
 import mutationoperators.OneASTVisitor;
 
-import org.eclipse.jdt.core.dom.CatchClause;
 import org.eclipse.jdt.core.dom.IMethodBinding;
 import org.eclipse.jdt.core.dom.MethodInvocation;
 
@@ -16,7 +15,7 @@ public class VMCM_Visitor extends OneASTVisitor {
 	@Override
 	public boolean visit(MethodInvocation node) {
 
-		IMethodBinding methodbinding 	= node.resolveMethodBinding();
+		IMethodBinding methodbinding = node.resolveMethodBinding();
 
 		// calculate conditions
 		boolean returnsVoid = (methodbinding.getReturnType().isPrimitive()) && (methodbinding.getReturnType().getName().equals("void"));
@@ -26,12 +25,6 @@ public class VMCM_Visitor extends OneASTVisitor {
 			mutop.found(node);
 		}
 		
-		return false;
+		return true;
 	}
-
-	@Override
-	public boolean visit(CatchClause node) {
-		return false;
-	}
-	
 }

@@ -15,7 +15,7 @@ public class IPC_Visitor extends OneASTVisitor {
 	public boolean visit(SuperConstructorInvocation node) {
 		// since this statement can only occure in a constructor, we do not have to check anything
 		this.mutop.found(node);
-		return false;
+		return true;
 	}
 
 	

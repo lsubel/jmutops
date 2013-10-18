@@ -15,7 +15,7 @@ public class EXCO_Insert_Visitor extends OneASTVisitor {
 	public boolean visit(CatchClause node) {
 		// since we have found a inserted catch clause, we can notify a match
 		this.mutop.found(node);
-		return false;
+		return true;
 	}
 	
 	
