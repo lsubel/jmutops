@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Properties;
 
 import jmutops.JMutOps;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
 
@@ -60,14 +62,18 @@ public class AlessandraVMApplication {
 			System.exit(0);
 		}
 
-		// extract the different paths
-		String initialPath = pathToIDFolders + File.separator + iBugs_ID;
-		String prefixFolder  = initialPath + File.separator + PREFIX;
-		String postfixFolder = initialPath + File.separator + POSTFIX;
-		File[] prefixFoldercontent  = new File(prefixFolder).listFiles();
-		File[] postfixFoldercontent = new File(postfixFolder).listFiles();
-		String prefixSourceFolder 	= pathToSources + File.separator + PREFIX;
-		String postfixSourceFolder 	= pathToSources + File.separator + POSTFIX;
+		// extract the path with the different files
+		String strPathRoot 		= pathToIDFolders + File.separator + iBugs_ID;
+		String strPathPrefix  	= strPathRoot + File.separator + PREFIX;
+		String strPathPostfix 	= strPathRoot + File.separator + POSTFIX;
+		File[] arrayFilesPrefix  = new File(strPathPrefix).listFiles();
+		File[] arrayFilesPostfix = new File(strPathPostfix).listFiles();
+		
+		// extract the path with the sources
+		String strPathSourcesPrefix 	= pathToSources + File.separator + PREFIX;
+		String strPathSourcesPostfix 	= pathToSources + File.separator + POSTFIX;
+		File filePathSourcesPrefix = new File(strPathSourcesPrefix);
+		File filePathSourcesPostfix = new File(strPathSourcesPostfix);
 		
 		// initialize jMutOps
 		JMutOps jmutops = new JMutOps();
@@ -142,16 +148,20 @@ public class AlessandraVMApplication {
 		jmutops.initializeBugreport(new Integer(iBugs_ID).toString(), "");
 		
 		// look for source folders in pathToSources
-		checkForSrc(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
-		checkForSrc(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
+		checkForSrc(jmutops, new File[]{filePathSourcesPrefix}, OptionsVersion.PREFIX);
+		checkForSrc(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
 		
 		// look for class folders in pathToSources
-		checkForClassfiles(jmutops, new File[]{new File(prefixSourceFolder)}, OptionsVersion.PREFIX);
-		checkForClassfiles(jmutops, new File[]{new File(postfixSourceFolder)}, OptionsVersion.POSTFIX);
+		checkForClassfiles(jmutops, new File[]{filePathSourcesPrefix}, OptionsVersion.PREFIX);
+		checkForClassfiles(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
+		
+		// get all java files in the source folders
+		Iterator<File> prefix_iterator;
+		Iterator<File> postfix_iterator;
 		
 		// check each file in the prefix folder
-		for(File prefixFile: prefixFoldercontent){
-			File postfixFile = new File(postfixFolder + File.separator + prefixFile.getName());
+		for(File prefixFile: arrayFilesPrefix){
+			File postfixFile = new File(strPathPostfix + File.separator + prefixFile.getName());
 			
 			// check for file existance
 			if((!prefixFile.exists()) || (!postfixFile.exists())){
@@ -163,8 +173,14 @@ public class AlessandraVMApplication {
 				continue;
 			}
 			
+			// get the files in the project source folder
+			prefix_iterator = FileUtils.iterateFiles(filePathSourcesPrefix, new String[]{"java"}, true);
+			postfix_iterator = FileUtils.iterateFiles(filePathSourcesPostfix, new String[]{"java"}, true);
+			
+			File prefix_input = getCorrectFile(prefixFile.getName(), prefix_iterator);
+			File postfix_input = getCorrectFile(postfixFile.getName(), postfix_iterator);
 			try {
-				jmutops.checkFiles(prefixFile, postfixFile);
+				jmutops.checkFiles(prefix_input, postfix_input);
 			} catch (Exception e) {
 				System.out.println("Exception found: " + e.getMessage());
 			}
@@ -199,6 +215,18 @@ public class AlessandraVMApplication {
 				jmutops.addClasspathEntry(file.getAbsolutePath(), version);
 			}
 		}
+	}
+	
+	public static File getCorrectFile(String filename, Iterator<File> iter) {
+		// reset iterator
+		for(; iter.hasNext(); ) {
+			File temp_file = iter.next();
+			if(temp_file.getName().equals(filename)) {
+				return temp_file;
+			}
+		}
+		
+		return null;
 	}
 	
 }
