@@ -466,7 +466,7 @@ public class MutationOperatorTester {
 				detected_applications += operator.check(prefix, postfix);
 			} catch (Exception e) {
 				String errorMessage = 
-					"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
+					"Exception thrown while checking mutation operator " + operator.getShortname() + ": " 
 					+ e.toString();
 				this.listener.OnErrorDetected("MutationOperatorTester - runMutationOperators(List<MutationOperator>, ASTNode, ASTNode)", errorMessage);
 				continue;
@@ -497,7 +497,7 @@ public class MutationOperatorTester {
 				detected_applications += operator.check(node);
 			} catch (Exception e) {
 				String errorMessage = 
-						"Exception thrown while checking mutation operator " + operator.getShortname() + ": " + "\n" 
+						"Exception thrown while checking mutation operator " + operator.getShortname() + ": " 
 						+ e.toString();
 				this.listener.OnErrorDetected("MutationOperatorTester - runMutationOperators(List<MutationOperator>, ASTNode)", errorMessage);
 				continue;
