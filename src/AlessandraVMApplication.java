@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.JavaCore;
 import results.EventLogger;
 import results.ResultCreator;
 import results.ResultDatabase;
+import utils.Preperator;
 import enums.OptionsVersion;
 
 
@@ -147,6 +148,10 @@ public class AlessandraVMApplication {
 		jmutops.initializeProgram("iBugs", "", "", "");
 		jmutops.initializeBugreport(new Integer(iBugs_ID).toString(), "");
 		
+		// set the source paths, so the parser can generate valid names
+		jmutops.setSourcePath(filePathSourcesPrefix, OptionsVersion.PREFIX);
+		jmutops.setSourcePath(filePathSourcesPostfix, OptionsVersion.POSTFIX);
+		
 		// look for source folders in pathToSources
 		checkForSrc(jmutops, new File[]{filePathSourcesPrefix}, OptionsVersion.PREFIX);
 		checkForSrc(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
@@ -177,8 +182,8 @@ public class AlessandraVMApplication {
 			prefix_iterator = FileUtils.iterateFiles(filePathSourcesPrefix, new String[]{"java"}, true);
 			postfix_iterator = FileUtils.iterateFiles(filePathSourcesPostfix, new String[]{"java"}, true);
 			
-			File prefix_input = getCorrectFile(prefixFile.getName(), prefix_iterator);
-			File postfix_input = getCorrectFile(postfixFile.getName(), postfix_iterator);
+			File prefix_input = Preperator.findFile(prefixFile.getName(), prefix_iterator);
+			File postfix_input = Preperator.findFile(postfixFile.getName(), postfix_iterator);
 			try {
 				jmutops.checkFiles(prefix_input, postfix_input);
 			} catch (Exception e) {
@@ -216,17 +221,4 @@ public class AlessandraVMApplication {
 			}
 		}
 	}
-	
-	public static File getCorrectFile(String filename, Iterator<File> iter) {
-		// reset iterator
-		for(; iter.hasNext(); ) {
-			File temp_file = iter.next();
-			if(temp_file.getName().equals(filename)) {
-				return temp_file;
-			}
-		}
-		
-		return null;
-	}
-	
 }
