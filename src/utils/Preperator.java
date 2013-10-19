@@ -10,7 +10,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -47,6 +49,8 @@ public class Preperator {
 	File defaultPath;
 	
 	JMutOpsEventListenerMulticaster listener;
+
+	private File m_pathToSources;
 	
 	///////////////////////////////////////////////////
 	///	Methods
@@ -98,6 +102,9 @@ public class Preperator {
 			out.close();
 			this.m_OutputContent = bufferFileContent.toString();
 		
+			// generate the UnitName for the parsed code
+			String unitname = getUnitName(inputFile);
+					
 			// add additional information to the parser
 			String[] classPaths = this.classpathEntries.toArray(new String[this.classpathEntries.size()]);
 			String[] sourcePaths = this.sourcepathEntries.toArray(new String[this.sourcepathEntries.size()]);
@@ -105,7 +112,7 @@ public class Preperator {
 			char[] source_old = this.m_OutputContent.toCharArray();
 			this.parser.setEnvironment(classPaths, sourcePaths, encodings, this.includeRunningVMBootclasspath);
 			this.parser.setCompilerOptions(this.options);
-			this.parser.setUnitName(inputFile.getName());
+			this.parser.setUnitName(unitname);
 			this.parser.setSource(source_old);
 			
 			// generate an AST for this file
@@ -142,6 +149,31 @@ public class Preperator {
 	///	Getter/Setter methods
 	///////////////////////////////////////////////////////
 	
+	private String getUnitName(File inputFile) {
+		StringBuffer buffer = new StringBuffer();
+		File traversedFile = inputFile;
+		buffer.insert(0, "/" + traversedFile.getName());
+		traversedFile = traversedFile.getParentFile();
+		
+		while((!this.m_pathToSources.equals(traversedFile)) || (traversedFile == null)) {
+			// if in this folder is a .classpath, we stop
+			Iterator<File> folder_content = FileUtils.iterateFiles(traversedFile, null, false);
+			File found = FileUtilities.findFile(".classpath", folder_content);
+			if(found != null) {
+				buffer.insert(0, "/" + traversedFile.getName());
+				traversedFile = traversedFile.getParentFile();
+				break;
+			}
+			
+			buffer.insert(0, "/" + traversedFile.getName());
+			traversedFile = traversedFile.getParentFile();
+		}
+		
+		
+		
+		return buffer.toString();
+	}
+
 	public File getFile(){
 		return this.m_OutputFile;
 	}
@@ -190,4 +222,8 @@ public class Preperator {
 		}
 	}
 	
+	public boolean setPathToSources(File path) {
+		this.m_pathToSources = path;
+		return true;
+	}	
 }

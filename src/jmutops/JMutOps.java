@@ -357,6 +357,19 @@ public class JMutOps {
 		return preFixedResult && postFixedResult;
 	}
 	
+	public boolean setSourcePath(File path_to_source, OptionsVersion version) {
+		switch(version) {
+		case PREFIX:
+			return this.prefixed_preperator.setPathToSources(path_to_source);
+		case POSTFIX:
+			return this.postfixed_preperator.setPathToSources(path_to_source);
+		default:
+			String errorMessage = "Argument version has to be a correct value";
+			this.listener.OnErrorDetected("JMutOps - setSourcePath", errorMessage);
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}
+	}
+	
 	public boolean setOptions(Hashtable<String, String> options, OptionsVersion version){
 		switch(version){
 		case PREFIX:
