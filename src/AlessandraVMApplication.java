@@ -7,16 +7,24 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import jmutops.JMutOps;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.eclipse.jdt.core.JavaCore;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import results.EventLogger;
 import results.ResultCreator;
 import results.ResultDatabase;
-import utils.Preperator;
+import utils.FileUtilities;
 import enums.OptionsVersion;
 
 
@@ -76,6 +84,10 @@ public class AlessandraVMApplication {
 		File filePathSourcesPrefix = new File(strPathSourcesPrefix);
 		File filePathSourcesPostfix = new File(strPathSourcesPostfix);
 		
+		// extract the pathes with the modules
+		File prefix_module_folder = new File(filePathSourcesPrefix,  "org.aspectj" +  File.separator + "modules");
+		File postfix_module_folder = new File(filePathSourcesPostfix, "org.aspectj" +  File.separator + "modules");
+			
 		// initialize jMutOps
 		JMutOps jmutops = new JMutOps();
 		jmutops.setIncludeRunningVMBootclasspath(true);
@@ -147,22 +159,14 @@ public class AlessandraVMApplication {
 		// initialise program and bug
 		jmutops.initializeProgram("iBugs", "", "", "");
 		jmutops.initializeBugreport(new Integer(iBugs_ID).toString(), "");
-		
+		 
 		// set the source paths, so the parser can generate valid names
-		jmutops.setSourcePath(filePathSourcesPrefix, OptionsVersion.PREFIX);
+		jmutops.setSourcePath(filePathSourcesPrefix,  OptionsVersion.PREFIX);
 		jmutops.setSourcePath(filePathSourcesPostfix, OptionsVersion.POSTFIX);
-		
-		// look for source folders in pathToSources
-		checkForSrc(jmutops, new File[]{filePathSourcesPrefix}, OptionsVersion.PREFIX);
-		checkForSrc(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
-		
-		// look for class folders in pathToSources
-		checkForClassfiles(jmutops, new File[]{filePathSourcesPrefix}, OptionsVersion.PREFIX);
-		checkForClassfiles(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
-		
+			
 		// get all java files in the source folders
-		Iterator<File> prefix_iterator;
-		Iterator<File> postfix_iterator;
+		Iterator<File> prefix_iterator  = null;
+		Iterator<File> postfix_iterator = null;
 		
 		// check each file in the prefix folder
 		for(File prefixFile: arrayFilesPrefix){
@@ -178,12 +182,33 @@ public class AlessandraVMApplication {
 				continue;
 			}
 			
+			// reset the preperators
+			jmutops.resetRequiredFiles();
+			
 			// get the files in the project source folder
-			prefix_iterator = FileUtils.iterateFiles(filePathSourcesPrefix, new String[]{"java"}, true);
+			prefix_iterator  = FileUtils.iterateFiles(filePathSourcesPrefix, new String[]{"java"}, true);
 			postfix_iterator = FileUtils.iterateFiles(filePathSourcesPostfix, new String[]{"java"}, true);
 			
-			File prefix_input = Preperator.findFile(prefixFile.getName(), prefix_iterator);
-			File postfix_input = Preperator.findFile(postfixFile.getName(), postfix_iterator);
+			File prefix_input  = FileUtilities.findFile(prefixFile.getName(), prefix_iterator);
+			File postfix_input = FileUtilities.findFile(postfixFile.getName(), postfix_iterator);
+			
+			// read in the .classpath files
+//			processClasspath(jmutops, prefix_input,  prefix_module_folder,  OptionsVersion.PREFIX);
+//			processClasspath(jmutops, postfix_input, postfix_module_folder, OptionsVersion.POSTFIX);
+			
+			// set the unitname
+			String prefix_unitname  = getUnitName(prefix_input, filePathSourcesPrefix);
+			String postfix_unitname = getUnitName(postfix_input, filePathSourcesPostfix);
+			jmutops.setUnitName(prefix_unitname,  OptionsVersion.PREFIX);
+			jmutops.setUnitName(postfix_unitname, OptionsVersion.POSTFIX);
+			
+			// look for source folders in pathToSources
+			checkForSrc(jmutops, new File[]{filePathSourcesPrefix},  OptionsVersion.PREFIX);
+			checkForSrc(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
+			// look for class folders in pathToSources
+			checkForClassfiles(jmutops, new File[]{filePathSourcesPrefix},  OptionsVersion.PREFIX);
+			checkForClassfiles(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
+		
 			try {
 				jmutops.checkFiles(prefix_input, postfix_input);
 			} catch (Exception e) {
@@ -196,6 +221,71 @@ public class AlessandraVMApplication {
 		jmutops.createResults();
 	}
 	
+	private static void processClasspath(JMutOps jmutops, File file_input, File folder_modules, OptionsVersion version) {
+		// first search for the classpath
+		File fileClasspath = FileUtilities.getClasspathFile(file_input);
+		File fileClasspathContainingFolder = fileClasspath.getParentFile();
+		
+		try {
+			// now process the content of the .classpath
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(fileClasspath);
+			Element classpath = doc.getDocumentElement();
+			NodeList allClasspathEntries = classpath.getChildNodes();
+			for (int i = 0; i < allClasspathEntries.getLength(); i++) {
+				Node classpathentry = allClasspathEntries.item(i);
+				if (classpathentry.getNodeName().equals("classpathentry")) {
+					NamedNodeMap map = classpathentry.getAttributes();
+					
+					// extract the "kind"-attribute
+					Node kind = map.item(0);
+					if (kind.getTextContent().equals("lib")) {
+						Node path = map.item(1);
+						String strSubfolder = path.getTextContent().replace("/", File.separator);
+						// if the sub folder is contained in the local module, add it
+						File folder_input = new File(fileClasspathContainingFolder, strSubfolder);
+						if(folder_input.exists()) {
+							// add the content of the src folder to the preperator
+							checkForClassfiles(jmutops, new File[]{folder_input}, version);
+							continue;
+						}
+						// otherwise, search in the module folder
+						folder_input = new File(folder_modules, strSubfolder);
+						if(folder_input.exists()) {
+							// add the content of the src folder to the preperator
+							checkForClassfiles(jmutops, new File[]{folder_input}, version);
+							continue;
+						}
+					}
+					if (kind.getTextContent().equals("src")) {
+						// extract the "path"-attribute
+						Node path = map.item(1);
+						String strSubfolder = path.getTextContent().replace("/", File.separator);
+						// if the sub folder is contained in the local module, add it
+						File folder_input = new File(fileClasspathContainingFolder, strSubfolder);
+						if(folder_input.exists()) {
+							// add the content of the src folder to the preperator
+							checkForSrc(jmutops, new File[]{folder_input}, version);
+							continue;
+						}
+						// otherwise, search in the module folder
+						folder_input = new File(folder_modules, strSubfolder);
+						if(folder_input.exists()) {
+							// add the content of the src folder to the preperator
+							checkForSrc(jmutops, new File[]{folder_input}, version);
+							continue;
+						}
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
+
 	public static void checkForSrc(JMutOps jmutops, File[] folderContent, OptionsVersion version){
 		for(File file: folderContent){
 			if(file.isDirectory()){
@@ -220,5 +310,30 @@ public class AlessandraVMApplication {
 				jmutops.addClasspathEntry(file.getAbsolutePath(), version);
 			}
 		}
+	}
+	
+	private static String getUnitName(File inputFile, File sourcesPath) {
+		StringBuffer buffer = new StringBuffer();
+		File traversedFile = inputFile;
+		buffer.insert(0, "/" + traversedFile.getName());
+		traversedFile = traversedFile.getParentFile();
+		
+		while((!sourcesPath.equals(traversedFile)) || (traversedFile == null)) {
+			// if in this folder is a .classpath, we stop
+			Iterator<File> folder_content = FileUtils.iterateFiles(traversedFile, null, false);
+			File found = FileUtilities.findFile(".classpath", folder_content);
+			if(found != null) {
+				buffer.insert(0, "/" + traversedFile.getName());
+				traversedFile = traversedFile.getParentFile();
+				break;
+			}
+			
+			buffer.insert(0, "/" + traversedFile.getName());
+			traversedFile = traversedFile.getParentFile();
+		}
+		
+		
+		
+		return buffer.toString();
 	}
 }

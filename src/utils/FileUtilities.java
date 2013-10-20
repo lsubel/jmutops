@@ -3,6 +3,8 @@ package utils;
 import java.io.File;
 import java.util.Iterator;
 
+import org.apache.commons.io.FileUtils;
+
 public class FileUtilities {
 
 	
@@ -28,5 +30,23 @@ public class FileUtilities {
 		return (findFile(".classpath", iter) != null);
 	}
 	
+	public static File getClasspathFile(Iterator<File> iter) {
+		return findFile(".classpath", iter);
+	}
 	
+	public static File getClasspathFile(File file) {
+		File traversedFile = file.getParentFile();
+		
+		while(traversedFile != null) {
+			// if in this folder is a .classpath, we stop
+			Iterator<File> folder_content = FileUtils.iterateFiles(traversedFile, null, false);
+			File found = FileUtilities.findFile(".classpath", folder_content);
+			if(found != null) {
+				return found;
+			}
+			traversedFile = traversedFile.getParentFile();
+		}
+
+		return null;
+	}
 }

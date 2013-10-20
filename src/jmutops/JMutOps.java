@@ -342,6 +342,24 @@ public class JMutOps {
 		}		
 	}
 	
+	public void resetRequiredFiles() {
+		 this.prefixed_preperator.resetPreperator();
+		 this.postfixed_preperator.resetPreperator();
+	}
+	
+	
+	public boolean setUnitName(String name, OptionsVersion version) {
+		switch(version){
+		case PREFIX:
+			return this.prefixed_preperator.setUnitName(name);
+		case POSTFIX:
+			return this.postfixed_preperator.setUnitName(name);
+		default:
+			String errorMessage = "Argument version has to be a correct value";
+			this.listener.OnErrorDetected("JMutOps - setUnitName", errorMessage);
+			throw new IllegalArgumentException("Argument version has to be a correct value");
+		}	
+	}
 
 	
 	/**

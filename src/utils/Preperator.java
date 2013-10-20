@@ -10,9 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Iterator;
 
-import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
@@ -51,6 +49,8 @@ public class Preperator {
 	JMutOpsEventListenerMulticaster listener;
 
 	private File m_pathToSources;
+
+	private String unitname;
 	
 	///////////////////////////////////////////////////
 	///	Methods
@@ -65,16 +65,8 @@ public class Preperator {
 		// store parameter
 		this.defaultPath = defaultPath;
 		this.listener = listener;
-		// initialize parser
-		this.parser = ASTParser.newParser(AST.JLS4);
-		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		this.parser.setResolveBindings(true);
-		this.parser.setBindingsRecovery(true);
-		this.parser.setStatementsRecovery(true);
 		// initialize ArrayList
-		this.classpathEntries = new ArrayList<String>();
-		this.sourcepathEntries = new ArrayList<String>();
-		this.encodings = new ArrayList<String>();
+		this.resetPreperator();
 	}
 	
 	public boolean prepare(File inputFile){
@@ -101,10 +93,7 @@ public class Preperator {
 			out.write(outText);
 			out.close();
 			this.m_OutputContent = bufferFileContent.toString();
-		
-			// generate the UnitName for the parsed code
-			String unitname = getUnitName(inputFile);
-					
+			
 			// add additional information to the parser
 			String[] classPaths = this.classpathEntries.toArray(new String[this.classpathEntries.size()]);
 			String[] sourcePaths = this.sourcepathEntries.toArray(new String[this.sourcepathEntries.size()]);
@@ -112,7 +101,7 @@ public class Preperator {
 			char[] source_old = this.m_OutputContent.toCharArray();
 			this.parser.setEnvironment(classPaths, sourcePaths, encodings, this.includeRunningVMBootclasspath);
 			this.parser.setCompilerOptions(this.options);
-			this.parser.setUnitName(unitname);
+			this.parser.setUnitName(this.unitname);
 			this.parser.setSource(source_old);
 			
 			// generate an AST for this file
@@ -148,31 +137,6 @@ public class Preperator {
 	///////////////////////////////////////////////////////
 	///	Getter/Setter methods
 	///////////////////////////////////////////////////////
-	
-	private String getUnitName(File inputFile) {
-		StringBuffer buffer = new StringBuffer();
-		File traversedFile = inputFile;
-		buffer.insert(0, "/" + traversedFile.getName());
-		traversedFile = traversedFile.getParentFile();
-		
-		while((!this.m_pathToSources.equals(traversedFile)) || (traversedFile == null)) {
-			// if in this folder is a .classpath, we stop
-			Iterator<File> folder_content = FileUtils.iterateFiles(traversedFile, null, false);
-			File found = FileUtilities.findFile(".classpath", folder_content);
-			if(found != null) {
-				buffer.insert(0, "/" + traversedFile.getName());
-				traversedFile = traversedFile.getParentFile();
-				break;
-			}
-			
-			buffer.insert(0, "/" + traversedFile.getName());
-			traversedFile = traversedFile.getParentFile();
-		}
-		
-		
-		
-		return buffer.toString();
-	}
 
 	public File getFile(){
 		return this.m_OutputFile;
@@ -226,4 +190,22 @@ public class Preperator {
 		this.m_pathToSources = path;
 		return true;
 	}	
+	
+	public void resetPreperator() {
+		// initialize parser
+		this.parser = ASTParser.newParser(AST.JLS4);
+		this.parser.setKind(ASTParser.K_COMPILATION_UNIT);
+		this.parser.setResolveBindings(true);
+		this.parser.setBindingsRecovery(true);
+		this.parser.setStatementsRecovery(true);
+		// reinitialize arrays
+		this.classpathEntries = new ArrayList<String>();
+		this.sourcepathEntries = new ArrayList<String>();
+		this.encodings = new ArrayList<String>();
+	}
+
+	public boolean setUnitName(String name) {
+		this.unitname = name;
+		return true;
+	}
 }
