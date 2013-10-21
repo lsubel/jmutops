@@ -109,14 +109,20 @@ public class Preperator {
 		
 			// write occuring problems into the logger
 		    IProblem[] problems = this.m_OutputAST.getProblems();
+		    boolean atLeastOneError = false;
+		    String errortype = "";
 		    if (problems != null && problems.length > 0) {
 		    	// create and send a error message:
-		    	StringBuffer errorMessage = new StringBuffer();
-		    	errorMessage.append(problems.length + " different errors detected." + "\n");
+		    	StringBuffer errorMessage = new StringBuffer(); 
 		        for (IProblem problem : problems) { 
-		        	
-					errorMessage.append("\t" + (problem.isWarning() ? "Warning" : "Error") + " in " + new String(problem.getOriginatingFileName()) + ": " + problem.getMessage() + "\n");
+		        	atLeastOneError |= !(problem.isWarning());
+		        	errortype = (problem.isWarning() ? "Warning" : "Error");
+					errorMessage.append("\t" + errortype + " in " + new String(problem.getOriginatingFileName()) + ": " + problem.getMessage() + "\n");
 		        }
+		        if(atLeastOneError)
+			    	errorMessage.append(problems.length + " different errors detected. At least one error!" + "\n");
+		        else
+			    	errorMessage.append(problems.length + " different errors detected." + "\n");
 		        this.listener.OnErrorDetected("Preperator - prepare", errorMessage.toString());
 		    }
 		
