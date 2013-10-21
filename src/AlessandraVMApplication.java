@@ -193,8 +193,8 @@ public class AlessandraVMApplication {
 			File postfix_input = FileUtilities.findFile(postfixFile.getName(), postfix_iterator);
 			
 			// read in the .classpath files
-//			processClasspath(jmutops, prefix_input,  prefix_module_folder,  OptionsVersion.PREFIX);
-//			processClasspath(jmutops, postfix_input, postfix_module_folder, OptionsVersion.POSTFIX);
+			processClasspath(jmutops, prefix_input,  prefix_module_folder,  OptionsVersion.PREFIX);
+			processClasspath(jmutops, postfix_input, postfix_module_folder, OptionsVersion.POSTFIX);
 			
 			// set the unitname
 			String prefix_unitname  = getUnitName(prefix_input, filePathSourcesPrefix);
@@ -203,11 +203,11 @@ public class AlessandraVMApplication {
 			jmutops.setUnitName(postfix_unitname, OptionsVersion.POSTFIX);
 			
 			// look for source folders in pathToSources
-			checkForSrc(jmutops, new File[]{filePathSourcesPrefix},  OptionsVersion.PREFIX);
-			checkForSrc(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
+//			checkForSrc(jmutops, new File[]{filePathSourcesPrefix},  OptionsVersion.PREFIX);
+//			checkForSrc(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
 			// look for class folders in pathToSources
-			checkForClassfiles(jmutops, new File[]{filePathSourcesPrefix},  OptionsVersion.PREFIX);
-			checkForClassfiles(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
+//			checkForClassfiles(jmutops, new File[]{filePathSourcesPrefix},  OptionsVersion.PREFIX);
+//			checkForClassfiles(jmutops, new File[]{filePathSourcesPostfix}, OptionsVersion.POSTFIX);
 		
 			try {
 				jmutops.checkFiles(prefix_input, postfix_input);
@@ -237,11 +237,10 @@ public class AlessandraVMApplication {
 				Node classpathentry = allClasspathEntries.item(i);
 				if (classpathentry.getNodeName().equals("classpathentry")) {
 					NamedNodeMap map = classpathentry.getAttributes();
-					
 					// extract the "kind"-attribute
-					Node kind = map.item(0);
+					Node kind = map.getNamedItem("kind");
 					if (kind.getTextContent().equals("lib")) {
-						Node path = map.item(1);
+						Node path = map.getNamedItem("path");
 						String strSubfolder = path.getTextContent().replace("/", File.separator);
 						// if the sub folder is contained in the local module, add it
 						File folder_input = new File(fileClasspathContainingFolder, strSubfolder);
@@ -260,7 +259,7 @@ public class AlessandraVMApplication {
 					}
 					if (kind.getTextContent().equals("src")) {
 						// extract the "path"-attribute
-						Node path = map.item(1);
+						Node path = map.getNamedItem("path");
 						String strSubfolder = path.getTextContent().replace("/", File.separator);
 						// if the sub folder is contained in the local module, add it
 						File folder_input = new File(fileClasspathContainingFolder, strSubfolder);
