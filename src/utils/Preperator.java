@@ -208,6 +208,10 @@ public class Preperator {
 		this.classpathEntries = new ArrayList<String>();
 		this.sourcepathEntries = new ArrayList<String>();
 		this.encodings = new ArrayList<String>();
+		// delete the temporary file
+		if(this.m_OutputFile != null) {
+			this.m_OutputFile.delete();
+		}
 	}
 
 	public boolean setUnitName(String name) {
