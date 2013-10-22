@@ -25,6 +25,7 @@ import results.EventLogger;
 import results.ResultCreator;
 import results.ResultDatabase;
 import utils.FileUtilities;
+import utils.iBugsTools;
 import enums.OptionsVersion;
 
 
@@ -32,7 +33,7 @@ public class AlessandraVMApplication {
 
 	private static final String PREFIX = "pre-fix";
 	private static final String POSTFIX = "post-fix";
-	
+	private static final File   IBUGS_REPOSITORY = new File("repository.xml");
 	/**
 	 * Runs an check for one specific iBugs ID.
 	 * @param args Expected parameters:<p>
@@ -185,12 +186,17 @@ public class AlessandraVMApplication {
 			// reset the preperators
 			jmutops.resetRequiredFiles();
 			
-			// get the files in the project source folder
-			prefix_iterator  = FileUtils.iterateFiles(filePathSourcesPrefix, new String[]{"java"}, true);
-			postfix_iterator = FileUtils.iterateFiles(filePathSourcesPostfix, new String[]{"java"}, true);
 			
-			File prefix_input  = FileUtilities.findFile(prefixFile.getName(), prefix_iterator);
-			File postfix_input = FileUtilities.findFile(postfixFile.getName(), postfix_iterator);
+			
+			// get the files in the project source folder
+//			prefix_iterator  = FileUtils.iterateFiles(filePathSourcesPrefix, new String[]{"java"}, true);
+//			postfix_iterator = FileUtils.iterateFiles(filePathSourcesPostfix, new String[]{"java"}, true);
+			
+//			File prefix_input  = FileUtilities.findFile(prefixFile.getName(), prefix_iterator);
+//			File postfix_input = FileUtilities.findFile(postfixFile.getName(), postfix_iterator);
+			
+			File prefix_input = iBugsTools.getFileFromiBugsRepository(iBugs_ID, filePathSourcesPrefix, prefixFile.getName(), IBUGS_REPOSITORY);
+			File postfix_input = iBugsTools.getFileFromiBugsRepository(iBugs_ID, filePathSourcesPostfix, postfixFile.getName(), IBUGS_REPOSITORY);
 			
 			// read in the .classpath files
 			processClasspath(jmutops, prefix_input,  prefix_module_folder,  OptionsVersion.PREFIX);
@@ -216,7 +222,7 @@ public class AlessandraVMApplication {
 			}
 							
 		}
-		
+		jmutops.resetRequiredFiles();
 		
 		jmutops.createResults();
 	}
@@ -288,7 +294,7 @@ public class AlessandraVMApplication {
 	public static void checkForSrc(JMutOps jmutops, File[] folderContent, OptionsVersion version){
 		for(File file: folderContent){
 			if(file.isDirectory()){
-				if(file.getName().equals("src")){
+				if(file.getName().contains("src")){
 					jmutops.addSourcepathEntry(file.getAbsolutePath(), null, version);
 				}else{
 					checkForSrc(jmutops, file.listFiles(), version);
