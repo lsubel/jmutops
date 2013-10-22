@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,6 +14,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -88,5 +90,43 @@ public class iBugsTools {
 		}
 		
 		return buffer.toString();
+	}
+	
+	public static File getFileFromiBugsRepository(int id_bug, File pathToModule, String strFilename, File repository) {
+		try {
+			// load in repository.xml
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+			domFactory.setNamespaceAware(true); 
+			DocumentBuilder builder = domFactory.newDocumentBuilder();
+			Document doc = builder.parse(repository);
+			
+			// search the entry id_bug
+			XPath xpathGeneral = XPathFactory.newInstance().newXPath();
+			XPathExpression exprAllChangedFiles = xpathGeneral.compile("/bugrepository/bug[@id = " + id_bug + "]/fixedFiles/file");
+			NodeList nodelistChangedFiles = (NodeList) exprAllChangedFiles.evaluate(doc, XPathConstants.NODESET);	
+			
+			//  now check for each subnode
+			for(int i=0; i<nodelistChangedFiles.getLength(); i++) {
+				// extract the corresponding file entry
+				Node nodeFile = nodelistChangedFiles.item(i);
+				NamedNodeMap attributeFile = nodeFile.getAttributes();
+				
+				// extract the filepath related to the entry
+				String strExtractedFilepath = attributeFile.getNamedItem("name").getNodeValue();
+				
+				// extract the file name out of it
+				String[] subentries = strExtractedFilepath.split("/");
+				String strExtractedFilename = subentries[(subentries.length - 1)];
+				
+				if(strExtractedFilename.equals(strFilename)) {
+					return new File(pathToModule, strExtractedFilepath.replace("/", File.separator));
+				}
+			}
+			
+			// return the detected file, otherwise null
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
