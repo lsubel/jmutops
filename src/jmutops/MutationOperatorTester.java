@@ -513,6 +513,9 @@ public class MutationOperatorTester {
 			ArrayList<MutationOperator> operatorlist,
 			List<SourceCodeChange> changes, Preperator prefixed_preperator,
 			Preperator postfixed_preperator) {
+		// initialize a variable which counts the number of detected
+		// applications
+		int detected_applications = 0;
 		// check all mutation operators
 		for (MutationOperator operator : operatorlist) {
 			try {
@@ -524,6 +527,10 @@ public class MutationOperatorTester {
 				this.listener.OnErrorDetected("MutationOperatorTester - preRunMutationOperators(ArrayList<MutationOperator>, List<SourceCodeChange>, Preperator, Preperator)", errorMessage);
 				continue;
 			}
+		}
+		// fire event when there was no matching detected
+		if (detected_applications == 0) {
+			this.listener.OnNoMatchingFound(operatorlist);
 		}
 	}	
 	
