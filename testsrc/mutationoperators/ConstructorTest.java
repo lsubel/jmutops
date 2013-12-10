@@ -3,8 +3,6 @@ package mutationoperators;
 import java.io.File;
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
-
 public abstract class ConstructorTest extends InheritTest {
 
 	/////////////////////////////////////////
@@ -38,7 +36,7 @@ public abstract class ConstructorTest extends InheritTest {
 	
 	/**
 	* Embed methodbody into method and class, creates files for prefix and postfix version 
-	* 	and calls {@link BasicTest#compareMatches(File, File) compareMatches(File, File)} in {@link BasicTest}.
+	* 	and calls {@link BasicTest#compareMatches(File, File, String) compareMatches(File, File)} in {@link BasicTest}.
 	* @param prefixMethodBody The prefix method body.
 	* @param postfixMethodBody The postfix method body.
 	* @return The number of applications of the {@link MutationOperator} under test.
@@ -47,7 +45,7 @@ public abstract class ConstructorTest extends InheritTest {
 		File preFix = this.createPrefixSourceFile(this.createFieldConstructorSourceCode(arguments, prefixMethodBody));
 		File postFix = this.createPostfixSourceFile(this.createFieldConstructorSourceCode(arguments, postfixMethodBody));
 		
-	return compareMatches(preFix, postFix);
+	return compareMatches(preFix, postFix, CLASS_NAME);
 	}
 	
 	/**

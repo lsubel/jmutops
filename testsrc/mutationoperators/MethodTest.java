@@ -3,8 +3,6 @@ package mutationoperators;
 import java.io.File;
 import java.util.HashMap;
 
-import mutationoperators.MutationOperator;
-
 /**
  * General (abstract) class which should be used for method level related tests.
  * @author Lukas Subel
@@ -48,7 +46,7 @@ public abstract class MethodTest extends BasicTest {
 	
 	/**
 	 * Embed methodbody into method and class, creates files for prefix and postfix version 
-	 * 	and calls {@link BasicTest#compareMatches(File, File) compareMatches(File, File)} in {@link BasicTest}.
+	 * 	and calls {@link BasicTest#compareMatches(File, File, String) compareMatches(File, File)} in {@link BasicTest}.
 	 * @param prefixMethodBody The prefix method body.
 	 * @param postfixMethodBody The postfix method body.
 	 * @return The number of applications of the {@link MutationOperator} under test.
@@ -57,7 +55,7 @@ public abstract class MethodTest extends BasicTest {
 		File preFix = this.createPrefixSourceFile(this.createFieldMethodSourceCode(prefixMethodBody));
 		File postFix = this.createPostfixSourceFile(this.createFieldMethodSourceCode(postfixMethodBody));
 
-		return compareMatches(preFix, postFix);
+		return compareMatches(preFix, postFix, CLASS_NAME);
 	}
 	
 	/**

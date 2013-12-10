@@ -11,7 +11,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 import jmutops.JMutOps;
-import mutationoperators.MutationOperator;
 
 import org.eclipse.jdt.core.JavaCore;
 import org.junit.After;
@@ -84,7 +83,8 @@ public abstract class BasicTest {
 	    Hashtable<String, String> options = JavaCore.getDefaultOptions();
 	    options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_6);
 	    this.jmutops.setOptions(options, OptionsVersion.PREFIX);
-	    this.jmutops.setOptions(options, OptionsVersion.POSTFIX); 
+	    this.jmutops.setOptions(options, OptionsVersion.POSTFIX);
+	    this.jmutops.resetRequiredFiles();
 	    
 	    // add the ApplicationsCounter to jMutOps so we can count the applications
 		this.jmutops.addEventListener(counter);
@@ -160,11 +160,18 @@ public abstract class BasicTest {
 	 * to the number of detected applications.
 	 * @param preFix The prefix version of code.
 	 * @param postFix The postfix version of code.
+	 * @param classname TODO
 	 * @return The map.
 	 */
-	public HashMap<String, Integer> compareMatches(File preFix, File postFix) {
+	public HashMap<String, Integer> compareMatches(File preFix, File postFix, String classname) {
 		// initialize the hashmap which contains the result
 		HashMap<String, Integer> resultMap = new HashMap<String, Integer>();
+		
+		// set unit name in the parser
+		String unitname = "/" + "P"+ "/" + classname;
+		jmutops.setUnitName(unitname,  OptionsVersion.PREFIX);
+		jmutops.setUnitName(unitname,  OptionsVersion.POSTFIX);
+		
 		// run jMutOps on both files
 		this.jmutops.checkFiles(preFix, postFix);
 		// fill the HashMap 
