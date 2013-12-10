@@ -2,10 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="testsrc"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="lib/postgresql-9.2-1003.jdbc4.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.core.resources_3.8.1.v20121114-124432.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.jdt.core_3.8.3.v20130121-145325.jar" sourcepath="/org.eclipse.jdt.core">
+	<classpathentry exported="true" kind="lib" path="C:/UniTools/eclipse/plugins/org.eclipse.jdt.core_3.8.3.v20130121-145325.jar" sourcepath="C:/Users/sheak/git/downloads/eclipse.jdt.core/org.eclipse.jdt.core">
 		<attributes>
 			<attribute name="javadoc_location" value="https://github.com/eclipse/eclipse.jdt.core/tree/master/org.eclipse.jdt.core"/>
 		</attributes>
@@ -25,7 +24,7 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/sheak/Desktop/Bachelorarbeit/Repository/Code/jMutOps/lib/commons-io-2.4/commons-io-2.4-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/sheak/Desktop/Bachelorarbeit/Repository/Code/JFreeChart/jfreechart-1.0.16.zip"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
