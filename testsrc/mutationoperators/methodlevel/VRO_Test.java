@@ -165,10 +165,10 @@ public class VRO_Test extends MethodTest {
 	
 	@Test
 	public void testVRO_ForLoop1() {
-		String pre 	= "int sum = 0; for(int j = 40; j >= 0; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
-		String post = "int sum = 0; for(int i = 40; i >= 0; i--) { sum += i;} System.out.println(\"Summe: \" + sum);";
+		String pre 	= "int i; int j; int sum = 0; for(j = 40; j >= 0; i--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		String post = "int i; int j; int sum = 0; for(j = 40; j >= 0; j--) { sum += i;} System.out.println(\"Summe: \" + sum);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
-		assertEquals(4, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(2, getApplicationValue(resultMap, mutop_vro));
 		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
 		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
 		checkOtherMutationOperators(resultMap);
@@ -177,9 +177,64 @@ public class VRO_Test extends MethodTest {
 	@Test
 	public void testVRO_ForLoop2() {
 		String pre 	= "int sum = 0; for(int j = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
-		String post = "int sum = 0; for(int i = 0; sum >= 100; i++) { sum += i;} System.out.println(\"Summe: \" + sum);";
+		String post = "int sum = 0; for(int i = 100; sum >= 100; i--) { sum += i;} System.out.println(\"Summe: \" + sum);";
 		HashMap<String, Integer> resultMap = compareMatches(pre, post);
 		assertEquals(3, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		checkOtherMutationOperators(resultMap);
+	}
+	
+	@Test
+	public void testVRO_ForLoop3() {
+		String pre 	= "int i = 0; int j = 0; int sum = 0; for(j = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		String post = "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		checkOtherMutationOperators(resultMap);
+	}
+	
+	@Test
+	public void testVRO_ForLoop4() {
+		String pre 	= "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		String post = "int i = 0; int j = 0; int sum = 0; for(i = 100; i >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		checkOtherMutationOperators(resultMap);
+	}
+	
+	@Test
+	public void testVRO_ForLoop5() {
+		String pre 	= "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		String post = "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; i--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		checkOtherMutationOperators(resultMap);
+	}
+	
+	@Test
+	public void testVRO_ForLoop6() {
+		String pre 	= "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		String post = "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { sum += i;} System.out.println(\"Summe: \" + sum);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
+		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
+		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
+		checkOtherMutationOperators(resultMap);
+	}
+	
+	@Test
+	public void testVRO_ForLoop7() {
+		String pre 	= "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { sum += j;} System.out.println(\"Summe: \" + sum);";
+		String post = "int i = 0; int j = 0; int sum = 0; for(i = 100; sum >= 100; j--) { i += j;} System.out.println(\"Summe: \" + sum);";
+		HashMap<String, Integer> resultMap = compareMatches(pre, post);
+		assertEquals(1, getApplicationValue(resultMap, mutop_vro));
 		assertEquals(0, getApplicationValue(resultMap, mutop_aco));
 		assertEquals(0, getApplicationValue(resultMap, mutop_afro));
 		checkOtherMutationOperators(resultMap);
