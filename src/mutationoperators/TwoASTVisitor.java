@@ -703,17 +703,17 @@ public abstract class TwoASTVisitor extends ASTVisitor {
 		if(localStoredTree instanceof ForStatement){
 			ForStatement fs = (ForStatement) localStoredTree;
 			
+			// visit all initializer nodes
+			visitSubtrees(node.initializers(), fs.initializers());
+			
 			// visit the expression node
 			visitSubtree(node.getExpression(), fs.getExpression());
-			
-			// visit the body node
-			visitSubtree(node.getBody(), fs.getBody());
 			
 			// visit all updaters nodes
 			visitSubtrees(node.updaters(), fs.updaters());
 
-			// visit all initializer nodes
-			visitSubtrees(node.initializers(), fs.initializers());
+			// visit the body node
+			visitSubtree(node.getBody(), fs.getBody());
 		}
 		return false;
 	}
