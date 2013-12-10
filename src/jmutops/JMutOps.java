@@ -182,6 +182,7 @@ public class JMutOps {
 		}
 		
 		// first check for mutation operators which are running on top, f.e. SWO
+		this.listener.OnAllChangesCheck(changes);
 		preCheckOperators(changes);
 		
 		// handle each change
