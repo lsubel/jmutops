@@ -1081,8 +1081,9 @@ public class ResultDatabase implements JMutOpsEventListener {
 	}
 	
 	public static void main(String[] args) {
+		// TODO get database values from results.properties
+		ResultDatabase rd = new ResultDatabase("jdbc:postgresql://localhost:5432/jmutops_results_20131022", "postgres", "asteria");
 		// drop all tables
-		ResultDatabase rd = new ResultDatabase("jdbc:postgresql://localhost:5432/jmutops_results_20131008", "postgres", "asteria");
 		rd.dropTables();
 		rd.initializeTables();
 		//rd.removeEntries("82062");
