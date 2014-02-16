@@ -31,9 +31,10 @@ import enums.OptionsVersion;
 
 public class IbugsEvaluationApplication {
 
-	private static final String PREFIX = "pre-fix";
-	private static final String POSTFIX = "post-fix";
-	private static final File   IBUGS_REPOSITORY = new File("repository.xml");
+	private static final String	PREFIX = "pre-fix";
+	private static final String	POSTFIX = "post-fix";
+	private static final File	IBUGS_REPOSITORY = new File("repository.xml");
+	private static final int	NUMBER_OF_ARGUMENTS = 3;
 	/**
 	 * Runs an check for one specific iBugs ID.
 	 * @param args Expected parameters:<p>
@@ -48,12 +49,17 @@ public class IbugsEvaluationApplication {
 	 * ./ID/postfix/all different .java files <p>
 	 */
 	public static void main(String[] args) {
-		// parse the parameters
-		if(args.length != 3) {
-			System.out.println("Please set up exactly three parameters. You provided " + args.length + ".");
+		// check the valid number of parameters
+		if(args.length != NUMBER_OF_ARGUMENTS) {
+			System.out.println(
+				"Please provide arguments to run this application:" + System.lineSeparator() + 
+				"	1) path to the folders containing all iBugs ID folders with the different files" + System.lineSeparator() +
+				"	2) iBugs ID to test" + System.lineSeparator() +
+				"	3) path to folder containing the extracted iBugs sources" + System.lineSeparator()
+			);
 			System.exit(0);
 		}
-		
+		// extract the parameters
 		String pathToIDFolders 	= args[0];
 		if(pathToIDFolders == null){
 			System.out.println("Please set up the first parameter.");
@@ -71,7 +77,7 @@ public class IbugsEvaluationApplication {
 			System.out.println("Please set up the third parameter.");
 			System.exit(0);
 		}
-
+		
 		// extract the path with the different files
 		String strPathRoot 		= pathToIDFolders + File.separator + iBugs_ID;
 		String strPathPrefix  	= strPathRoot + File.separator + PREFIX;
@@ -85,10 +91,10 @@ public class IbugsEvaluationApplication {
 		File filePathSourcesPrefix = new File(strPathSourcesPrefix);
 		File filePathSourcesPostfix = new File(strPathSourcesPostfix);
 		
-		// extract the pathes with the modules
+		// extract the path with the modules
 		File prefix_module_folder = new File(filePathSourcesPrefix,  "org.aspectj" +  File.separator + "modules");
 		File postfix_module_folder = new File(filePathSourcesPostfix, "org.aspectj" +  File.separator + "modules");
-			
+		
 		// initialize jMutOps
 		JMutOps jmutops = new JMutOps();
 		jmutops.setIncludeRunningVMBootclasspath(true);
@@ -104,7 +110,8 @@ public class IbugsEvaluationApplication {
 			properties.loadFromXML(stream);
 			stream.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Error during loading of 'result.properties': " + e.getMessage());
+			System.exit(0);
 		}
 
 		// register the user defined JMutOpsEventListener
