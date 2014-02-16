@@ -74,7 +74,7 @@ import enums.OptionsVersion;
 
 
 /**
- * Initial object.
+ * Central class that handles the user's input.
  * 
  * @author Lukas Subel
  *
@@ -86,26 +86,27 @@ public class JMutOps {
 	/////////////////////////////////////////
 	
 	/**
-	 * FileDistiller used to distill changes between two version of a file.
+	 * {@link FileDistiller} used to distill changes between two version of a file.
 	 */
-	private FileDistiller distiller = ChangeDistiller.createFileDistiller(Language.JAVA);;
+	private FileDistiller distiller = ChangeDistiller.createFileDistiller(Language.JAVA);
 
 	/**
-	 * MutationOperatorChecker handles all implemented MutationOperators.
+	 * Instance of {@link MutationOperatorTester} that maintains and forwards inputs
+	 * to all registered instances of {@link MutationOperator}.
 	 */
 	private MutationOperatorTester tester;
 	
 	/**
-	 * Preperation class used to retrieve information for the prefixed code.
+	 * Preparation class used to retrieve information for the pre-fixed code.
 	 */
 	private Preperator prefixed_preperator;
 	/**
-	 * Preperation class used to retrieve information for the postfixed code.
+	 * Preparation class used to retrieve information for the post-fixed code.
 	 */
 	private Preperator postfixed_preperator;
 
 	/**
-	 * Multicaster which will talk to all ResultListeners which were added
+	 * Multicaster which will talk to all {@link JMutOpsEventListener} implementing classes that are registered.
 	 */
 	private final JMutOpsEventListenerMulticaster listener = new JMutOpsEventListenerMulticaster();
 	
