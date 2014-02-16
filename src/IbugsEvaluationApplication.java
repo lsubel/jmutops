@@ -29,7 +29,7 @@ import utils.iBugsTools;
 import enums.OptionsVersion;
 
 
-public class AlessandraVMApplication {
+public class IbugsEvaluationApplication {
 
 	private static final String PREFIX = "pre-fix";
 	private static final String POSTFIX = "post-fix";
