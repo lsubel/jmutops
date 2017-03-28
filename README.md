@@ -1,4 +1,4 @@
-# jmutops
+# jMutOps
 
 jMutOps is a Java tool that I developed during my computer science bachelor thesis at Saarland University in 2013. It has the ability to map detected source code changes between two different Java source code versions to 63 different mutation operators retrieved from research papers and existing mutation testing tools.
 
